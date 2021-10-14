@@ -1,10 +1,10 @@
 asgiref==3.4.1; python_version >= "3.6"
-certifi==2021.10.8; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version < "4"
+certifi==2021.10.8; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0"
 cffi==1.15.0; python_version >= "3.6"
 charset-normalizer==2.0.7; python_full_version >= "3.6.0" and python_version >= "3"
 coreapi==2.3.3; python_version >= "3.6"
 coreschema==0.0.4; python_version >= "3.6"
-cryptography==35.0.0; python_version >= "3.6" and (python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version < "4" and python_version >= "3.6")
+cryptography==35.0.0; python_version >= "3.6"
 defusedxml==0.7.1; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
 dj-database-url==0.4.2
 django-allauth==0.45.0
@@ -17,7 +17,7 @@ drf-nested-routers==0.93.3; python_version >= "3.5"
 drf-yasg==1.20.0; python_version >= "3.6"
 faker==9.3.1; python_version >= "3.6"
 gunicorn==20.1.0; python_version >= "3.5"
-idna==3.3; python_version >= "3.5" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.5" and python_version < "4"
+idna==3.3; python_version >= "3.5" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.5"
 inflection==0.5.1; python_version >= "3.6"
 itypes==1.2.0; python_version >= "3.6"
 jinja2==3.0.2; python_version >= "3.6"
