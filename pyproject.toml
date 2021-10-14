@@ -1,0 +1,76 @@
+[tool.poetry]
+
+name = "ballotbuddies"
+version = "0.0"
+description = ""
+authors = ["Citizen Labs <you@yourdomain.com>"]
+
+[tool.poetry.dependencies]
+
+python = "^3.8"
+
+# Django
+django = "^3.1.9"
+django-allauth = "*"
+django-cors-headers = "*"
+django-grappelli = "*"
+
+# API
+djangorestframework = "~3.11"
+drf-nested-routers = "*"
+drf-yasg = "*"
+
+# Storage
+dj-database-url = "~0.4.2"
+psycopg2-binary = "^2.6"
+django-redis = "^4.12.1"
+
+# Utilities
+faker = "*"
+minilog = "^2.0"
+
+# Deployment
+whitenoise = "^5.0.1"
+gunicorn = "^20.0.4"
+
+[tool.poetry.dev-dependencies]
+
+# Formatting
+black = "=21.8b0"
+isort = "=5.9.3"
+
+# Linters
+pylint = "^2.4.3"
+mypy = "~0.790"
+
+# Testing
+pytest = "^5.3.2"
+pytest-django = "*"
+pytest-describe = "^1.0"
+pytest-expecter = "^2.0"
+pytest-randomly = "*"
+pytest-cov = "^2.8.0"
+freezegun = "*"
+coverage = "^5.0"
+coveragespace = "^4.0"
+
+# Server
+django-livereload-server = "*"
+honcho = { git = "https://github.com/nickstenning/honcho", rev = "b4de1aa0504d41c0f05efbb04f63c624fccded81" }
+
+# E2E
+fire = "*"
+splinter = "*"
+
+# Tooling
+ipython = "*"
+MacFSEvents = { version = "*", platform = "darwin" }
+pync = { version = "*", platform = "darwin" }
+sniffer = "*"
+
+[tool.isort]
+
+profile = "black"
+
+known_django = "django"
+sections = "FUTURE,STDLIB,DJANGO,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
