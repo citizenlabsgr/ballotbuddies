@@ -1,8 +1,8 @@
 import time
+
 from splinter import Browser
 
-
-site: str = ''
+site: str = ""
 browser: Browser = None
 
 
@@ -11,11 +11,11 @@ def visit(path):
 
 
 def is_loading():
-    return browser.is_element_present_by_css('.loading')
+    return browser.is_element_present_by_css(".loading")
 
 
 def is_logged_in():
-    return browser.is_element_present_by_css('.navbar-queue')
+    return browser.is_element_present_by_css(".navbar-queue")
 
 
 def is_logged_out():
@@ -27,9 +27,9 @@ def signup(username, email, password):
 
     browser.find_by_text("Sign up").first.click()
 
-    browser.fill('username', username)
-    browser.fill('email', email)
-    browser.fill('password', password)
+    browser.fill("username", username)
+    browser.fill("email", email)
+    browser.fill("password", password)
 
     browser.find_by_text("Sign up").first.click()
     wait()
@@ -51,10 +51,10 @@ def login(username=None, password=None):
     browser.find_by_text("login").first.click()
     assert browser.is_text_present("Access ballotbuddies")
 
-    browser.fill('username', username)
-    browser.fill('password', password)
+    browser.fill("username", username)
+    browser.fill("password", password)
 
-    browser.find_by_name('login').first.click()
+    browser.find_by_name("login").first.click()
     wait()
 
     if using_default_credentials:

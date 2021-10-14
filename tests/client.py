@@ -17,12 +17,11 @@ from splinter import Browser
 
 from .system import user
 
-
-SITE = os.getenv('TEST_SITE', "http://localhost:8000")
+SITE = os.getenv("TEST_SITE", "http://localhost:8000")
 
 
 def run():
-    with Browser('firefox') as user.browser:
+    with Browser("firefox") as user.browser:
         _launch_browser()
         _execute_command()
         _wait_for_browser_close()
@@ -53,5 +52,5 @@ def _wait_for_browser_close():
     print()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run()

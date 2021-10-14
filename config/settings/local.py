@@ -2,7 +2,6 @@ import dj_database_url
 
 from .default import *
 
-
 BASE_NAME = BASE_DOMAIN = "localhost"
 BASE_URL = f"http://{BASE_DOMAIN}:8000"
 
@@ -10,30 +9,30 @@ BASE_URL = f"http://{BASE_DOMAIN}:8000"
 # Core
 
 DEBUG = True
-SECRET_KEY = 'dev'
+SECRET_KEY = "dev"
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    '.ngrok.io',
+    "127.0.0.1",
+    "localhost",
+    ".ngrok.io",
 ]
 
 INSTALLED_APPS += [
-    'livereload',
+    "livereload",
 ]
 
 MIDDLEWARE += [
-    'livereload.middleware.LiveReloadScript',
+    "livereload.middleware.LiveReloadScript",
 ]
 
 ###############################################################################
 # Databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ballotbuddies_dev',
-        'HOST': '127.0.0.1',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "ballotbuddies_dev",
+        "HOST": "127.0.0.1",
     }
 }
 

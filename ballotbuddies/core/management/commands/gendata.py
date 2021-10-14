@@ -10,7 +10,6 @@ from django.db.utils import IntegrityError
 import log
 from faker import Faker
 
-
 # from ballotbuddies.buddies import models
 
 
@@ -25,9 +24,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'emails',
-            nargs='?',
-            type=lambda value: value.split(','),
+            "emails",
+            nargs="?",
+            type=lambda value: value.split(","),
             default=[],
         )
 
@@ -60,7 +59,7 @@ class Command(BaseCommand):
         return user
 
     def get_or_create_user(self, base_email, password="password"):
-        username, email_domain = base_email.split('@')
+        username, email_domain = base_email.split("@")
 
         user, created = User.objects.get_or_create(username=username)
         user.email = f"{username}+{settings.BASE_NAME}@{email_domain}"
@@ -94,4 +93,4 @@ class Command(BaseCommand):
         return random.choice(User.objects.exclude(id__in=skip_ids))
 
     def fake_username(self):
-        return self.fake.name().replace(' ', '').lower()
+        return self.fake.name().replace(" ", "").lower()
