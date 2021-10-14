@@ -6,4 +6,4 @@ urlpatterns = [
     path("", views.current_datetime),
 ]
 
-ballotbuddies_name = "buddies"
+app_name = "buddies"
