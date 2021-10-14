@@ -6,25 +6,24 @@ from contextlib import suppress
 
 import log
 import pytest
-from splinter import Browser
 from selenium.common.exceptions import WebDriverException
+from splinter import Browser
 
 from . import user
 
-
-PORT = int(os.getenv('TEST_PORT', '8001'))
-SITE = os.getenv('TEST_SITE', f"http://localhost:{PORT}")
-HEADLESS = bool(os.getenv('TEST_HEADLESS'))
+PORT = int(os.getenv("TEST_PORT", "8001"))
+SITE = os.getenv("TEST_SITE", f"http://localhost:{PORT}")
+HEADLESS = bool(os.getenv("TEST_HEADLESS"))
 
 
 def pytest_configure(config):
     log.init(debug=True)
-    log.silence('selenium', allow_warning=True)
+    log.silence("selenium", allow_warning=True)
 
 
-@pytest.yield_fixture(scope='session', autouse=True)
+@pytest.yield_fixture(scope="session", autouse=True)
 def browser():
-    with Browser('firefox', headless=HEADLESS) as browser:
+    with Browser("firefox", headless=HEADLESS) as browser:
         user.browser = browser
         user.site = SITE
 
