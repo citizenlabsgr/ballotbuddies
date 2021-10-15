@@ -2,15 +2,15 @@
 
 name = "ballotbuddies"
 version = "0.0"
-description = ""
-authors = ["Citizen Labs <you@yourdomain.com>"]
+description = "Track your friends' voter registration status."
+authors = ["Citizen Labs <info@citizenlabs.org>"]
 
 [tool.poetry.dependencies]
 
 python = "^3.10"
 
 # Django
-django = "^3.1.9"
+django = "^3.2.8"
 django-allauth = "*"
 django-cors-headers = "*"
 django-grappelli = "*"
