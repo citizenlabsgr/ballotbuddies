@@ -16,7 +16,7 @@ def update_selected_voters(modeladmin, request, queryset):
 class VoterAdmin(admin.ModelAdmin):
 
     list_display = [
-        "id",
+        "email",
         "first_name",
         "last_name",
         "birth_date",

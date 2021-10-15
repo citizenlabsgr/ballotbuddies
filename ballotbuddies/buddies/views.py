@@ -25,7 +25,10 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             # TODO: Send sesame login emails when not debugging
-            user, created = User.objects.get_or_create(email=form.cleaned_data["email"])
+            user, created = User.objects.get_or_create(
+                email=form.cleaned_data["email"],
+                defaults=dict(username=form.cleaned_data["email"]),
+            )
             if created:
                 log.info(f"Created user: {user}")
             do_login(request, user)
@@ -47,7 +50,8 @@ def profile(request):
     if not voter.complete:
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
-    return HttpResponse(str(voter))
+    context = {"voter": voter}
+    return render(request, "profile/detail.html", context)
 
 
 @login_required
@@ -59,6 +63,7 @@ def setup(request):
             voter = form.save()
             voter.user.first_name = form.cleaned_data["first_name"]
             voter.user.last_name = form.cleaned_data["last_name"]
+            voter.user.username = f"{voter.user.get_full_name()} ({voter.user.email})"
             voter.user.save()
             messages.success(request, "Successfully updated your profile information.")
             return redirect("buddies:profile")

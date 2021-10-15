@@ -29,6 +29,10 @@ class Voter(models.Model):
         return self.user.get_full_name()
 
     @property
+    def email(self) -> str:
+        return self.user.email
+
+    @property
     def first_name(self) -> str:
         return self.user.first_name
 
@@ -56,6 +60,7 @@ class Voter(models.Model):
     def update(self) -> bool:
         previous_status_id = self.status_id
 
+        # TODO: Use `self.data` to build the query string
         url = f"https://michiganelections.io/api/status/?first_name={self.first_name}&last_name={self.last_name}&zip_code={self.zip_code}&birth_date={self.birth_date}"
         log.info(f"GET {url}")
         response = requests.get(url)
