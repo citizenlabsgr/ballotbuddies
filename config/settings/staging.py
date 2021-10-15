@@ -15,3 +15,8 @@ ALLOWED_HOSTS += [
     ".herokuapp.com",
     # TODO: Add your custom domain
 ]
+
+###############################################################################
+# Authentication
+
+AUTH_PASSWORD_VALIDATORS = []
