@@ -1,8 +1,14 @@
 import os
 
+from django.contrib import messages
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(CONFIG_ROOT)
+
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 ###############################################################################
 # Core
@@ -20,6 +26,8 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "corsheaders",
+    "crispy_forms",
+    "crispy_bootstrap5",
     "rest_framework",
     "drf_yasg",
     "ballotbuddies.api",
@@ -44,7 +52,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates"],
+        "DIRS": [os.path.join(PROJECT_ROOT, "ballotbuddies", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -124,3 +132,17 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Grappelli
 
 GRAPPELLI_ADMIN_TITLE = "Ballot Buddies Admin"
+
+###############################################################################
+# Bootstrap
+
+MESSAGE_TAGS = {
+    messages.DEBUG: "alert-info",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger",
+}
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
