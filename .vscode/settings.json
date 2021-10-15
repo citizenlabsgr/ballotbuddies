@@ -2,7 +2,6 @@
   "files.exclude": {
     ".cache/": true,
     ".coverage": true,
-    ".envrc": true,
     ".pytest_cache": true,
     ".venv/": true,
     "*.egg-info/": true,

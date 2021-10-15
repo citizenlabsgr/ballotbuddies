@@ -19,9 +19,9 @@ root = routers.DefaultRouter()
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="ballotbuddies",
+        title="Ballot Buddies",
         default_version="0",
-        description="The API for ballotbuddies.",
+        description="The API for Ballot Buddies.",
     ),
     url=settings.BASE_URL,
 )

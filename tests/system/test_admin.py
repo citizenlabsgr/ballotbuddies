@@ -7,4 +7,4 @@ def describe_login():
     def placeholder(expect):
         user.visit("/admin")
 
-        expect(user.browser.title) == "Log in | ballotbuddies Admin"
+        expect(user.browser.title) == "Log in | Ballot Buddies Admin"

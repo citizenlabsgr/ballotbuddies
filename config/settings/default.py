@@ -123,4 +123,4 @@ CORS_ORIGIN_ALLOW_ALL = True
 ###############################################################################
 # Grappelli
 
-GRAPPELLI_ADMIN_TITLE = "ballotbuddies Admin"
+GRAPPELLI_ADMIN_TITLE = "Ballot Buddies Admin"

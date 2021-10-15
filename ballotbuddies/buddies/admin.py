@@ -6,6 +6,7 @@ from . import models
 
 
 def update_selected_voters(modeladmin, request, queryset):
+    voter: models.Voter
     for voter in queryset:
         if voter.update():
             voter.save()
