@@ -76,5 +76,10 @@ def setup(request):
 @login_required
 def friends(request):
     voter = Voter.objects.from_user(request.user)
+
+    if not voter.complete:
+        messages.info(request, "Please finish setting up your profile to continue.")
+        return redirect("buddies:setup")
+
     context = {"voter": voter, "friends": voter.friends.all()}
     return render(request, "friends/index.html", context)
