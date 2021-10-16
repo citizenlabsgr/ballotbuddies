@@ -26,7 +26,7 @@ def login(request):
             if created:
                 log.info(f"Created user: {user}")
             do_login(request, user)
-            return redirect("buddies:profile")
+            return redirect("buddies:friends")
     else:
         form = LoginForm()
     context = {"form": form}
@@ -40,14 +40,14 @@ def logout(request):
 
 @login_required
 def profile(request):
-    voter = Voter.objects.from_user(request.user)
+    voter: Voter = Voter.objects.from_user(request.user)
 
     if not voter.complete:
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
 
-    if voter.update():
-        voter.save()
+    voter.update()
+    voter.save()
 
     context = {"voter": voter}
     return render(request, "profile/detail.html", context)
@@ -55,7 +55,7 @@ def profile(request):
 
 @login_required
 def setup(request):
-    voter = Voter.objects.from_user(request.user)
+    voter: Voter = Voter.objects.from_user(request.user)
     if request.method == "POST":
         form = VoterForm(request.POST, instance=voter)
         if form.is_valid():
@@ -75,7 +75,7 @@ def setup(request):
 
 @login_required
 def friends(request):
-    voter = Voter.objects.from_user(request.user)
+    voter: Voter = Voter.objects.from_user(request.user)
 
     if not voter.complete:
         messages.info(request, "Please finish setting up your profile to continue.")
@@ -83,3 +83,12 @@ def friends(request):
 
     context = {"voter": voter, "friends": voter.friends.all()}
     return render(request, "friends/index.html", context)
+
+
+@login_required
+def status(request, username: str):
+    voter: Voter = Voter.objects.get(user__username=username)
+    voter.update()
+    voter.save()
+    context = {"voter": voter}
+    return render(request, "friends/_voter.html", context)

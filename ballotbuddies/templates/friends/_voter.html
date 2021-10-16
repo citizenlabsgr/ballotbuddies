@@ -1,0 +1,14 @@
+<tr>
+    <th scope="row">{{ voter.name }}</th>
+    <td><pre>{{ voter.status|pprint }}</pre></td>
+    <td>{{ voter.updated }}</td>
+    <td>
+        <button class="btn btn-secondary"
+            hx-get="{% url 'buddies:status' username=voter.user.username %}"
+            hx-trigger="click"
+            hx-target="closest tr"
+            hx-swap="outerHTML">
+            Refresh
+        </button>
+    </td>
+</tr>

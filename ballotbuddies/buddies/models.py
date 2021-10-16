@@ -59,12 +59,8 @@ class Voter(models.Model):
     def complete(self) -> bool:
         return all(self.data.values())
 
-    @property
-    def status_id(self) -> str:
-        return (self.status or {}).get("id", "")
-
     def update(self) -> bool:
-        previous_status_id = self.status_id
+        previous_status = self._status
 
         # TODO: Use `self.data` to build the query string and remove unnecessary properties
         url = f"https://michiganelections.io/api/status/?first_name={self.first_name}&last_name={self.last_name}&zip_code={self.zip_code}&birth_date={self.birth_date}"
@@ -77,9 +73,14 @@ class Voter(models.Model):
         data = response.json()
         log.info(f"{response.status_code} response: {data}")
         self.status = data
+        self.updated = timezone.now()
 
-        return self.status_id != previous_status_id
+        return self._status != previous_status
+
+    @property
+    def _status(self) -> str:
+        return (self.status or {}).get("id", "")
 
     def save(self, **kwargs):
-        self.updated = timezone.now()
+        # TODO: Remove self from friends
         super().save(**kwargs)

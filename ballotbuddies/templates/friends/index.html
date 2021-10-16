@@ -10,7 +10,8 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Status</th>
-                    <th scope="cosl">Updated</th>
+                    <th scope="col">Updated</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -18,13 +19,14 @@
                     <th scope="row">{{ voter.name }}</th>
                     <td><pre>{{ voter.status|pprint }}</pre></td>
                     <td>{{ voter.updated }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+                            View
+                        </a>
+                    </td>
                 </tr>
                 {% for voter in friends %}
-                <tr>
-                    <th scope="row">{{ voter.name }}</th>
-                    <td><pre>{{ voter.status|pprint }}</pre></td>
-                    <td>{{ voter.updated }}</td>
-                </tr>
+                {% include "friends/_voter.html" %}
                 {% endfor %}
             </tbody>
             </table>
