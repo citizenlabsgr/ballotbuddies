@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="cosl">Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for voter in friends %}
+                <tr>
+                    <th scope="row">{{ voter.name }}</th>
+                    <td><pre>{{ voter.status|pprint }}</pre></td>
+                    <td>{{ voter.updated }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+
+    </div>
+</div>
+
+{% endblock content %}
