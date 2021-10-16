@@ -4,10 +4,14 @@
 
 {% block content %}
 
+<h1>Access Ballot Buddies</h1>
+
+<p>We'll send you an email with a link to log in automatically.<p>
+
 <form method="post" novalidate>
   {% csrf_token %}
   {{ form|crispy }}
-  <button type="submit">Submit</button>
+  <button class="btn btn-primary" type="submit">Log in</button>
 </form>
 
 {% endblock content %}

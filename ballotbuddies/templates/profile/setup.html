@@ -4,10 +4,12 @@
 
 {% block content %}
 
+<h1>Voter Information</h1>
+
 <form method="post" novalidate>
   {% csrf_token %}
   {{ form|crispy }}
-  <button class="btn btn-primary" type="submit">Submit</button>
+  <button class="btn btn-primary" type="submit">Save</button>
 </form>
 
 {% endblock content %}

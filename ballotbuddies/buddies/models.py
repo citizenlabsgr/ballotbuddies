@@ -19,7 +19,7 @@ class Voter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     birth_date = models.DateField(null=True)
-    zip_code = models.CharField(null=True, max_length=5)
+    zip_code = models.CharField(null=True, max_length=5, verbose_name="ZIP code")
     status = models.JSONField(null=True, blank=True)
     updated = models.DateTimeField(null=True, blank=True)
 

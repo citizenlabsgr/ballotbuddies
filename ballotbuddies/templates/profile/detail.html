@@ -2,14 +2,33 @@
 
 {% block content %}
 
-{{ voter.user }}
+<h1>Your Profile</h1>
 
-<br>
+<p>
+    {{ voter.user.username }}
+</p>
 
-{{ voter.data }}
+<h2>Voter Information</h2>
 
-<br>
+<p>
+    <pre>{{ voter.data | pprint }}</pre>
+</p>
 
-{{ voter.status }}
+<h2>Ballot Status</h2>
+
+<p>
+
+    <pre>{{ voter.status | pprint }}</pre>
+</p>
+
+<h2>Last Changed</h2>
+
+<p>
+    {{ voter.updated }}
+</p>
+
+<a class="btn btn-primary" href="{% url 'buddies:profile' %}">Refresh status</a>
+<a class="btn btn-secondary" href="{% url 'buddies:setup' %}">Edit profile</a>
+<a class="btn btn-danger" href="{% url 'buddies:logout' %}">Log out</a>
 
 {% endblock content %}
