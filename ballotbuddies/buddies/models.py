@@ -23,9 +23,15 @@ class Voter(models.Model):
     status = models.JSONField(null=True, blank=True)
     updated = models.DateTimeField(null=True, blank=True)
 
+    friends = models.ManyToManyField("Voter", blank=True)
+
     objects = VoterManager()
 
     def __str__(self):
+        return f"{self.name} ({self.user.email})"
+
+    @property
+    def name(self) -> str:
         return self.user.get_full_name()
 
     @property
@@ -60,7 +66,7 @@ class Voter(models.Model):
     def update(self) -> bool:
         previous_status_id = self.status_id
 
-        # TODO: Use `self.data` to build the query string
+        # TODO: Use `self.data` to build the query string and remove unnecessary properties
         url = f"https://michiganelections.io/api/status/?first_name={self.first_name}&last_name={self.last_name}&zip_code={self.zip_code}&birth_date={self.birth_date}"
         log.info(f"GET {url}")
         response = requests.get(url)

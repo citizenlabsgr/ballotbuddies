@@ -11,8 +11,7 @@ from .models import User, Voter
 
 
 def index(_request):
-    # TODO: Require login and display all friends' status
-    return redirect("buddies:profile")
+    return redirect("buddies:friends")
 
 
 def login(request):
@@ -63,7 +62,8 @@ def setup(request):
             voter = form.save()
             voter.user.first_name = form.cleaned_data["first_name"]
             voter.user.last_name = form.cleaned_data["last_name"]
-            voter.user.username = f"{voter.user.get_full_name()} ({voter.user.email})"
+            if voter.user.username != "admin":  # preserve default localhost user
+                voter.user.username = str(voter)
             voter.user.save()
             messages.success(request, "Successfully updated your profile information.")
             return redirect("buddies:profile")
@@ -71,3 +71,15 @@ def setup(request):
         form = VoterForm(instance=voter, initial=voter.data)
     context = {"voter": voter, "form": form}
     return render(request, "profile/setup.html", context)
+
+
+@login_required
+def friends(request):
+    voter = Voter.objects.from_user(request.user)
+
+    if not voter.complete:
+        messages.info(request, "Please finish setting up your profile to continue.")
+        return redirect("buddies:setup")
+
+    context = {"voter": voter, "friends": voter.friends.all()}
+    return render(request, "friends/index.html", context)
