@@ -2,17 +2,17 @@
 
 from django.contrib import admin
 
-from . import models
+from .models import Voter
 
 
 def update_selected_voters(modeladmin, request, queryset):
-    voter: models.Voter
+    voter: Voter
     for voter in queryset:
         if voter.update():
             voter.save()
 
 
-@admin.register(models.Voter)
+@admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
 
     list_display = [
