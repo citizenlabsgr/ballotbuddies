@@ -41,6 +41,6 @@ def site_loading():
     with suppress(WebDriverException):
         user.visit("/")
 
-    loaded = user.browser.is_text_present("ballotbuddies")
+    loaded = user.browser.is_text_present("Ballot Buddies")
 
     return not loaded
