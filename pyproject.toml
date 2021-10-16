@@ -11,15 +11,9 @@ python = "^3.10"
 
 # Django
 django = "^3.2.8"
-django-allauth = "*"
 django-cors-headers = "*"
 django-grappelli = "*"
 crispy-bootstrap5 = "*"
-
-# API
-djangorestframework = "~3.11"
-drf-nested-routers = "*"
-drf-yasg = "*"
 
 # Storage
 dj-database-url = "~0.4.2"
@@ -27,8 +21,8 @@ psycopg2-binary = "^2.6"
 django-redis = "^4.12.1"
 
 # Utilities
-faker = "*"
 minilog = "^2.0"
+requests = "^2.26"
 
 # Deployment
 whitenoise = "^5.0.1"
@@ -60,7 +54,6 @@ django-livereload-server = "~0.3.2"
 honcho = { git = "https://github.com/nickstenning/honcho", rev = "b4de1aa0504d41c0f05efbb04f63c624fccded81" }
 
 # E2E
-fire = "*"
 splinter = "~0.15.0"
 selenium = "<4" # https://github.com/cobrateam/splinter/issues/929
 
