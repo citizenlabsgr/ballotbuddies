@@ -14,6 +14,11 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <th scope="row">{{ voter.name }}</th>
+                    <td><pre>{{ voter.status|pprint }}</pre></td>
+                    <td>{{ voter.updated }}</td>
+                </tr>
                 {% for voter in friends %}
                 <tr>
                     <th scope="row">{{ voter.name }}</th>
