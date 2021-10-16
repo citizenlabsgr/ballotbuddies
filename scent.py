@@ -4,6 +4,7 @@ import time
 import subprocess
 
 from sniffer.api import select_runnable, file_validator, runnable
+
 try:
     from pync import Notifier
 except ImportError:
@@ -15,9 +16,9 @@ else:
 watch_paths = [
     "ballotbuddies",
     "config",
-    "frontend",
     "tests",
 ]
+
 
 class options:
     group = int(time.time())
@@ -31,54 +32,47 @@ class options:
         return should_skip
 
 
-@select_runnable('backend_targets')
+@select_runnable("backend_targets")
 @file_validator
 def backend_files(path):
-    return matches(path, 'py', 'ini') and 'system' not in path
+    return matches(path, "py", "ini") and "system" not in path
 
 
-@select_runnable('frontend_targets')
-@file_validator
-def frontend_files(path):
-    return matches(path, 'html', 'js')
-
-
-@select_runnable('system_targets')
+@select_runnable("system_targets")
 @file_validator
 def system_files(path):
-    return matches(path, 'py', 'ini') and 'system' in path
+    return matches(path, "py", "ini") and "system" in path
 
 
 def matches(path, *extensions):
-    extension = path.split('.')[-1]
+    extension = path.split(".")[-1]
     return extension in extensions
 
 
 @runnable
 def backend_targets(*_args):
-    return run("Backend", [
-        ("Unit Tests", "make test-backend-unit", True),
-        ("Integration Tests", "make test-backend-all", False),
-        ("Static Analysis", "make check-backend", True),
-    ])
-
-
-@runnable
-def frontend_targets(*_args):
-    return run("Frontend", [
-        ("Unit Tests", "make test-frontend-unit", True),
-        ("Static Analysis", "make check-frontend", True),
-    ])
+    return run(
+        "Backend",
+        [
+            ("Unit Tests", "make test-backend-unit", True),
+            ("Integration Tests", "make test-backend-all", False),
+            ("Static Analysis", "make check-backend", True),
+        ],
+    )
 
 
 @runnable
 def system_targets(*_args):
     if options.skip():
         return True
-    return run("System", [
-        ("Tests", "make test-system TEST_HEADLESS=true", False),
-        ("Static Analysis", "make check-backend", True),
-    ])
+    return run(
+        "System",
+        [
+            ("Tests", "make test-system TEST_HEADLESS=true", False),
+            ("Static Analysis", "make check-backend", True),
+        ],
+    )
+
 
 def run(name, targets):
     count = 0

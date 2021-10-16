@@ -2,33 +2,39 @@
 
 {% block content %}
 
-<h1>Your Profile</h1>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-12">
 
-<p>
-    {{ voter.user.username }}
-</p>
+        <h1>Your Profile</h1>
 
-<h2>Voter Information</h2>
+        <p>
+            {{ voter.user.username }}
+        </p>
 
-<p>
-    <pre>{{ voter.data | pprint }}</pre>
-</p>
+        <h2>Voter Information</h2>
 
-<h2>Ballot Status</h2>
+        <p>
+            <pre>{{ voter.data | pprint }}</pre>
+        </p>
 
-<p>
+        <h2>Ballot Status</h2>
 
-    <pre>{{ voter.status | pprint }}</pre>
-</p>
+        <p>
 
-<h2>Last Changed</h2>
+            <pre>{{ voter.status | pprint }}</pre>
+        </p>
 
-<p>
-    {{ voter.updated }}
-</p>
+        <h2>Last Changed</h2>
 
-<a class="btn btn-primary" href="{% url 'buddies:profile' %}">Refresh status</a>
-<a class="btn btn-secondary" href="{% url 'buddies:setup' %}">Edit profile</a>
-<a class="btn btn-danger" href="{% url 'buddies:logout' %}">Log out</a>
+        <p>
+            {{ voter.updated }}
+        </p>
+
+        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">Refresh status</a>
+        <a class="btn btn-secondary" href="{% url 'buddies:setup' %}">Edit profile</a>
+        <a class="btn btn-danger" href="{% url 'buddies:logout' %}">Log out</a>
+
+    </div>
+</div>
 
 {% endblock content %}

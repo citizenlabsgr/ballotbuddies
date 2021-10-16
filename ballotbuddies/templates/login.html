@@ -4,14 +4,20 @@
 
 {% block content %}
 
-<h1>Access Ballot Buddies</h1>
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-12">
 
-<p>We'll send you an email with a link to log in automatically.<p>
+      <h1>Access Ballot Buddies</h1>
 
-<form method="post" novalidate>
-  {% csrf_token %}
-  {{ form|crispy }}
-  <button class="btn btn-primary" type="submit">Log in</button>
-</form>
+      <p>We'll send you an email with a link to log in automatically.<p>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary" type="submit">Log in</button>
+      </form>
+
+    </div>
+</div>
 
 {% endblock content %}

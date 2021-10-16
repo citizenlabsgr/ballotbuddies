@@ -36,11 +36,10 @@ doctor: ## Check for required system dependencies
 VIRTUAL_ENV ?= .venv
 
 BACKEND_DEPENDENCIES = $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock)
-FRONTEND_DEPENDENCIES =
 
 .PHONY: install
 ifndef SKIP_INSTALL
-install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES) ## Install project dependencies
+install: $(BACKEND_DEPENDENCIES) ## Install project dependencies
 endif
 
 $(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
@@ -60,10 +59,6 @@ requirements.txt: poetry.lock
 	poetry export --format requirements.txt --output $@ --without-hashes
 endif
 
-$(FRONTEND_DEPENDENCIES):
-	# TODO: Install frontend dependencies if applicable
-	@ touch $@
-
 .PHONY: clean
 clean:
 	rm -rf staticfiles
@@ -71,7 +66,6 @@ clean:
 
 .PHONY: clean-all
 clean-all: clean
-	# TODO: Delete all frontend files
 	rm -rf $(VIRTUAL_ENV)
 
 # RUNTIME DEPENDENCIES ########################################################
@@ -110,16 +104,12 @@ check-backend: install format-backend
 	$(RUN) mypy $(PYTHON_PACKAGES) tests --config-file=.mypy.ini
 	$(RUN) pylint $(PYTHON_PACKAGES) tests --rcfile=.pylint.ini
 
-.PHONY: check-frontend
-check-frontend: install
-	# TODO: Run frontend linters if applicable
-
 format-backend: install
 	$(RUN) isort $(PYTHON_PACKAGES) tests
 	$(RUN) black $(PYTHON_PACKAGES) tests
 
 .PHONY: test
-test: test-backend test-frontend ## Run all tests
+test: test-backend ## Run all tests
 
 .PHONY: test-backend
 test-backend: test-backend-all
@@ -145,13 +135,6 @@ test-backend-all: install
 	$(RUN) pytest $(PYTHON_PACKAGES) tests/unit tests/integration
 	$(RUN) coveragespace update overall
 
-.PHONY: test-frontend
-test-frontend: test-frontend-unit
-
-.PHONY: test-frontend-unit
-test-frontend-unit: install
-	# TODO: Run frontend tests if applicable
-
 .PHONY: test-system
 test-system: install
 	$(RUN) honcho start --procfile=tests/system/Procfile --env=tests/system/.env
@@ -172,7 +155,6 @@ run-production: .envrc install
 
 .PHONY: build
 build: install
-	# TODO: Build frontend code for production if applicable
 
 .PHONY: promote
 promote: install
