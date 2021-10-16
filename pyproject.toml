@@ -22,6 +22,7 @@ django-redis = "^4.12.1"
 
 # Utilities
 minilog = "^2.0"
+requests = "^2.26"
 
 # Deployment
 whitenoise = "^5.0.1"
