@@ -10,7 +10,7 @@ LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-ALLOW_DEBUG = True
+ALLOW_DEBUG = False
 
 ###############################################################################
 # Core

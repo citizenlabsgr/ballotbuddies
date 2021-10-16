@@ -9,8 +9,6 @@ BASE_NAME = os.environ["HEROKU_APP_NAME"]
 BASE_DOMAIN = f"{BASE_NAME}.com"
 BASE_URL = f"https://{BASE_DOMAIN}"
 
-ALLOW_DEBUG = False
-
 ###############################################################################
 # Core
 
