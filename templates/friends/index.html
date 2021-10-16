@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <div class="row justify-content-center">
@@ -30,6 +32,23 @@
                 {% endfor %}
             </tbody>
             </table>
+
+    </div>
+
+    <div class="col-lg-6 col-md-8 col-12">
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {{ form|crispy }}
+
+            {% comment %} TODO: Enable button when email is connected {% endcomment %}
+            <button class="btn btn-primary" type="submit" disabled>Invite friends</button>
+
+            {% if allow_debug %}
+            <button type="submit" class="btn btn-outline-danger" name="debug" value="true">Invite friends (debug)</button>
+            {% endif %}
+        </form>
 
     </div>
 </div>

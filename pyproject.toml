@@ -13,6 +13,7 @@ python = "^3.10"
 django = "^3.2.8"
 django-cors-headers = "*"
 django-grappelli = "*"
+django-multi-email-field = "*"
 crispy-bootstrap5 = "*"
 
 # Storage

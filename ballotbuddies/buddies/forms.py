@@ -1,5 +1,7 @@
 from django import forms
 
+from multi_email_field.forms import MultiEmailField
+
 from .models import User, Voter
 
 
@@ -24,3 +26,7 @@ class VoterForm(forms.ModelForm):
         if len(value) != 5 or not value.isnumeric():
             raise forms.ValidationError("This value must be exactly five digits.")
         return value
+
+
+class FriendsForm(forms.Form):
+    emails = MultiEmailField()

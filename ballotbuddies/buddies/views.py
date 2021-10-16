@@ -6,7 +6,9 @@ from django.shortcuts import redirect, render
 
 import log
 
-from .forms import LoginForm, VoterForm
+from ballotbuddies.core.helpers import allow_debug
+
+from .forms import FriendsForm, LoginForm, VoterForm
 from .models import User, Voter
 
 
@@ -18,18 +20,21 @@ def login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
+
+            if "debug" in request.POST and allow_debug(request):
+                user, created = User.objects.get_or_create(
+                    email=form.cleaned_data["email"],
+                    defaults=dict(username=form.cleaned_data["email"]),
+                )
+                if created:
+                    log.info(f"Created user: {user}")
+                do_login(request, user)
+                return redirect("buddies:friends")
+
             # TODO: Send sesame login emails when not debugging
-            user, created = User.objects.get_or_create(
-                email=form.cleaned_data["email"],
-                defaults=dict(username=form.cleaned_data["email"]),
-            )
-            if created:
-                log.info(f"Created user: {user}")
-            do_login(request, user)
-            return redirect("buddies:friends")
     else:
         form = LoginForm()
-    context = {"form": form}
+    context = {"form": form, "allow_debug": allow_debug(request)}
     return render(request, "login.html", context)
 
 
@@ -81,7 +86,21 @@ def friends(request):
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
 
-    context = {"voter": voter, "friends": voter.friends.all()}
+    if request.method == "POST":
+        form = FriendsForm(request.POST)
+        if form.is_valid():
+            debug = "debug" in request.POST and allow_debug(request)
+            Voter.objects.invite(voter, form.cleaned_data["emails"], send=not debug)
+            return redirect("buddies:friends")
+    else:
+        form = FriendsForm()
+
+    context = {
+        "voter": voter,
+        "friends": voter.friends.all(),
+        "form": form,
+        "allow_debug": allow_debug(request),
+    }
     return render(request, "friends/index.html", context)
 
 

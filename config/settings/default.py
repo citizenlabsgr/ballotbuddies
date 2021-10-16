@@ -10,6 +10,8 @@ LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+ALLOW_DEBUG = True
+
 ###############################################################################
 # Core
 
@@ -26,6 +28,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "crispy_forms",
     "crispy_bootstrap5",
+    "multi_email_field",
     "ballotbuddies.core",
     "ballotbuddies.buddies",
 ]

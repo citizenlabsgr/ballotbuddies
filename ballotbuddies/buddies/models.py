@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import List
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -7,11 +11,32 @@ import requests
 
 
 class VoterManager(models.Manager):
-    def from_user(self, user: User):
+    def from_user(self, user: User) -> Voter:
         voter, created = self.get_or_create(user=user)
         if created:
             log.info(f"Created voter: {voter}")
         return voter
+
+    def invite(self, voter: Voter, emails: List[str], *, send: bool) -> List[Voter]:
+        friends = []
+        for email in emails:
+            user, created = User.objects.get_or_create(
+                email=email, defaults=dict(username=email)
+            )
+            if created:
+                log.info(f"Created user: {user}")
+                if send:
+                    pass  # TODO: Send "invitation" or "new friend" email
+
+            other = self.from_user(user)
+            other.friends.add(voter)
+            other.save()
+
+            voter.friends.add(other)
+            friends.append(other)
+
+        voter.save()
+        return friends
 
 
 class Voter(models.Model):
@@ -32,7 +57,7 @@ class Voter(models.Model):
 
     @property
     def name(self) -> str:
-        return self.user.get_full_name()
+        return self.user.get_full_name() or self.email
 
     @property
     def email(self) -> str:

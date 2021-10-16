@@ -1,8 +1,9 @@
-<tr>
+<tr {% if not voter.complete %}class="text-muted"{% endif %}>
     <th scope="row">{{ voter.name }}</th>
     <td><pre>{{ voter.status|pprint }}</pre></td>
     <td>{{ voter.updated }}</td>
     <td>
+        {% if voter.complete %}
         <button class="btn btn-secondary"
             hx-get="{% url 'buddies:status' username=voter.user.username %}"
             hx-trigger="click"
@@ -10,5 +11,6 @@
             hx-swap="outerHTML">
             Refresh
         </button>
+        {% endif %}
     </td>
 </tr>
