@@ -8,6 +8,8 @@ else:
     BASE_DOMAIN = f"{SUBDOMAIN}.{BASE_NAME}.com"
 BASE_URL = f"https://{BASE_DOMAIN}"
 
+ALLOW_DEBUG = True
+
 ###############################################################################
 # Core
 
