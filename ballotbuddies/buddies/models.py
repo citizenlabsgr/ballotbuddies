@@ -29,6 +29,7 @@ class VoterManager(models.Manager):
                     pass  # TODO: Send "invitation" or "new friend" email
 
             other = self.from_user(user)
+            other.referrer = other.referrer or voter
             other.friends.add(voter)
             other.save()
 
@@ -43,12 +44,17 @@ class Voter(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    birth_date = models.DateField(null=True)
-    zip_code = models.CharField(null=True, max_length=5, verbose_name="ZIP code")
+    birth_date = models.DateField(null=True, blank=True)
+    zip_code = models.CharField(
+        null=True, blank=True, max_length=5, verbose_name="ZIP code"
+    )
     status = models.JSONField(null=True, blank=True)
     updated = models.DateTimeField(null=True, blank=True)
 
-    friends = models.ManyToManyField("Voter", blank=True)
+    referrer = models.ForeignKey(
+        "Voter", null=True, blank=True, on_delete=models.SET_NULL
+    )
+    friends = models.ManyToManyField("Voter", blank=True, related_name="followers")
 
     objects = VoterManager()
 
