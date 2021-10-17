@@ -1,6 +1,6 @@
 # pylint: disable=unused-argument
 
-from django.contrib import admin
+from django.contrib import admin, messages
 
 from .models import Voter
 
@@ -8,8 +8,11 @@ from .models import Voter
 def update_selected_voters(modeladmin, request, queryset):
     voter: Voter
     for voter in queryset:
-        if voter.update():
+        updated, error = voter.update()
+        if updated:
             voter.save()
+        if error:
+            messages.error(request, error)
 
 
 @admin.register(Voter)

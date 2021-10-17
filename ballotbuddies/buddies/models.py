@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List
+from typing import List, Tuple
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -90,23 +90,28 @@ class Voter(models.Model):
     def complete(self) -> bool:
         return all(self.data.values())
 
-    def update(self) -> bool:
+    def update(self) -> Tuple[bool, str]:
         previous_status = self._status
 
         # TODO: Use `self.data` to build the query string and remove unnecessary properties
         url = f"https://michiganelections.io/api/status/?first_name={self.first_name}&last_name={self.last_name}&zip_code={self.zip_code}&birth_date={self.birth_date}"
         log.info(f"GET {url}")
         response = requests.get(url)
+        if response.status_code == 202:
+            data = response.json()
+            log.error(f"{response.status_code} response: {data}")
+            self.updated = timezone.now()
+            return False, data["message"]
         if response.status_code != 200:
             log.error(f"{response.status_code} response")
-            return False
+            return False, ""
 
         data = response.json()
         log.info(f"{response.status_code} response: {data}")
         self.status = data
         self.updated = timezone.now()
 
-        return self._status != previous_status
+        return self._status != previous_status, ""
 
     @property
     def _status(self) -> str:

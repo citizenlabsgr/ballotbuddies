@@ -51,8 +51,10 @@ def profile(request):
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
 
-    voter.update()
+    _updated, error = voter.update()
     voter.save()
+    if error:
+        messages.error(request, error)
 
     context = {"voter": voter}
     return render(request, "profile/detail.html", context)
@@ -73,7 +75,8 @@ def setup(request):
             messages.success(request, "Successfully updated your profile information.")
             return redirect("buddies:profile")
     else:
-        form = VoterForm(instance=voter, initial=voter.data)
+        data = {"email": voter.email} | voter.data  # type: ignore
+        form = VoterForm(instance=voter, initial=data)
     context = {"voter": voter, "form": form}
     return render(request, "profile/setup.html", context)
 

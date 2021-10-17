@@ -2,6 +2,8 @@ import os
 
 from django.contrib import messages
 
+import grappelli
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(CONFIG_ROOT)
@@ -130,6 +132,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Grappelli
 
 GRAPPELLI_ADMIN_TITLE = "Ballot Buddies Admin"
+
+del grappelli.default_app_config  # fixes RemovedInDjango41Warning
 
 ###############################################################################
 # Bootstrap

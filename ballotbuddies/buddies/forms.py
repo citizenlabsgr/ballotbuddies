@@ -14,12 +14,13 @@ class LoginForm(forms.ModelForm):
 
 
 class VoterForm(forms.ModelForm):
-    first_name = forms.CharField()
+    email = forms.EmailField(disabled=True, required=False)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={"autofocus": True}))
     last_name = forms.CharField()
 
     class Meta:
         model = Voter
-        fields = ["first_name", "last_name", "birth_date", "zip_code"]
+        fields = ["email", "first_name", "last_name", "birth_date", "zip_code"]
 
     def clean_zip_code(self):
         value = self.cleaned_data["zip_code"].strip()
