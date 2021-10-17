@@ -55,8 +55,7 @@ django-livereload-server = "~0.3.2"
 honcho = { git = "https://github.com/nickstenning/honcho", rev = "b4de1aa0504d41c0f05efbb04f63c624fccded81" }
 
 # E2E
-splinter = "~0.15.0"
-selenium = "<4" # https://github.com/cobrateam/splinter/issues/929
+splinter = "~0.16.0"
 
 # Tooling
 ipython = "*"
