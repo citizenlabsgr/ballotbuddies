@@ -6,7 +6,9 @@ from .models import User, Voter
 
 
 class LoginForm(forms.ModelForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(
+        required=True, widget=forms.TextInput(attrs={"autofocus": True})
+    )
 
     class Meta:
         model = User
