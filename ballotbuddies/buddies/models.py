@@ -10,6 +10,8 @@ from django.utils import timezone
 import log
 import requests
 
+from ballotbuddies.core.helpers import send_invite_email
+
 
 class VoterManager(models.Manager):
     def from_user(self, user: User) -> Voter:
@@ -26,7 +28,7 @@ class VoterManager(models.Manager):
             )
             if created:
                 log.info(f"Created user: {user}")
-                # TODO: Send "invitation" or "new friend" email
+                send_invite_email(user, voter.user)
 
             other = self.from_user(user)
             other.referrer = other.referrer or voter
