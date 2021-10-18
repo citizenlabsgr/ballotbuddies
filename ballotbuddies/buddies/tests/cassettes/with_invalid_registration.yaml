@@ -1,0 +1,57 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.26.0
+    method: GET
+    uri: https://michiganelections.io/api/status/?first_name=Rosalynn&last_name=Bliss&birth_date=1975-08-03&zip_code=
+  response:
+    body:
+      string: '{"zip_code":["This field may not be blank."]}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6a03e79c48022bcc-ORD
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '45'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 18 Oct 2021 18:42:07 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=mKoCPrmpe2O%2Fwwnu0kwGgyBF9uuvwu2x9gGM4ZqXhk6VeF%2FQzFt1RdRBTCfSlOE24dRS%2F4PvklbqQ%2BjU1hq1vqvHAefhZSuhzQuIBzyx3EA3HnK7oy4rovT%2BJ7XtAzOARVafUaA9pg%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      allow:
+      - GET, HEAD, OPTIONS
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      referrer-policy:
+      - same-origin
+      vary:
+      - Accept, Cookie, Origin
+      via:
+      - 1.1 vegur
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+    status:
+      code: 400
+      message: Bad Request
+version: 1

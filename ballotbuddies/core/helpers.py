@@ -30,3 +30,17 @@ def send_login_email(user: User, path: str = "/"):
         [user.email],
         fail_silently=False,
     )
+
+
+def send_invite_email(user: User, friend: User, path: str = "/profile"):
+    url = build_url(path) + get_query_string(user)
+    name = friend.get_full_name()
+    send_mail(
+        f"Join {name} on Ballot Buddies",
+        "Your friend has challenged you to vote in every election!"
+        "\n\n"
+        f"Please click this link to view your profile: {url}",
+        "no-reply@michiganelections.io",
+        [user.email],
+        fail_silently=False,
+    )
