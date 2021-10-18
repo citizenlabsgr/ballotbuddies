@@ -1,0 +1,68 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.26.0
+    method: GET
+    uri: https://michiganelections.io/api/status/?first_name=Rosalynn&last_name=Bliss&birth_date=1975-08-03&zip_code=49503
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3SPwWrDMBBEf2XZs1xsJ2mDjum9h/yAke1JKpAlo10bSvC/F1FC2tKeltnZecvc
+        2I9sebc/VPv6eKja55cjG54g4q5gy+ckLnzESKfgRcgLZVy9KDJG0kRrUpDrBVEBuqRM+g56Syum
+        HpleU5QU/OgUIyFgUJ8ipUht3TZV01R1+8SG7w7bG0c3lcd/IthwmWz5kS87yJD9/EVgNpxxQUYc
+        0C05sI1LCJthUaeLlB+PDmw1LzB8r/Bbd26egx9cYXcZA/xaQoX47ah3ISTtivrP+5ndtk8AAAD/
+        /wMA/ZDVhHoBAAA=
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6a0345c44b2c6338-ORD
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 18 Oct 2021 16:51:38 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=vBmnnrK3az9O8NwZyfCxyDLV31CBBRh0d9vxknOfdDfxsg3%2Fwjr1ZP3iQ6eX1VPfjMKtL9YJ5jPwwVUSmuHMF4GImPEbP4R5leeG8SY8Jyl58ghjAyg9KPrBPI4OJJ78irrgEQdWgw%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      allow:
+      - GET, HEAD, OPTIONS
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      cache-control:
+      - max-age=300
+      expires:
+      - Mon, 18 Oct 2021 16:56:38 GMT
+      referrer-policy:
+      - same-origin
+      vary:
+      - Accept, Cookie, Origin
+      via:
+      - 1.1 vegur
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

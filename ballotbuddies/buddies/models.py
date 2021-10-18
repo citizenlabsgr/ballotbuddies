@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import List, Tuple
+from urllib.parse import urlencode
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -92,8 +93,7 @@ class Voter(models.Model):
     def update(self) -> Tuple[bool, str]:
         previous_status = self._status
 
-        # TODO: Use `self.data` to build the query string and remove unnecessary properties
-        url = f"https://michiganelections.io/api/status/?first_name={self.first_name}&last_name={self.last_name}&zip_code={self.zip_code}&birth_date={self.birth_date}"
+        url = "https://michiganelections.io/api/status/?" + urlencode(self.data)
         log.info(f"GET {url}")
         response = requests.get(url)
         if response.status_code == 202:
@@ -117,5 +117,5 @@ class Voter(models.Model):
         return (self.status or {}).get("id", "")
 
     def save(self, **kwargs):
-        # TODO: Remove self from friends
+        self.friends.remove(self)
         super().save(**kwargs)
