@@ -17,7 +17,7 @@ class VoterManager(models.Manager):
             log.info(f"Created voter: {voter}")
         return voter
 
-    def invite(self, voter: Voter, emails: List[str], *, send: bool) -> List[Voter]:
+    def invite(self, voter: Voter, emails: List[str]) -> List[Voter]:
         friends = []
         for email in emails:
             user, created = User.objects.get_or_create(
@@ -25,8 +25,7 @@ class VoterManager(models.Manager):
             )
             if created:
                 log.info(f"Created user: {user}")
-                if send:
-                    pass  # TODO: Send "invitation" or "new friend" email
+                # TODO: Send "invitation" or "new friend" email
 
             other = self.from_user(user)
             other.referrer = other.referrer or voter

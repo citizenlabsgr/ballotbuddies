@@ -45,6 +45,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "sesame.middleware.AuthenticationMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -148,3 +149,23 @@ MESSAGE_TAGS = {
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+###############################################################################
+# Email
+
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = os.getenv("SENDGRID_USERNAME")
+EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+###############################################################################
+# Django Sesame
+
+SESAME_TOKEN_NAME = "token"
+SESAME_MAX_AGE = 60 * 60 * 24
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "sesame.backends.ModelBackend",
+]

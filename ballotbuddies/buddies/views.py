@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 
 import log
 
-from ballotbuddies.core.helpers import allow_debug
+from ballotbuddies.core.helpers import allow_debug, send_login_email
 
 from .forms import FriendsForm, LoginForm, VoterForm
 from .models import User, Voter
@@ -20,18 +20,18 @@ def login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-
+            email = form.cleaned_data["email"]
+            user, created = User.objects.get_or_create(
+                email=email, defaults=dict(username=email)
+            )
+            if created:
+                log.info(f"Created user: {user}")
             if "debug" in request.POST and allow_debug(request):
-                user, created = User.objects.get_or_create(
-                    email=form.cleaned_data["email"],
-                    defaults=dict(username=form.cleaned_data["email"]),
-                )
-                if created:
-                    log.info(f"Created user: {user}")
                 do_login(request, user)
                 return redirect("buddies:friends")
-
-            # TODO: Send sesame login emails when not debugging
+            send_login_email(user)
+            context = {"domain": email.split("@")[-1]}
+            return render(request, "login.html", context)
     else:
         form = LoginForm()
     context = {"form": form, "allow_debug": allow_debug(request)}
@@ -89,11 +89,14 @@ def friends(request):
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
 
+    if not voter.updated:
+        voter.update()
+        voter.save()
+
     if request.method == "POST":
         form = FriendsForm(request.POST)
         if form.is_valid():
-            debug = "debug" in request.POST and allow_debug(request)
-            Voter.objects.invite(voter, form.cleaned_data["emails"], send=not debug)
+            Voter.objects.invite(voter, form.cleaned_data["emails"])
             return redirect("buddies:friends")
     else:
         form = FriendsForm()

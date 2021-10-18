@@ -14,6 +14,7 @@ django = "^3.2.8"
 django-cors-headers = "*"
 django-grappelli = "*"
 django-multi-email-field = "*"
+django-sesame = "^2.4"
 crispy-bootstrap5 = "*"
 
 # Storage
@@ -24,6 +25,7 @@ django-redis = "^4.12.1"
 # Utilities
 minilog = "^2.0"
 requests = "^2.26"
+ua-parser = "*" # Optional 'django-sesame' to detect Safari
 
 # Deployment
 whitenoise = "^5.0.1"

@@ -42,12 +42,7 @@
 
             {{ form|crispy }}
 
-            {% comment %} TODO: Enable button when email is connected {% endcomment %}
-            <button class="btn btn-primary" type="submit" disabled>Invite friends</button>
-
-            {% if allow_debug %}
-            <button type="submit" class="btn btn-outline-danger" name="debug" value="true">Invite friends (debug)</button>
-            {% endif %}
+            <button class="btn btn-primary" type="submit">Invite friends</button>
         </form>
 
     </div>

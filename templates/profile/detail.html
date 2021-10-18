@@ -8,7 +8,7 @@
         <h1>Your Profile</h1>
 
         <p>
-            {{ voter.user.username }}
+            {{ voter.email }}
         </p>
 
         <h2>Voter Information</h2>
@@ -30,9 +30,8 @@
             {{ voter.updated }}
         </p>
 
-        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">Refresh status</a>
+        <a class="btn btn-primary" href="{% url 'buddies:friends' %}">View friends</a>
         <a class="btn btn-secondary" href="{% url 'buddies:setup' %}">Edit profile</a>
-        <a class="btn btn-secondary" href="{% url 'buddies:friends' %}">View friends</a>
         <a class="btn btn-danger" href="{% url 'buddies:logout' %}">Log out</a>
 
     </div>
