@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "debug_toolbar",
     "corsheaders",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -46,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "sesame.middleware.AuthenticationMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -135,6 +137,14 @@ CORS_ORIGIN_ALLOW_ALL = True
 GRAPPELLI_ADMIN_TITLE = "Ballot Buddies Admin"
 
 del grappelli.default_app_config  # fixes RemovedInDjango41Warning
+
+###############################################################################
+# Django Debug Toolbar
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_COLLAPSED": True,
+    "SHOW_TOOLBAR_CALLBACK": "ballotbuddies.core.helpers.allow_debug",
+}
 
 ###############################################################################
 # Bootstrap

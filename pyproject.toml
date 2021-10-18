@@ -12,6 +12,7 @@ python = "^3.10"
 # Django
 django = "^3.2.8"
 django-cors-headers = "*"
+django-debug-toolbar = "^3.2.2"
 django-grappelli = "*"
 django-multi-email-field = "*"
 django-sesame = "^2.4"
