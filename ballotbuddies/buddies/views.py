@@ -1,6 +1,7 @@
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login as do_login
-from django.contrib.auth import logout as do_logout
+from django.contrib.auth import login as force_login
+from django.contrib.auth import logout as force_logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
@@ -27,7 +28,7 @@ def login(request):
             if created:
                 log.info(f"Created user: {user}")
             if "debug" in request.POST and allow_debug(request):
-                do_login(request, user)
+                force_login(request, user, backend=settings.AUTHENTICATION_BACKENDS[0])
                 return redirect("buddies:friends")
             send_login_email(user)
             context = {"domain": email.split("@")[-1]}
@@ -39,7 +40,7 @@ def login(request):
 
 
 def logout(request):
-    do_logout(request)
+    force_logout(request)
     return redirect("buddies:index")
 
 
