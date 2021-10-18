@@ -11,18 +11,25 @@
 
       <p>We'll send you an email with a link to log in automatically.<p>
 
+      {% if domain %}
+
+      <a class="btn btn-primary" href="http://{{ domain }}"> Open {{ domain }}<a>
+
+      {% else %}
+
       <form method="post" novalidate>
         {% csrf_token %}
 
         {{ form|crispy }}
 
-        {% comment %} TODO: Enable button when email is connected {% endcomment %}
-        <button class="btn btn-primary" type="submit" disabled>Log in</button>
+        <button class="btn btn-primary" type="submit">Log in</button>
 
         {% if allow_debug %}
         <button type="submit" class="btn btn-outline-danger" name="debug" value="true">Log in (debug)</button>
         {% endif %}
       </form>
+
+      {% endif %}
 
     </div>
 </div>
