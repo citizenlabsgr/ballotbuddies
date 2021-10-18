@@ -119,5 +119,6 @@ class Voter(models.Model):
         return (self.status or {}).get("id", "")
 
     def save(self, **kwargs):
-        self.friends.remove(self)
+        if self.id:
+            self.friends.remove(self)
         super().save(**kwargs)
