@@ -4,47 +4,48 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
-    <div class="col-12">
+<div class="container-fluid mt-4">
+    <div class="row justify-content-center">
+        <div class="col-12">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Updated</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">{{ voter.name }}</th>
-                    <td><pre>{{ voter.status|pprint }}</pre></td>
-                    <td>{{ voter.updated }}</td>
-                    <td>
-                        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
-                            View
-                        </a>
-                    </td>
-                </tr>
-                {% for voter in friends %}
-                {% include "friends/_voter.html" %}
-                {% endfor %}
-            </tbody>
-            </table>
+            <table class="table">
+                <thead class="text-center">
+                    <tr>
+                        <th scope="col" rowspan="2"></th>
+                        <th scope="col" rowspan="2" class="border-end align-middle">Registered</th>
+                        <th scope="colgroup" colspan="2" class="border-end">Absentee</th>
+                        <th scope="colgroup" colspan="3" class="border-end">Ballot</th>
+                        <th scope="col" colspan="2" rowspan="2" class="align-middle">Last Updated</th>
+                    </tr>
+                    <tr>
+                        <th class="border">Recieved</th>
+                        <th class="border">Approved</th>
+                        <th class="border">Available</th>
+                        <th class="border">Sent</th>
+                        <th class="border">Recieved</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% include "friends/_voter.html" %}
+                    {% for voter in friends %}
+                    {% include "friends/_voter.html" %}
+                    {% endfor %}
+                </tbody>
+                </table>
 
-    </div>
+        </div>
 
-    <div class="col-lg-6 col-md-8 col-12">
+        <div class="col-lg-6 col-md-8 col-12">
 
-        <form method="post" novalidate>
-            {% csrf_token %}
+            <form method="post" novalidate>
+                {% csrf_token %}
 
-            {{ form|crispy }}
+                {{ form|crispy }}
 
-            <button class="btn btn-primary" type="submit">Invite friends</button>
-        </form>
+                <button class="btn btn-primary" type="submit">Invite friends</button>
+            </form>
 
+        </div>
     </div>
 </div>
 

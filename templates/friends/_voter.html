@@ -1,9 +1,18 @@
-<tr {% if not voter.complete %}class="text-muted"{% endif %}>
+<tr class="align-middle {% if not voter.complete %}text-muted{% endif %}">
     <th scope="row">{{ voter.name }}</th>
-    <td><pre>{{ voter.status|pprint }}</pre></td>
-    <td>{{ voter.updated }}</td>
+    <td class="text-center">{{ voter.progress.registered }}</td>
+    <td class="text-center">{{ voter.progress.absentee_received }}</td>
+    <td class="text-center">{{ voter.progress.absentee_approved }}</td>
+    <td class="text-center">{{ voter.progress.ballot_available }}</td>
+    <td class="text-center">{{ voter.progress.ballot_sent }}</td>
+    <td class="text-center">{{ voter.progress.ballot_received }}</td>
+    <td>{{ voter.updated|default:"Pending Invitation" }}</td>
     <td>
-        {% if voter.complete %}
+        {% if voter.user == request.user %}
+        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+            View
+        </a>
+        {% elif voter.complete %}
         <button class="btn btn-secondary"
             hx-get="{% url 'buddies:status' username=voter.user.username %}"
             hx-trigger="click"

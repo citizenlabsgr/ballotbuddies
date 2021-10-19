@@ -2,36 +2,30 @@
 
 {% load crispy_forms_tags %}
 
-{% block content %}
+{% block main %}
 
-<div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8 col-12">
+<h1>Access Ballot Buddies</h1>
 
-      <h1>Access Ballot Buddies</h1>
+<p>We'll send you an email with a link to log in automatically.<p>
 
-      <p>We'll send you an email with a link to log in automatically.<p>
+{% if domain %}
 
-      {% if domain %}
+<a class="btn btn-primary" href="http://{{ domain }}"> Open {{ domain }}<a>
 
-      <a class="btn btn-primary" href="http://{{ domain }}"> Open {{ domain }}<a>
+{% else %}
 
-      {% else %}
+<form method="post" novalidate>
+  {% csrf_token %}
 
-      <form method="post" novalidate>
-        {% csrf_token %}
+  {{ form|crispy }}
 
-        {{ form|crispy }}
+  <button class="btn btn-primary" type="submit">Log in</button>
 
-        <button class="btn btn-primary" type="submit">Log in</button>
+  {% if allow_debug %}
+  <button type="submit" class="btn btn-outline-danger" name="debug" value="true">Log in (debug)</button>
+  {% endif %}
+</form>
 
-        {% if allow_debug %}
-        <button type="submit" class="btn btn-outline-danger" name="debug" value="true">Log in (debug)</button>
-        {% endif %}
-      </form>
+{% endif %}
 
-      {% endif %}
-
-    </div>
-</div>
-
-{% endblock content %}
+{% endblock main %}

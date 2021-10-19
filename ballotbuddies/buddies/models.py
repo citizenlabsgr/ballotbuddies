@@ -50,6 +50,7 @@ class Voter(models.Model):
     zip_code = models.CharField(
         null=True, blank=True, max_length=5, verbose_name="ZIP code"
     )
+
     status = models.JSONField(null=True, blank=True)
     updated = models.DateTimeField(null=True, blank=True)
 
@@ -91,6 +92,47 @@ class Voter(models.Model):
     @property
     def complete(self) -> bool:
         return all(self.data.values())
+
+    @property
+    def progress(self) -> dict:
+        values = {}
+
+        status = self.status.get("status") if self.status else None
+        if not status:
+            values["registered"] = "🟡"
+            return values
+
+        registered = status.get("registered")
+        values["registered"] = "✅" if registered else "❌"
+        if not registered:
+            return values
+
+        if absentee_date := status.get("absentee_application_received"):
+            values["absentee_received"] = absentee_date
+        else:
+            values["absentee_received"] = "-"
+
+        absentee = status.get("absentee")
+        values["absentee_approved"] = "✅" if absentee else "⚪"
+
+        values["ballot_available"] = "TBD"
+        # TODO: https://github.com/citizenlabsgr/ballotbuddies/issues/17
+        ballot = True
+
+        if not ballot and absentee:
+            return values
+
+        if sent_date := status.get("absentee_ballot_sent"):
+            values["ballot_sent"] = sent_date
+        else:
+            values["ballot_sent"] = "🟡"
+
+        if received_date := status.get("absentee_ballot_received"):
+            values["ballot_received"] = received_date
+        elif sent_date:
+            values["ballot_received"] = "🟡"
+
+        return values
 
     def update(self) -> Tuple[bool, str]:
         previous_status = self._status
