@@ -1,11 +1,11 @@
 <tr {% if not voter.complete %}class="text-muted"{% endif %}>
     <th scope="row">{{ voter.name }}</th>
-    <td class="text-center">{{ voter.status.status.registered }}</td>
-    <td class="text-center">{{ voter.status.status.absentee_application_received }}</td>
-    <td class="text-center">{{ voter.status.status.absentee }}</td>
-    <td class="text-center">???</td>
-    <td class="text-center">{{ voter.status.status.absentee_ballot_sent }}</td>
-    <td class="text-center">{{ voter.status.status.absentee_ballot_received }}</td>
+    <td class="text-center">{{ voter.progress.registered }}</td>
+    <td class="text-center">{{ voter.progress.absentee_received }}</td>
+    <td class="text-center">{{ voter.progress.absentee_approved }}</td>
+    <td class="text-center">{{ voter.progress.ballot_available }}</td>
+    <td class="text-center">{{ voter.progress.ballot_sent }}</td>
+    <td class="text-center">{{ voter.progress.ballot_received }}</td>
     <td>{{ voter.updated }}</td>
     <td>
         {% if voter.user == request.user %}
