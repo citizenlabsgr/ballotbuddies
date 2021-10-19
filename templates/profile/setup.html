@@ -2,28 +2,22 @@
 
 {% load crispy_forms_tags %}
 
-{% block content %}
+{% block main %}
 
-<div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8 col-12">
+<h1>Your Voter Information</h1>
 
-      <h1>Voter Information</h1>
+<form method="post" novalidate>
+  {% csrf_token %}
 
-      <form method="post" novalidate>
-        {% csrf_token %}
+  {{ form|crispy }}
 
-        {{ form|crispy }}
+  <button class="btn btn-primary" type="submit">Save</button>
+  {% if voter.complete %}
+  <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">Cancel</a>
+  {% else %}
+  <a class="btn btn-secondary" href="{% url 'buddies:login' %}">Cancel</a>
+  {% endif %}
 
-        <button class="btn btn-primary" type="submit">Save</button>
-        {% if voter.complete %}
-        <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">Cancel</a>
-        {% else %}
-        <a class="btn btn-secondary" href="{% url 'buddies:login' %}">Cancel</a>
-        {% endif %}
+</form>
 
-      </form>
-
-    </div>
-</div>
-
-{% endblock content %}
+{% endblock main %}

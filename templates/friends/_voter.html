@@ -1,9 +1,18 @@
 <tr {% if not voter.complete %}class="text-muted"{% endif %}>
     <th scope="row">{{ voter.name }}</th>
-    <td><pre>{{ voter.status|pprint }}</pre></td>
+    <td class="text-center">{{ voter.status.status.registered }}</td>
+    <td class="text-center">{{ voter.status.status.absentee_application_received }}</td>
+    <td class="text-center">{{ voter.status.status.absentee }}</td>
+    <td class="text-center">???</td>
+    <td class="text-center">{{ voter.status.status.absentee_ballot_sent }}</td>
+    <td class="text-center">{{ voter.status.status.absentee_ballot_received }}</td>
     <td>{{ voter.updated }}</td>
     <td>
-        {% if voter.complete %}
+        {% if voter.user == request.user %}
+        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+            View
+        </a>
+        {% elif voter.complete %}
         <button class="btn btn-secondary"
             hx-get="{% url 'buddies:status' username=voter.user.username %}"
             hx-trigger="click"
