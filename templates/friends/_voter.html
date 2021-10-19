@@ -1,4 +1,4 @@
-<tr class="align-middle{% if not voter.complete %}text-muted{% endif %}">
+<tr class="align-middle {% if not voter.complete %}text-muted{% endif %}">
     <th scope="row">{{ voter.name }}</th>
     <td class="text-center">{{ voter.progress.registered }}</td>
     <td class="text-center">{{ voter.progress.absentee_received }}</td>
@@ -6,7 +6,7 @@
     <td class="text-center">{{ voter.progress.ballot_available }}</td>
     <td class="text-center">{{ voter.progress.ballot_sent }}</td>
     <td class="text-center">{{ voter.progress.ballot_received }}</td>
-    <td>{{ voter.updated }}</td>
+    <td>{{ voter.updated|default:"Pending Invitation" }}</td>
     <td>
         {% if voter.user == request.user %}
         <a class="btn btn-primary" href="{% url 'buddies:profile' %}">

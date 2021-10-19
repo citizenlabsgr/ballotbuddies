@@ -96,7 +96,11 @@ class Voter(models.Model):
     @property
     def progress(self) -> dict:
         values = {}
-        status = self.status.get("status", {}) if self.status else {}
+
+        status = self.status.get("status") if self.status else None
+        if not status:
+            values["registered"] = "🟡"
+            return values
 
         registered = status.get("registered")
         values["registered"] = "✅" if registered else "❌"
