@@ -63,11 +63,7 @@ class Voter(models.Model):
     objects = VoterManager()
 
     def __str__(self):
-        return f"{self.name} ({self.user.email})"
-
-    @property
-    def name(self) -> str:
-        return self.user.get_full_name() or self.email
+        return f"{self.user.full_name} ({self.user.email})"
 
     @property
     def email(self) -> str:
@@ -80,6 +76,10 @@ class Voter(models.Model):
     @property
     def last_name(self) -> str:
         return self.user.last_name
+
+    @property
+    def display_name(self) -> str:
+        return self.user.display_name
 
     @property
     def data(self) -> dict:

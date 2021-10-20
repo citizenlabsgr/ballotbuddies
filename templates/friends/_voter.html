@@ -1,5 +1,5 @@
 <tr class="align-middle {% if not voter.complete %}text-muted{% endif %}">
-    <th scope="row">{{ voter.name }}</th>
+    <th scope="row">{{ voter.display_name }}</th>
     <td class="text-center">{{ voter.progress.registered }}</td>
     <td class="text-center">{{ voter.progress.absentee_received }}</td>
     <td class="text-center">{{ voter.progress.absentee_approved }}</td>

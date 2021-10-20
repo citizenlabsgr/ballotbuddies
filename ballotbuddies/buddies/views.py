@@ -68,11 +68,9 @@ def setup(request):
         form = VoterForm(request.POST, instance=voter)
         if form.is_valid():
             voter = form.save()
-            voter.user.first_name = form.cleaned_data["first_name"]
-            voter.user.last_name = form.cleaned_data["last_name"]
-            if voter.user.username != "admin":  # preserve default localhost user
-                voter.user.username = str(voter)
-            voter.user.save()
+            voter.user.update_name(
+                request, form.cleaned_data["first_name"], form.cleaned_data["last_name"]
+            )
             messages.success(request, "Successfully updated your profile information.")
             return redirect("buddies:profile")
     else:

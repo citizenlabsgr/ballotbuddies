@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 from django.contrib import messages
 
@@ -173,7 +174,7 @@ EMAIL_USE_TLS = True
 # Django Sesame
 
 SESAME_TOKEN_NAME = "token"
-SESAME_MAX_AGE = 60 * 60 * 24
+SESAME_MAX_AGE = timedelta(days=30)
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
