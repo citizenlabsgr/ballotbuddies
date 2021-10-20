@@ -31,6 +31,7 @@ ua-parser = "*" # Optional 'django-sesame' to detect Safari
 # Deployment
 whitenoise = "^5.0.1"
 gunicorn = "^20.0.4"
+bugsnag = "^4.1.1"
 
 [tool.poetry.dev-dependencies]
 

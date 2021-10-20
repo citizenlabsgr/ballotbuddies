@@ -1,5 +1,6 @@
 import os
 
+import bugsnag
 import dj_database_url
 
 from .default import *
@@ -42,3 +43,8 @@ DATABASES = {
 
 if "DATABASE_URL" in os.environ:
     DATABASES["default"] = dj_database_url.config()
+
+###############################################################################
+# Bugsnag
+
+bugsnag.configure(release_stage="local")
