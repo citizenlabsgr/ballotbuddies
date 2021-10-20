@@ -179,3 +179,8 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "sesame.backends.ModelBackend",
 ]
+
+###############################################################################
+# Michigan Elections
+
+MICHIGAN_ELECTIONS_API = "https://michiganelections.io/api/status/"

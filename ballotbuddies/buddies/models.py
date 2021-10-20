@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import List, Tuple
 from urllib.parse import urlencode
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -115,9 +116,8 @@ class Voter(models.Model):
         absentee = status.get("absentee")
         values["absentee_approved"] = "✅" if absentee else "⚪"
 
-        values["ballot_available"] = "TBD"
-        # TODO: https://github.com/citizenlabsgr/ballotbuddies/issues/17
-        ballot = True
+        ballot = status.get("ballot_url")
+        values["ballot_available"] = "✅" if ballot else "🟡"
 
         if not ballot and absentee:
             return values
@@ -137,7 +137,7 @@ class Voter(models.Model):
     def update(self) -> Tuple[bool, str]:
         previous_status = self._status
 
-        url = "https://michiganelections.io/api/status/?" + urlencode(self.data)
+        url = settings.MICHIGAN_ELECTIONS_API + "?" + urlencode(self.data)
         log.info(f"GET {url}")
         response = requests.get(url)
         if response.status_code == 202:
