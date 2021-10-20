@@ -1,3 +1,5 @@
+import bugsnag
+
 from .production import *
 
 BASE_NAME = os.environ["HEROKU_APP_NAME"]
@@ -25,3 +27,8 @@ ALLOWED_HOSTS += [
 # Authentication
 
 AUTH_PASSWORD_VALIDATORS = []
+
+###############################################################################
+# Bugsnag
+
+bugsnag.configure(release_stage="staging")
