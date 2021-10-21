@@ -1,10 +1,40 @@
+from copy import deepcopy
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
+from django.utils import timezone
 
 from ballotbuddies.buddies.models import Voter
+
+STATUS = {
+    "id": "345-3932-11713",
+    "status": {
+        "absentee": True,
+        "ballot_url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
+        "registered": True,
+        "absentee_ballot_sent": "2021-09-30",
+        "absentee_ballot_received": "2021-10-15",
+        "absentee_application_received": "2021-09-15",
+    },
+    "message": "Jane Doe is registered to vote absentee and your ballot was mailed to you on 2021-09-30 for the November Consolidated election on 2021-11-02 and a sample ballot is available.",
+    "election": {
+        "id": 45,
+        "date": "2021-11-02",
+        "name": "November Consolidated",
+        "description": "",
+        "reference_url": None,
+    },
+    "precinct": {
+        "id": 5943,
+        "ward": "2",
+        "county": "Kent",
+        "number": "10",
+        "jurisdiction": "City of Kentwood",
+    },
+}
 
 
 class Command(BaseCommand):
@@ -23,9 +53,20 @@ class Command(BaseCommand):
         self.update_site()
         self.get_or_create_superuser()
         self.get_or_create_user("newbie@example.com")
-        for voter in voters:
-            info = voter.split(",")
-            self.get_or_create_voter(*info)
+
+        real_voters = []
+        test_voters = []
+
+        for info in voters:
+            voter = self.get_or_create_voter(*info.split(","))
+            real_voters.append(voter)
+
+        test_voters = list(self.generate_test_voters())
+
+        for voter in real_voters:
+            voter.friends.add(*real_voters)
+            voter.friends.add(*test_voters)
+            voter.save()
 
     def update_site(self):
         site = Site.objects.get(id=1)
@@ -73,6 +114,7 @@ class Command(BaseCommand):
         last_name: str,
         birth_date: str,
         zip_code: str,
+        status=None,
     ):
         user = self.get_or_create_user(base_email)
         user.first_name = first_name
@@ -88,4 +130,65 @@ class Command(BaseCommand):
         else:
             self.stdout.write(f"Updated voter: {voter}")
 
+        if status:
+            voter.status = status
+            voter.updated = timezone.now()
+            voter.save()
+
         return voter
+
+    def generate_test_voters(self):
+        status = deepcopy(STATUS)
+        status["status"]["registered"] = False  # type: ignore
+        yield self.get_or_create_voter(
+            "test+unknown@example.com",
+            "Not",
+            "Registered",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["absentee"] = False  # type: ignore
+        status["status"]["absentee_application_received"] = None  # type: ignore
+        yield self.get_or_create_voter(
+            "test+inperson@example.com",
+            "Not",
+            "Absentee",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["absentee"] = False  # type: ignore
+        yield self.get_or_create_voter(
+            "test+absentee@example.com",
+            "Pending",
+            "Absentee",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["absentee_ballot_sent"] = None  # type: ignore
+        yield self.get_or_create_voter(
+            "test+available@example.com",
+            "Ballot",
+            "Available",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        yield self.get_or_create_voter(
+            "test+received@example.com",
+            "Ballot",
+            "Received",
+            "1970-01-01",
+            "49503",
+            status,
+        )

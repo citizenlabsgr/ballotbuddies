@@ -6,7 +6,7 @@
     <td class="text-center">{{ voter.progress.ballot_available }}</td>
     <td class="text-center">{{ voter.progress.ballot_sent }}</td>
     <td class="text-center">{{ voter.progress.ballot_received }}</td>
-    <td>{{ voter.updated|default:"Pending Invitation" }}</td>
+    <td>{{ voter.updated_humanized }}</td>
     <td>
         {% if voter.user == request.user %}
         <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
