@@ -10,11 +10,18 @@ import log
 from ballotbuddies.core.helpers import allow_debug, send_login_email
 
 from .forms import FriendsForm, LoginForm, VoterForm
+from .helpers import generate_sample_voters
 from .models import User, Voter
 
 
-def index(_request):
-    return redirect("buddies:friends")
+def index(request):
+    if request.user.is_authenticated:
+        return redirect("buddies:friends")
+
+    slug = request.GET.get("referrer")
+    voter: Voter = Voter.objects.filter(slug=slug).first()
+    context = {"voter": voter, "friends": generate_sample_voters()}
+    return render(request, "friends/index.html", context)
 
 
 def login(request):

@@ -29,7 +29,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% if voter %}
                     {% include "friends/_voter.html" %}
+                    {% endif %}
+
                     {% for voter in friends %}
                     {% include "friends/_voter.html" %}
                     {% endfor %}
@@ -40,6 +43,8 @@
 
         <div class="col-lg-6 col-md-8 col-12">
 
+            {% if request.user.is_authenticated %}
+
             <form method="post" novalidate>
                 {% csrf_token %}
 
@@ -47,6 +52,16 @@
 
                 <button class="btn btn-primary" type="submit">Invite friends</button>
             </form>
+
+            {% else %}
+
+            <div class="text-center">
+                <a class="btn btn-primary" href="{% url 'buddies:login' %}">
+                    Join Ballot Buddies
+                </a>
+            </div>
+
+            {% endif %}
 
         </div>
     </div>
