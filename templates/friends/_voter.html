@@ -14,7 +14,7 @@
         </a>
         {% elif voter.complete %}
         <button class="btn btn-secondary"
-            hx-get="{% url 'buddies:status' username=voter.user.username %}"
+            hx-get="{% url 'buddies:status' slug=voter.slug %}"
             hx-trigger="click"
             hx-target="closest tr"
             hx-swap="outerHTML">

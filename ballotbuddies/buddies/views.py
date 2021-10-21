@@ -113,8 +113,8 @@ def friends(request):
 
 
 @login_required
-def status(request, username: str):
-    voter: Voter = Voter.objects.get(user__username=username)
+def status(request, slug: str):
+    voter: Voter = Voter.objects.get(slug=slug)
 
     voter.update()
     voter.save()

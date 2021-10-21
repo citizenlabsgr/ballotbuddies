@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from base64 import urlsafe_b64encode
 from functools import cached_property
 from typing import List, Tuple
 from urllib.parse import urlencode
@@ -50,6 +51,7 @@ class VoterManager(models.Manager):
 class Voter(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    slug = models.CharField(max_length=100, blank=True)
 
     birth_date = models.DateField(null=True, blank=True)
     zip_code = models.CharField(
@@ -177,6 +179,11 @@ class Voter(models.Model):
         return "Pending invitation"
 
     def save(self, **kwargs):
+        self.slug = self._slugify()
         if self.id:
             self.friends.remove(self)
         super().save(**kwargs)
+
+    def _slugify(self) -> str:
+        fingerprint = self.first_name + self.last_name + str(self.zip_code)
+        return urlsafe_b64encode(fingerprint.encode()).decode().strip("=")
