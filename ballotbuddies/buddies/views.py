@@ -64,9 +64,6 @@ def profile(request):
 
 @login_required
 def setup(request):
-    # if request.user.is_superuser:
-    #     return redirect("admin:index")
-
     voter: Voter = Voter.objects.from_user(request.user)
     if request.method == "POST":
         form = VoterForm(request.POST, instance=voter)

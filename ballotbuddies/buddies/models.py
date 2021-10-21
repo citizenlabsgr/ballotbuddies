@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from functools import cached_property
 from typing import List, Tuple
 from urllib.parse import urlencode
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
 from django.utils import timezone
 
@@ -12,6 +14,8 @@ import log
 import requests
 
 from ballotbuddies.core.helpers import send_invite_email
+
+from .types import Progress
 
 
 class VoterManager(models.Manager):
@@ -65,23 +69,23 @@ class Voter(models.Model):
     def __str__(self):
         return f"{self.user.full_name} ({self.user.email})"
 
-    @property
+    @cached_property
     def email(self) -> str:
         return self.user.email
 
-    @property
+    @cached_property
     def first_name(self) -> str:
         return self.user.first_name
 
-    @property
+    @cached_property
     def last_name(self) -> str:
         return self.user.last_name
 
-    @property
+    @cached_property
     def display_name(self) -> str:
         return self.user.display_name
 
-    @property
+    @cached_property
     def data(self) -> dict:
         return dict(
             first_name=self.first_name,
@@ -90,47 +94,52 @@ class Voter(models.Model):
             zip_code=self.zip_code,
         )
 
-    @property
+    @cached_property
     def complete(self) -> bool:
         return all(self.data.values())
 
-    @property
-    def progress(self) -> dict:
-        values = {}
+    @cached_property
+    def progress(self) -> Progress:
+        values = Progress()
 
         status = self.status.get("status") if self.status else None
         if not status:
-            values["registered"] = "🟡"
+            values.registered.icon = "🟡"
             return values
 
         registered = status.get("registered")
-        values["registered"] = "✅" if registered else "❌"
+        values.registered.icon = "✅" if registered else "❌"
         if not registered:
             return values
 
         if absentee_date := status.get("absentee_application_received"):
-            values["absentee_received"] = absentee_date
+            values.absentee_received.date = absentee_date
         else:
-            values["absentee_received"] = "-"
+            values.absentee_received.icon = "-"
 
         absentee = status.get("absentee")
-        values["absentee_approved"] = "✅" if absentee else "⚪"
+        values.absentee_approved.icon = "✅" if absentee else "⚪"
 
         ballot = status.get("ballot_url")
-        values["ballot_available"] = "✅" if ballot else "🟡"
+        values.ballot_available.icon = "✅" if ballot else "🟡"
 
-        if not ballot and absentee:
+        if not (ballot and absentee):
             return values
 
         if sent_date := status.get("absentee_ballot_sent"):
-            values["ballot_sent"] = sent_date
+            values.ballot_sent.date = sent_date
+            values.ballot_sent.icon = "✅"
         else:
-            values["ballot_sent"] = "🟡"
+            values.ballot_sent.icon = "🟡"
+
+        if not sent_date:
+            return values
 
         if received_date := status.get("absentee_ballot_received"):
-            values["ballot_received"] = received_date
+            values.ballot_received.date = received_date
+            values.ballot_received.icon = "✅"
         elif sent_date:
-            values["ballot_received"] = "🟡"
+            values.ballot_received.icon = "🟡"
 
         return values
 
@@ -159,6 +168,13 @@ class Voter(models.Model):
     @property
     def _status(self) -> str:
         return (self.status or {}).get("id", "")
+
+    @property
+    def updated_humanized(self) -> str:
+        if self.updated:
+            text = naturaltime(self.updated)
+            return "Just now" if text == "now" else text
+        return "Pending invitation"
 
     def save(self, **kwargs):
         if self.id:
