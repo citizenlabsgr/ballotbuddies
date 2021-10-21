@@ -11,7 +11,12 @@
 
   {{ form|crispy }}
 
+  {% if request.user.is_superuser %}
+  <a class="btn btn-outline-danger" href="{% url 'admin:index' %}">Admin</a>
+  {% endif %}
+
   <button class="btn btn-primary" type="submit">Save</button>
+
   {% if voter.complete %}
   <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">Cancel</a>
   {% else %}

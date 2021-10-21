@@ -35,6 +35,7 @@ def login(request):
             return render(request, "login.html", context)
     else:
         form = LoginForm()
+
     context = {"form": form, "allow_debug": allow_debug(request)}
     return render(request, "login.html", context)
 
@@ -63,6 +64,9 @@ def profile(request):
 
 @login_required
 def setup(request):
+    # if request.user.is_superuser:
+    #     return redirect("admin:index")
+
     voter: Voter = Voter.objects.from_user(request.user)
     if request.method == "POST":
         form = VoterForm(request.POST, instance=voter)
@@ -76,6 +80,7 @@ def setup(request):
     else:
         data = {"email": voter.email} | voter.data  # type: ignore
         form = VoterForm(instance=voter, initial=data)
+
     context = {"voter": voter, "form": form}
     return render(request, "profile/setup.html", context)
 
@@ -113,7 +118,9 @@ def friends(request):
 @login_required
 def status(request, username: str):
     voter: Voter = Voter.objects.get(user__username=username)
+
     voter.update()
     voter.save()
+
     context = {"voter": voter}
     return render(request, "friends/_voter.html", context)

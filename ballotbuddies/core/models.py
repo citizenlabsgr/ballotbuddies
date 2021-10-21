@@ -30,10 +30,10 @@ class CustomUser:
     def update_name(self: User, request, first_name: str, last_name: str):
         self.first_name = first_name
         self.last_name = last_name
-        if self.username != "admin":  # preserve default localhost user
+        if not self.is_superuser:  # preserve default localhost user
             self.username = f"{self.get_full_name()} ({self.email})"
-        self.set_password(str(int(time())))
-        update_session_auth_hash(request, self)
+            self.set_password(str(int(time())))
+            update_session_auth_hash(request, self)
         self.save()
 
 
