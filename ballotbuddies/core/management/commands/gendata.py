@@ -98,8 +98,9 @@ class Command(BaseCommand):
             user.email = base_email
         else:
             user.email = f"{username}+{settings.BASE_NAME}@{email_domain}"
-        user.set_password(password)
-        user.save()
+        if created:
+            user.set_password(password)
+            user.save()
 
         if created:
             self.stdout.write(f"Created user: {user}")
@@ -153,6 +154,7 @@ class Command(BaseCommand):
         status = deepcopy(STATUS)
         status["status"]["absentee"] = False  # type: ignore
         status["status"]["absentee_application_received"] = None  # type: ignore
+        status["status"]["ballot"] = False  # type: ignore
         yield self.get_or_create_voter(
             "test+inperson@example.com",
             "Not",
@@ -200,6 +202,18 @@ class Command(BaseCommand):
             "test+received@example.com",
             "Ballot",
             "Received",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["absentee"] = False  # type: ignore
+        status["status"]["absentee_application_received"] = None  # type: ignore
+        yield self.get_or_create_voter(
+            "test+walking@example.com",
+            "Physical",
+            "Available",
             "1970-01-01",
             "49503",
             status,

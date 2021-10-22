@@ -1,17 +1,42 @@
 <tr class="align-middle {% if not voter.complete %}text-muted{% endif %}">
-    <th scope="row">{{ voter.display_name }}</th>
-    <td class="text-center">{{ voter.progress.registered }}</td>
-    <td class="text-center">{{ voter.progress.absentee_received }}</td>
-    <td class="text-center">{{ voter.progress.absentee_approved }}</td>
-    <td class="text-center">
+
+    <th scope="row">
+        {{ voter.display_name }}
+    </th>
+
+    <td class="text-center table-{{ voter.progress.registered.color }}">
+        {{ voter.progress.registered }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.absentee_received.color }}">
+        {{ voter.progress.absentee_received }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.absentee_approved.color }}">
+        {{ voter.progress.absentee_approved }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.ballot_available.color }}">
         {{ voter.progress.ballot_available }}
         {% if voter.progress.ballot_available.url %}
         <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
         {% endif %}
     </td>
-    <td class="text-center">{{ voter.progress.ballot_sent }}</td>
-    <td class="text-center">{{ voter.progress.ballot_received }}</td>
+
+    <td class="text-center table-{{ voter.progress.ballot_sent.color }}">
+        {{ voter.progress.ballot_sent }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.ballot_received.color }}">
+        {{ voter.progress.ballot_received }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.voted.color }}">
+        {{ voter.progress.voted }}
+    </td>
+
     <td>{{ voter.updated_humanized }}</td>
+
     <td class="text-end">
         {% if voter.user == request.user %}
         <a class="btn btn-sm btn-primary" href="{% url 'buddies:profile' %}">
@@ -28,4 +53,5 @@
         </button>
         {% endif %}
     </td>
+
 </tr>

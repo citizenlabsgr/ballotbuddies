@@ -9,6 +9,7 @@ from typing import Optional
 class State:
 
     icon: str = ""
+    color: str = "default"
     url: str = ""
     date: Optional[date] = None
 
@@ -31,6 +32,7 @@ class Progress:
     ballot_available: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
+    voted: State = field(default_factory=State)
 
     @classmethod
     def parse(cls, status: dict) -> Progress:
@@ -40,29 +42,45 @@ class Progress:
             progress.registered.icon = "🟡"
             return progress
 
-        registered = status.get("registered")
-        progress.registered.icon = "✅" if registered else "❌"
+        if registered := status.get("registered"):
+            progress.registered.icon = "✅"
+            progress.registered.color = "success"
+        else:
+            progress.registered.icon = "🚫"
+            progress.registered.color = "danger"
+
         if not registered:
             return progress
 
         if absentee_date := status.get("absentee_application_received"):
             progress.absentee_received.date = absentee_date
+            progress.absentee_received.color = "success"
         else:
-            progress.absentee_received.icon = "-"
+            progress.absentee_received.icon = "−"
+            progress.absentee_received.color = "success text-muted"
 
-        absentee = status.get("absentee")
-        progress.absentee_approved.icon = "✅" if absentee else "⚪"
+        if absentee := status.get("absentee"):
+            progress.absentee_approved.icon = "✅"
+            progress.absentee_approved.color = "success"
+        elif absentee_date:
+            progress.absentee_approved.icon = "🟡"
+        else:
+            progress.absentee_approved.icon = "🚫"
+            progress.absentee_approved.color = "warning"
 
-        ballot = status.get("ballot")
-        progress.ballot_available.icon = "✅" if ballot else "🟡"
-        progress.ballot_available.url = status.get("ballot_url", "")
+        if ballot := status.get("ballot"):
+            progress.absentee_approved.color = "success text-muted"
+            progress.ballot_available.url = status.get("ballot_url", "")
+            progress.ballot_available.color = "success"
+        else:
+            progress.ballot_available.icon = "🟡"
 
         if not (ballot and absentee):
             return progress
 
         if sent_date := status.get("absentee_ballot_sent"):
             progress.ballot_sent.date = sent_date
-            progress.ballot_sent.icon = "✅"
+            progress.ballot_sent.color = "success"
         else:
             progress.ballot_sent.icon = "🟡"
 
@@ -71,8 +89,14 @@ class Progress:
 
         if received_date := status.get("absentee_ballot_received"):
             progress.ballot_received.date = received_date
-            progress.ballot_received.icon = "✅"
+            progress.ballot_received.color = "success"
         elif sent_date:
             progress.ballot_received.icon = "🟡"
+
+        # TODO: Let voters be manually marked as complete
+        # https://github.com/citizenlabsgr/ballotbuddies/issues/55
+        if received_date:
+            progress.voted.icon = "✅"
+            progress.voted.color = "success"
 
         return progress
