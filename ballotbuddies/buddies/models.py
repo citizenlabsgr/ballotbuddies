@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from base64 import urlsafe_b64encode
+from datetime import timedelta
 from functools import cached_property
 from typing import List, Tuple
 from urllib.parse import urlencode
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
 from django.utils import timezone
 
@@ -153,9 +153,13 @@ class Voter(models.Model):
     @property
     def updated_humanized(self) -> str:
         if self.updated:
-            text = naturaltime(self.updated)
-            return "Just now" if text == "now" else text
-        return "Pending invitation"
+            delta = timezone.now() - self.updated
+            if delta < timedelta(seconds=5):
+                return "Now"
+            if delta < timedelta(minutes=5):
+                return "Today"
+            return f"{self.updated:%-m/%d}"
+        return "−"
 
     def save(self, **kwargs):
         self.slug = self._slugify()

@@ -140,6 +140,14 @@ class Command(BaseCommand):
         return voter
 
     def generate_test_voters(self):
+        yield self.get_or_create_voter(
+            "test+pending@example.com",
+            "New",
+            "User",
+            "1970-01-01",
+            "",
+        )
+
         status = deepcopy(STATUS)
         status["status"]["registered"] = False  # type: ignore
         yield self.get_or_create_voter(
