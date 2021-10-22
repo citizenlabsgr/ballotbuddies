@@ -5,22 +5,24 @@ from django.contrib.auth import logout as force_logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-import log
-
 from ballotbuddies.core.helpers import allow_debug, send_login_email
 
 from .forms import FriendsForm, LoginForm, VoterForm
 from .helpers import generate_sample_voters
-from .models import User, Voter
+from .models import Voter
 
 
 def index(request):
+    slug = request.GET.get("referrer")
+    request.session["referrer"] = slug
+
     if request.user.is_authenticated:
         return redirect("buddies:friends")
 
-    slug = request.GET.get("referrer")
-    voter: Voter = Voter.objects.filter(slug=slug).first()
-    context = {"voter": voter, "friends": generate_sample_voters()}
+    context = {
+        "voter": Voter.objects.filter(slug=slug).first(),
+        "friends": generate_sample_voters(),
+    }
     return render(request, "friends/index.html", context)
 
 
@@ -28,18 +30,20 @@ def login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data["email"]
-            user, created = User.objects.get_or_create(
-                email=email, defaults=dict(username=email)
+            voter: Voter = Voter.objects.from_email(
+                form.cleaned_data["email"],
+                request.session.get("referrer"),
             )
-            if created:
-                log.info(f"Created user: {user}")
+
             if "debug" in request.POST and allow_debug(request):
-                force_login(request, user, backend=settings.AUTHENTICATION_BACKENDS[0])
+                force_login(
+                    request, voter.user, backend=settings.AUTHENTICATION_BACKENDS[0]
+                )
                 return redirect("buddies:friends")
-            send_login_email(user)
-            context = {"domain": email.split("@")[-1]}
-            return render(request, "login.html", context)
+
+            send_login_email(voter.user)
+            domain = voter.email.split("@")[-1]
+            return render(request, "login.html", {"domain": domain})
     else:
         form = LoginForm()
 

@@ -20,6 +20,25 @@ from .types import Progress
 
 
 class VoterManager(models.Manager):
+    def from_email(self, email: str, referrer: str) -> Voter:
+        user, created = User.objects.get_or_create(
+            email=email, defaults=dict(username=email)
+        )
+        if created:
+            log.info(f"Created user: {user}")
+
+        voter = self.from_user(user)
+
+        if other := self.filter(slug=referrer).first():
+            other.friends.add(voter)
+            other.save()
+
+            voter.referrer = voter.referrer or other
+            voter.friends.add(other)
+            voter.save()
+
+        return voter
+
     def from_user(self, user: User) -> Voter:
         voter, created = self.get_or_create(user=user)
         if created:

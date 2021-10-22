@@ -7,13 +7,14 @@
     <td class="text-center">{{ voter.progress.ballot_sent }}</td>
     <td class="text-center">{{ voter.progress.ballot_received }}</td>
     <td>{{ voter.updated_humanized }}</td>
-    <td>
+    <td class="text-end">
         {% if voter.user == request.user %}
-        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+        <a class="btn btn-sm btn-primary" href="{% url 'buddies:profile' %}">
             View
         </a>
         {% elif voter.complete %}
-        <button class="btn btn-secondary"
+        <button class="btn btn-sm btn-secondary"
+            {% if not request.user.is_authenticated %}disabled{% endif %}
             hx-get="{% url 'buddies:status' slug=voter.slug %}"
             hx-trigger="click"
             hx-target="closest tr"
