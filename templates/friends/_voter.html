@@ -3,7 +3,12 @@
     <td class="text-center">{{ voter.progress.registered }}</td>
     <td class="text-center">{{ voter.progress.absentee_received }}</td>
     <td class="text-center">{{ voter.progress.absentee_approved }}</td>
-    <td class="text-center">{{ voter.progress.ballot_available }}</td>
+    <td class="text-center">
+        {{ voter.progress.ballot_available }}
+        {% if voter.progress.ballot_available.url %}
+        <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+        {% endif %}
+    </td>
     <td class="text-center">{{ voter.progress.ballot_sent }}</td>
     <td class="text-center">{{ voter.progress.ballot_received }}</td>
     <td>{{ voter.updated_humanized }}</td>

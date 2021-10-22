@@ -121,48 +121,8 @@ class Voter(models.Model):
 
     @cached_property
     def progress(self) -> Progress:
-        values = Progress()
-
         status = self.status.get("status") if self.status else None
-        if not status:
-            values.registered.icon = "🟡"
-            return values
-
-        registered = status.get("registered")
-        values.registered.icon = "✅" if registered else "❌"
-        if not registered:
-            return values
-
-        if absentee_date := status.get("absentee_application_received"):
-            values.absentee_received.date = absentee_date
-        else:
-            values.absentee_received.icon = "-"
-
-        absentee = status.get("absentee")
-        values.absentee_approved.icon = "✅" if absentee else "⚪"
-
-        ballot = status.get("ballot_url")
-        values.ballot_available.icon = "✅" if ballot else "🟡"
-
-        if not (ballot and absentee):
-            return values
-
-        if sent_date := status.get("absentee_ballot_sent"):
-            values.ballot_sent.date = sent_date
-            values.ballot_sent.icon = "✅"
-        else:
-            values.ballot_sent.icon = "🟡"
-
-        if not sent_date:
-            return values
-
-        if received_date := status.get("absentee_ballot_received"):
-            values.ballot_received.date = received_date
-            values.ballot_received.icon = "✅"
-        elif sent_date:
-            values.ballot_received.icon = "🟡"
-
-        return values
+        return Progress.parse(status)
 
     def update(self) -> Tuple[bool, str]:
         previous_status = self._status

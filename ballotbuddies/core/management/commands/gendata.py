@@ -13,6 +13,7 @@ STATUS = {
     "id": "345-3932-11713",
     "status": {
         "absentee": True,
+        "ballot": True,
         "ballot_url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
         "registered": True,
         "absentee_ballot_sent": "2021-09-30",
@@ -167,6 +168,17 @@ class Command(BaseCommand):
             "test+absentee@example.com",
             "Pending",
             "Absentee",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["ballot"] = False  # type: ignore
+        yield self.get_or_create_voter(
+            "test+waiting@example.com",
+            "Ballot",
+            "Pending",
             "1970-01-01",
             "49503",
             status,
