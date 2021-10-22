@@ -13,15 +13,16 @@ from .models import Voter
 
 
 def index(request):
-    slug = request.GET.get("referrer")
-    request.session["referrer"] = slug
+    if referrer := request.GET.get("referrer"):
+        request.session["referrer"] = referrer
 
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not referrer:
         return redirect("buddies:friends")
 
     context = {
-        "voter": Voter.objects.filter(slug=slug).first(),
+        "voter": Voter.objects.filter(slug=referrer).first(),
         "friends": generate_sample_voters(),
+        "referrer": referrer,
     }
     return render(request, "friends/index.html", context)
 

@@ -43,7 +43,7 @@
 
         <div class="col-lg-6 col-md-8 col-12">
 
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated and not referrer %}
 
             <form method="post" novalidate>
                 {% csrf_token %}
@@ -54,7 +54,7 @@
                     <button class="btn btn-primary" type="submit">Invite friends</button>
                     <button class="btn btn-secondary" type="button"
                             onclick="navigator.clipboard.writeText('http://{{ request.get_host }}?referrer={{ voter.slug }}')">
-                        Copy link
+                        Copy invitation link
                     </button>
                 </div>
             </form>

@@ -19,6 +19,8 @@ class VoterForm(forms.ModelForm):
     email = forms.EmailField(disabled=True, required=False)
     first_name = forms.CharField(widget=forms.TextInput(attrs={"autofocus": True}))
     last_name = forms.CharField()
+    birth_date = forms.DateField()
+    zip_code = forms.CharField()
 
     class Meta:
         model = Voter
