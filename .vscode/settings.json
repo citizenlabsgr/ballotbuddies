@@ -22,6 +22,7 @@
   "python.formatting.blackPath": ".venv/bin/black",
   "editor.formatOnSave": true,
   "cSpell.words": [
+    "asdict",
     "ballotbuddies",
     "createdb",
     "grappelli"

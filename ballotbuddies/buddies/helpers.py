@@ -3,37 +3,9 @@ from random import randint
 
 from django.utils import timezone
 
+from .data import SAMPLE_STATUS
 from .models import User, Voter
-from .types import Progress, State
-
-SAMPLE_STATUS = [
-    (
-        {"registered": True},
-        Progress(
-            registered=State(icon="✅", color="success", url="", date=None),
-            absentee_received=State(
-                icon="−", color="success text-muted", url="", date=None
-            ),
-            absentee_approved=State(icon="🚫", color="warning", url="", date=None),
-            ballot_available=State(icon="🟡", color="default", url="", date=None),
-            ballot_sent=State(icon="", color="default", url="", date=None),
-            ballot_received=State(icon="", color="default", url="", date=None),
-            voted=State(icon="", color="default", url="", date=None),
-        ),
-    ),
-    (
-        {"registered": False},
-        Progress(
-            registered=State(icon="🚫", color="danger", url="", date=None),
-            absentee_received=State(icon="", color="default", url="", date=None),
-            absentee_approved=State(icon="", color="default", url="", date=None),
-            ballot_available=State(icon="", color="default", url="", date=None),
-            ballot_sent=State(icon="", color="default", url="", date=None),
-            ballot_received=State(icon="", color="default", url="", date=None),
-            voted=State(icon="", color="default", url="", date=None),
-        ),
-    ),
-]
+from .types import Progress
 
 
 def generate_sample_voters():

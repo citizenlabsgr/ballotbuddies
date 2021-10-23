@@ -67,11 +67,15 @@ class Progress:
         else:
             progress.absentee_approved.icon = "🚫"
             progress.absentee_approved.color = "warning"
+            progress.ballot_sent.icon = "−"
+            progress.ballot_received.icon = "−"
 
         if ballot := status.get("ballot"):
             progress.absentee_approved.color = "success text-muted"
             progress.ballot_available.url = status.get("ballot_url", "")
             progress.ballot_available.color = "success"
+            if not absentee:
+                progress.voted.icon = "🟡"
         else:
             progress.ballot_available.icon = "🟡"
 
