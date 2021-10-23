@@ -65,7 +65,7 @@ def profile(request):
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
 
-    _updated, error = voter.update()
+    _updated, error = voter.update_status()
     voter.save()
     if error:
         messages.error(request, error)
@@ -103,7 +103,7 @@ def friends(request):
         return redirect("buddies:setup")
 
     if not voter.updated:
-        voter.update()
+        voter.update_status()
         voter.save()
 
     if request.method == "POST":
@@ -117,7 +117,8 @@ def friends(request):
 
     context = {
         "voter": voter,
-        "friends": voter.friends.all(),
+        "friends": voter.community,
+        "neighbors": voter.neighbors.all(),
         "form": form,
         "allow_debug": allow_debug(request),
     }
@@ -128,7 +129,7 @@ def friends(request):
 def status(request, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
 
-    voter.update()
+    voter.update_status()
     voter.save()
 
     context = {"voter": voter}

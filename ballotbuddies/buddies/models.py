@@ -3,6 +3,7 @@ from __future__ import annotations
 from base64 import urlsafe_b64encode
 from datetime import timedelta
 from functools import cached_property
+from itertools import chain
 from typing import List, Tuple
 from urllib.parse import urlencode
 
@@ -84,6 +85,8 @@ class Voter(models.Model):
         "Voter", null=True, blank=True, on_delete=models.SET_NULL
     )
     friends = models.ManyToManyField("Voter", blank=True, related_name="followers")
+    neighbors = models.ManyToManyField("Voter", blank=True, related_name="lurkers")
+    strangers = models.ManyToManyField("Voter", blank=True, related_name="blockers")
 
     objects = VoterManager()
 
@@ -124,7 +127,12 @@ class Voter(models.Model):
         status = self.status.get("status") if self.status else None
         return Progress.parse(status)
 
-    def update(self) -> Tuple[bool, str]:
+    @cached_property
+    def community(self) -> chain[Voter]:
+        # TODO: sort voters by progress
+        return chain(self.friends.all(), self.neighbors.all())
+
+    def update_status(self) -> Tuple[bool, str]:
         previous_status = self._status
 
         url = settings.MICHIGAN_ELECTIONS_API + "?" + urlencode(self.data)
@@ -149,6 +157,22 @@ class Voter(models.Model):
     @property
     def _status(self) -> str:
         return (self.status or {}).get("id", "")
+
+    def update_neighbors(self) -> int:
+        added = 0
+        for friend in self.friends.all():
+            for neighbor in friend.friends.all():
+                if not any(
+                    (
+                        neighbor == self,
+                        self.friends.filter(pk=neighbor.pk).exists(),
+                        self.neighbors.filter(pk=neighbor.pk).exists(),
+                        self.strangers.filter(pk=neighbor.pk).exists(),
+                    )
+                ):
+                    self.neighbors.add(neighbor)
+                    added += 1
+        return added
 
     @property
     def updated_humanized(self) -> str:

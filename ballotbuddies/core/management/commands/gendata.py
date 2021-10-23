@@ -64,10 +64,21 @@ class Command(BaseCommand):
 
         test_voters = list(self.generate_test_voters())
 
-        for voter in real_voters:
-            voter.friends.add(*real_voters)
-            voter.friends.add(*test_voters)
+        for count, voter in enumerate(real_voters, start=1):
+            friend = self.get_or_create_voter(
+                f"friend+{count}@example.com",
+                voter.first_name,
+                "Friend",
+                "1970-01-01",
+                "49503",
+            )
+            voter.friends.add(friend, *real_voters, *test_voters)
             voter.save()
+
+        for voter in Voter.objects.all():
+            if count := voter.update_neighbors():
+                self.stdout.write(f"Recommended {count} friend(s) to {voter}")
+                voter.save()
 
     def update_site(self):
         site = Site.objects.get(id=1)
