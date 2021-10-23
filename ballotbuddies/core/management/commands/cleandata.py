@@ -12,3 +12,9 @@ class Command(BaseCommand):
         for voter in Voter.objects.filter(slug=""):
             log.critical("Generating slug for voter")
             voter.save()
+
+        # TODO: only update voters with fewer than 3 pending firends
+        for voter in Voter.objects.all():
+            if count := voter.update_neighbors():
+                self.stdout.write(f"Recommended {count} friend(s) to {voter}")
+                voter.save()

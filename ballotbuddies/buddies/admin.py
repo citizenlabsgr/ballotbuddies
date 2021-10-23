@@ -8,7 +8,7 @@ from .models import Voter
 def update_selected_voters(modeladmin, request, queryset):
     voter: Voter
     for voter in queryset:
-        updated, error = voter.update()
+        updated, error = voter.update_status()
         if updated:
             voter.save()
         if error:
@@ -29,3 +29,5 @@ class VoterAdmin(admin.ModelAdmin):
     ]
 
     actions = [update_selected_voters]
+
+    filter_horizontal = ["friends", "neighbors", "strangers"]

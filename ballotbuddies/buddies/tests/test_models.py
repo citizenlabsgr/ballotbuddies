@@ -11,12 +11,12 @@ def describe_voter():
         user = User(first_name="Rosalynn", last_name="Bliss")
         return Voter(user=user, birth_date="1975-08-03", zip_code="49503")
 
-    def describe_update():
+    def describe_update_status():
         @pytest.mark.vcr
         def with_valid_registration(expect, voter):
             voter.status = None
 
-            updated, error = voter.update()
+            updated, error = voter.update_status()
 
             expect(updated) == True
             expect(error) == ""
@@ -26,7 +26,7 @@ def describe_voter():
             voter.zip_code = ""
             voter.status = None
 
-            updated, error = voter.update()
+            updated, error = voter.update_status()
 
             expect(updated) == False
             expect(error) == ""
