@@ -31,6 +31,16 @@ def describe_voter():
             expect(updated) == False
             expect(error) == ""
 
+    def describe_update_neighbors():
+        @pytest.mark.django_db
+        def it_returns_count_of_added_neighbors(expect, voter):
+            voter.user.save()
+            voter.save()
+
+            count = voter.update_neighbors(community=[voter])
+
+            expect(count) == 0
+
     def describe_save():
         @pytest.mark.django_db
         def it_remove_self_from_friends(expect, voter):

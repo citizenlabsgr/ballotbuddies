@@ -158,20 +158,26 @@ class Voter(models.Model):
     def _status(self) -> str:
         return (self.status or {}).get("id", "")
 
-    def update_neighbors(self) -> int:
+    def update_neighbors(self, community=None) -> int:
+        community = community or [
+            (neighbor for neighbor in friend.friends.all())
+            for friend in self.friends.all()
+        ]
+
         added = 0
-        for friend in self.friends.all():
-            for neighbor in friend.friends.all():
-                if not any(
-                    (
-                        neighbor == self,
-                        self.friends.filter(pk=neighbor.pk).exists(),
-                        self.neighbors.filter(pk=neighbor.pk).exists(),
-                        self.strangers.filter(pk=neighbor.pk).exists(),
-                    )
-                ):
-                    self.neighbors.add(neighbor)
-                    added += 1
+        for voter in community:
+            if not any(
+                (
+                    voter == self,
+                    not voter.complete,
+                    self.friends.filter(pk=voter.pk).exists(),
+                    self.neighbors.filter(pk=voter.pk).exists(),
+                    self.strangers.filter(pk=voter.pk).exists(),
+                )
+            ):
+                self.neighbors.add(voter)
+                added += 1
+
         return added
 
     @property
