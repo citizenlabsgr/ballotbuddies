@@ -70,7 +70,9 @@ def profile(request):
     if error:
         messages.error(request, error)
 
-    context = {"voter": voter}
+    form = VoterForm(initial=voter.data, locked=True)
+
+    context = {"voter": voter, "form": form}
     return render(request, "profile/detail.html", context)
 
 
@@ -87,8 +89,7 @@ def setup(request):
             messages.success(request, "Successfully updated your profile information.")
             return redirect("buddies:profile")
     else:
-        data = {"email": voter.email} | voter.data  # type: ignore
-        form = VoterForm(instance=voter, initial=data)
+        form = VoterForm(instance=voter, initial=voter.data)
 
     context = {"voter": voter, "form": form}
     return render(request, "profile/setup.html", context)

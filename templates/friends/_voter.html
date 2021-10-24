@@ -4,37 +4,49 @@
         {{ voter.display_name }}
     </th>
 
-    <td class="text-center table-{{ voter.progress.registered.color }}">
+    <td class="text-center table-{{ voter.progress.registered.color }}" style="white-space: nowrap;">
         {{ voter.progress.registered }}
         {% if voter.progress.registered.url %}
         <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
         {% endif %}
+
+        <button class="btn btn-sm btn-outline-dark ms-2 p-1 py-0 d-inline d-sm-none" type="button"
+            data-bs-toggle="collapse" data-bs-target="#status-{{ voter.slug }}" aria-expanded="false" aria-controls="status-{{ voter.slug }}">
+            ▼
+        </button>
     </td>
 
-    <td class="text-center table-{{ voter.progress.absentee_received.color }}">
-        {{ voter.progress.absentee_received }}
-    </td>
-
-    <td class="text-center table-{{ voter.progress.absentee_approved.color }}">
-        {{ voter.progress.absentee_approved }}
-    </td>
-
-    <td class="text-center table-{{ voter.progress.ballot_available.color }}">
+    <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-md-none">
         {{ voter.progress.ballot_available }}
         {% if voter.progress.ballot_available.url %}
         <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
         {% endif %}
     </td>
 
-    <td class="text-center table-{{ voter.progress.ballot_sent.color }}">
+    <td class="text-center table-{{ voter.progress.absentee_received.color }} d-none d-md-table-cell">
+        {{ voter.progress.absentee_received }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.absentee_approved.color }} d-none d-md-table-cell">
+        {{ voter.progress.absentee_approved }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-md-table-cell">
+        {{ voter.progress.ballot_available }}
+        {% if voter.progress.ballot_available.url %}
+        <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+        {% endif %}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.ballot_sent.color }} d-none d-md-table-cell">
         {{ voter.progress.ballot_sent }}
     </td>
 
-    <td class="text-center table-{{ voter.progress.ballot_received.color }}">
+    <td class="text-center table-{{ voter.progress.ballot_received.color }} d-none d-md-table-cell">
         {{ voter.progress.ballot_received }}
     </td>
 
-    <td class="text-center table-{{ voter.progress.voted.color }}">
+    <td class="text-center table-{{ voter.progress.voted.color }} d-none d-sm-table-cell">
         {{ voter.progress.voted }}
     </td>
 
@@ -81,4 +93,10 @@
         </form>
     </td>
 
+</tr>
+
+<tr class="collapse" id="status-{{ voter.slug }}">
+    <td colspan="100%" class="p-3">
+        {% include "profile/_status.html" %}
+    </td>
 </tr>

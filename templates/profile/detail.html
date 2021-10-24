@@ -1,4 +1,6 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
 
 {% block main %}
 
@@ -10,18 +12,15 @@
 
 <h2>Voter Information</h2>
 
-<p>
-    <pre>{{ voter.data|pprint }}</pre>
-</p>
+{{ form|crispy }}
 
 <h2>Ballot Status</h2>
 
-<p>
+<div class="pb-3">
+{% include "profile/_status.html" %}
+</div>
 
-    <pre>{{ voter.status|pprint }}</pre>
-</p>
-
-<h2>Last Changed</h2>
+<h2>Last Updated</h2>
 
 <p>
     {{ voter.updated }}

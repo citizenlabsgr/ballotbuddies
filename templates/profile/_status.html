@@ -1,0 +1,87 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" class="border-end border-bottom"></th>
+            <th scope="col" class="text-center border-bottom">Result</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Registered to Vote
+            </th>
+
+            <td class="text-center table-{{ voter.progress.registered.color }}">
+                {{ voter.progress.registered }}
+                {% if voter.progress.registered.url %}
+                <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Absentee Application Received
+            </th>
+
+            <td class="text-center table-{{ voter.progress.absentee_received.color }}">
+                {{ voter.progress.absentee_received }}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Absentee Application Approved
+            </th>
+
+            <td class="text-center table-{{ voter.progress.absentee_approved.color }}">
+                {{ voter.progress.absentee_approved }}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Ballot Bvailable
+            </th>
+
+            <td class="text-center table-{{ voter.progress.ballot_available.color }}">
+                {{ voter.progress.ballot_available }}
+                {% if voter.progress.ballot_available.url %}
+                <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Absentee Ballot Sent
+            </th>
+
+            <td class="text-center table-{{ voter.progress.ballot_sent.color }}">
+                {{ voter.progress.ballot_sent }}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Absentee Ballot Received
+            </th>
+
+            <td class="text-center table-{{ voter.progress.ballot_received.color }}">
+                {{ voter.progress.ballot_received }}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Voting Complete
+            </th>
+
+            <td class="text-center table-{{ voter.progress.voted.color }}">
+                {{ voter.progress.voted }}
+            </td>
+        </tr>
+
+    </tbody>
+</table>
