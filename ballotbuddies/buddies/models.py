@@ -172,7 +172,7 @@ class Voter(models.Model):
     def _status(self) -> str:
         return (self.status or {}).get("id", "")
 
-    def update_neighbors(self) -> int:
+    def update_neighbors(self, limit=0) -> int:
         added = 0
         for friend in self.friends.all():
             for voter in friend.friends.all():
@@ -187,6 +187,8 @@ class Voter(models.Model):
                 ):
                     self.neighbors.add(voter)
                     added += 1
+                    if limit and added >= limit:
+                        return added
         return added
 
     @property
