@@ -132,7 +132,8 @@ class Voter(models.Model):
     @cached_property
     def progress(self) -> Progress:
         status = self.status.get("status") if self.status else None
-        return Progress.parse(status, self.state)
+        election = self.status.get("election") if self.status else None
+        return Progress.parse(status, election, self.state)
 
     @cached_property
     def community(self) -> List[Voter]:

@@ -12,5 +12,5 @@ def describe_progress():
     def describe_parse():
         @pytest.mark.parametrize(("status", "progress"), SAMPLE_STATUS)
         def with_samples(expect, status, progress):
-            result = Progress.parse(status)
+            result = Progress.parse(status, {"date": "2021-11-02"})
             expect(asdict(result)) == progress

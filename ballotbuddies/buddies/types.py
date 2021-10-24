@@ -34,10 +34,11 @@ class Progress:
     ballot_available: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
+    election: State = field(default_factory=State)
     voted: State = field(default_factory=State)
 
     @classmethod
-    def parse(cls, status: dict, state: str = "Michigan") -> Progress:
+    def parse(cls, status: dict, election: dict, state: str = "Michigan") -> Progress:
         progress = cls()
 
         if not status:
@@ -49,6 +50,9 @@ class Progress:
                 )
                 progress.registered.color = "warning"
             return progress
+
+        if election:
+            progress.election.date = election.get("date")
 
         if registered := status.get("registered"):
             progress.registered.icon = "✅"
