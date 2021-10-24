@@ -4,11 +4,16 @@
         {{ voter.display_name }}
     </th>
 
-    <td class="text-center table-{{ voter.progress.registered.color }}">
+    <td class="text-center table-{{ voter.progress.registered.color }}" style="white-space: nowrap;">
         {{ voter.progress.registered }}
         {% if voter.progress.registered.url %}
         <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
         {% endif %}
+
+        <button class="btn btn-sm btn-outline-dark ms-2 p-1 py-0 d-inline d-sm-none" type="button"
+            data-bs-toggle="collapse" data-bs-target="#status-{{ voter.slug }}" aria-expanded="false" aria-controls="status-{{ voter.slug }}">
+            ▼
+        </button>
     </td>
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-md-none">
@@ -88,4 +93,10 @@
         </form>
     </td>
 
+</tr>
+
+<tr class="collapse" id="status-{{ voter.slug }}">
+    <td colspan="100%" class="p-3">
+        {% include "profile/_status.html" %}
+    </td>
 </tr>
