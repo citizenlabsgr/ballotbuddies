@@ -25,6 +25,7 @@
     "asdict",
     "ballotbuddies",
     "createdb",
-    "grappelli"
+    "grappelli",
+    "HTMX"
   ]
 }

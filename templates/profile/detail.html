@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block main %}
 
 <h1>Your Profile</h1>
@@ -10,9 +12,7 @@
 
 <h2>Voter Information</h2>
 
-<p>
-    <pre>{{ voter.data|pprint }}</pre>
-</p>
+{{ form|crispy }}
 
 <h2>Ballot Status</h2>
 
@@ -21,7 +21,7 @@
     <pre>{{ voter.status|pprint }}</pre>
 </p>
 
-<h2>Last Changed</h2>
+<h2>Last Updated</h2>
 
 <p>
     {{ voter.updated }}

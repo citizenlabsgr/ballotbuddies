@@ -118,6 +118,7 @@ class Voter(models.Model):
     @cached_property
     def data(self) -> dict:
         return dict(
+            email=self.email,
             first_name=self.first_name,
             last_name=self.last_name,
             birth_date=self.birth_date,
