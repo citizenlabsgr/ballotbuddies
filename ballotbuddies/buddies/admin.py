@@ -18,12 +18,14 @@ def update_selected_voters(modeladmin, request, queryset):
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
 
+    list_filter = ["state"]
     list_display = [
         "email",
         "first_name",
         "last_name",
         "birth_date",
         "zip_code",
+        "state",
         "status",
         "updated",
     ]
