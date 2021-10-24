@@ -189,3 +189,4 @@ AUTHENTICATION_BACKENDS = [
 # Michigan Elections
 
 MICHIGAN_ELECTIONS_API = "https://michiganelections.io/api/status/"
+REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"

@@ -6,6 +6,9 @@
 
     <td class="text-center table-{{ voter.progress.registered.color }}">
         {{ voter.progress.registered }}
+        {% if voter.progress.registered.url %}
+        <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+        {% endif %}
     </td>
 
     <td class="text-center table-{{ voter.progress.absentee_received.color }}">

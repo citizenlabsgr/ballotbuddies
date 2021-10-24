@@ -37,7 +37,7 @@ def describe_voter():
             voter.user.save()
             voter.save()
 
-            count = voter.update_neighbors(community=[voter])
+            count = voter.update_neighbors()
 
             expect(count) == 0
 
@@ -51,3 +51,12 @@ def describe_voter():
             voter.save()
 
             expect(voter.friends.all()).excludes(voter)
+
+        @pytest.mark.django_db
+        def it_updates_state(expect, voter):
+            voter.user.save()
+
+            voter.zip_code = "94040"
+            voter.save()
+
+            expect(voter.state) == "California"
