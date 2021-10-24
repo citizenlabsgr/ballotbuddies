@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="container-fluid mt-4">
+<div class="container-fluid my-3">
 
     {% include "_messages.html" %}
 
@@ -14,18 +14,36 @@
             <table class="table">
                 <thead class="text-center">
                     <tr>
-                        <th scope="col" colspan="2" rowspan="2" class="border-end align-middle">Registered</th>
-                        <th scope="colgroup" colspan="2" class="border-end">Absentee</th>
-                        <th scope="colgroup" colspan="3" class="border-end">Ballot</th>
-                        <th scope="col" rowspan="2" class="border-end align-middle">Voted</th>
-                        <th scope="col" colspan="2" rowspan="2" class="align-middle">Last Updated</th>
+                        <th scope="col" colspan="2" rowspan="2" class="border-end align-middle">
+                            Registered
+                        </th>
+
+                        <th scope="colgroup" colspan="2" class="border-end d-none d-md-table-cell">
+                            Absentee
+                        </th>
+
+                        <th scope="col" rowspan="2" class="border-end d-none d-sm-table-cell d-md-none">
+                            Ballot
+                        </th>
+
+                        <th scope="colgroup" colspan="3" class="border-end d-none d-md-table-cell">
+                            Ballot
+                        </th>
+
+                        <th scope="col" rowspan="2" class="border-end align-middle d-none d-sm-table-cell">
+                            Voted
+                        </th>
+
+                        <th scope="col" colspan="2" rowspan="2" class="align-middle">
+                            Last Updated
+                        </th>
                     </tr>
                     <tr>
-                        <th class="border">Received</th>
-                        <th class="border">Approved</th>
-                        <th class="border">Available</th>
-                        <th class="border">Sent</th>
-                        <th class="border">Received</th>
+                        <th class="border d-none d-md-table-cell">Received</th>
+                        <th class="border d-none d-md-table-cell">Approved</th>
+                        <th class="border d-none d-md-table-cell">Available</th>
+                        <th class="border d-none d-md-table-cell">Sent</th>
+                        <th class="border d-none d-md-table-cell">Received</th>
                     </tr>
                 </thead>
                 <tbody>

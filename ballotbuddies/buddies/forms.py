@@ -35,3 +35,7 @@ class VoterForm(forms.ModelForm):
 
 class FriendsForm(forms.Form):
     emails = MultiEmailField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["emails"].widget.attrs["rows"] = "4"
