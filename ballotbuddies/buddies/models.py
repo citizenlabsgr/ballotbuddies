@@ -148,6 +148,7 @@ class Voter(models.Model):
         previous_status = self._status
 
         if self.state != "Michigan":
+            self.updated = timezone.now()
             return False, "Voter registration can only be fetched for Michigan."
 
         url = settings.MICHIGAN_ELECTIONS_API + "?" + urlencode(self.data)
