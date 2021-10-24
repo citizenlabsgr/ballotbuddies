@@ -96,6 +96,9 @@ class Voter(models.Model):
     def __str__(self):
         return f"{self.user.full_name} ({self.user.email})"
 
+    def __lt__(self, other):
+        return self.display_name.lower() < other.display_name.lower()
+
     @cached_property
     def email(self) -> str:
         return self.user.email
@@ -131,9 +134,14 @@ class Voter(models.Model):
         return Progress.parse(status, self.state)
 
     @cached_property
-    def community(self) -> chain[Voter]:
-        # TODO: sort voters by progress
-        return chain(self.friends.all(), self.neighbors.all())
+    def community(self) -> List[Voter]:
+        return sorted(
+            chain(
+                [self],
+                self.friends.select_related("user"),
+                self.neighbors.select_related("user"),
+            )
+        )
 
     def update_status(self) -> Tuple[bool, str]:
         previous_status = self._status
@@ -164,7 +172,7 @@ class Voter(models.Model):
     def _status(self) -> str:
         return (self.status or {}).get("id", "")
 
-    def update_neighbors(self) -> int:
+    def update_neighbors(self, limit=0) -> int:
         added = 0
         for friend in self.friends.all():
             for voter in friend.friends.all():
@@ -179,6 +187,8 @@ class Voter(models.Model):
                 ):
                     self.neighbors.add(voter)
                     added += 1
+                    if limit and added >= limit:
+                        return added
         return added
 
     @property

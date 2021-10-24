@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import login as force_login
 from django.contrib.auth import logout as force_logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from ballotbuddies.core.helpers import allow_debug, send_login_email
@@ -20,8 +21,7 @@ def index(request):
         return redirect("buddies:friends")
 
     context = {
-        "voter": Voter.objects.filter(slug=referrer).first(),
-        "friends": generate_sample_voters(),
+        "community": sorted(generate_sample_voters(referrer)),
         "referrer": referrer,
     }
     return render(request, "friends/index.html", context)
@@ -116,9 +116,8 @@ def friends(request):
         form = FriendsForm()
 
     context = {
-        "voter": voter,
-        "friends": voter.community,
-        "neighbors": voter.neighbors.all(),
+        "community": voter.community,
+        "recommended": voter.neighbors.all(),
         "form": form,
         "allow_debug": allow_debug(request),
     }
@@ -128,6 +127,17 @@ def friends(request):
 @login_required
 def status(request, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
+
+    if "ignore" in request.POST:
+        request.user.voter.neighbors.remove(voter)
+        request.user.voter.strangers.add(voter)
+        request.user.voter.save()
+        return HttpResponse()
+
+    if "add" in request.POST:
+        request.user.voter.neighbors.remove(voter)
+        request.user.voter.friends.add(voter)
+        request.user.voter.save()
 
     voter.update_status()
     voter.save()

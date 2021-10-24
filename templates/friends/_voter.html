@@ -41,25 +41,44 @@
     <td class="text-center">{{ voter.updated_humanized }}</td>
 
     <td class="text-end">
+        <form>
+        {% csrf_token %}
+
         {% if voter.user == request.user %}
         <a class="btn btn-sm btn-primary" href="{% url 'buddies:profile' %}">
             View
         </a>
-        {% elif voter in neighbors %}
+        {% elif voter in recommended %}
         <div class="btn-group" role="group" aria-label="Recommended friend">
-            <button type="button" class="btn btn-sm btn-success" disabled>Add</button>
-            <button type="button" class="btn btn-sm btn-danger" disabled>Ignore</button>
+            <button class="btn btn-sm btn-success"
+                hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                hx-vals='{ "add": true }'
+                hx-trigger="click"
+                hx-target="closest tr"
+                hx-swap="outerHTML">
+                Add
+            </button>
+            <button class="btn btn-sm btn-danger"
+                hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                hx-vals='{ "ignore": true }'
+                hx-trigger="click"
+                hx-target="closest tr"
+                hx-swap="outerHTML">
+                Ignore
+            </button>
         </div>
         {% elif voter.complete %}
         <button class="btn btn-sm btn-secondary"
             {% if not request.user.is_authenticated %}disabled{% endif %}
-            hx-get="{% url 'buddies:status' slug=voter.slug %}"
+            hx-post="{% url 'buddies:status' slug=voter.slug %}"
             hx-trigger="click"
             hx-target="closest tr"
             hx-swap="outerHTML">
             Refresh
         </button>
         {% endif %}
+
+        </form>
     </td>
 
 </tr>

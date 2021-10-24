@@ -29,11 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if voter %}
-                    {% include "friends/_voter.html" %}
-                    {% endif %}
-
-                    {% for voter in friends %}
+                    {% for voter in community %}
                     {% include "friends/_voter.html" %}
                     {% endfor %}
                 </tbody>
@@ -53,7 +49,7 @@
                 <div class="d-flex justify-content-between">
                     <button class="btn btn-primary" type="submit">Invite friends</button>
                     <button class="btn btn-secondary" type="button"
-                            onclick="navigator.clipboard.writeText('http://{{ request.get_host }}?referrer={{ voter.slug }}')">
+                            onclick="navigator.clipboard.writeText('http://{{ request.get_host }}?referrer={{ request.user.voter.slug }}')">
                         Copy invitation link
                     </button>
                 </div>

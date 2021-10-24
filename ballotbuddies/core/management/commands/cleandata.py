@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.db.models import Count
 
 import log
 
@@ -9,12 +10,15 @@ class Command(BaseCommand):
     help = "Clean up existing data"
 
     def handle(self, **_options):
+        voter: Voter
+
         for voter in Voter.objects.filter(slug=""):
             log.critical("Generating slug for voter")
             voter.save()
 
-        # TODO: only update voters with fewer than 3 pending firends
-        for voter in Voter.objects.all():
-            if count := voter.update_neighbors():
+        for voter in Voter.objects.annotate(pending=Count("neighbors")).filter(
+            pending__lt=3
+        ):
+            if count := voter.update_neighbors(limit=3):
                 self.stdout.write(f"Recommended {count} friend(s) to {voter}")
                 voter.save()

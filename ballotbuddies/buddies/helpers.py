@@ -8,7 +8,10 @@ from .models import User, Voter
 from .types import Progress
 
 
-def generate_sample_voters():
+def generate_sample_voters(referrer: str = ""):
+    if voter := Voter.objects.filter(slug=referrer).first():
+        yield voter
+
     user = User(first_name="Jane", last_name="Doe")
     voter = Voter(
         user=user, slug="_", updated=timezone.now() - timedelta(days=randint(7, 180))
