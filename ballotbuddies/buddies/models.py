@@ -14,6 +14,8 @@ from django.utils import timezone
 
 import log
 import requests
+import us
+import zipcodes
 
 from ballotbuddies.core.helpers import send_invite_email
 
@@ -77,6 +79,7 @@ class Voter(models.Model):
     zip_code = models.CharField(
         null=True, blank=True, max_length=5, verbose_name="ZIP code"
     )
+    state = models.CharField(max_length=20, default="Michigan", editable=False)
 
     status = models.JSONField(null=True, blank=True)
     updated = models.DateTimeField(null=True, blank=True)
@@ -125,7 +128,7 @@ class Voter(models.Model):
     @cached_property
     def progress(self) -> Progress:
         status = self.status.get("status") if self.status else None
-        return Progress.parse(status)
+        return Progress.parse(status, self.state)
 
     @cached_property
     def community(self) -> chain[Voter]:
@@ -134,6 +137,9 @@ class Voter(models.Model):
 
     def update_status(self) -> Tuple[bool, str]:
         previous_status = self._status
+
+        if self.state != "Michigan":
+            return False, "Voter registration can only be fetched for Michigan."
 
         url = settings.MICHIGAN_ELECTIONS_API + "?" + urlencode(self.data)
         log.info(f"GET {url}")
@@ -158,26 +164,21 @@ class Voter(models.Model):
     def _status(self) -> str:
         return (self.status or {}).get("id", "")
 
-    def update_neighbors(self, community=None) -> int:
-        community = community or [
-            (neighbor for neighbor in friend.friends.all())
-            for friend in self.friends.all()
-        ]
-
+    def update_neighbors(self) -> int:
         added = 0
-        for voter in community:
-            if not any(
-                (
-                    voter == self,
-                    not voter.complete,
-                    self.friends.filter(pk=voter.pk).exists(),
-                    self.neighbors.filter(pk=voter.pk).exists(),
-                    self.strangers.filter(pk=voter.pk).exists(),
-                )
-            ):
-                self.neighbors.add(voter)
-                added += 1
-
+        for friend in self.friends.all():
+            for voter in friend.friends.all():
+                if not any(
+                    (
+                        voter == self,
+                        not voter.complete,
+                        self.friends.filter(pk=voter.pk).exists(),
+                        self.neighbors.filter(pk=voter.pk).exists(),
+                        self.strangers.filter(pk=voter.pk).exists(),
+                    )
+                ):
+                    self.neighbors.add(voter)
+                    added += 1
         return added
 
     @property
@@ -192,6 +193,9 @@ class Voter(models.Model):
         return "−"
 
     def save(self, **kwargs):
+        if places := zipcodes.matching(self.zip_code or "0"):
+            abbr = places[0]["state"]
+            self.state = us.states.lookup(abbr).name
         self.slug = self._slugify()
         if self.id:
             self.friends.remove(self)

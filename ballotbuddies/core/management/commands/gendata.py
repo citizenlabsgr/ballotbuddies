@@ -162,6 +162,16 @@ class Command(BaseCommand):
         status = deepcopy(STATUS)
         status["status"]["registered"] = False  # type: ignore
         yield self.get_or_create_voter(
+            "test+outsite@example.com",
+            "Not",
+            "Michigander",
+            "1970-01-01",
+            "94040",
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["registered"] = False  # type: ignore
+        yield self.get_or_create_voter(
             "test+unknown@example.com",
             "Not",
             "Registered",
