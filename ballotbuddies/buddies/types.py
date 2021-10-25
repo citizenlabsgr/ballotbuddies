@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Optional
 
+from django.utils import timezone
+
 
 @dataclass
 class State:
@@ -111,7 +113,7 @@ class Progress:
         # TODO: Let voters be manually marked as complete
         # https://github.com/citizenlabsgr/ballotbuddies/issues/55
         if received_date:
-            progress.voted.icon = "✅"
+            progress.voted.date = timezone.now().date()
             progress.voted.color = "success"
 
         return progress

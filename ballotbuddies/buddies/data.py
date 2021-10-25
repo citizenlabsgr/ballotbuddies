@@ -1,84 +1,162 @@
-SAMPLE_DATA = [
-    (
-        {
-            "election": {"date": "2021-11-02"},
-            "status": {"registered": True},
+from datetime import date
+from typing import Dict, List, Tuple
+
+UNREGISTERED = (
+    {
+        "election": {"date": "2021-11-02"},
+        "status": {"registered": True},
+    },
+    {
+        "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
+        "absentee_received": {
+            "icon": "−",
+            "color": "success text-muted",
+            "url": "",
+            "date": None,
         },
-        {
-            "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
-            "absentee_received": {
-                "icon": "−",
-                "color": "success text-muted",
-                "url": "",
-                "date": None,
-            },
-            "absentee_approved": {
-                "icon": "🚫",
-                "color": "warning",
-                "url": "",
-                "date": None,
-            },
-            "ballot_available": {
-                "icon": "🟡",
-                "color": "default",
-                "url": "",
-                "date": None,
-            },
-            "ballot_sent": {"icon": "−", "color": "default", "url": "", "date": None},
-            "ballot_received": {
-                "icon": "−",
-                "color": "default",
-                "url": "",
-                "date": None,
-            },
-            "election": {
-                "color": "default",
-                "date": "2021-11-02",
-                "icon": "",
-                "url": "",
-            },
-            "voted": {"icon": "", "color": "default", "url": "", "date": None},
+        "absentee_approved": {
+            "icon": "🚫",
+            "color": "warning",
+            "url": "",
+            "date": None,
         },
-    ),
-    (
-        {
-            "election": {"date": "2021-11-02"},
-            "status": {"registered": False},
+        "ballot_available": {
+            "icon": "🟡",
+            "color": "default",
+            "url": "",
+            "date": None,
         },
-        {
-            "registered": {"icon": "🚫", "color": "danger", "url": "", "date": None},
-            "absentee_received": {
-                "icon": "",
-                "color": "default",
-                "url": "",
-                "date": None,
-            },
-            "absentee_approved": {
-                "icon": "",
-                "color": "default",
-                "url": "",
-                "date": None,
-            },
-            "ballot_available": {
-                "icon": "",
-                "color": "default",
-                "url": "",
-                "date": None,
-            },
-            "ballot_sent": {"icon": "", "color": "default", "url": "", "date": None},
-            "ballot_received": {
-                "icon": "",
-                "color": "default",
-                "url": "",
-                "date": None,
-            },
-            "election": {
-                "color": "default",
-                "date": "2021-11-02",
-                "icon": "",
-                "url": "",
-            },
-            "voted": {"icon": "", "color": "default", "url": "", "date": None},
+        "ballot_sent": {"icon": "−", "color": "default", "url": "", "date": None},
+        "ballot_received": {
+            "icon": "−",
+            "color": "default",
+            "url": "",
+            "date": None,
         },
-    ),
+        "election": {
+            "color": "default",
+            "date": "2021-11-02",
+            "icon": "",
+            "url": "",
+        },
+        "voted": {"icon": "", "color": "default", "url": "", "date": None},
+    },
+)
+
+REGISTERED = (
+    {
+        "election": {"date": "2021-11-02"},
+        "status": {"registered": False},
+    },
+    {
+        "registered": {"icon": "🚫", "color": "danger", "url": "", "date": None},
+        "absentee_received": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
+        "absentee_approved": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
+        "ballot_available": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
+        "ballot_sent": {"icon": "", "color": "default", "url": "", "date": None},
+        "ballot_received": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
+        "election": {
+            "color": "default",
+            "date": "2021-11-02",
+            "icon": "",
+            "url": "",
+        },
+        "voted": {"icon": "", "color": "default", "url": "", "date": None},
+    },
+)
+
+VOTED = (
+    {
+        "status": {
+            "ballot": True,
+            "absentee": True,
+            "ballot_url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
+            "registered": True,
+            "absentee_ballot_sent": "2021-09-30",
+            "absentee_ballot_received": "2021-10-15",
+            "absentee_application_received": "2021-09-15",
+        },
+        "message": "Jane Doe is registered to vote absentee and your ballot was mailed to you on 2021-09-30 for the November Consolidated election on 2021-11-02 and a sample ballot is available.",
+        "election": {
+            "id": 45,
+            "date": "2021-11-02",
+            "name": "November Consolidated",
+            "description": "",
+            "reference_url": None,
+        },
+        "precinct": {
+            "id": 5943,
+            "ward": "2",
+            "county": "Kent",
+            "number": "10",
+            "jurisdiction": "City of Kentwood",
+        },
+    },
+    {
+        "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
+        "absentee_received": {
+            "icon": "",
+            "color": "success",
+            "url": "",
+            "date": "2021-09-15",
+        },
+        "absentee_approved": {
+            "icon": "✅",
+            "color": "success text-muted",
+            "url": "",
+            "date": None,
+        },
+        "ballot_available": {
+            "icon": "",
+            "color": "success",
+            "url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
+            "date": None,
+        },
+        "ballot_sent": {
+            "icon": "",
+            "color": "success",
+            "url": "",
+            "date": "2021-09-30",
+        },
+        "ballot_received": {
+            "icon": "",
+            "color": "success",
+            "url": "",
+            "date": "2021-10-15",
+        },
+        "election": {"icon": "", "color": "default", "url": "", "date": "2021-11-02"},
+        "voted": {
+            "icon": "",
+            "color": "success",
+            "url": "",
+            "date": date(2021, 10, 16),
+        },
+    },
+)
+
+
+SAMPLE_DATA: List[Tuple[Dict, Dict]] = [
+    UNREGISTERED,
+    REGISTERED,
+    VOTED,
 ]

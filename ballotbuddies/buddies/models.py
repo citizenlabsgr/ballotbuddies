@@ -83,6 +83,7 @@ class Voter(models.Model):
 
     status = models.JSONField(null=True, blank=True)
     updated = models.DateTimeField(null=True, blank=True)
+    voted = models.DateTimeField(null=True, blank=True)
 
     referrer = models.ForeignKey(
         "Voter", null=True, blank=True, on_delete=models.SET_NULL
@@ -137,6 +138,9 @@ class Voter(models.Model):
             progress.registered.url = settings.REGISTRATION_URL.format(
                 name=self.state.lower()
             )
+        if progress.voted.date and not self.voted:
+            self.voted = progress.voted.date
+            self.save()
         return progress
 
     @cached_property
