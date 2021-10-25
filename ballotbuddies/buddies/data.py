@@ -85,6 +85,50 @@ REGISTERED = (
     },
 )
 
+REGISTERED_BUT_NO_ELECTION = (
+    {
+        "status": {
+            "ballot": False,
+            "absentee": True,
+            "ballot_url": None,
+            "registered": True,
+            "absentee_ballot_sent": None,
+            "absentee_ballot_received": None,
+            "absentee_application_received": None,
+        },
+        "message": "Jane Doe is registered to vote absentee and your ballot was mailed to you on 2021-09-30 for the November Consolidated election on 2021-11-02 and a sample ballot is available.",
+        "election": {
+            "id": 45,
+            "date": "2021-11-02",
+            "name": "November Consolidated",
+            "description": "",
+            "reference_url": None,
+        },
+        "precinct": {
+            "id": 5943,
+            "ward": "2",
+            "county": "Kent",
+            "number": "10",
+            "jurisdiction": "City of Kentwood",
+        },
+    },
+    {
+        "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
+        "absentee_received": {
+            "icon": "−",
+            "color": "success text-muted",
+            "url": "",
+            "date": None,
+        },
+        "absentee_approved": {"icon": "✅", "color": "success", "url": "", "date": None},
+        "ballot_available": {"icon": "🟡", "color": "default", "url": "", "date": None},
+        "ballot_sent": {"icon": "", "color": "default", "url": "", "date": None},
+        "ballot_received": {"icon": "", "color": "default", "url": "", "date": None},
+        "election": {"icon": "", "color": "default", "url": "", "date": "2021-11-02"},
+        "voted": {"icon": "", "color": "default", "url": "", "date": None},
+    },
+)
+
 VOTED = (
     {
         "status": {
@@ -158,5 +202,6 @@ VOTED = (
 SAMPLE_DATA: List[Tuple[Dict, Dict]] = [
     UNREGISTERED,
     REGISTERED,
+    REGISTERED_BUT_NO_ELECTION,
     VOTED,
 ]

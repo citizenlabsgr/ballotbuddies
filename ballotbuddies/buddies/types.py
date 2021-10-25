@@ -1,10 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Optional
 
+from django.conf import settings
 from django.utils import timezone
+
+
+def ensure_date(value) -> date:
+    if isinstance(value, str):
+        value = datetime.strptime(value, "%Y-%m-%d").date()
+    return value
 
 
 @dataclass
@@ -17,8 +24,7 @@ class State:
 
     @property
     def short_date(self) -> str:
-        if isinstance(self.date, str):
-            self.date = datetime.strptime(self.date, "%Y-%m-%d").date()
+        self.date = ensure_date(self.date)
         return f"{self.date:%-m/%d}" if self.date else ""
 
     def __str__(self):
@@ -91,6 +97,17 @@ class Progress:
                 progress.voted.icon = "🟡"
         else:
             progress.ballot_available.icon = "🟡"
+
+        delta = ensure_date(progress.election.date) - settings.TODAY
+        if not ballot and delta < timedelta(days=30):
+            progress.ballot_available.icon = "✕"
+            progress.ballot_available.color = "success text-muted"
+            progress.ballot_sent.icon = "−"
+            progress.ballot_sent.color = "success text-muted"
+            progress.ballot_received.icon = "−"
+            progress.ballot_received.color = "success text-muted"
+            progress.voted.icon = "−"
+            progress.voted.color = "success text-muted"
 
         if not (ballot and absentee):
             return progress
