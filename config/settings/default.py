@@ -2,6 +2,7 @@ import os
 from datetime import timedelta
 
 from django.contrib import messages
+from django.utils import timezone
 
 import grappelli
 
@@ -9,11 +10,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(CONFIG_ROOT)
 
-LOGIN_URL = "/login"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
-
 ALLOW_DEBUG = False
+TODAY = timezone.now().date()
 
 ###############################################################################
 # Core
@@ -104,6 +102,10 @@ LOGGING = {
 SITE_ID = 1
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 ###############################################################################
 # Sessions

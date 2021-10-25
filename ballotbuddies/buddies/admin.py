@@ -28,6 +28,7 @@ class VoterAdmin(admin.ModelAdmin):
         "state",
         "status",
         "updated",
+        "voted",
     ]
 
     actions = [update_selected_voters]

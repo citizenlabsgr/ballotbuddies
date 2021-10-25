@@ -3,14 +3,16 @@
 from dataclasses import asdict
 
 import pytest
+from freezegun import freeze_time
 
-from ..data import SAMPLE_STATUS
+from ..data import SAMPLE_DATA
 from ..types import Progress
 
 
 def describe_progress():
     def describe_parse():
-        @pytest.mark.parametrize(("status", "progress"), SAMPLE_STATUS)
-        def with_samples(expect, status, progress):
-            result = Progress.parse(status, {"date": "2021-11-02"})
+        @freeze_time("2021-10-16")
+        @pytest.mark.parametrize(("data", "progress"), SAMPLE_DATA)
+        def with_samples(expect, data, progress):
+            result = Progress.parse(data)
             expect(asdict(result)) == progress

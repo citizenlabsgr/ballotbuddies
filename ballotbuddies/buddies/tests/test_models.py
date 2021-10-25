@@ -1,7 +1,11 @@
 # pylint: disable=expression-not-assigned,singleton-comparison,unused-variable
 
-import pytest
+from dataclasses import asdict
 
+import pytest
+from freezegun import freeze_time
+
+from ..data import SAMPLE_DATA
 from ..models import User, Voter
 
 
@@ -10,6 +14,24 @@ def describe_voter():
     def voter():
         user = User(first_name="Rosalynn", last_name="Bliss")
         return Voter(user=user, birth_date="1975-08-03", zip_code="49503")
+
+    def describe_progress():
+        @freeze_time("2021-10-16")
+        @pytest.mark.django_db
+        @pytest.mark.parametrize(("data", "progress"), SAMPLE_DATA)
+        def with_samples(expect, voter, data, progress):
+            voter.user.save()
+
+            voter.status = data
+
+            expect(asdict(voter.progress)) == progress
+
+        def with_nonmichigander(expect, voter):
+            voter.state = "Ohio"
+
+            expect(
+                voter.progress.registered.url
+            ) == "https://votesaveamerica.com/state/ohio/"
 
     def describe_update_status():
         @pytest.mark.vcr

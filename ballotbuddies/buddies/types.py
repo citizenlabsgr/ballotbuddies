@@ -1,10 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Optional
 
 from django.conf import settings
+from django.utils import timezone
+
+
+def ensure_date(value) -> date:
+    if isinstance(value, str):
+        value = datetime.strptime(value, "%Y-%m-%d").date()
+    return value
 
 
 @dataclass
@@ -17,8 +24,7 @@ class State:
 
     @property
     def short_date(self) -> str:
-        if isinstance(self.date, str):
-            self.date = datetime.strptime(self.date, "%Y-%m-%d").date()
+        self.date = ensure_date(self.date)
         return f"{self.date:%-m/%d}" if self.date else ""
 
     def __str__(self):
@@ -38,21 +44,22 @@ class Progress:
     voted: State = field(default_factory=State)
 
     @classmethod
-    def parse(cls, status: dict, election: dict, state: str = "Michigan") -> Progress:
+    def parse(cls, data: dict) -> Progress:
         progress = cls()
 
-        if not status:
-            if state == "Michigan":
-                progress.registered.icon = "🟡"
-            else:
-                progress.registered.url = settings.REGISTRATION_URL.format(
-                    name=state.lower()
-                )
-                progress.registered.color = "warning"
-            return progress
+        try:
+            status = data["status"]
+            election = data["election"]
+        except (TypeError, KeyError):
+            status = {}
+            election = {}
 
-        if election:
-            progress.election.date = election.get("date")
+        progress.election.date = election.get("date")
+
+        if not status:
+            progress.registered.icon = "🟡"
+            progress.registered.color = "warning"
+            return progress
 
         if registered := status.get("registered"):
             progress.registered.icon = "✅"
@@ -91,6 +98,17 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
+        delta = ensure_date(progress.election.date) - settings.TODAY
+        if not ballot and delta < timedelta(days=30):
+            progress.ballot_available.icon = "✕"
+            progress.ballot_available.color = "success text-muted"
+            progress.ballot_sent.icon = "−"
+            progress.ballot_sent.color = "success text-muted"
+            progress.ballot_received.icon = "−"
+            progress.ballot_received.color = "success text-muted"
+            progress.voted.icon = "−"
+            progress.voted.color = "success text-muted"
+
         if not (ballot and absentee):
             return progress
 
@@ -112,7 +130,7 @@ class Progress:
         # TODO: Let voters be manually marked as complete
         # https://github.com/citizenlabsgr/ballotbuddies/issues/55
         if received_date:
-            progress.voted.icon = "✅"
+            progress.voted.date = timezone.now().date()
             progress.voted.color = "success"
 
         return progress
