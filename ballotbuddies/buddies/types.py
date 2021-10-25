@@ -4,8 +4,6 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Optional
 
-from django.conf import settings
-
 
 @dataclass
 class State:
@@ -38,21 +36,22 @@ class Progress:
     voted: State = field(default_factory=State)
 
     @classmethod
-    def parse(cls, status: dict, election: dict, state: str = "Michigan") -> Progress:
+    def parse(cls, data: dict) -> Progress:
         progress = cls()
 
-        if not status:
-            if state == "Michigan":
-                progress.registered.icon = "🟡"
-            else:
-                progress.registered.url = settings.REGISTRATION_URL.format(
-                    name=state.lower()
-                )
-                progress.registered.color = "warning"
-            return progress
+        try:
+            status = data["status"]
+            election = data["election"]
+        except (TypeError, KeyError):
+            status = {}
+            election = {}
 
-        if election:
-            progress.election.date = election.get("date")
+        progress.election.date = election.get("date")
+
+        if not status:
+            progress.registered.icon = "🟡"
+            progress.registered.color = "warning"
+            return progress
 
         if registered := status.get("registered"):
             progress.registered.icon = "✅"

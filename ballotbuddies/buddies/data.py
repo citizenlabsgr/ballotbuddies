@@ -1,6 +1,9 @@
-SAMPLE_STATUS = [
+SAMPLE_DATA = [
     (
-        {"registered": True},
+        {
+            "election": {"date": "2021-11-02"},
+            "status": {"registered": True},
+        },
         {
             "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
             "absentee_received": {
@@ -38,7 +41,10 @@ SAMPLE_STATUS = [
         },
     ),
     (
-        {"registered": False},
+        {
+            "election": {"date": "2021-11-02"},
+            "status": {"registered": False},
+        },
         {
             "registered": {"icon": "🚫", "color": "danger", "url": "", "date": None},
             "absentee_received": {

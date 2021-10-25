@@ -131,9 +131,13 @@ class Voter(models.Model):
 
     @cached_property
     def progress(self) -> Progress:
-        status = self.status.get("status") if self.status else None
-        election = self.status.get("election") if self.status else None
-        return Progress.parse(status, election, self.state)
+        progress = Progress.parse(self.status)
+        if self.state != "Michigan":
+            progress.registered.icon = ""
+            progress.registered.url = settings.REGISTRATION_URL.format(
+                name=self.state.lower()
+            )
+        return progress
 
     @cached_property
     def community(self) -> List[Voter]:

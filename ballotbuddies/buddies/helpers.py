@@ -3,7 +3,7 @@ from random import randint
 
 from django.utils import timezone
 
-from .data import SAMPLE_STATUS
+from .data import SAMPLE_DATA
 from .models import User, Voter
 from .types import Progress
 
@@ -17,7 +17,7 @@ def generate_sample_voters(referrer: str = ""):
         user=user, slug="_", updated=timezone.now() - timedelta(days=randint(7, 180))
     )
     voter.complete = True
-    voter.progress = Progress.parse(SAMPLE_STATUS[0][0], {})
+    voter.progress = Progress.parse(SAMPLE_DATA[0][0])
     yield voter
 
     user = User(first_name="John", last_name="Doe")
@@ -25,5 +25,5 @@ def generate_sample_voters(referrer: str = ""):
         user=user, slug="_", updated=timezone.now() - timedelta(days=randint(7, 180))
     )
     voter.complete = True
-    voter.progress = Progress.parse(SAMPLE_STATUS[1][0], {})
+    voter.progress = Progress.parse(SAMPLE_DATA[1][0])
     yield voter
