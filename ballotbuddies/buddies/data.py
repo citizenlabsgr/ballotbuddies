@@ -17,7 +17,7 @@ UNREGISTERED = (
         "absentee_approved": {
             "icon": "🚫",
             "color": "warning",
-            "url": "",
+            "url": "https://absentee.michiganelections.io/",
             "date": None,
         },
         "ballot_available": {

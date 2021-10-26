@@ -85,6 +85,7 @@ class Progress:
             progress.absentee_approved.icon = "🟡"
         else:
             progress.absentee_approved.icon = "🚫"
+            progress.absentee_approved.url = settings.ABSENTEE_URL
             progress.absentee_approved.color = "warning"
             progress.ballot_sent.icon = "−"
             progress.ballot_received.icon = "−"

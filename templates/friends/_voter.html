@@ -28,7 +28,13 @@
     </td>
 
     <td class="text-center table-{{ voter.progress.absentee_approved.color }} d-none d-md-table-cell">
+        {% if voter.progress.absentee_approved.url %}
+        <a href="{{ voter.progress.absentee_approved.url }}" target="_blank" class="ms-1 text-decoration-none">
+            {{ voter.progress.absentee_approved }}
+        </a>
+        {% else %}
         {{ voter.progress.absentee_approved }}
+        {% endif %}
     </td>
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-md-table-cell">
