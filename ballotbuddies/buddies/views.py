@@ -80,7 +80,7 @@ def profile(request):
 def setup(request):
     voter: Voter = Voter.objects.from_user(request.user)
     if request.method == "POST":
-        form = VoterForm(request.POST, instance=voter)
+        form = VoterForm(request.POST, instance=voter, initial=voter.data)
         if form.is_valid():
             voter = form.save()
             voter.user.update_name(

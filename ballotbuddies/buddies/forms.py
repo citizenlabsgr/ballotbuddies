@@ -17,7 +17,9 @@ class LoginForm(forms.ModelForm):
 
 class VoterForm(forms.ModelForm):
     email = forms.EmailField(disabled=True, required=False)
-    first_name = forms.CharField(widget=forms.TextInput(attrs={"autofocus": True}))
+    first_name = forms.CharField(
+        label="Legal first name", widget=forms.TextInput(attrs={"autofocus": True})
+    )
     last_name = forms.CharField()
 
     class Meta:
@@ -26,15 +28,16 @@ class VoterForm(forms.ModelForm):
 
     def __init__(self, *args, locked: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["birth_date"].required = True
+        self.fields["birth_date"].widget.attrs["placeholder"] = "YYYY-MM-DD"
+        self.fields["zip_code"].required = True
+        self.fields["zip_code"].widget.attrs["placeholder"] = "#####"
         if locked:
             del self.fields["email"]
             for name in self.fields:
                 self.fields[name].required = False
                 self.fields[name].widget.attrs["autofocus"] = False
                 self.fields[name].widget.attrs["readonly"] = True
-        else:
-            self.fields["birth_date"].required = True
-            self.fields["zip_code"].required = True
 
     def clean_zip_code(self):
         value = self.cleaned_data["zip_code"].strip()
