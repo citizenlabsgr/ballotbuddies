@@ -227,6 +227,17 @@ class Command(BaseCommand):
         )
 
         status = deepcopy(STATUS)
+        status["status"]["absentee_ballot_received"] = None  # type: ignore
+        yield self.get_or_create_voter(
+            "test+holding@example.com",
+            "Ballot",
+            "Sent",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
         yield self.get_or_create_voter(
             "test+received@example.com",
             "Ballot",

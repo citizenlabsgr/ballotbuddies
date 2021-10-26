@@ -10,6 +10,7 @@ BASE_NAME = BASE_DOMAIN = "localhost"
 BASE_URL = f"http://{BASE_DOMAIN}:8000"
 
 ALLOW_DEBUG = True
+
 TODAY = date(2021, 10, 1)
 
 ###############################################################################

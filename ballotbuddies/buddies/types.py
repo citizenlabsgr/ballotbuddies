@@ -125,7 +125,10 @@ class Progress:
             progress.ballot_received.date = received_date
             progress.ballot_received.color = "success"
         elif sent_date:
-            progress.ballot_received.icon = "🟡"
+            if delta < timedelta(days=7):
+                progress.ballot_received.icon = "⚠️"
+            else:
+                progress.ballot_received.icon = "🟡"
 
         # TODO: Let voters be manually marked as complete
         # https://github.com/citizenlabsgr/ballotbuddies/issues/55
