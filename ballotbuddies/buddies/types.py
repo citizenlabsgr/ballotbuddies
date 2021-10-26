@@ -100,7 +100,7 @@ class Progress:
 
         delta = ensure_date(progress.election.date) - settings.TODAY
         if not ballot and delta < timedelta(days=30):
-            progress.ballot_available.icon = "✕"
+            progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
             progress.ballot_sent.icon = "−"
             progress.ballot_sent.color = "success text-muted"
