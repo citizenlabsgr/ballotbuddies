@@ -7,10 +7,35 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>{% block title %}Ballot Buddies{% endblock title %}</title>
 
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icons/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'icons/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'icons/safari-pinned-tab.svg' %}" color="#f55221">
+    <meta name="msapplication-TileColor" content="#f55221">
+    <meta name="theme-color" content="#ffffff">
+
     {% block meta %}
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Michigan Ballot Buddies">
+    <meta name="description" content="An app to help friends hold each other accountable to vote in every election.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://buddies.michiganelections.io/">
+    <meta property="og:title" content="Michigan Ballot Buddies">
+    <meta property="og:description" content="An app to help friends hold each other accountable to vote in every election.">
+    <meta property="og:image" content="https://buddies.michiganelections.io{% static 'logo.png' %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://buddies.michiganelections.io/">
+    <meta property="twitter:title" content="Michigan Ballot Buddies">
+    <meta property="twitter:description" content="An app to help friends hold each other accountable to vote in every election.">
+    <meta property="twitter:image" content="https://buddies.michiganelections.io{% static 'logo.png' %}">
     {% endblock meta %}
 
     <!-- Bootstrap -->

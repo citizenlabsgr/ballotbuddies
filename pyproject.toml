@@ -1,8 +1,8 @@
 [tool.poetry]
 
 name = "ballotbuddies"
-version = "0.0"
-description = "Track your friends' voter registration status."
+version = "1.0"
+description = "An app to help friends hold each other accountable to vote in every election."
 authors = ["Citizen Labs <info@citizenlabs.org>"]
 
 [tool.poetry.dependencies]
