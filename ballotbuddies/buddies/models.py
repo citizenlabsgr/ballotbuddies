@@ -214,6 +214,10 @@ class Voter(models.Model):
         return "−"
 
     def save(self, **kwargs):
+        if self.user.full_name.islower():
+            self.user.first_name = self.user.first_name.capitalize()
+            self.user.last_name = self.user.last_name.capitalize()
+            self.user.save()
         if places := zipcodes.matching(self.zip_code or "0"):
             abbr = places[0]["state"]
             self.state = us.states.lookup(abbr).name

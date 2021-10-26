@@ -65,6 +65,16 @@ def describe_voter():
 
     def describe_save():
         @pytest.mark.django_db
+        def it_formats_name(expect, voter):
+            voter.user.first_name = "jane"
+            voter.user.last_name = "doe"
+            voter.user.save()
+
+            voter.save()
+
+            expect(voter.user.full_name) == "Jane Doe"
+
+        @pytest.mark.django_db
         def it_remove_self_from_friends(expect, voter):
             voter.user.save()
             voter.save()
