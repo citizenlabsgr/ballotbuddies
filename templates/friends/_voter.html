@@ -46,11 +46,13 @@
         {{ voter.progress.ballot_received }}
     </td>
 
-    <td class="text-center table-{{ voter.progress.voted.color }} d-none d-sm-table-cell">
+    <td class="text-center table-{{ voter.progress.voted.color }}">
         {{ voter.progress.voted }}
     </td>
 
-    <td class="text-center">{{ voter.updated_humanized }}</td>
+    <td class="text-center pe-0">
+        {{ voter.updated_humanized }}
+    </td>
 
     <td class="text-end">
         <form>
@@ -58,7 +60,8 @@
 
         {% if voter.user == request.user %}
         <a class="btn btn-sm btn-primary" href="{% url 'buddies:profile' %}">
-            View
+            <span class="d-none d-sm-inline">View</span>
+            <span class="d-inline d-sm-none">✎</span>
         </a>
         {% elif voter in recommended %}
         <div class="btn-group" role="group" aria-label="Recommended friend">
@@ -68,7 +71,8 @@
                 hx-trigger="click"
                 hx-target="closest tr"
                 hx-swap="outerHTML">
-                Add
+                <span class="d-none d-sm-inline">Add</span>
+                <span class="d-inline d-sm-none">+</span>
             </button>
             <button class="btn btn-sm btn-danger"
                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
@@ -76,7 +80,8 @@
                 hx-trigger="click"
                 hx-target="closest tr"
                 hx-swap="outerHTML">
-                Ignore
+                <span class="d-none d-sm-inline">Ignore</span>
+                <span class="d-inline d-sm-none">-</span>
             </button>
         </div>
         {% elif voter.complete %}
@@ -86,7 +91,8 @@
             hx-trigger="click"
             hx-target="closest tr"
             hx-swap="outerHTML">
-            Refresh
+            <span class="d-none d-sm-inline">Refresh</span>
+            <span class="d-inline d-sm-none">↺</span>
         </button>
         {% endif %}
 
