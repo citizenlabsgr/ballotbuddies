@@ -2,8 +2,10 @@
 
 name = "ballotbuddies"
 version = "1.0"
+
 description = "An app to help friends hold each other accountable to vote in every election."
 authors = ["Citizen Labs <info@citizenlabs.org>"]
+license = "GPLv3"
 
 [tool.poetry.dependencies]
 
