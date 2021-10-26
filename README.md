@@ -1,11 +1,9 @@
+# Ballot Buddies
+
+An app to help friends hold each other accountable to vote in every election.
+
 [![CircleCI](https://img.shields.io/circleci/build/github/citizenlabsgr/ballotbuddies)](https://circleci.com/gh/citizenlabsgr/ballotbuddies)
 [![Coveralls](https://img.shields.io/coveralls/github/citizenlabsgr/ballotbuddies)](https://coveralls.io/github/citizenlabsgr/ballotbuddies)
-
-# Overview
-
-TODO: Describe this project.
-
-This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-django](https://github.com/jacebrowning/template-django).
 
 # Setup
 
@@ -46,23 +44,10 @@ $ make data
 
 ## Development
 
-Run the application and recompile static files:
+Run the application:
 
 ```
 $ make run
 ```
 
-Continuously run validation targets:
-
-```
-$ make watch
-```
-
-or run them individually:
-
-```
-$ make check-backend
-$ make test-backend-unit
-$ make test-backend-integration
-$ make test-system
-```
+See the [contributor guide](CONTRIBUTING.md) for additional details.
