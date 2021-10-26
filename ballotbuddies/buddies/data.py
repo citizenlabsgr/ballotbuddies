@@ -173,7 +173,7 @@ VOTED = (
         "ballot_available": {
             "icon": "",
             "color": "success",
-            "url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
+            "url": "https://share.michiganelections.io/elections/45/precincts/5943?name=Jane",
             "date": None,
         },
         "ballot_sent": {

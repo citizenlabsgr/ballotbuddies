@@ -192,6 +192,7 @@ AUTHENTICATION_BACKENDS = [
 ###############################################################################
 # Michigan Elections
 
-MICHIGAN_ELECTIONS_API = "https://michiganelections.io/api/status/"
+STATUS_API = "https://michiganelections.io/api/status/"
 REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
 ABSENTEE_URL = "https://absentee.michiganelections.io/"
+PREVIEW_URL = "https://share.michiganelections.io/elections/{election}/precincts/{precinct}?name={name}"

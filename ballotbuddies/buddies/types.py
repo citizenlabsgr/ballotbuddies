@@ -53,6 +53,8 @@ class Progress:
         except (TypeError, KeyError):
             status = {}
             election = {}
+        else:
+            precinct = data.get("precinct", {})
 
         progress.election.date = election.get("date")
 
@@ -92,7 +94,11 @@ class Progress:
 
         if ballot := status.get("ballot"):
             progress.absentee_approved.color = "success text-muted"
-            progress.ballot_available.url = status.get("ballot_url", "")
+            progress.ballot_available.url = settings.PREVIEW_URL.format(
+                election=election["id"],
+                precinct=precinct["id"],
+                name=data.get("message", "").split(" ")[0],
+            )
             progress.ballot_available.color = "success"
             if not absentee:
                 progress.voted.icon = "🟡"
