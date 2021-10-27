@@ -4,7 +4,6 @@ from base64 import urlsafe_b64encode
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
-from typing import List, Tuple
 from urllib.parse import urlencode
 
 from django.conf import settings
@@ -48,7 +47,7 @@ class VoterManager(models.Manager):
             log.info(f"Created voter: {voter}")
         return voter
 
-    def invite(self, voter: Voter, emails: List[str]) -> List[Voter]:
+    def invite(self, voter: Voter, emails: list[str]) -> list[Voter]:
         friends = []
         for email in emails:
             user, created = User.objects.get_or_create(
@@ -95,7 +94,7 @@ class Voter(models.Model):
     objects = VoterManager()
 
     def __str__(self):
-        return f"{self.user.full_name} ({self.user.email})"
+        return f"{self.user.get_full_name()} ({self.user.email})"
 
     def __lt__(self, other):
         return self.display_name.lower() < other.display_name.lower()
@@ -114,7 +113,7 @@ class Voter(models.Model):
 
     @cached_property
     def display_name(self) -> str:
-        return self.user.display_name
+        return self.user.display_name  # type: ignore
 
     @cached_property
     def data(self) -> dict:
@@ -144,7 +143,7 @@ class Voter(models.Model):
         return progress
 
     @cached_property
-    def community(self) -> List[Voter]:
+    def community(self) -> list[Voter]:
         return sorted(
             chain(
                 [self],
@@ -153,7 +152,7 @@ class Voter(models.Model):
             )
         )
 
-    def update_status(self) -> Tuple[bool, str]:
+    def update_status(self) -> tuple[bool, str]:
         previous_status = self._status
 
         if self.state != "Michigan":
@@ -214,7 +213,7 @@ class Voter(models.Model):
         return "−"
 
     def save(self, **kwargs):
-        if self.user.full_name.islower():
+        if self.user.get_full_name().islower():
             self.user.first_name = self.user.first_name.capitalize()
             self.user.last_name = self.user.last_name.capitalize()
             self.user.save()

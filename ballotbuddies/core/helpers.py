@@ -34,7 +34,7 @@ def send_login_email(user: User, path: str = "/"):
 
 def send_invite_email(user: User, friend: User, path: str = "/profile"):
     url = build_url(path) + get_query_string(user)
-    name = friend.display_name
+    name = friend.display_name  # type: ignore
     send_mail(
         f"Join {name} on Ballot Buddies",
         "Your friend has challenged you to vote in every election!"

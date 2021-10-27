@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
-from typing import Optional
 
 from django.conf import settings
 from django.utils import timezone
@@ -20,7 +19,7 @@ class State:
     icon: str = ""
     color: str = "default"
     url: str = ""
-    date: Optional[date] = None
+    date: date | None = None
 
     @property
     def short_date(self) -> str:

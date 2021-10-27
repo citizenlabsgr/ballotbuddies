@@ -72,7 +72,7 @@ def describe_voter():
 
             voter.save()
 
-            expect(voter.user.full_name) == "Jane Doe"
+            expect(voter.user.get_full_name()) == "Jane Doe"
 
         @pytest.mark.django_db
         def it_remove_self_from_friends(expect, voter):

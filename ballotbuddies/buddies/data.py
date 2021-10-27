@@ -1,5 +1,4 @@
 from datetime import date
-from typing import Dict, List, Tuple
 
 UNREGISTERED = (
     {
@@ -199,7 +198,7 @@ VOTED = (
 )
 
 
-SAMPLE_DATA: List[Tuple[Dict, Dict]] = [
+SAMPLE_DATA: list[tuple[dict, dict]] = [
     UNREGISTERED,
     REGISTERED,
     REGISTERED_BUT_NO_ELECTION,
