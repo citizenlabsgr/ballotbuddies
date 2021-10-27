@@ -83,7 +83,7 @@ def setup(request):
         form = VoterForm(request.POST, instance=voter, initial=voter.data)
         if form.is_valid():
             voter = form.save()
-            voter.user.update_name(
+            voter.user.update_name(  # type: ignore
                 request, form.cleaned_data["first_name"], form.cleaned_data["last_name"]
             )
             messages.success(request, "Successfully updated your profile information.")

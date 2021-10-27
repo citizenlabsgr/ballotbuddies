@@ -94,7 +94,7 @@ class Voter(models.Model):
     objects = VoterManager()
 
     def __str__(self):
-        return f"{self.user.full_name} ({self.user.email})"
+        return f"{self.user.get_full_name()} ({self.user.email})"
 
     def __lt__(self, other):
         return self.display_name.lower() < other.display_name.lower()
@@ -113,7 +113,7 @@ class Voter(models.Model):
 
     @cached_property
     def display_name(self) -> str:
-        return self.user.display_name
+        return self.user.display_name  # type: ignore
 
     @cached_property
     def data(self) -> dict:
@@ -213,7 +213,7 @@ class Voter(models.Model):
         return "−"
 
     def save(self, **kwargs):
-        if self.user.full_name.islower():
+        if self.user.get_full_name().islower():
             self.user.first_name = self.user.first_name.capitalize()
             self.user.last_name = self.user.last_name.capitalize()
             self.user.save()

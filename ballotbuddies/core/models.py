@@ -12,22 +12,18 @@ def normalize(name: str) -> str:
 
 class CustomUser:
     @property
-    def full_name(self: User) -> str:
-        return self.get_full_name()
-
-    @property
-    def display_name(self: User) -> str:
+    def display_name(self: User) -> str:  # type: ignore
         return self.get_full_name() or self.email
 
     @property
-    def is_trackable(self: User) -> bool:
+    def is_trackable(self: User) -> bool:  # type: ignore
         return (
             self.is_authenticated
             and "@example.com" not in self.email
             and "admin" not in self.username
         )
 
-    def update_name(self: User, request, first_name: str, last_name: str):
+    def update_name(self: User, request, first_name: str, last_name: str):  # type: ignore
         self.first_name = first_name
         self.last_name = last_name
         if not self.is_superuser:  # preserve default localhost user
