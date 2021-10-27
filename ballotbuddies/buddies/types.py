@@ -133,6 +133,7 @@ class Progress:
         elif sent_date:
             if delta < timedelta(days=7):
                 progress.ballot_received.icon = "⚠️"
+                progress.ballot_received.color = "warning"
             else:
                 progress.ballot_received.icon = "🟡"
 
