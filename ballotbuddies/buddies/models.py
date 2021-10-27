@@ -4,7 +4,6 @@ from base64 import urlsafe_b64encode
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
-from typing import List, Tuple
 from urllib.parse import urlencode
 
 from django.conf import settings
@@ -48,7 +47,7 @@ class VoterManager(models.Manager):
             log.info(f"Created voter: {voter}")
         return voter
 
-    def invite(self, voter: Voter, emails: List[str]) -> List[Voter]:
+    def invite(self, voter: Voter, emails: list[str]) -> list[Voter]:
         friends = []
         for email in emails:
             user, created = User.objects.get_or_create(
@@ -144,7 +143,7 @@ class Voter(models.Model):
         return progress
 
     @cached_property
-    def community(self) -> List[Voter]:
+    def community(self) -> list[Voter]:
         return sorted(
             chain(
                 [self],
@@ -153,7 +152,7 @@ class Voter(models.Model):
             )
         )
 
-    def update_status(self) -> Tuple[bool, str]:
+    def update_status(self) -> tuple[bool, str]:
         previous_status = self._status
 
         if self.state != "Michigan":

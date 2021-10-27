@@ -45,7 +45,9 @@ isort = "=5.9.3"
 
 # Linters
 pylint = "^2.4.3"
-mypy = "~0.790"
+mypy = "~0.910"
+types-freezegun = "*"
+types-requests = "*"
 
 # Testing
 pytest = "^6.2.5"
@@ -78,3 +80,11 @@ profile = "black"
 
 known_django = "django"
 sections = "FUTURE,STDLIB,DJANGO,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+
+[tool.mypy]
+
+ignore_missing_imports = true
+no_implicit_optional = true
+check_untyped_defs = true
+
+cache_dir = ".cache/mypy/"
