@@ -5,6 +5,7 @@ from django.contrib.auth import logout as force_logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 
 from ballotbuddies.core.helpers import allow_debug, send_login_email
 
@@ -139,6 +140,12 @@ def status(request, slug: str):
         request.user.voter.neighbors.remove(voter)
         request.user.voter.friends.add(voter)
         request.user.voter.save()
+
+    if "voted" in request.POST:
+        voter.voted = timezone.now()
+        voter.save()
+        context = {"voter": voter}
+        return render(request, "profile/_status.html", context)
 
     voter.update_status()
     voter.save()

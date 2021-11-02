@@ -132,14 +132,21 @@ class Voter(models.Model):
     @cached_property
     def progress(self) -> Progress:
         progress = Progress.parse(self.status)
+
         if self.state != "Michigan":
             progress.registered.icon = ""
             progress.registered.url = settings.REGISTRATION_URL.format(
                 name=self.state.lower()
             )
+
         if progress.voted.date and not self.voted:
             self.voted = progress.voted.date
             self.save()
+
+        if self.voted and not progress.voted.date:
+            progress.voted.date = self.voted
+            progress.voted.color = "success"
+
         return progress
 
     @cached_property

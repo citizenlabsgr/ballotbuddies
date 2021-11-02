@@ -29,6 +29,9 @@ class State:
     def __str__(self):
         return f"{self.icon} {self.short_date}".strip()
 
+    def __bool__(self):
+        return bool(str(self))
+
 
 @dataclass
 class Progress:
@@ -137,8 +140,6 @@ class Progress:
             else:
                 progress.ballot_received.icon = "🟡"
 
-        # TODO: Let voters be manually marked as complete
-        # https://github.com/citizenlabsgr/ballotbuddies/issues/55
         if received_date:
             progress.voted.date = timezone.now().date()
             progress.voted.color = "success"
