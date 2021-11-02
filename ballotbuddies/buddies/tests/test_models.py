@@ -2,6 +2,8 @@
 
 from dataclasses import asdict
 
+from django.utils import timezone
+
 import pytest
 from freezegun import freeze_time
 
@@ -32,6 +34,11 @@ def describe_voter():
             expect(
                 voter.progress.registered.url
             ) == "https://votesaveamerica.com/state/ohio/"
+
+        def with_manual_voter(expect, voter):
+            voter.voted = timezone.now()
+
+            expect(voter.progress.voted.color) == "success"
 
     def describe_update_status():
         @pytest.mark.vcr

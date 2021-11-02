@@ -30,7 +30,7 @@ class State:
         return f"{self.icon} {self.short_date}".strip()
 
     def __bool__(self):
-        return bool(str(self))
+        return self.color != "default"
 
 
 @dataclass

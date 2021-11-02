@@ -144,6 +144,9 @@ class Voter(models.Model):
             self.save()
 
         if self.voted and not progress.voted.date:
+            progress.ballot_sent.color = "success"
+            progress.ballot_received.color = "success"
+            progress.voted.icon = ""
             progress.voted.date = self.voted
             progress.voted.color = "success"
 
