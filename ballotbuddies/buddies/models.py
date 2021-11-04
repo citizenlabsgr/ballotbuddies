@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from base64 import urlsafe_b64encode
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
@@ -16,7 +15,7 @@ import requests
 import us
 import zipcodes
 
-from ballotbuddies.core.helpers import send_invite_email
+from ballotbuddies.core.helpers import generate_key, send_invite_email
 
 from .types import Progress
 
@@ -72,7 +71,7 @@ class VoterManager(models.Manager):
 class Voter(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    slug = models.CharField(max_length=100, blank=True)
+    slug = models.CharField(max_length=100, default=generate_key)
 
     birth_date = models.DateField(null=True, blank=True)
     zip_code = models.CharField(
@@ -230,11 +229,6 @@ class Voter(models.Model):
         if places := zipcodes.matching(self.zip_code or "0"):
             abbr = places[0]["state"]
             self.state = us.states.lookup(abbr).name
-        self.slug = self._slugify()
         if self.id:
             self.friends.remove(self)
         super().save(**kwargs)
-
-    def _slugify(self) -> str:
-        fingerprint = self.first_name + self.last_name + str(self.zip_code)
-        return urlsafe_b64encode(fingerprint.encode()).decode().strip("=")

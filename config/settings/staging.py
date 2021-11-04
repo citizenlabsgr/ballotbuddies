@@ -7,6 +7,7 @@ from .production import *
 BASE_NAME = os.environ["HEROKU_APP_NAME"]
 if BASE_NAME.count("-") >= 2:
     BASE_DOMAIN = f"{BASE_NAME}.herokuapp.com"
+    DEBUG = True
 else:
     BASE_DOMAIN = "staging-buddies.michiganelections.io"
 BASE_URL = f"https://{BASE_DOMAIN}"
