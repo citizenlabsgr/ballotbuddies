@@ -1,3 +1,6 @@
+import random
+import string
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -19,6 +22,11 @@ def allow_debug(request) -> bool:
     if request.GET.get("debug"):
         return True
     return settings.DEBUG
+
+
+def generate_key(length=10):
+    alphabet = string.ascii_letters + string.digits
+    return "".join(random.choice(alphabet) for _ in range(length))
 
 
 def send_login_email(user: User, path: str = "/"):

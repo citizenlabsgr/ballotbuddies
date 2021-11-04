@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.db.models import Count
 
-import log
-
 from ballotbuddies.buddies.models import Voter
 
 
@@ -11,11 +9,6 @@ class Command(BaseCommand):
 
     def handle(self, **_options):
         voter: Voter
-
-        for voter in Voter.objects.filter(slug=""):
-            log.critical("Generating slug for voter")
-            voter.save()
-
         for voter in Voter.objects.annotate(pending=Count("neighbors")).filter(
             pending__lt=3
         ):
