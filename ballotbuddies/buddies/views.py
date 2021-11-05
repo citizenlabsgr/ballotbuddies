@@ -66,10 +66,11 @@ def profile(request):
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
 
-    _updated, error = voter.update_status()
-    voter.save()
-    if error:
-        messages.error(request, error)
+    if not voter.updated:
+        _updated, error = voter.update_status()
+        voter.save()
+        if error:
+            messages.error(request, error)
 
     form = VoterForm(initial=voter.data, locked=True)
 
@@ -84,6 +85,8 @@ def setup(request):
         form = VoterForm(request.POST, instance=voter, initial=voter.data)
         if form.is_valid():
             voter = form.save()
+            voter.updated = None
+            voter.save()
             voter.user.update_name(  # type: ignore
                 request, form.cleaned_data["first_name"], form.cleaned_data["last_name"]
             )
@@ -143,12 +146,12 @@ def status(request, slug: str):
 
     if "voted" in request.POST:
         voter.voted = timezone.now()
-        voter.save()
-        context = {"voter": voter}
-        return render(request, "profile/_status.html", context)
 
     voter.update_status()
     voter.save()
 
     context = {"voter": voter}
+    if "voted" in request.POST or request.method == "GET":
+        return render(request, "profile/_status.html", context)
+
     return render(request, "friends/_voter.html", context)
