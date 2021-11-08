@@ -4,6 +4,18 @@
         {{ voter.display_name }}
     </th>
 
+    {% if voter in recommended %}
+    <td></td>
+    <td class="d-none d-sm-table-cell d-lg-none"></td>
+    <td class="d-none d-lg-table-cell"></td>
+    <td class="d-none d-lg-table-cell"></td>
+    <td class="d-none d-lg-table-cell"></td>
+    <td class="d-none d-lg-table-cell"></td>
+    <td class="d-none d-lg-table-cell"></td>
+    <td></td>
+    <td></td>
+    {% else %}
+
     <td class="text-center table-{{ voter.progress.registered.color }}" style="white-space: nowrap;">
         {{ voter.progress.registered }}
         {% if voter.progress.registered.url %}
@@ -58,6 +70,8 @@
     <td class="text-center pe-0">
         {{ voter.updated_humanized }}
     </td>
+
+    {% endif %}
 
     <td class="text-end">
         <form>
