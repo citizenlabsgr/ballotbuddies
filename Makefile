@@ -160,9 +160,9 @@ build: install
 
 .PHONY: promote
 promote: install
-	TEST_SITE=https://staging.ballotbuddies.com $(RUN) pytest tests/system --cache-clear
-	heroku pipelines:promote --ballotbuddies ballotbuddies-staging --to ballotbuddies
-	TEST_SITE=https://ballotbuddies.com $(RUN) pytest tests/system
+	TEST_SITE=https://staging-buddies.michiganelections.io $(RUN) pytest tests/system --cache-clear
+	heroku pipelines:promote --app ballotbuddies-staging --to ballotbuddies
+	TEST_SITE=https://buddies.michiganelections.io $(RUN) pytest tests/system
 
 # HELP ########################################################################
 
