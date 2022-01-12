@@ -18,6 +18,8 @@ def update_selected_voters(modeladmin, request, queryset):
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
 
+    search_fields = ["user__email", "user__first_name", "user__last_name"]
+
     list_filter = ["state"]
     list_display = [
         "email",
