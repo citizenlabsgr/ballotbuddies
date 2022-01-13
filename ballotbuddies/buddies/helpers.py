@@ -55,7 +55,7 @@ def update_statuses() -> int:
     log.info(f"Updating status for {query.count()} voter(s)")
     voter: Voter
     for voter in query:
-        if voter.update_status()[0]:
+        if voter.complete and voter.update_status()[0]:
             total += 1
         voter.updated = timezone.now()
         voter.save()
