@@ -40,8 +40,8 @@ us = "^2.0.2"
 [tool.poetry.dev-dependencies]
 
 # Formatting
-black = "=21.8b0"
-isort = "=5.9.3"
+black = "~21.12b0"
+isort = "~5.10.1"
 
 # Linters
 pylint = "~2.11.1"
@@ -67,13 +67,17 @@ django-livereload-server = "~0.3.2"
 honcho = "^1.1"
 
 # E2E
-splinter = "~0.16.0"
+splinter = "~0.16"
 
 # Tooling
 ipython = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
 sniffer = "*"
+
+[tool.black]
+
+quiet = true
 
 [tool.isort]
 
