@@ -1,4 +1,3 @@
-from contextlib import suppress
 from datetime import timedelta
 from random import randint
 
@@ -56,9 +55,8 @@ def update_statuses() -> int:
     log.info(f"Updating status for {query.count()} voter(s)")
     voter: Voter
     for voter in query:
-        with suppress(ValueError):
-            if voter.update_status()[0]:
-                total += 1
+        if voter.update_status()[0]:
+            total += 1
         voter.updated = timezone.now()
         voter.save()
 

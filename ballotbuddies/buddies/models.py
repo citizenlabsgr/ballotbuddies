@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import suppress
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
@@ -226,9 +227,10 @@ class Voter(models.Model):
             self.user.first_name = self.user.first_name.capitalize()
             self.user.last_name = self.user.last_name.capitalize()
             self.user.save()
-        if places := zipcodes.matching(self.zip_code or "0"):
-            abbr = places[0]["state"]
-            self.state = us.states.lookup(abbr).name
+        with suppress(ValueError):
+            if places := zipcodes.matching(self.zip_code or "0"):
+                abbr = places[0]["state"]
+                self.state = us.states.lookup(abbr).name
         if self.id:
             self.friends.remove(self)
         super().save(**kwargs)

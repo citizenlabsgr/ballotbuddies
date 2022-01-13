@@ -99,3 +99,12 @@ def describe_voter():
             voter.save()
 
             expect(voter.state) == "California"
+
+        @pytest.mark.django_db
+        def it_handles_invalid_zip_code(expect, voter):
+            voter.user.save()
+
+            voter.zip_code = "?????"
+            voter.save()
+
+            expect(voter.state) == "Michigan"
