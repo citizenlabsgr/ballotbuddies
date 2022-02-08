@@ -16,7 +16,7 @@ django = "^4.0.2"
 django-cors-headers = "*"
 django-debug-toolbar = "^3.2.2"
 django-grappelli = "*"
-django-multi-email-field = "*"
+django-multi-email-field = { git = "https://github.com/aht007/django-multi-email-field", rev = "99a27ccdad465ff13a08cdfdd6b2612f817d32fc" } # https://github.com/fle/django-multi-email-field/pull/20
 django-sesame = "^2.4"
 crispy-bootstrap5 = "*"
 
@@ -33,7 +33,7 @@ bugsnag = "^4.1.1"
 # Utilities
 minilog = "^2.0"
 requests = "^2.26"
-ua-parser = "*" # Optional 'django-sesame' dependency to detect Safari
+ua-parser = "*" # optional 'django-sesame' dependency to detect Safari
 zipcodes = "^1.2.0"
 us = "^2.0.2"
 

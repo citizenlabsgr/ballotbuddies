@@ -277,13 +277,20 @@ tornado = "*"
 [[package]]
 name = "django-multi-email-field"
 version = "0.6.2"
-description = "Provides a model field and a form field to manage list of e-mails"
+description = ""
 category = "main"
 optional = false
 python-versions = "*"
+develop = false
 
 [package.dependencies]
 Django = "*"
+
+[package.source]
+type = "git"
+url = "https://github.com/aht007/django-multi-email-field"
+reference = "99a27ccdad465ff13a08cdfdd6b2612f817d32fc"
+resolved_reference = "99a27ccdad465ff13a08cdfdd6b2612f817d32fc"
 
 [[package]]
 name = "django-redis"
@@ -1120,7 +1127,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "0a8b6b561b4bb3cb7d690129c0bf96676f3592f0e37b679118ba95215414b807"
+content-hash = "2af1220aa939dabf385cf4e6f3e9d4615cbfa9d6aee69bad98d103ed73efb9c2"
 
 [metadata.files]
 appnope = [
@@ -1289,10 +1296,7 @@ django-grappelli = [
 django-livereload-server = [
     {file = "django-livereload-server-0.3.2.tar.gz", hash = "sha256:6c8da1cb356d9a7fd044d0a50342574aad168522d5d8d25bbdc4ddd9fd196eab"},
 ]
-django-multi-email-field = [
-    {file = "django-multi-email-field-0.6.2.tar.gz", hash = "sha256:7c623c851604a3ac6a5221ccc448f4e28fcd01c498b1acf58357ef30bb84f879"},
-    {file = "django_multi_email_field-0.6.2-py3-none-any.whl", hash = "sha256:1fd1c2d20ccee9cae7a68ad2ea69185f3132d96d02ec83e6d54cee535c43f093"},
-]
+django-multi-email-field = []
 django-redis = [
     {file = "django-redis-4.12.1.tar.gz", hash = "sha256:306589c7021e6468b2656edc89f62b8ba67e8d5a1c8877e2688042263daa7a63"},
     {file = "django_redis-4.12.1-py3-none-any.whl", hash = "sha256:1133b26b75baa3664164c3f44b9d5d133d1b8de45d94d79f38d1adc5b1d502e5"},
