@@ -12,7 +12,7 @@ license = "GPLv3"
 python = "^3.10"
 
 # Django
-django = "^3.2.8"
+django = "^4.0.2"
 django-cors-headers = "*"
 django-debug-toolbar = "^3.2.2"
 django-grappelli = "*"
@@ -33,7 +33,7 @@ bugsnag = "^4.1.1"
 # Utilities
 minilog = "^2.0"
 requests = "^2.26"
-ua-parser = "*" # Optional 'django-sesame' to detect Safari
+ua-parser = "*" # Optional 'django-sesame' dependency to detect Safari
 zipcodes = "^1.2.0"
 us = "^2.0.2"
 
