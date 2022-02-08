@@ -40,8 +40,8 @@ us = "^2.0.2"
 [tool.poetry.dev-dependencies]
 
 # Formatting
-black = "~21.12b0"
-isort = "~5.10.1"
+black = "^22.1"
+isort = "^5.10"
 
 # Linters
 pylint = "~2.11.1"
