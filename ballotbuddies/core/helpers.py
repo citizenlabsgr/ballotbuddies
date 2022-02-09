@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
+import log
 from sesame.utils import get_query_string
 
 
@@ -30,6 +31,9 @@ def generate_key(length=10):
 
 
 def send_login_email(user: User, path: str = "/"):
+    if user.email.endswith("@example.com"):
+        log.warn(f"Skipped email for test user: {user}")
+        return
     url = build_url(path) + get_query_string(user)
     send_mail(
         "Welcome to Ballot Buddies",
