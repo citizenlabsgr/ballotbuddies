@@ -24,9 +24,11 @@
   "cSpell.words": [
     "asdict",
     "ballotbuddies",
+    "circleci",
     "createdb",
     "direnv",
     "grappelli",
+    "htmlcov",
     "HTMX"
   ]
 }

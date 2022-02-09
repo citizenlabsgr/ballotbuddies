@@ -65,9 +65,6 @@ endif
 clean:
 	rm -rf staticfiles
 	rm -rf .coverage htmlcov
-
-.PHONY: clean-all
-clean-all: clean
 	rm -rf $(VIRTUAL_ENV)
 
 # RUNTIME DEPENDENCIES ########################################################

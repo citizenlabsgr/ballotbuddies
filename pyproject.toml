@@ -9,7 +9,7 @@ license = "GPLv3"
 
 [tool.poetry.dependencies]
 
-python = "^3.10"
+python = "~3.10"
 
 # Django
 django = "^4.0.2"
