@@ -1,6 +1,6 @@
 from django import forms
-
-from multi_email_field.forms import MultiEmailField
+from django.core import validators
+from django.core.validators import validate_email
 
 from .models import User, Voter
 
@@ -44,6 +44,41 @@ class VoterForm(forms.ModelForm):
         if len(value) != 5 or not value.isnumeric():
             raise forms.ValidationError("This value must be exactly five digits.")
         return value
+
+
+class MultiEmailWidget(forms.widgets.Textarea):
+
+    EMPTY_VALUES = validators.EMPTY_VALUES + ("[]",)
+
+    is_hidden = False
+
+    def _prepare(self, value) -> str:
+        if value in self.EMPTY_VALUES:
+            return ""
+        elif isinstance(value, str):
+            return value
+        elif isinstance(value, list):
+            return "\n".join(value)
+        raise forms.ValidationError("Invalid format.")
+
+    def render(self, name, value, **kwargs):
+        value = self._prepare(value)
+        return super().render(name, value, **kwargs)
+
+
+class MultiEmailField(forms.Field):
+
+    widget = MultiEmailWidget
+
+    def to_python(self, value):
+        if not value:
+            return []
+        return [v.strip() for v in value.splitlines() if v != ""]
+
+    def validate(self, value):
+        super().validate(value)
+        for email in value:
+            validate_email(email)
 
 
 class FriendsForm(forms.Form):

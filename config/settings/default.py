@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "crispy_forms",
     "crispy_bootstrap5",
-    "multi_email_field",
     "ballotbuddies.core",
     "ballotbuddies.buddies",
 ]
