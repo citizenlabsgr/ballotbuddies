@@ -144,8 +144,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 GRAPPELLI_ADMIN_TITLE = "Ballot Buddies Admin"
 
-del grappelli.default_app_config  # fixes RemovedInDjango41Warning
-
 ###############################################################################
 # Django Debug Toolbar
 
