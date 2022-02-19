@@ -19,6 +19,8 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 ALLOWED_HOSTS = ["localhost", ".michiganelections.io"]
 
+CSRF_TRUSTED_ORIGINS = ["https://*.michiganelections.io"]
+
 ###############################################################################
 # Databases
 
