@@ -25,10 +25,16 @@
     "asdict",
     "ballotbuddies",
     "circleci",
+    "cleandata",
     "createdb",
     "direnv",
     "grappelli",
+    "gunicorn",
     "htmlcov",
-    "HTMX"
+    "HTMX",
+    "livereload",
+    "PYTHONUNBUFFERED",
+    "runserver",
+    "wsgi"
   ]
 }

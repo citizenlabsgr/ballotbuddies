@@ -12,8 +12,8 @@ all: install
 .PHONY: ci
 ci: check test ## CI | Run all validation targets
 
-.PHONY: watch
-watch: install ## CI | Rerun all validation targests in a loop
+.PHONY: dev
+dev: install ## CI | Rerun all validation targests in a loop
 	@ rm -rf $(FAILURES)
 	$(RUN) sniffer
 
@@ -63,8 +63,11 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf staticfiles
-	rm -rf .coverage htmlcov
+	rm -rf .cache .coverage htmlcov staticfiles
+
+.PHONY: clean-all
+clean-all: clean
+	# TODO: Delete compiled frontend dependencies if applicable
 	rm -rf $(VIRTUAL_ENV)
 
 # RUNTIME DEPENDENCIES ########################################################
@@ -90,7 +93,7 @@ reset: install ## Database | Create a new database, migrate, and seed it
 # VALIDATION TARGETS ##########################################################
 
 PYTHON_PACKAGES := config ballotbuddies
-FAILURES := .cache/v/cache/lastfailed
+FAILURES := .cache/pytest/v/cache/lastfailed
 
 .PHONY: check
 check: check-backend ## Run static analysis

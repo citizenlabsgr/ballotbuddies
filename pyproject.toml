@@ -99,3 +99,26 @@ plugins = ["mypy_django_plugin.main"]
 [tool.django-stubs]
 
 django_settings_module = "config.settings.local"
+
+[tool.pytest.ini_options]
+
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+
+addopts = """
+--strict-markers
+--pdbcls=tests.debugger:Debugger
+
+--quiet
+-r sxX
+
+--fail-on-template-vars
+
+--cov=ballotbuddies
+--cov-report=html
+--cov-report=term-missing:skip-covered
+--no-cov-on-fail
+"""
+
+cache_dir = ".cache/pytest/"
+
+markers = []

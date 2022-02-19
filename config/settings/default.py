@@ -4,8 +4,6 @@ from datetime import timedelta
 from django.contrib import messages
 from django.utils import timezone
 
-import grappelli
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(CONFIG_ROOT)
