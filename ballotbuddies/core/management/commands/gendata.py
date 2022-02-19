@@ -101,14 +101,12 @@ class Command(BaseCommand):
 
         return user
 
-    def get_or_create_user(self, base_email: str, password="password"):
-        username, email_domain = base_email.split("@")
+    def get_or_create_user(self, email: str, password="password"):
+        username, _domain = email.split("@")
 
-        user, created = User.objects.get_or_create(username=username)
-        if email_domain == "example.com":
-            user.email = base_email
-        else:
-            user.email = f"{username}+{settings.BASE_NAME}@{email_domain}"
+        user, created = User.objects.get_or_create(
+            username=username, defaults={"email": email}
+        )
         if created:
             user.set_password(password)
             user.save()
