@@ -97,7 +97,9 @@ class Voter(models.Model):
         return f"{self.user.get_full_name()} ({self.user.email})"
 
     def __lt__(self, other):
-        return self.display_name.lower() < other.display_name.lower()
+        if self.progress == other.progress:
+            return self.display_name.lower() < other.display_name.lower()
+        return self.progress > other.progress
 
     @cached_property
     def email(self) -> str:

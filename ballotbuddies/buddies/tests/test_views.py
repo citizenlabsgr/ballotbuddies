@@ -7,8 +7,7 @@ from ..models import Voter
 
 @pytest.fixture
 def voter(admin_user):
-    voter, _created = Voter.objects.update_or_create(user=admin_user)
-    return voter
+    return Voter.objects.from_user(admin_user)
 
 
 @pytest.mark.django_db

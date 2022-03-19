@@ -13,6 +13,14 @@ def ensure_date(value) -> date:
     return value
 
 
+COLOR_VALUES = {
+    "success": 3,
+    "warning": 2,
+    "danger": 1,
+    "default": 0,
+}
+
+
 @dataclass
 class State:
 
@@ -20,6 +28,11 @@ class State:
     color: str = "default"
     url: str = ""
     date: date | None = None
+
+    @property
+    def value(self) -> int:
+        color = self.color.split(" ", maxsplit=1)[0]
+        return COLOR_VALUES[color]
 
     @property
     def short_date(self) -> str:
@@ -44,6 +57,21 @@ class Progress:
     ballot_received: State = field(default_factory=State)
     election: State = field(default_factory=State)
     voted: State = field(default_factory=State)
+
+    def __gt__(self, other):
+        return self.values > other.values
+
+    @property
+    def values(self):
+        return (
+            self.voted.value,
+            self.ballot_received.value,
+            self.ballot_sent.value,
+            self.ballot_available.value,
+            self.absentee_approved.value,
+            self.absentee_received.value,
+            self.registered.value,
+        )
 
     @classmethod
     def parse(cls, data: dict) -> Progress:
