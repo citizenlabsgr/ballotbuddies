@@ -74,8 +74,7 @@
     {% endif %}
 
     <td class="text-end">
-        <form>
-        {% csrf_token %}
+        <form>{% csrf_token %}
 
         {% if voter.user == request.user %}
         <a class="btn btn-sm btn-primary" href="{% url 'buddies:profile' %}">
