@@ -132,6 +132,7 @@ def friends(request):
 @login_required
 def status(request, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
+    render_as_table = request.method == "GET"
 
     if "ignore" in request.POST:
         request.user.voter.neighbors.remove(voter)
@@ -146,12 +147,17 @@ def status(request, slug: str):
 
     if "voted" in request.POST:
         voter.voted = timezone.now()
+        render_as_table = True
+
+    if "reset" in request.POST:
+        voter.reset_status()
+        render_as_table = True
 
     voter.update_status()
     voter.save()
 
     context = {"voter": voter}
-    if "voted" in request.POST or request.method == "GET":
+    if render_as_table:
         return render(request, "profile/_status.html", context)
 
     return render(request, "friends/_voter.html", context)

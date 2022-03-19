@@ -79,11 +79,19 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.voted.color }} border-start">
+                <form>{% csrf_token %}
+
                 {% if voter.progress.voted %}
-                {{ voter.progress.voted }}
+                    {{ voter.progress.voted }}
+                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                        hx-vals='{ "reset": true }'
+                        hx-trigger="click"
+                        hx-target="closest table"
+                        hx-swap="outerHTML">
+                        x
+                    </button>
                 {% else %}
-                <form>
-                    {% csrf_token %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap"
                         hx-post="{% url 'buddies:status' slug=voter.slug %}"
                         hx-vals='{ "voted": true }'
@@ -92,8 +100,9 @@
                         hx-swap="outerHTML">
                         I Voted
                     </button>
-                </form>
                 {% endif %}
+
+                </form>
             </td>
         </tr>
 
