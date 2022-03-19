@@ -1,6 +1,7 @@
 # pylint: disable=expression-not-assigned,singleton-comparison,unused-variable
 
 from dataclasses import asdict
+from datetime import timedelta
 
 from django.utils import timezone
 
@@ -59,6 +60,15 @@ def describe_voter():
 
             expect(updated) == False
             expect(error) == ""
+
+        def with_stale_vote(expect, voter):
+            voter.voted = timezone.now() - timedelta(weeks=5)
+
+            updated, error = voter.update_status()
+
+            expect(updated) == True
+            expect(error) != ""
+            expect(voter.voted) == None
 
     def describe_update_neighbors():
         @pytest.mark.django_db

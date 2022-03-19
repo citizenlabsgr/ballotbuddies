@@ -170,6 +170,10 @@ class Voter(models.Model):
     def update_status(self) -> tuple[bool, str]:
         previous_status = self._status
 
+        if self.voted and timezone.now() - self.voted > timedelta(weeks=4):
+            self.voted = None
+            return True, "Reset voted date since the election is in the past."
+
         if self.state != "Michigan":
             self.updated = timezone.now()
             return False, "Voter registration can only be fetched for Michigan."
