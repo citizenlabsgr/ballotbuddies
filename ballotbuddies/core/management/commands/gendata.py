@@ -160,7 +160,7 @@ class Command(BaseCommand):
         status = deepcopy(STATUS)
         status["status"]["registered"] = False  # type: ignore
         yield self.get_or_create_voter(
-            "test+outsite@example.com",
+            "test+outstate@example.com",
             "Not",
             "Michigander",
             "1970-01-01",
@@ -208,6 +208,18 @@ class Command(BaseCommand):
             "test+waiting@example.com",
             "Ballot",
             "Pending",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["ballot"] = False  # type: ignore
+        status["election"]["date"] = settings.TODAY.strftime("%Y-%m-%d")  # type: ignore
+        yield self.get_or_create_voter(
+            "test+nonvoter@example.com",
+            "No",
+            "Election",
             "1970-01-01",
             "49503",
             status,

@@ -140,11 +140,11 @@ class Progress:
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
             progress.ballot_sent.icon = "−"
-            progress.ballot_sent.color = "success text-muted"
+            progress.ballot_sent.color = "default text-muted"
             progress.ballot_received.icon = "−"
-            progress.ballot_received.color = "success text-muted"
+            progress.ballot_received.color = "default text-muted"
             progress.voted.icon = "−"
-            progress.voted.color = "success text-muted"
+            progress.voted.color = "default text-muted"
 
         if not (ballot and absentee):
             return progress
