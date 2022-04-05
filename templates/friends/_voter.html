@@ -1,7 +1,12 @@
 <tr class="align-middle {% if not voter.complete %}text-muted{% endif %}">
 
     <th scope="row">
-        {{ voter.display_name }}
+        <span class="d-block d-sm-none" {% if "@" in voter.display_name %}style="word-break: break-all;"{% endif %}>
+            {{ voter.display_name }}
+        </span>
+        <span class="d-none d-sm-block">
+            {{ voter.display_name }}
+        </span>
     </th>
 
     {% if voter in recommended %}
