@@ -21,11 +21,11 @@ COLOR_VALUES = {
 }
 
 ICON_VALUES = {
-    "🔗": 0.5,
-    "✅": 0.4,
-    "🟡": 0.3,
-    "🚫": 0.2,
-    "−": 0.1,
+    "🔗": 0.4,
+    "✅": 0.3,
+    "🟡": 0.2,
+    "🚫": 0.1,
+    "−": 0.0,
     "": 0.0,
 }
 
@@ -41,8 +41,7 @@ class State:
     @property
     def value(self) -> float:
         color = self.color.split(" ", maxsplit=1)[0]
-        value = COLOR_VALUES[color]
-        return value + ICON_VALUES[self.icon]
+        return COLOR_VALUES[color] + ICON_VALUES[self.icon]
 
     @property
     def short_date(self) -> str:
@@ -78,8 +77,6 @@ class Progress:
             self.ballot_received.value,
             self.ballot_sent.value,
             self.ballot_available.value,
-            self.absentee_approved.value,
-            self.absentee_received.value,
             self.registered.value,
         )
 
