@@ -226,7 +226,7 @@ class Voter(models.Model):
     def election(self) -> date | None:
         try:
             return ensure_date(self.status["election"]["date"])
-        except TypeError:
+        except (TypeError, KeyError):
             return None
 
     @property
@@ -235,10 +235,9 @@ class Voter(models.Model):
             delta = timezone.now().date() - self.election
             days = delta.days
             if days > 1:
-                return f"{delta.days} days"
-            if days == 1:
-                return "tomorrow"
-            return "today"
+                return f"{days} days"
+            # TODO: Handle past elections
+            return "tomorrow" if days == 1 else "today"
         return ""
 
     @property
