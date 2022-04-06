@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import suppress
-from datetime import timedelta
+from datetime import date, timedelta
 from functools import cached_property
 from itertools import chain
 from urllib.parse import urlencode
@@ -18,7 +18,7 @@ import zipcodes
 
 from ballotbuddies.core.helpers import generate_key, send_invite_email
 
-from .types import Progress
+from .types import Progress, ensure_date
 
 
 class VoterManager(models.Manager):
@@ -221,6 +221,25 @@ class Voter(models.Model):
                     if limit and added >= limit:
                         return added
         return added
+
+    @property
+    def election(self) -> date | None:
+        try:
+            return ensure_date(self.status["election"]["date"])
+        except TypeError:
+            return None
+
+    @property
+    def deadline_humanized(self) -> str:
+        if self.election:
+            delta = timezone.now().date() - self.election
+            days = delta.days
+            if days > 1:
+                return f"{delta.days} days"
+            if days == 1:
+                return "tomorrow"
+            return "today"
+        return ""
 
     @property
     def updated_humanized(self) -> str:

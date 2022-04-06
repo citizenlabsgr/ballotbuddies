@@ -10,15 +10,15 @@
     </th>
 
     {% if voter in recommended %}
-    <td></td>
-    <td class="d-none d-sm-table-cell d-lg-none"></td>
-    <td class="d-none d-lg-table-cell"></td>
-    <td class="d-none d-lg-table-cell"></td>
-    <td class="d-none d-lg-table-cell"></td>
-    <td class="d-none d-lg-table-cell"></td>
-    <td class="d-none d-lg-table-cell"></td>
-    <td></td>
-    <td></td>
+    <td></td> <!-- Registered -->
+    <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Recieved -->
+    <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Approved -->
+    <td class="d-none d-sm-table-cell"></td> <!-- Ballot: Available -->
+    <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Sent -->
+    <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Recieved -->
+    <td class=""></td> <!-- Election: Voted -->
+    <td class="d-none d-md-table-cell"></td> <!-- Election: Deadline -->
+    <td></td> <!-- Last Updated -->
     {% else %}
 
     <td class="text-center table-{{ voter.progress.registered.color }}" style="white-space: nowrap;">
@@ -70,6 +70,10 @@
 
     <td class="text-center table-{{ voter.progress.voted.color }}">
         {{ voter.progress.voted }}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.voted.color }} d-none d-md-table-cell">
+        {{ voter.deadline_humanized }}
     </td>
 
     <td class="text-center pe-0">
