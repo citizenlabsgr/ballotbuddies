@@ -156,7 +156,12 @@ VOTED = (
         },
     },
     {
-        "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
+        "registered": {
+            "icon": "✅",
+            "color": "success",
+            "url": "",
+            "date": None,
+        },
         "absentee_received": {
             "icon": "",
             "color": "success",
@@ -187,12 +192,17 @@ VOTED = (
             "url": "",
             "date": "2021-10-15",
         },
-        "election": {"icon": "", "color": "default", "url": "", "date": "2021-11-02"},
         "voted": {
             "icon": "",
             "color": "success",
             "url": "",
             "date": date(2021, 10, 16),
+        },
+        "election": {
+            "icon": "",
+            "color": "success text-muted",
+            "url": "",
+            "date": "2021-11-02",
         },
     },
 )

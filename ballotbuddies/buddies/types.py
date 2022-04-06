@@ -48,6 +48,20 @@ class State:
         self.date = ensure_date(self.date)
         return f"{self.date:%-m/%d}" if self.date else ""
 
+    @property
+    def delta_date(self) -> str:
+        if self.icon:
+            return self.icon
+        self.date = ensure_date(self.date)
+        if self.date:
+            delta = (self.date - settings.TODAY).days
+            if delta > 1:
+                return f"{delta} days"
+            if delta == 1:
+                return "Tomorrow"
+            return self.short_date if delta else "Today"
+        return ""
+
     def __str__(self):
         return f"{self.icon} {self.short_date}".strip()
 
@@ -64,8 +78,8 @@ class Progress:
     ballot_available: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
-    election: State = field(default_factory=State)
     voted: State = field(default_factory=State)
+    election: State = field(default_factory=State)
 
     def __gt__(self, other):
         return self.values > other.values
@@ -73,9 +87,9 @@ class Progress:
     @property
     def values(self):
         return (
-            self.voted.value,
             self.ballot_received.value,
             self.ballot_sent.value,
+            self.voted.value,
             self.ballot_available.value,
             self.registered.value,
         )
@@ -152,6 +166,8 @@ class Progress:
             progress.ballot_received.color = "default text-muted"
             progress.voted.icon = "−"
             progress.voted.color = "default text-muted"
+            progress.election.icon = "−"
+            progress.election.color = "default text-muted"
 
         if not (ballot and absentee):
             return progress
@@ -178,5 +194,6 @@ class Progress:
         if received_date:
             progress.voted.date = timezone.now().date()
             progress.voted.color = "success"
+            progress.election.color = "success text-muted"
 
         return progress

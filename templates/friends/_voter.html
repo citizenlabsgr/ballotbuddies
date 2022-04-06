@@ -72,8 +72,8 @@
         {{ voter.progress.voted }}
     </td>
 
-    <td class="text-center table-{{ voter.progress.voted.color }} d-none d-md-table-cell">
-        {{ voter.deadline_humanized }}
+    <td class="text-center table-{{ voter.progress.election.color }} d-none d-md-table-cell">
+        {{ voter.progress.election.delta_date }}
     </td>
 
     <td class="text-center pe-0">
