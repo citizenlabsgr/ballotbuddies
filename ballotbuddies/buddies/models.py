@@ -222,7 +222,7 @@ class Voter(models.Model):
                         return added
         return added
 
-    @property
+    @cached_property
     def election(self) -> date | None:
         try:
             return ensure_date(self.status["election"]["date"])
@@ -232,12 +232,13 @@ class Voter(models.Model):
     @property
     def deadline_humanized(self) -> str:
         if self.election:
-            delta = timezone.now().date() - self.election
+            delta = self.election - timezone.now().date()
             days = delta.days
             if days > 1:
                 return f"{days} days"
-            # TODO: Handle past elections
-            return "tomorrow" if days == 1 else "today"
+            if days == 1:
+                return "Tomorrow"
+            return f"{self.election:%-m/%d}" if days else "Today"
         return ""
 
     @property
