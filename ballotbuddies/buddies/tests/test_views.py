@@ -10,6 +10,7 @@ def voter(admin_user):
     return Voter.objects.from_user(admin_user)
 
 
+@pytest.mark.vcr
 @pytest.mark.django_db
 def describe_status():
     @pytest.fixture
@@ -22,6 +23,7 @@ def describe_status():
         response = client.post(url, {"voted": True})
 
         html = response.content.decode()
+        expect(html).includes("Reset")
         expect(html).excludes("I Voted")
 
     def it_can_manually_clear_voting(expect, client, url, voter):
@@ -31,3 +33,4 @@ def describe_status():
 
         html = response.content.decode()
         expect(html).includes("I Voted")
+        expect(html).excludes("Reset")

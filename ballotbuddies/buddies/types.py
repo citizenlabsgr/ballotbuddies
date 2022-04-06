@@ -21,9 +21,10 @@ COLOR_VALUES = {
 }
 
 ICON_VALUES = {
-    "🔗": 0.4,
-    "✅": 0.3,
-    "🟡": 0.2,
+    "🔗": 0.32,
+    "✅": 0.31,
+    "🟡": 0.22,
+    "⚠️": 0.21,
     "🚫": 0.1,
     "−": 0.0,
     "": 0.0,
@@ -192,7 +193,7 @@ class Progress:
                 progress.ballot_received.icon = "🟡"
 
         if received_date:
-            progress.voted.date = timezone.now().date()
+            progress.voted.date = timezone.now().date().strftime("%Y-%m-%d")  # type: ignore
             progress.voted.color = "success"
             progress.election.color = "success text-muted"
 

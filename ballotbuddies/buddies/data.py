@@ -1,12 +1,15 @@
-from datetime import date
-
 UNREGISTERED = (
     {
         "election": {"date": "2021-11-02"},
         "status": {"registered": True},
     },
     {
-        "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
+        "registered": {
+            "icon": "✅",
+            "color": "success",
+            "url": "",
+            "date": None,
+        },
         "absentee_received": {
             "icon": "−",
             "color": "success text-muted",
@@ -25,7 +28,12 @@ UNREGISTERED = (
             "url": "",
             "date": None,
         },
-        "ballot_sent": {"icon": "−", "color": "default", "url": "", "date": None},
+        "ballot_sent": {
+            "icon": "−",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
         "ballot_received": {
             "icon": "−",
             "color": "default",
@@ -38,7 +46,12 @@ UNREGISTERED = (
             "icon": "",
             "url": "",
         },
-        "voted": {"icon": "", "color": "default", "url": "", "date": None},
+        "voted": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
     },
 )
 
@@ -48,7 +61,12 @@ REGISTERED = (
         "status": {"registered": False},
     },
     {
-        "registered": {"icon": "🚫", "color": "danger", "url": "", "date": None},
+        "registered": {
+            "icon": "🚫",
+            "color": "danger",
+            "url": "",
+            "date": None,
+        },
         "absentee_received": {
             "icon": "",
             "color": "default",
@@ -67,7 +85,12 @@ REGISTERED = (
             "url": "",
             "date": None,
         },
-        "ballot_sent": {"icon": "", "color": "default", "url": "", "date": None},
+        "ballot_sent": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
         "ballot_received": {
             "icon": "",
             "color": "default",
@@ -80,7 +103,12 @@ REGISTERED = (
             "icon": "",
             "url": "",
         },
-        "voted": {"icon": "", "color": "default", "url": "", "date": None},
+        "voted": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
     },
 )
 
@@ -112,19 +140,54 @@ REGISTERED_BUT_NO_ELECTION = (
         },
     },
     {
-        "registered": {"icon": "✅", "color": "success", "url": "", "date": None},
+        "registered": {
+            "icon": "✅",
+            "color": "success",
+            "url": "",
+            "date": None,
+        },
         "absentee_received": {
             "icon": "−",
             "color": "success text-muted",
             "url": "",
             "date": None,
         },
-        "absentee_approved": {"icon": "✅", "color": "success", "url": "", "date": None},
-        "ballot_available": {"icon": "🟡", "color": "default", "url": "", "date": None},
-        "ballot_sent": {"icon": "", "color": "default", "url": "", "date": None},
-        "ballot_received": {"icon": "", "color": "default", "url": "", "date": None},
-        "election": {"icon": "", "color": "default", "url": "", "date": "2021-11-02"},
-        "voted": {"icon": "", "color": "default", "url": "", "date": None},
+        "absentee_approved": {
+            "icon": "✅",
+            "color": "success",
+            "url": "",
+            "date": None,
+        },
+        "ballot_available": {
+            "icon": "🟡",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
+        "ballot_sent": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
+        "ballot_received": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
+        "election": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-11-02",
+        },
+        "voted": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": None,
+        },
     },
 )
 
@@ -196,7 +259,7 @@ VOTED = (
             "icon": "",
             "color": "success",
             "url": "",
-            "date": date(2021, 10, 16),
+            "date": "2021-10-16",
         },
         "election": {
             "icon": "",
