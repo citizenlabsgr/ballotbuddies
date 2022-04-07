@@ -255,17 +255,17 @@ VOTED = (
             "url": "",
             "date": "2021-10-15",
         },
-        "voted": {
-            "icon": "",
-            "color": "success",
-            "url": "",
-            "date": "2021-10-16",
-        },
         "election": {
             "icon": "",
             "color": "success text-muted",
             "url": "",
             "date": "2021-11-02",
+        },
+        "voted": {
+            "icon": "✅",
+            "color": "success",
+            "url": "",
+            "date": "2021-10-15",
         },
     },
 )

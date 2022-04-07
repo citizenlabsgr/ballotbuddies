@@ -148,8 +148,8 @@ class Voter(models.Model):
         if self.voted:
             progress.ballot_sent.color = "success"
             progress.ballot_received.color = "success"
-            progress.voted.icon = ""
-            progress.voted.date = self.voted
+            progress.election.color = "success text-muted"
+            progress.voted.icon = "✅"
             progress.voted.color = "success"
 
         return progress

@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 
 from django.conf import settings
-from django.utils import timezone
 
 
 def ensure_date(value) -> date:
@@ -91,8 +90,8 @@ class Progress:
     ballot_available: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
-    voted: State = field(default_factory=State)
     election: State = field(default_factory=State)
+    voted: State = field(default_factory=State)
 
     def __gt__(self, other):
         return self.values > other.values
@@ -177,10 +176,10 @@ class Progress:
             progress.ballot_sent.color = "default text-muted"
             progress.ballot_received.icon = "−"
             progress.ballot_received.color = "default text-muted"
-            progress.voted.icon = "−"
-            progress.voted.color = "default text-muted"
             progress.election.icon = "−"
             progress.election.color = "default text-muted"
+            progress.voted.icon = "−"
+            progress.voted.color = "default text-muted"
 
         if not (ballot and absentee):
             return progress
@@ -197,16 +196,15 @@ class Progress:
         if received_date := status.get("absentee_ballot_received"):
             progress.ballot_received.date = received_date
             progress.ballot_received.color = "success"
+            progress.election.color = "success text-muted"
+            progress.voted.icon = "✅"
+            progress.voted.color = "success"
+            progress.voted.date = received_date
         elif sent_date:
             if delta < timedelta(days=7):
                 progress.ballot_received.icon = "⚠️"
                 progress.ballot_received.color = "warning"
             else:
                 progress.ballot_received.icon = "🟡"
-
-        if received_date:
-            progress.voted.date = timezone.now().date().strftime("%Y-%m-%d")  # type: ignore
-            progress.voted.color = "success"
-            progress.election.color = "success text-muted"
 
         return progress

@@ -1,1 +1,0 @@
-web: PYTHONUNBUFFERED=1 DJANGO_COLORS=1 python manage.py runserver ${PORT} --force-color
