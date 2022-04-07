@@ -230,7 +230,7 @@ class Voter(models.Model):
                 return "Now"
             if delta < timedelta(minutes=5):
                 return "Today"
-            return f"{self.updated:%-m/%d}"
+            return f"{self.updated:%-m/%-d}"
         return "−"
 
     def save(self, **kwargs):

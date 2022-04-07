@@ -13,6 +13,10 @@ def ensure_date(value) -> date:
     return value
 
 
+def get_ordinal(day: int) -> str:
+    return "th" if 11 <= day <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+
+
 COLOR_VALUES = {
     "success": 3,
     "warning": 2,
@@ -47,7 +51,15 @@ class State:
     @property
     def short_date(self) -> str:
         self.date = ensure_date(self.date)
-        return f"{self.date:%-m/%d}" if self.date else ""
+        return f"{self.date:%-m/%-d}" if self.date else ""
+
+    @property
+    def full_date(self) -> str:
+        self.date = ensure_date(self.date)
+        if self.date:
+            ordinal = get_ordinal(self.date.day)
+            return f"{self.date:%A, %B %-d}{ordinal}"
+        return ""
 
     @property
     def delta_date(self) -> str:
