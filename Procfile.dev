@@ -1,2 +1,1 @@
-python: PYTHONUNBUFFERED=1 python manage.py runserver ${PORT}
-reload: python manage.py livereload
+web: PYTHONUNBUFFERED=1 DJANGO_COLORS=1 python manage.py runserver ${PORT} --force-color
