@@ -6,13 +6,13 @@ from datetime import date, datetime, timedelta
 from django.conf import settings
 
 
-def ensure_date(value) -> date:
+def to_date(value) -> date:
     if isinstance(value, str):
         value = datetime.strptime(value, "%Y-%m-%d").date()
     return value
 
 
-def get_ordinal(day: int) -> str:
+def to_ordinal(day: int) -> str:
     return "th" if 11 <= day <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
 
 
@@ -49,14 +49,14 @@ class State:
 
     @property
     def short_date(self) -> str:
-        self.date = ensure_date(self.date)
+        self.date = to_date(self.date)
         return f"{self.date:%-m/%-d}" if self.date else ""
 
     @property
     def full_date(self) -> str:
-        self.date = ensure_date(self.date)
+        self.date = to_date(self.date)
         if self.date:
-            ordinal = get_ordinal(self.date.day)
+            ordinal = to_ordinal(self.date.day)
             return f"{self.date:%A, %B %-d}{ordinal}"
         return ""
 
@@ -64,7 +64,7 @@ class State:
     def delta_date(self) -> str:
         if self.icon:
             return self.icon
-        self.date = ensure_date(self.date)
+        self.date = to_date(self.date)
         if self.date:
             delta = (self.date - settings.TODAY).days
             if delta > 1:
@@ -92,6 +92,9 @@ class Progress:
     ballot_received: State = field(default_factory=State)
     election: State = field(default_factory=State)
     voted: State = field(default_factory=State)
+
+    def __eq__(self, other):
+        return self.values == other.values
 
     def __gt__(self, other):
         return self.values > other.values
@@ -168,8 +171,9 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
-        delta = ensure_date(progress.election.date) - settings.TODAY
+        delta = to_date(progress.election.date) - settings.TODAY
         if not ballot and delta < timedelta(days=30):
+            progress.absentee_approved.color = "success"
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
             progress.ballot_sent.icon = "−"
