@@ -58,7 +58,7 @@ class State:
         if self.date:
             ordinal = to_ordinal(self.date.day)
             return f"{self.date:%A, %B %-d}{ordinal}"
-        return ""
+        return "−"
 
     @property
     def delta_date(self) -> str:
@@ -182,6 +182,7 @@ class Progress:
             progress.ballot_received.color = "default text-muted"
             progress.election.icon = "−"
             progress.election.color = "default text-muted"
+            progress.election.date = None
             progress.voted.icon = "−"
             progress.voted.color = "default text-muted"
 

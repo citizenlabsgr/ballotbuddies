@@ -2,12 +2,13 @@
 
 import pytest
 
+from ..data import VOTED
 from ..models import Voter
 
 
 @pytest.fixture
 def voter(admin_user):
-    return Voter.objects.from_user(admin_user)
+    return Voter.objects.from_user(admin_user, VOTED[0])
 
 
 @pytest.mark.vcr
@@ -23,8 +24,7 @@ def describe_status():
         response = client.post(url, {"voted": True})
 
         html = response.content.decode()
-        expect(html).includes("Reset")
-        expect(html).excludes("I Voted")
+        expect(html).includes("Didn't Vote")
 
     def it_can_manually_clear_voting(expect, client, url, voter):
         client.force_login(voter.user)
@@ -32,5 +32,4 @@ def describe_status():
         response = client.post(url, {"reset": True})
 
         html = response.content.decode()
-        expect(html).includes("I Voted")
-        expect(html).excludes("Reset")
+        expect(html).excludes("Didn't Vote")
