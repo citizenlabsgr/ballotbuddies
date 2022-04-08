@@ -1,4 +1,4 @@
-# Ballot Buddies
+# Michigan Ballot Buddies
 
 An app to help friends hold each other accountable to vote in every election.
 
