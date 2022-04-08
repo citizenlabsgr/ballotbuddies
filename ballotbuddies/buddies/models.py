@@ -41,10 +41,13 @@ class VoterManager(models.Manager):
 
         return voter
 
-    def from_user(self, user: User) -> Voter:
+    def from_user(self, user: User, status=None) -> Voter:
         voter, created = self.get_or_create(user=user)
         if created:
             log.info(f"Created voter: {voter}")
+        if status:
+            voter.status = status
+            voter.save()
         return voter
 
     def invite(self, voter: Voter, emails: list[str]) -> list[Voter]:

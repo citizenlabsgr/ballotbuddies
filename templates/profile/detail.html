@@ -10,13 +10,13 @@
     {{ voter.email }}
 </p>
 
-<h2>Voter Information</h2>
+<h2 class="pt-2">Voter Information</h2>
 
 {{ form|crispy }}
 
-<h2>Ballot Status</h2>
+<h2 class="pt-2">Ballot Status</h2>
 
-<div class="pb-3">
+<div>
     <div hx-get="{% url 'buddies:status' slug=voter.slug %}"
          hx-trigger="load delay:1s"
          hx-swap="outerHTML">
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<h2>Last Updated</h2>
+<h2 class="pt-2">Last Updated</h2>
 
 <p>
     {{ voter.updated }}

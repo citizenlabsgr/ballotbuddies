@@ -1,8 +1,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col" class="border-end border-bottom"></th>
-            <th scope="col" class="text-center border">Result</th>
+            <th scope="col" colspan="2" class="border-bottom"></th>
         </tr>
     </thead>
     <tbody class="border-start border-end">
@@ -91,8 +90,10 @@
             <td class="text-center table-{{ voter.progress.voted.color }} border-start">
                 <form>{% csrf_token %}
 
+                {{ voter.progress.voted.icon }}
+
+                {% if voter.progress.ballot_available.url %}
                 {% if voter.progress.voted %}
-                    {{ voter.progress.voted.icon }}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
                         aria-label="Reset"
                         hx-post="{% url 'buddies:status' slug=voter.slug %}"
@@ -100,7 +101,7 @@
                         hx-trigger="click"
                         hx-target="closest table"
                         hx-swap="outerHTML">
-                        Reset
+                        Didn't Vote
                     </button>
                 {% else %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap"
@@ -109,8 +110,9 @@
                         hx-trigger="click"
                         hx-target="closest table"
                         hx-swap="outerHTML">
-                        I Voted
+                        Voted in Person
                     </button>
+                {% endif %}
                 {% endif %}
 
                 </form>

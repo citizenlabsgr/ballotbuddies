@@ -16,6 +16,7 @@ else:
 watch_paths = [
     "ballotbuddies",
     "config",
+    "templates",
     "tests",
 ]
 
@@ -35,7 +36,7 @@ class options:
 @select_runnable("backend_targets")
 @file_validator
 def backend_files(path):
-    return matches(path, "py", "ini") and "system" not in path
+    return matches(path, "py", "ini", "html") and "system" not in path
 
 
 @select_runnable("system_targets")
