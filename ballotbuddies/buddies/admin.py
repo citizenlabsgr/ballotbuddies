@@ -29,10 +29,13 @@ class VoterAdmin(admin.ModelAdmin):
         "zip_code",
         "state",
         "status",
-        "updated",
         "voted",
+        "updated",
+        "created",
     ]
 
     actions = [update_selected_voters]
 
     filter_horizontal = ["friends", "neighbors", "strangers"]
+
+    readonly_fields = ["status", "voted", "updated", "created"]

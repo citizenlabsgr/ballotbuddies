@@ -84,7 +84,6 @@ class Voter(models.Model):
     state = models.CharField(max_length=20, default="Michigan", editable=False)
 
     status = models.JSONField(null=True, blank=True)
-    updated = models.DateTimeField(null=True, blank=True)
     voted = models.DateTimeField(null=True, blank=True)
 
     referrer = models.ForeignKey(
@@ -94,10 +93,16 @@ class Voter(models.Model):
     neighbors = models.ManyToManyField("Voter", blank=True, related_name="lurkers")
     strangers = models.ManyToManyField("Voter", blank=True, related_name="blockers")
 
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(null=True, blank=True)
+
     objects = VoterManager()
 
+    class Meta:
+        ordering = ["-created"]
+
     def __str__(self):
-        return f"{self.user.get_full_name()} ({self.user.email})"
+        return f"{self.user.get_full_name()} <{self.user.email}>"
 
     def __lt__(self, other):
         if self.progress == other.progress:
