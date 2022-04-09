@@ -22,9 +22,12 @@
     {% else %}
 
     <td class="text-center table-{{ voter.progress.registered.color }}" style="white-space: nowrap;">
-        {{ voter.progress.registered }}
         {% if voter.progress.registered.url %}
-        <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+        <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">
+            {{ voter.progress.registered }}
+        </a>
+        {% else %}
+        {{ voter.progress.registered }}
         {% endif %}
         <button class="btn btn-sm btn-outline-dark ms-2 p-1 py-0 d-lg-none" type="button"
             data-bs-toggle="collapse" data-bs-target="#status-{{ voter.slug }}" aria-expanded="false" aria-controls="status-{{ voter.slug }}">

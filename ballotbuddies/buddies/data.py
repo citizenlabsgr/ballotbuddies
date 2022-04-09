@@ -1,6 +1,63 @@
 UNREGISTERED = (
     {
         "election": {"date": "2021-11-02"},
+        "status": {"registered": False},
+    },
+    {
+        "registered": {
+            "icon": "🚫",
+            "color": "danger",
+            "url": "https://mvic.sos.state.mi.us/RegisterVoter/Index",
+            "date": "",
+        },
+        "absentee_received": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+        "absentee_approved": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+        "ballot_available": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+        "ballot_sent": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+        "ballot_received": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+        "election": {
+            "color": "default",
+            "date": "2021-11-02",
+            "icon": "",
+            "url": "",
+        },
+        "voted": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+    },
+)
+
+REGISTERED = (
+    {
+        "election": {"date": "2021-11-02"},
         "status": {"registered": True},
     },
     {
@@ -55,62 +112,6 @@ UNREGISTERED = (
     },
 )
 
-REGISTERED = (
-    {
-        "election": {"date": "2021-11-02"},
-        "status": {"registered": False},
-    },
-    {
-        "registered": {
-            "icon": "🚫",
-            "color": "danger",
-            "url": "",
-            "date": "",
-        },
-        "absentee_received": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "",
-        },
-        "absentee_approved": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "",
-        },
-        "ballot_available": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "",
-        },
-        "ballot_sent": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "",
-        },
-        "ballot_received": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "",
-        },
-        "election": {
-            "color": "default",
-            "date": "2021-11-02",
-            "icon": "",
-            "url": "",
-        },
-        "voted": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "",
-        },
-    },
-)
 
 REGISTERED_BUT_NO_ELECTION = (
     {

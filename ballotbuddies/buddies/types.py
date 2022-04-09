@@ -135,6 +135,7 @@ class Progress:
         else:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
+            progress.registered.url = settings.MICHIGAN_REGISTRATION_URL
 
         if not registered:
             return progress

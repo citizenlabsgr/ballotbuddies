@@ -144,8 +144,8 @@ class Voter(models.Model):
         progress = Progress.parse(self.status)
 
         if self.state != "Michigan":
-            progress.registered.icon = ""
-            progress.registered.url = settings.REGISTRATION_URL.format(
+            progress.registered.icon = "🔗"
+            progress.registered.url = settings.OTHER_REGISTRATION_URL.format(
                 name=self.state.lower()
             )
 

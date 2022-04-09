@@ -12,9 +12,12 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.registered.color }} border-start">
-                {{ voter.progress.registered }}
                 {% if voter.progress.registered.url %}
-                <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+                <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">
+                    {{ voter.progress.registered }}
+                </a>
+                {% else %}
+                {{ voter.progress.registered }}
                 {% endif %}
             </td>
         </tr>
