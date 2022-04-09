@@ -3,6 +3,7 @@ from django import forms
 from multi_email_field.forms import MultiEmailField
 
 from .models import User, Voter
+from .widgets import DateInput
 
 
 class LoginForm(forms.ModelForm):
@@ -21,6 +22,7 @@ class VoterForm(forms.ModelForm):
         label="Legal first name", widget=forms.TextInput(attrs={"autofocus": True})
     )
     last_name = forms.CharField()
+    birth_date = forms.CharField(widget=DateInput)
 
     class Meta:
         model = Voter
@@ -29,9 +31,9 @@ class VoterForm(forms.ModelForm):
     def __init__(self, *args, locked: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["birth_date"].required = True
-        self.fields["birth_date"].widget.attrs["placeholder"] = "YYYY-MM-DD"
+        self.fields["birth_date"].widget.attrs["placeholder"] = "mm/dd/yyyy"
+        self.fields["birth_date"].widget.attrs["data-date-format"] = "mm/dd/yyyy"
         self.fields["zip_code"].required = True
-        self.fields["zip_code"].widget.attrs["placeholder"] = "#####"
         if locked:
             del self.fields["email"]
             for name in self.fields:
