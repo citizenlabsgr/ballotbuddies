@@ -18,7 +18,7 @@ import zipcodes
 
 from ballotbuddies.core.helpers import generate_key, send_invite_email
 
-from .types import Progress
+from .types import Progress, to_datetime
 
 
 class VoterManager(models.Manager):
@@ -150,7 +150,8 @@ class Voter(models.Model):
             )
 
         if progress.voted.date and not self.voted:
-            self.voted = progress.voted.date
+            datetime = to_datetime(progress.voted.date)
+            self.voted = timezone.make_aware(datetime)
             self.save()
 
         if self.voted:

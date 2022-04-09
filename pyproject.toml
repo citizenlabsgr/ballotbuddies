@@ -49,7 +49,6 @@ isort = "^5.10"
 pylint = "~2.11.1"
 mypy = "~0.910"
 django-stubs = "~1.9.0"
-types-freezegun = "*"
 types-requests = "*"
 
 # Testing
@@ -60,7 +59,7 @@ pytest-expecter = "^2.0"
 pytest-randomly = "*"
 pytest-vcr = "*"
 pytest-cov = "^2.8.0"
-freezegun = "^1.1"
+time-machine = "^2.6"
 coverage = "^5.0"
 coveragespace = "^4.0"
 

@@ -67,7 +67,6 @@ clean:
 
 .PHONY: clean-all
 clean-all: clean
-	# TODO: Delete compiled frontend dependencies if applicable
 	rm -rf $(VIRTUAL_ENV)
 
 # RUNTIME DEPENDENCIES ########################################################
