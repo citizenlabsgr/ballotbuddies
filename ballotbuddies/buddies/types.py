@@ -6,10 +6,12 @@ from datetime import date, datetime, timedelta
 from django.conf import settings
 
 
-def to_date(value) -> date:
-    if isinstance(value, str):
-        value = datetime.strptime(value, "%Y-%m-%d").date()
-    return value
+def to_date(value: str) -> date:
+    return to_datetime(value).date() if value else value  # type: ignore
+
+
+def to_datetime(value: str) -> datetime:
+    return datetime.strptime(value, "%Y-%m-%d")
 
 
 def to_ordinal(day: int) -> str:
@@ -40,7 +42,7 @@ class State:
     icon: str = ""
     color: str = "default"
     url: str = ""
-    date: date | None = None
+    date: str = ""
 
     @property
     def value(self) -> float:
@@ -49,24 +51,22 @@ class State:
 
     @property
     def short_date(self) -> str:
-        self.date = to_date(self.date)
-        return f"{self.date:%-m/%-d}" if self.date else ""
+        _date = to_date(self.date)
+        return f"{_date:%-m/%-d}" if _date else ""
 
     @property
     def full_date(self) -> str:
-        self.date = to_date(self.date)
-        if self.date:
-            ordinal = to_ordinal(self.date.day)
-            return f"{self.date:%A, %B %-d}{ordinal}"
+        if _date := to_date(self.date):
+            ordinal = to_ordinal(_date.day)
+            return f"{_date:%A, %B %-d}{ordinal}"
         return "−"
 
     @property
     def delta_date(self) -> str:
         if self.icon:
             return self.icon
-        self.date = to_date(self.date)
-        if self.date:
-            delta = (self.date - settings.TODAY).days
+        if _date := to_date(self.date):
+            delta = (_date - settings.TODAY).days
             if delta > 1:
                 return f"{delta} days"
             if delta == 1:
@@ -182,7 +182,7 @@ class Progress:
             progress.ballot_received.color = "default text-muted"
             progress.election.icon = "−"
             progress.election.color = "default text-muted"
-            progress.election.date = None
+            progress.election.date = ""
             progress.voted.icon = "−"
             progress.voted.color = "default text-muted"
 

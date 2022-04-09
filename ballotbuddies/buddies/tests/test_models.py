@@ -6,7 +6,7 @@ from datetime import timedelta
 from django.utils import timezone
 
 import pytest
-from freezegun import freeze_time
+import time_machine
 
 from ..data import SAMPLE_DATA
 from ..models import User, Voter
@@ -19,7 +19,7 @@ def describe_voter():
         return Voter(user=user, birth_date="1975-08-03", zip_code="49503")
 
     def describe_progress():
-        @freeze_time("2021-10-16")
+        @time_machine.travel("2021-10-16")
         @pytest.mark.django_db
         @pytest.mark.parametrize(("data", "progress"), SAMPLE_DATA)
         def with_samples(expect, voter, data, progress):
