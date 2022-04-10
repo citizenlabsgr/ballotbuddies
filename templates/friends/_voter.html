@@ -101,7 +101,7 @@
             hx-trigger="click"
             hx-target="closest tr"
             hx-swap="outerHTML">
-            <span class="d-none d-sm-inline text-nowrap">⊕ Add Friend</span>
+            <span class="d-none d-sm-inline text-nowrap">⊕ Follow Voter</span>
             <span class="d-inline d-sm-none">⊕</span>
         </button>
         {% elif voter.complete %}
@@ -120,7 +120,9 @@
             data-bs-toggle="dropdown" aria-expanded="false" {% if not request.user.is_authenticated %}disabled{% endif %}>
             <span class="visually-hidden">Toggle Dropdown</span>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end text-center pb-3">
+
+        {% if request.user.is_authenticated %}
+        <ul class="dropdown-menu dropdown-menu-end text-center px-2 pb-3">
 
             <li><h6 class="dropdown-header">More options:</h6></li>
 
@@ -131,10 +133,10 @@
                 hx-trigger="click"
                 hx-target="closest tr"
                 hx-swap="outerHTML">
-                <span>⊖ Ignore Person</span>
+                <span class="text-nowrap">⊖ Ignore Suggestion</span>
             </button></li>
             {% elif voter.user != request.user %}
-            <li><a class="btn btn-sm btn-primary" href="mailto:{{ voter.user.email }}">
+            <li><a class="btn btn-sm btn-primary text-nowrap" href="mailto:{{ voter.user.email }}">
                 @ Send Email
             </a></li>
             <li><button class="btn btn-sm btn-danger mt-2"
@@ -143,7 +145,7 @@
                 hx-trigger="click"
                 hx-target="closest tr"
                 hx-swap="outerHTML">
-                <span>⊖ Unfollow Person</span>
+                <span>⊖ Unfollow Voter</span>
             </button></li>
             {% else %}
             <li><button class="btn btn-sm btn-secondary"
@@ -157,6 +159,7 @@
             </button></li>
             {% endif %}
         </ul>
+        {% endif %}
 
         </div>
         </form>
