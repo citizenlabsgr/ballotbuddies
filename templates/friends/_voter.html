@@ -30,7 +30,9 @@
         {{ voter.progress.registered }}
         {% endif %}
         <button class="btn btn-sm btn-outline-dark ms-2 p-1 py-0 d-lg-none" type="button"
-            data-bs-toggle="collapse" data-bs-target="#status-{{ voter.slug }}" aria-expanded="false" aria-controls="status-{{ voter.slug }}">
+            id="toggle-{{ voter.slug }}"
+            data-bs-toggle="collapse" data-bs-target="#status-{{ voter.slug }}"
+            aria-expanded="false" aria-controls="status-{{ voter.slug }}">
             ▼
         </button>
     </td>
@@ -172,3 +174,19 @@
         {% include "profile/_status.html" %}
     </td>
 </tr>
+
+<script>
+
+var collapsible = document.getElementById('status-{{ voter.slug }}')
+
+collapsible.addEventListener('show.bs.collapse', function () {
+    button = document.getElementById('toggle-{{ voter.slug }}')
+    button.innerText = "▲"
+})
+
+collapsible.addEventListener('hide.bs.collapse', function () {
+    button = document.getElementById('toggle-{{ voter.slug }}')
+    button.innerText = "▼"
+})
+
+</script>
