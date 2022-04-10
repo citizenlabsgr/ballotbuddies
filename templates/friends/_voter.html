@@ -136,8 +136,8 @@
                 <span class="text-nowrap">⊖ Ignore Suggestion</span>
             </button></li>
             {% elif voter.user != request.user %}
-            <li><a class="btn btn-sm btn-primary text-nowrap" href="mailto:{{ voter.user.email }}">
-                @ Send Email
+            <li><a class="btn btn-sm btn-primary" href="mailto:{{ voter.user.email }}">
+                <span class="text-nowrap">@ Send Email</span>
             </a></li>
             <li><button class="btn btn-sm btn-danger mt-2"
                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
@@ -145,7 +145,7 @@
                 hx-trigger="click"
                 hx-target="closest tr"
                 hx-swap="outerHTML">
-                <span>⊖ Unfollow Voter</span>
+                <span class="text-nowrap">⊖ Unfollow Voter</span>
             </button></li>
             {% else %}
             <li><button class="btn btn-sm btn-secondary"
