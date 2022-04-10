@@ -181,12 +181,12 @@ var collapsible = document.getElementById('status-{{ voter.slug }}')
 
 collapsible.addEventListener('show.bs.collapse', function () {
     button = document.getElementById('toggle-{{ voter.slug }}')
-    button.innerText = "▲"
+    button.innerText = '▲'
 })
 
-collapsible.addEventListener('hide.bs.collapse', function () {
+collapsible.addEventListener('hidden.bs.collapse', function () {
     button = document.getElementById('toggle-{{ voter.slug }}')
-    button.innerText = "▼"
+    button.innerText = '▼'
 })
 
 </script>
