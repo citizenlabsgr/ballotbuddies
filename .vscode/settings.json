@@ -35,6 +35,7 @@
     "HTMX",
     "PYTHONUNBUFFERED",
     "runserver",
+    "Unfollowing",
     "wsgi"
   ]
 }

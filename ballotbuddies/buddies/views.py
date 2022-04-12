@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
+import log
+
 from ballotbuddies.core.helpers import allow_debug, send_login_email
 
 from .forms import FriendsForm, LoginForm, VoterForm
@@ -136,21 +138,26 @@ def status(request, slug: str):
     render_as_table = request.method == "GET"
 
     if "ignore" in request.POST:
+        log.info(f"Unfollowing voter: {voter}")
+        request.user.voter.friends.remove(voter)
         request.user.voter.neighbors.remove(voter)
         request.user.voter.strangers.add(voter)
         request.user.voter.save()
         return HttpResponse()
 
     if "add" in request.POST:
+        log.info(f"Following voter: {voter}")
         request.user.voter.neighbors.remove(voter)
         request.user.voter.friends.add(voter)
         request.user.voter.save()
 
     if "voted" in request.POST:
+        log.info(f"Recording vote: {voter}")
         voter.voted = timezone.now()
         render_as_table = True
 
     if "reset" in request.POST:
+        log.info(f"Clearing vote: {voter}")
         voter.reset_status()
         render_as_table = True
 
