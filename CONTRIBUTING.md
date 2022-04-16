@@ -13,13 +13,13 @@
 * PostgreSQL: `$ brew install postgres`
 * direnv: https://direnv.net/
 
-See the [Developer Machine Setup](https://github.com/citizenlabsgr/ballotbuddies/wiki/Developer-Machine-Setup) wiki for more instructions.
-
 To confirm these system dependencies are configured correctly:
 
 ```
 $ make doctor
 ```
+
+See the [Developer Machine Setup](https://github.com/citizenlabsgr/ballotbuddies/wiki/Developer-Machine-Setup) wiki for more instructions.
 
 ### Installation
 
