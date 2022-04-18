@@ -21,7 +21,7 @@ dev: install ## CI | Rerun all validation targests in a loop
 
 .PHONY: doctor
 doctor: ## Check for required system dependencies
-	bin/verchew --exit-code
+	bin/verchew-wrapper --exit-code
 
 .envrc:
 	echo export SECRET_KEY=local >> $@
