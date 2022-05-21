@@ -157,6 +157,14 @@ run-production: .envrc install
 .PHONY: build
 build: install
 
+.PHONY: deploy
+deploy:
+	@ echo
+	git diff --exit-code
+	heroku git:remote -a ballotbuddies-staging
+	@ echo
+	git push heroku main
+
 .PHONY: promote
 promote: install
 	@ echo
