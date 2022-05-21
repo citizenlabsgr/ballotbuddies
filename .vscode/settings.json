@@ -25,17 +25,21 @@
     "asdict",
     "asgi",
     "ballotbuddies",
+    "bugsnag",
     "circleci",
     "cleandata",
+    "corsheaders",
     "createdb",
     "direnv",
     "grappelli",
     "gunicorn",
     "htmlcov",
     "HTMX",
+    "ngrok",
     "PYTHONUNBUFFERED",
     "runserver",
     "Unfollowing",
+    "whitenoise",
     "wsgi"
   ]
 }

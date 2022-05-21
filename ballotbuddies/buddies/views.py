@@ -30,6 +30,10 @@ def index(request):
     return render(request, "friends/index.html", context)
 
 
+def about(request):
+    return render(request, "about/index.html")
+
+
 def login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
