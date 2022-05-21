@@ -10,7 +10,10 @@
     {{ voter.email }}
 </p>
 
-<h2 class="pt-2">Voter Information</h2>
+<div class="d-flex justify-content-between align-items-center">
+    <h2 class="pt-2">Voter Information</h2>
+    <a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">Edit details</a>
+</div>
 
 {{ form|crispy }}
 
@@ -29,9 +32,5 @@
 <p>
     {{ voter.updated }}
 </p>
-
-<a class="btn btn-primary" href="{% url 'buddies:friends' %}">View friends</a>
-<a class="btn btn-secondary" href="{% url 'buddies:setup' %}">Edit profile</a>
-<a class="btn btn-danger" href="{% url 'buddies:logout' %}">Log out</a>
 
 {% endblock main %}

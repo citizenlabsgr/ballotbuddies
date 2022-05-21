@@ -24,7 +24,7 @@ def describe_status():
         response = client.post(url, {"voted": True})
 
         html = response.content.decode()
-        expect(html).includes("Didn't Vote")
+        expect(html).includes("Didn't vote")
 
     def it_can_manually_clear_voting(expect, client, url, voter):
         client.force_login(voter.user)
@@ -32,4 +32,4 @@ def describe_status():
         response = client.post(url, {"reset": True})
 
         html = response.content.decode()
-        expect(html).excludes("Didn't Vote")
+        expect(html).excludes("Didn't vote")
