@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 
 from django.conf import settings
 
@@ -62,6 +62,13 @@ class State:
             ordinal = to_ordinal(_date.day)
             return f"{_date:%A, %B %-d}{ordinal}"
         return "−"
+
+    @property
+    def days(self) -> int:
+        if self.date:
+            delta = to_date(self.date) - today()
+            return delta.days
+        return 0
 
     @property
     def delta_date(self) -> str:
@@ -174,8 +181,7 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
-        delta = to_date(progress.election.date) - today()
-        if not ballot and delta < timedelta(days=30):
+        if not ballot and progress.election.days < 30:
             progress.absentee_approved.color = "success"
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
@@ -209,7 +215,7 @@ class Progress:
             progress.voted.color = "success"
             progress.voted.date = received_date
         elif sent_date:
-            if delta < timedelta(days=7):
+            if progress.election.days < 7:
                 progress.ballot_received.icon = "⚠️"
                 progress.ballot_received.color = "warning"
             else:

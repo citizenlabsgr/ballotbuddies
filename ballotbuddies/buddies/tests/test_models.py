@@ -1,12 +1,11 @@
 # pylint: disable=expression-not-assigned,singleton-comparison,unused-variable
 
 from dataclasses import asdict
-from datetime import timedelta
 
+from django.conf import settings
 from django.utils import timezone
 
 import pytest
-import time_machine
 
 from ..data import SAMPLE_DATA
 from ..models import User, Voter
@@ -19,7 +18,6 @@ def describe_voter():
         return Voter(user=user, birth_date="1975-08-03", zip_code="49503")
 
     def describe_progress():
-        @time_machine.travel("2021-10-16")
         @pytest.mark.django_db
         @pytest.mark.parametrize(("data", "progress"), SAMPLE_DATA)
         def with_samples(expect, voter, data, progress):
@@ -29,12 +27,21 @@ def describe_voter():
 
             expect(asdict(voter.progress)) == progress
 
-        def with_nonmichigander(expect, voter):
+        def with_non_michigander(expect, voter):
             voter.state = "Ohio"
 
             expect(
                 voter.progress.registered.url
             ) == "https://votesaveamerica.com/state/ohio/"
+
+        @pytest.mark.django_db
+        def with_past_election(expect, voter, monkeypatch):
+            monkeypatch.setattr(settings, "TODAY", None)
+            voter.user.save()
+
+            voter.status = SAMPLE_DATA[-1][0]
+
+            expect(voter.progress.voted.date) == ""
 
         def with_manual_voter(expect, voter):
             voter.voted = timezone.now()
@@ -60,15 +67,6 @@ def describe_voter():
 
             expect(updated) == False
             expect(error) == ""
-
-        def with_stale_vote(expect, voter):
-            voter.voted = timezone.now() - timedelta(weeks=5)
-
-            updated, error = voter.update_status()
-
-            expect(updated) == True
-            expect(error) != ""
-            expect(voter.voted) == None
 
     def describe_update_neighbors():
         @pytest.mark.django_db

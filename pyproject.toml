@@ -59,7 +59,6 @@ pytest-expecter = "^2.0"
 pytest-randomly = "*"
 pytest-vcr = "*"
 pytest-cov = "^2.8.0"
-time-machine = "^2.6"
 coverage = "^5.0"
 coveragespace = "^4.0"
 
