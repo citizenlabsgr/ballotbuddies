@@ -18,7 +18,7 @@ import zipcodes
 
 from ballotbuddies.core.helpers import generate_key, send_invite_email
 
-from .types import Progress, to_datetime
+from .types import Progress, State, to_datetime
 
 
 class VoterManager(models.Manager):
@@ -148,6 +148,15 @@ class Voter(models.Model):
             progress.registered.url = settings.OTHER_REGISTRATION_URL.format(
                 name=self.state.lower()
             )
+            return progress
+
+        if progress.election.days < -21:
+            progress.ballot_available = State()
+            progress.ballot_sent = State()
+            progress.ballot_received = State()
+            progress.election = State()
+            progress.voted = State()
+            return progress
 
         if progress.voted.date and not self.voted:
             datetime = to_datetime(progress.voted.date)
@@ -180,10 +189,6 @@ class Voter(models.Model):
 
     def update_status(self) -> tuple[bool, str]:
         previous_status = self._status
-
-        if self.voted and timezone.now() - self.voted > timedelta(weeks=4):
-            self.voted = None
-            return True, "Reset voted date since the election is in the past."
 
         if self.state != "Michigan":
             self.updated = timezone.now()

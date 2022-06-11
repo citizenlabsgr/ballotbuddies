@@ -3,7 +3,6 @@
 from dataclasses import asdict
 
 import pytest
-import time_machine
 
 from ..data import SAMPLE_DATA
 from ..types import Progress, to_ordinal
@@ -24,7 +23,6 @@ def test_to_ordinal(expect, days, ordinal):
 
 def describe_progress():
     def describe_parse():
-        @time_machine.travel("2021-10-16")
         @pytest.mark.parametrize(("data", "progress"), SAMPLE_DATA)
         def with_samples(expect, data, progress):
             result = Progress.parse(data)
