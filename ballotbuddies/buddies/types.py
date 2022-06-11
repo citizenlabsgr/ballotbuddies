@@ -5,6 +5,8 @@ from datetime import date, datetime, timedelta
 
 from django.conf import settings
 
+from ballotbuddies.core.helpers import today
+
 
 def to_date(value: str) -> date:
     return to_datetime(value).date() if value else value  # type: ignore
@@ -66,7 +68,7 @@ class State:
         if self.icon:
             return self.icon
         if _date := to_date(self.date):
-            delta = (_date - settings.TODAY).days
+            delta = (_date - today()).days
             if delta > 1:
                 return f"{delta} days"
             if delta == 1:
@@ -172,7 +174,7 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
-        delta = to_date(progress.election.date) - settings.TODAY
+        delta = to_date(progress.election.date) - today()
         if not ballot and delta < timedelta(days=30):
             progress.absentee_approved.color = "success"
             progress.ballot_available.icon = "🚫"

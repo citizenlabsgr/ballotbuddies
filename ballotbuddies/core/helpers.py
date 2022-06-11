@@ -1,12 +1,18 @@
 import random
 import string
+from datetime import date
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.utils import timezone
 
 import log
 from sesame.utils import get_query_string
+
+
+def today() -> date:
+    return settings.TODAY or timezone.now().date()
 
 
 def build_url(path: str) -> str:

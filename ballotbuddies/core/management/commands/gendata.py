@@ -8,6 +8,7 @@ from django.db.utils import IntegrityError
 from django.utils import timezone
 
 from ballotbuddies.buddies.models import Voter
+from ballotbuddies.core.helpers import today
 
 STATUS = {
     "id": "345-3932-11713",
@@ -215,7 +216,7 @@ class Command(BaseCommand):
 
         status = deepcopy(STATUS)
         status["status"]["ballot"] = False  # type: ignore
-        status["election"]["date"] = settings.TODAY.strftime("%Y-%m-%d")  # type: ignore
+        status["election"]["date"] = today().strftime("%Y-%m-%d")  # type: ignore
         yield self.get_or_create_voter(
             "test+nonvoter@example.com",
             "No",

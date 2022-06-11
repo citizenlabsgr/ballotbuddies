@@ -35,6 +35,7 @@
     "gunicorn",
     "htmlcov",
     "HTMX",
+    "maxsplit",
     "ngrok",
     "PYTHONUNBUFFERED",
     "runserver",
