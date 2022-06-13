@@ -37,13 +37,16 @@ def describe_voter():
         @pytest.mark.django_db
         def with_past_election(expect, voter, monkeypatch):
             monkeypatch.setattr(settings, "TODAY", None)
+            voter.voted = timezone.now()
             voter.user.save()
 
             voter.status = SAMPLE_DATA[-1].status
 
             expect(voter.progress.voted.date) == ""
+            expect(voter.voted) == None
 
         def with_manual_voter(expect, voter):
+            voter.status = SAMPLE_DATA[-1].status
             voter.voted = timezone.now()
 
             expect(voter.progress.voted.color) == "success"

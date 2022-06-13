@@ -6,6 +6,10 @@ OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
 ABSENTEE_URL = "https://absentee.michiganelections.io/"
 PREVIEW_URL = "https://share.michiganelections.io/elections/{election}/precincts/{precinct}?name={name}"
 
+ELECTION_DEADLINE_DAYS = 30
+ABSENTEE_WARNING_DAYS = 7
+PAST_ELECTION_DAYS = -21
+
 
 class VoterData(NamedTuple):
     status: dict

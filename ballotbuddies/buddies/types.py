@@ -168,6 +168,10 @@ class Progress:
             progress.ballot_sent.icon = "−"
             progress.ballot_received.icon = "−"
 
+        if progress.election.days < constants.PAST_ELECTION_DAYS:
+            progress.election = State()
+            return progress
+
         if ballot := status.get("ballot"):
             progress.absentee_approved.color = "success text-muted"
             progress.ballot_available.url = constants.PREVIEW_URL.format(
@@ -181,7 +185,7 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
-        if not ballot and progress.election.days < 30:
+        if not ballot and progress.election.days < constants.ELECTION_DEADLINE_DAYS:
             progress.absentee_approved.color = "success"
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
@@ -215,7 +219,7 @@ class Progress:
             progress.voted.color = "success"
             progress.voted.date = received_date
         elif sent_date:
-            if progress.election.days < 7:
+            if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
                 progress.ballot_received.icon = "⚠️"
                 progress.ballot_received.color = "warning"
             else:

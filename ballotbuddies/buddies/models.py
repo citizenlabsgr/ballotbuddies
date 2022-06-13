@@ -18,7 +18,7 @@ import zipcodes
 from ballotbuddies.core.helpers import generate_key, send_invite_email
 
 from . import constants
-from .types import Progress, State, to_datetime
+from .types import Progress, to_datetime
 
 
 class VoterManager(models.Manager):
@@ -148,19 +148,16 @@ class Voter(models.Model):
             progress.registered.url = constants.OTHER_REGISTRATION_URL.format(
                 name=self.state.lower()
             )
-            return progress
-
-        if progress.election.days < -21:
-            progress.ballot_available = State()
-            progress.ballot_sent = State()
-            progress.ballot_received = State()
-            progress.election = State()
-            progress.voted = State()
-            return progress
 
         if progress.voted.date and not self.voted:
+            log.info("Recording vote for current election")
             datetime = to_datetime(progress.voted.date)
             self.voted = timezone.make_aware(datetime)
+            self.save()
+
+        if not progress.ballot_available.url and self.voted:
+            log.info("Clearing recorded vote for past election")
+            self.voted = None
             self.save()
 
         if self.voted:
