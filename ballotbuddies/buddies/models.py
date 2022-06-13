@@ -6,7 +6,6 @@ from functools import cached_property
 from itertools import chain
 from urllib.parse import urlencode
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -18,6 +17,7 @@ import zipcodes
 
 from ballotbuddies.core.helpers import generate_key, send_invite_email
 
+from . import constants
 from .types import Progress, State, to_datetime
 
 
@@ -145,7 +145,7 @@ class Voter(models.Model):
 
         if self.state != "Michigan":
             progress.registered.icon = "🔗"
-            progress.registered.url = settings.OTHER_REGISTRATION_URL.format(
+            progress.registered.url = constants.OTHER_REGISTRATION_URL.format(
                 name=self.state.lower()
             )
             return progress
@@ -194,7 +194,7 @@ class Voter(models.Model):
             self.updated = timezone.now()
             return False, "Voter registration can only be fetched for Michigan."
 
-        url = settings.STATUS_API + "?" + urlencode(self.data)
+        url = constants.STATUS_API + "?" + urlencode(self.data)
         log.info(f"GET {url}")
         response = requests.get(url)
         if response.status_code == 202:

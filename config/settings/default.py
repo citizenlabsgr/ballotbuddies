@@ -181,12 +181,3 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "sesame.backends.ModelBackend",
 ]
-
-###############################################################################
-# Michigan Elections
-
-STATUS_API = "https://michiganelections.io/api/status/"
-MICHIGAN_REGISTRATION_URL = "https://mvic.sos.state.mi.us/RegisterVoter/Index"
-OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
-ABSENTEE_URL = "https://absentee.michiganelections.io/"
-PREVIEW_URL = "https://share.michiganelections.io/elections/{election}/precincts/{precinct}?name={name}"

@@ -35,6 +35,7 @@
     "gunicorn",
     "htmlcov",
     "HTMX",
+    "Kentwood",
     "levelname",
     "mandrillapp",
     "maxsplit",

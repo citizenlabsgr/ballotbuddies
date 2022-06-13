@@ -2,13 +2,13 @@
 
 import pytest
 
-from ..data import VOTED
+from ..constants import VOTED
 from ..models import Voter
 
 
 @pytest.fixture
 def voter(admin_user):
-    return Voter.objects.from_user(admin_user, VOTED[0])
+    return Voter.objects.from_user(admin_user, VOTED.status)
 
 
 @pytest.mark.vcr

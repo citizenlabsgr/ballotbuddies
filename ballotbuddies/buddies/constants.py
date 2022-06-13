@@ -1,4 +1,18 @@
-UNREGISTERED = (
+from typing import NamedTuple
+
+STATUS_API = "https://michiganelections.io/api/status/"
+MICHIGAN_REGISTRATION_URL = "https://mvic.sos.state.mi.us/RegisterVoter/Index"
+OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
+ABSENTEE_URL = "https://absentee.michiganelections.io/"
+PREVIEW_URL = "https://share.michiganelections.io/elections/{election}/precincts/{precinct}?name={name}"
+
+
+class VoterData(NamedTuple):
+    status: dict
+    progress: dict
+
+
+UNREGISTERED = VoterData(
     {
         "election": {"date": "2021-11-02"},
         "status": {"registered": False},
@@ -55,7 +69,7 @@ UNREGISTERED = (
     },
 )
 
-REGISTERED = (
+REGISTERED = VoterData(
     {
         "election": {"date": "2021-11-02"},
         "status": {"registered": True},
@@ -113,7 +127,7 @@ REGISTERED = (
 )
 
 
-REGISTERED_BUT_NO_ELECTION = (
+REGISTERED_BUT_NO_ELECTION = VoterData(
     {
         "status": {
             "ballot": False,
@@ -192,7 +206,7 @@ REGISTERED_BUT_NO_ELECTION = (
     },
 )
 
-VOTED = (
+VOTED = VoterData(
     {
         "status": {
             "ballot": True,
@@ -272,7 +286,7 @@ VOTED = (
 )
 
 
-SAMPLE_DATA: list[tuple[dict, dict]] = [
+SAMPLE_DATA: list[VoterData] = [
     UNREGISTERED,
     REGISTERED,
     REGISTERED_BUT_NO_ELECTION,

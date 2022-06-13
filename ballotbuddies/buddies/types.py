@@ -3,9 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import date, datetime
 
-from django.conf import settings
-
 from ballotbuddies.core.helpers import today
+
+from . import constants
 
 
 def to_date(value: str) -> date:
@@ -144,7 +144,7 @@ class Progress:
         else:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
-            progress.registered.url = settings.MICHIGAN_REGISTRATION_URL
+            progress.registered.url = constants.MICHIGAN_REGISTRATION_URL
 
         if not registered:
             return progress
@@ -163,14 +163,14 @@ class Progress:
             progress.absentee_approved.icon = "🟡"
         else:
             progress.absentee_approved.icon = "🚫"
-            progress.absentee_approved.url = settings.ABSENTEE_URL
+            progress.absentee_approved.url = constants.ABSENTEE_URL
             progress.absentee_approved.color = "warning"
             progress.ballot_sent.icon = "−"
             progress.ballot_received.icon = "−"
 
         if ballot := status.get("ballot"):
             progress.absentee_approved.color = "success text-muted"
-            progress.ballot_available.url = settings.PREVIEW_URL.format(
+            progress.ballot_available.url = constants.PREVIEW_URL.format(
                 election=election["id"],
                 precinct=precinct["id"],
                 name=data.get("message", "").split(" ")[0],

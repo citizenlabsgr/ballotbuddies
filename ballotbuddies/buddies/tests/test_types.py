@@ -4,7 +4,7 @@ from dataclasses import asdict
 
 import pytest
 
-from ..data import SAMPLE_DATA
+from ..constants import SAMPLE_DATA
 from ..types import Progress, to_ordinal
 
 
@@ -23,11 +23,11 @@ def test_to_ordinal(expect, days, ordinal):
 
 def describe_progress():
     def describe_parse():
-        @pytest.mark.parametrize(("data", "progress"), SAMPLE_DATA)
-        def with_samples(expect, data, progress):
-            result = Progress.parse(data)
+        @pytest.mark.parametrize(("status", "progress"), SAMPLE_DATA)
+        def with_samples(expect, status, progress):
+            result = Progress.parse(status)
             expect(asdict(result)) == progress
 
     def test_sort(expect):
-        items = [Progress.parse(p[1]) for p in SAMPLE_DATA]
+        items = [Progress.parse(voter.progress) for voter in SAMPLE_DATA]
         expect(sorted(items)) == items  # type: ignore

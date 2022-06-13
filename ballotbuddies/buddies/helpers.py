@@ -6,7 +6,7 @@ from django.utils import timezone
 
 import log
 
-from .data import SAMPLE_DATA
+from .constants import SAMPLE_DATA
 from .models import User, Voter
 from .types import Progress
 
@@ -20,7 +20,7 @@ def generate_sample_voters(referrer: str = ""):
         user=user, slug="1", updated=timezone.now() - timedelta(days=randint(7, 180))
     )
     voter.complete = True
-    voter.progress = Progress.parse(SAMPLE_DATA[0][0])
+    voter.progress = Progress.parse(SAMPLE_DATA[0].status)
     yield voter
 
     user = User(first_name="John", last_name="Doe")
@@ -28,7 +28,7 @@ def generate_sample_voters(referrer: str = ""):
         user=user, slug="2", updated=timezone.now() - timedelta(days=randint(7, 180))
     )
     voter.complete = True
-    voter.progress = Progress.parse(SAMPLE_DATA[1][0])
+    voter.progress = Progress.parse(SAMPLE_DATA[1].status)
     yield voter
 
 
@@ -36,7 +36,7 @@ def update_neighbors() -> int:
     total = 0
 
     query = Voter.objects.annotate(pending=Count("neighbors")).filter(pending__lt=3)
-    log.info(f"Updating neighboors for {query.count()} voter(s)")
+    log.info(f"Updating neighbors for {query.count()} voter(s)")
     voter: Voter
     for voter in query:
         if count := voter.update_neighbors(limit=3):

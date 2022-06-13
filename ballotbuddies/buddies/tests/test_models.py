@@ -7,7 +7,7 @@ from django.utils import timezone
 
 import pytest
 
-from ..data import SAMPLE_DATA
+from ..constants import SAMPLE_DATA
 from ..models import User, Voter
 
 
@@ -19,11 +19,11 @@ def describe_voter():
 
     def describe_progress():
         @pytest.mark.django_db
-        @pytest.mark.parametrize(("data", "progress"), SAMPLE_DATA)
-        def with_samples(expect, voter, data, progress):
+        @pytest.mark.parametrize(("status", "progress"), SAMPLE_DATA)
+        def with_samples(expect, voter, status, progress):
             voter.user.save()
 
-            voter.status = data
+            voter.status = status
 
             expect(asdict(voter.progress)) == progress
 
@@ -39,7 +39,7 @@ def describe_voter():
             monkeypatch.setattr(settings, "TODAY", None)
             voter.user.save()
 
-            voter.status = SAMPLE_DATA[-1][0]
+            voter.status = SAMPLE_DATA[-1].status
 
             expect(voter.progress.voted.date) == ""
 
