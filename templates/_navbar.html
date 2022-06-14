@@ -23,8 +23,12 @@
 		        </li>
 	        </ul>
 
+			{% if request.user.is_superuser %}
+			<a class="btn btn-outline-danger" href="{% url 'admin:index' %}">Admin</a>
+			{% endif %}
+
             {% if request.user.is_authenticated %}
-	        <a class="btn btn-outline-secondary" href="{% url 'buddies:logout' %}">Log out</a>
+	        <a class="btn btn-outline-secondary ms-2" href="{% url 'buddies:logout' %}">Log out</a>
             {% endif %}
 
 	    </div>
