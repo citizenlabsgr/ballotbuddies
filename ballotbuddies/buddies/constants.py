@@ -1,3 +1,4 @@
+from datetime import timedelta
 from typing import NamedTuple
 
 STATUS_API = "https://michiganelections.io/api/status/"
@@ -6,7 +7,9 @@ OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
 ABSENTEE_URL = "https://absentee.michiganelections.io/"
 PREVIEW_URL = "https://share.michiganelections.io/elections/{election}/precincts/{precinct}?name={name}"
 
-ELECTION_DEADLINE_DAYS = 30
+REGISTRATION_DEADLINE_DELTA = timedelta(days=15)
+BALLOT_DEADLINE_DAYS = 30
+BALLOT_DEADLINE_DELTA = timedelta(days=BALLOT_DEADLINE_DAYS)
 ABSENTEE_WARNING_DAYS = 7
 PAST_ELECTION_DAYS = -21
 
@@ -28,6 +31,12 @@ UNREGISTERED = VoterData(
             "url": "https://mvic.sos.state.mi.us/RegisterVoter/Index",
             "date": "",
         },
+        "registered_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-18",
+        },
         "absentee_received": {
             "icon": "",
             "color": "default",
@@ -45,6 +54,12 @@ UNREGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
+        },
+        "ballot_available_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-03",
         },
         "ballot_sent": {
             "icon": "",
@@ -85,6 +100,12 @@ REGISTERED = VoterData(
             "url": "",
             "date": "",
         },
+        "registered_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-18",
+        },
         "absentee_received": {
             "icon": "−",
             "color": "success text-muted",
@@ -102,6 +123,12 @@ REGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
+        },
+        "ballot_available_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-03",
         },
         "ballot_sent": {
             "icon": "−",
@@ -165,6 +192,12 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "url": "",
             "date": "",
         },
+        "registered_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-18",
+        },
         "absentee_received": {
             "icon": "−",
             "color": "success text-muted",
@@ -182,6 +215,12 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "color": "default",
             "url": "",
             "date": "",
+        },
+        "ballot_available_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-03",
         },
         "ballot_sent": {
             "icon": "",
@@ -244,6 +283,12 @@ VOTED = VoterData(
             "url": "",
             "date": "",
         },
+        "registered_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-18",
+        },
         "absentee_received": {
             "icon": "",
             "color": "success",
@@ -261,6 +306,12 @@ VOTED = VoterData(
             "color": "success",
             "url": "https://share.michiganelections.io/elections/45/precincts/5943?name=Jane",
             "date": "",
+        },
+        "ballot_available_deadline": {
+            "icon": "",
+            "color": "default",
+            "date": "2021-10-03",
+            "url": "",
         },
         "ballot_sent": {
             "icon": "",

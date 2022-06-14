@@ -94,9 +94,11 @@ class State:
 class Progress:
 
     registered: State = field(default_factory=State)
+    registered_deadline: State = field(default_factory=State)
     absentee_received: State = field(default_factory=State)
     absentee_approved: State = field(default_factory=State)
     ballot_available: State = field(default_factory=State)
+    ballot_available_deadline: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
     election: State = field(default_factory=State)
@@ -132,6 +134,13 @@ class Progress:
             precinct = data.get("precinct", {})
 
         progress.election.date = election.get("date")
+        if progress.election.date:
+            progress.registered_deadline.date = str(
+                to_date(progress.election.date) - constants.REGISTRATION_DEADLINE_DELTA
+            )
+            progress.ballot_available_deadline.date = str(
+                to_date(progress.election.date) - constants.BALLOT_DEADLINE_DELTA
+            )
 
         if not status:
             progress.registered.icon = "🟡"
@@ -185,7 +194,7 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
-        if not ballot and progress.election.days < constants.ELECTION_DEADLINE_DAYS:
+        if not ballot and progress.election.days < constants.BALLOT_DEADLINE_DAYS:
             progress.absentee_approved.color = "success"
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"

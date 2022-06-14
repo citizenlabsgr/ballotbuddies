@@ -4,8 +4,13 @@
             <th scope="col" class="border">
                 Election Step
             </th>
+
             <th scope="col" class="text-center border">
                 Progress
+            </th>
+
+            <th scope="col" width="20%" class="text-center border">
+                Deadline
             </th>
         </tr>
     </thead>
@@ -25,6 +30,10 @@
                 {{ voter.progress.registered }}
                 {% endif %}
             </td>
+
+            <td class="text-center border-start">
+                {{ voter.progress.registered_deadline.full_date }}
+            </td>
         </tr>
 
         <tr class="align-middle">
@@ -35,6 +44,8 @@
             <td class="text-center table-{{ voter.progress.absentee_received.color }} border-start">
                 {{ voter.progress.absentee_received }}
             </td>
+
+            <td class="text-center border-start"></td>
         </tr>
 
         <tr class="align-middle">
@@ -45,6 +56,8 @@
             <td class="text-center table-{{ voter.progress.absentee_approved.color }} border-start">
                 {{ voter.progress.absentee_approved }}
             </td>
+
+            <td class="text-center border-start"></td>
         </tr>
 
         <tr class="align-middle">
@@ -58,6 +71,10 @@
                 <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
                 {% endif %}
             </td>
+
+            <td class="text-center border-start">
+                {{ voter.progress.ballot_available_deadline.full_date }}
+            </td>
         </tr>
 
         <tr class="align-middle">
@@ -68,6 +85,8 @@
             <td class="text-center table-{{ voter.progress.ballot_sent.color }} border-start">
                 {{ voter.progress.ballot_sent }}
             </td>
+
+            <td class="text-center border-start"></td>
         </tr>
 
         <tr class="align-middle">
@@ -78,6 +97,8 @@
             <td class="text-center table-{{ voter.progress.ballot_received.color }} border-start">
                 {{ voter.progress.ballot_received }}
             </td>
+
+            <td class="text-center border-start"></td>
         </tr>
 
         <tr class="align-middle">
@@ -85,17 +106,7 @@
                 Election Day
             </th>
 
-            <td class="text-center table-{{ voter.progress.voted.color }} border-start">
-                {{ voter.progress.election.full_date }}
-            </td>
-        </tr>
-
-        <tr class="align-middle">
-            <th scope="row">
-                Vote Recorded
-            </th>
-
-            <td class="text-center table-{{ voter.progress.voted.color }} border-start">
+            <td class="text-center table-{{ voter.progress.voted.color }} text-nowrap border-start">
                 <form>{% csrf_token %}
 
                 {{ voter.progress.voted.icon }}
@@ -124,6 +135,10 @@
                 {% endif %}
 
                 </form>
+            </td>
+
+            <td class="text-center border-start">
+                {{ voter.progress.election.full_date }}
             </td>
         </tr>
 
