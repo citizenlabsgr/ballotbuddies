@@ -31,6 +31,7 @@ doctor: ## Check for required system dependencies
 	echo export MANDRILL_API_KEY=??? >> $@
 	echo >> $@
 	echo export TEST_VOTERS=you@yourdomain.com,First,Last,YYYY-MM-DD,ZIP/test@example.com,Rosalynn,Bliss,1975-08-03,49503 >> $@
+	echo export FREEZE_TIME=true >> $@
 	- direnv allow
 
 # PROJECT DEPENDENCIES ########################################################

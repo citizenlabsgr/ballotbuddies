@@ -178,6 +178,8 @@ class Progress:
             progress.ballot_received.icon = "−"
 
         if progress.election.days < constants.PAST_ELECTION_DAYS:
+            progress.registered_deadline = State()
+            progress.ballot_available_deadline = State()
             progress.election = State()
             return progress
 
