@@ -6,6 +6,11 @@
 
 	    <a class="navbar-brand" href="{% url 'buddies:index' %}">Ballot Buddies</a>
 
+		<div class="navbar-nav d-block d-sm-none">
+			<a class="nav-link {% if request.path == profile_url %} active {% endif %} d-block d-sm-none"
+				href="{% url 'buddies:profile' %}">Your Profile</a>
+		</div>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,11 +29,11 @@
 	        </ul>
 
 			{% if request.user.is_superuser %}
-			<a class="btn btn-outline-danger" href="{% url 'admin:index' %}">Admin</a>
+			<a class="btn btn-outline-danger me-2" href="{% url 'admin:index' %}">Admin</a>
 			{% endif %}
 
             {% if request.user.is_authenticated %}
-	        <a class="btn btn-outline-secondary ms-2" href="{% url 'buddies:logout' %}">Log out</a>
+	        <a class="btn btn-outline-secondary" href="{% url 'buddies:logout' %}">Log out</a>
             {% endif %}
 
 	    </div>
