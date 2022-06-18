@@ -31,7 +31,7 @@
                 {% endif %}
             </td>
 
-            <td class="text-center border-start">
+            <td class="text-center border-start {% if voter.progress.registered %} text-muted {% endif %}">
                 {{ voter.progress.registered_deadline.full_date }}
             </td>
         </tr>
@@ -72,7 +72,7 @@
                 {% endif %}
             </td>
 
-            <td class="text-center border-start">
+            <td class="text-center border-start {% if voter.progress.ballot_available %} text-muted {% endif %}">
                 {{ voter.progress.ballot_available_deadline.full_date }}
             </td>
         </tr>
@@ -137,7 +137,7 @@
                 </form>
             </td>
 
-            <td class="text-center border-start">
+            <td class="text-center border-start  {% if voter.progress.voted %} text-muted {% endif %}">
                 {{ voter.progress.election.full_date }}
             </td>
         </tr>
