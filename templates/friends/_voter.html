@@ -29,7 +29,7 @@
         {% else %}
         {{ voter.progress.registered }}
         {% endif %}
-        <button class="btn btn-sm btn-outline-dark ms-2 p-1 py-0 d-lg-none" type="button"
+        <button class="btn btn-sm btn-outline-dark ms-2 p-1 py-0" type="button"
             id="toggle-{{ voter.slug }}"
             data-bs-toggle="collapse" data-bs-target="#status-{{ voter.slug }}"
             aria-expanded="false" aria-controls="status-{{ voter.slug }}">
@@ -170,7 +170,7 @@
 </tr>
 
 <tr class="collapse" id="status-{{ voter.slug }}">
-    <td colspan="100%" class="p-3">
+    <td colspan="100%" class="pt-3 pb-0 px-2">
         {% include "profile/_status.html" %}
     </td>
 </tr>
