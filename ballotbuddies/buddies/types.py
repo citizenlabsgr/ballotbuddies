@@ -95,8 +95,8 @@ class Progress:
 
     registered: State = field(default_factory=State)
     registered_deadline: State = field(default_factory=State)
+    absentee_requested: State = field(default_factory=State)
     absentee_received: State = field(default_factory=State)
-    absentee_approved: State = field(default_factory=State)
     ballot_available: State = field(default_factory=State)
     ballot_available_deadline: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
@@ -158,22 +158,23 @@ class Progress:
         if not registered:
             return progress
 
+        if absentee := status.get("absentee"):
+            progress.absentee_requested.icon = "✅"
+            progress.absentee_requested.color = "success"
+        else:
+            progress.absentee_requested.icon = "🚫"
+            progress.absentee_requested.url = constants.ABSENTEE_URL
+            progress.absentee_requested.color = "warning"
+
         if absentee_date := status.get("absentee_application_received"):
             progress.absentee_received.date = absentee_date
             progress.absentee_received.color = "success"
+        elif absentee:
+            progress.absentee_received.icon = "🟡"
+            progress.ballot_sent.icon = "−"
+            progress.ballot_received.icon = "−"
         else:
             progress.absentee_received.icon = "−"
-            progress.absentee_received.color = "success text-muted"
-
-        if absentee := status.get("absentee"):
-            progress.absentee_approved.icon = "✅"
-            progress.absentee_approved.color = "success"
-        elif absentee_date:
-            progress.absentee_approved.icon = "🟡"
-        else:
-            progress.absentee_approved.icon = "🚫"
-            progress.absentee_approved.url = constants.ABSENTEE_URL
-            progress.absentee_approved.color = "warning"
             progress.ballot_sent.icon = "−"
             progress.ballot_received.icon = "−"
 
@@ -184,7 +185,8 @@ class Progress:
             return progress
 
         if ballot := status.get("ballot"):
-            progress.absentee_approved.color = "success text-muted"
+            progress.absentee_requested.color = "success text-muted"
+            progress.absentee_received.color = "success text-muted"
             progress.ballot_available.url = constants.PREVIEW_URL.format(
                 election=election["id"],
                 precinct=precinct["id"],
@@ -197,7 +199,7 @@ class Progress:
             progress.ballot_available.icon = "🟡"
 
         if not ballot and progress.election.days < constants.BALLOT_DEADLINE_DAYS:
-            progress.absentee_approved.color = "success"
+            progress.absentee_requested.color = "success"
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
             progress.ballot_sent.icon = "−"

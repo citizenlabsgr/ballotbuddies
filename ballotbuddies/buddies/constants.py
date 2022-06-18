@@ -37,13 +37,13 @@ UNREGISTERED = VoterData(
             "url": "",
             "date": "2021-10-18",
         },
-        "absentee_received": {
+        "absentee_requested": {
             "icon": "",
             "color": "default",
             "url": "",
             "date": "",
         },
-        "absentee_approved": {
+        "absentee_received": {
             "icon": "",
             "color": "default",
             "url": "",
@@ -106,17 +106,17 @@ REGISTERED = VoterData(
             "url": "",
             "date": "2021-10-18",
         },
-        "absentee_received": {
-            "icon": "−",
-            "color": "success text-muted",
-            "url": "",
-            "date": "",
-        },
-        "absentee_approved": {
+        "absentee_requested": {
             "icon": "🚫",
             "color": "warning",
             "url": "https://absentee.michiganelections.io/",
             "date": "",
+        },
+        "absentee_received": {
+            "color": "default",
+            "date": "",
+            "icon": "−",
+            "url": "",
         },
         "ballot_available": {
             "icon": "🟡",
@@ -198,17 +198,17 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "url": "",
             "date": "2021-10-18",
         },
-        "absentee_received": {
-            "icon": "−",
-            "color": "success text-muted",
-            "url": "",
-            "date": "",
-        },
-        "absentee_approved": {
+        "absentee_requested": {
             "icon": "✅",
             "color": "success",
             "url": "",
             "date": "",
+        },
+        "absentee_received": {
+            "color": "default",
+            "date": "",
+            "icon": "🟡",
+            "url": "",
         },
         "ballot_available": {
             "icon": "🟡",
@@ -223,13 +223,13 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "date": "2021-10-03",
         },
         "ballot_sent": {
-            "icon": "",
+            "icon": "−",
             "color": "default",
             "url": "",
             "date": "",
         },
         "ballot_received": {
-            "icon": "",
+            "icon": "−",
             "color": "default",
             "url": "",
             "date": "",
@@ -289,17 +289,17 @@ VOTED = VoterData(
             "url": "",
             "date": "2021-10-18",
         },
-        "absentee_received": {
-            "icon": "",
-            "color": "success",
-            "url": "",
-            "date": "2021-09-15",
-        },
-        "absentee_approved": {
+        "absentee_requested": {
             "icon": "✅",
             "color": "success text-muted",
             "url": "",
             "date": "",
+        },
+        "absentee_received": {
+            "icon": "",
+            "color": "success text-muted",
+            "url": "",
+            "date": "2021-09-15",
         },
         "ballot_available": {
             "icon": "",
