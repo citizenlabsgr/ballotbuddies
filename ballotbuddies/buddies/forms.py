@@ -15,6 +15,10 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ["email"]
 
+    def clean_email(self):
+        value = self.cleaned_data["email"]
+        return value.lower()
+
 
 class VoterForm(forms.ModelForm):
     email = forms.EmailField(disabled=True, required=False)
@@ -54,3 +58,7 @@ class FriendsForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["emails"].widget.attrs["rows"] = "4"
+
+    def clean_emails(self):
+        values = self.cleaned_data["emails"]
+        return [value.lower() for value in values]
