@@ -315,13 +315,13 @@ VOTED = VoterData(
         },
         "ballot_sent": {
             "icon": "",
-            "color": "success",
+            "color": "success text-muted",
             "url": "",
             "date": "2021-09-30",
         },
         "ballot_received": {
             "icon": "",
-            "color": "success",
+            "color": "success text-muted",
             "url": "",
             "date": "2021-10-15",
         },

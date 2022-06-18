@@ -199,18 +199,15 @@ class Progress:
             progress.ballot_available.icon = "🟡"
 
         if not ballot and progress.election.days < constants.BALLOT_DEADLINE_DAYS:
-            progress.absentee_requested.color = "success"
+            progress.absentee_requested.color = "success text-muted"
+            progress.absentee_received.color = "success text-muted"
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
             progress.ballot_sent.icon = "−"
-            progress.ballot_sent.color = "default text-muted"
             progress.ballot_received.icon = "−"
-            progress.ballot_received.color = "default text-muted"
             progress.election.icon = "−"
-            progress.election.color = "default text-muted"
             progress.election.date = ""
             progress.voted.icon = "−"
-            progress.voted.color = "default text-muted"
 
         if not (ballot and absentee_date):
             return progress
@@ -225,8 +222,9 @@ class Progress:
             return progress
 
         if received_date := status.get("absentee_ballot_received"):
+            progress.ballot_sent.color = "success text-muted"
             progress.ballot_received.date = received_date
-            progress.ballot_received.color = "success"
+            progress.ballot_received.color = "success text-muted"
             progress.election.color = "success text-muted"
             progress.voted.icon = "✅"
             progress.voted.color = "success"
