@@ -122,7 +122,8 @@ def friends(request):
         form = FriendsForm(request.POST)
         if form.is_valid():
             voters = Voter.objects.invite(voter, form.cleaned_data["emails"])
-            messages.success(request, f"Successfully added {len(voters)} friend(s).")
+            s = "" if len(voters) == 1 else "s"
+            messages.success(request, f"Successfully added {len(voters)} friend{s}.")
             return redirect("buddies:friends")
     else:
         form = FriendsForm()
