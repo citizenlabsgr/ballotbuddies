@@ -212,7 +212,7 @@ class Progress:
             progress.voted.icon = "−"
             progress.voted.color = "default text-muted"
 
-        if not (ballot and absentee):
+        if not (ballot and absentee_date):
             return progress
 
         if sent_date := status.get("absentee_ballot_sent"):
