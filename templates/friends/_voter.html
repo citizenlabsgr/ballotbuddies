@@ -11,8 +11,8 @@
 
     {% if voter in recommended %}
     <td></td> <!-- Registered -->
+    <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Requested -->
     <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Recieved -->
-    <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Approved -->
     <td class="d-none d-sm-table-cell"></td> <!-- Ballot: Available -->
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Sent -->
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Recieved -->
@@ -44,18 +44,18 @@
         {% endif %}
     </td>
 
-    <td class="text-center table-{{ voter.progress.absentee_received.color }} d-none d-lg-table-cell">
-        {{ voter.progress.absentee_received }}
-    </td>
-
-    <td class="text-center table-{{ voter.progress.absentee_approved.color }} d-none d-lg-table-cell">
-        {% if voter.progress.absentee_approved.url %}
-        <a href="{{ voter.progress.absentee_approved.url }}" target="_blank" class="ms-1 text-decoration-none">
-            {{ voter.progress.absentee_approved }}
+    <td class="text-center table-{{ voter.progress.absentee_requested.color }} d-none d-lg-table-cell">
+        {% if voter.progress.absentee_requested.url %}
+        <a href="{{ voter.progress.absentee_requested.url }}" target="_blank" class="ms-1 text-decoration-none">
+            {{ voter.progress.absentee_requested }}
         </a>
         {% else %}
-        {{ voter.progress.absentee_approved }}
+        {{ voter.progress.absentee_requested }}
         {% endif %}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.absentee_received.color }} d-none d-lg-table-cell">
+        {{ voter.progress.absentee_received }}
     </td>
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-lg-table-cell">
