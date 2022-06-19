@@ -168,7 +168,7 @@ def status(request, slug: str):
 
     voter.update_status()
     voter.save()
-    context = {"voter": voter}
+    context = {"voter": voter, "recommended": []}
 
     if render_as_table:
         return render(request, "profile/_status.html", context)
