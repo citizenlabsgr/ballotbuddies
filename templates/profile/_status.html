@@ -123,7 +123,7 @@
                         Didn't vote
                     </button>
                 {% else %}
-                    <button class="btn btn-sm btn-outline-dark text-nowrap"
+                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
                         hx-post="{% url 'buddies:status' slug=voter.slug %}"
                         hx-vals='{ "voted": true }'
                         hx-trigger="click"
