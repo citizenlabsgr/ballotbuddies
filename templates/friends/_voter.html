@@ -18,7 +18,6 @@
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Recieved -->
     <td class=""></td> <!-- Election: Voted -->
     <td class="d-none d-md-table-cell"></td> <!-- Election: Deadline -->
-    <td></td> <!-- Last Updated -->
     {% else %}
 
     <td class="text-center table-{{ voter.progress.registered.color }}" style="white-space: nowrap;">
@@ -81,10 +80,6 @@
         {{ voter.progress.voted.icon }}
     </td>
 
-    <td class="text-center">
-        {{ voter.updated_humanized }}
-    </td>
-
     {% endif %}
 
     <td>
@@ -92,22 +87,32 @@
         <div class="input-group flex-nowrap">
 
         {% if voter.user == request.user %}
-        <a class="btn btn-sm btn-primary" href="{% url 'buddies:profile' %}">
-            <span class="d-none d-sm-inline text-nowrap">✎ View Profile</span>
+        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+            <span class="d-none d-md-inline text-nowrap">✎ View Profile</span>
+            <span class="d-none d-sm-inline d-md-none text-nowrap">✎ View</span>
             <span class="d-inline d-sm-none">✎</span>
         </a>
         {% elif voter in recommended %}
-        <button class="btn btn-sm btn-success"
+        <button class="btn btn-success"
             hx-post="{% url 'buddies:status' slug=voter.slug %}"
             hx-vals='{ "add": true }'
             hx-trigger="click"
             hx-target="closest tr"
             hx-swap="outerHTML">
-            <span class="d-none d-sm-inline text-nowrap">⊕ Follow Voter</span>
+            <span class="d-none d-md-inline text-nowrap">⊕ Follow Voter</span>
+            <span class="d-none d-sm-inline d-md-none text-nowrap">⊕ Follow</span>
             <span class="d-inline d-sm-none">⊕</span>
         </button>
+        <button class="btn btn-danger"
+                hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                hx-vals='{ "ignore": true }'
+                hx-trigger="click"
+                hx-target="closest tr"
+                hx-swap="outerHTML">
+                ✕
+            </button>
         {% elif voter.complete %}
-        <button class="btn btn-sm btn-secondary"
+        <button class="btn btn-secondary"
             {% if not request.user.is_authenticated %}disabled{% endif %}
             hx-post="{% url 'buddies:status' slug=voter.slug %}"
             hx-trigger="click"
@@ -118,7 +123,8 @@
         </button>
         {% endif %}
 
-        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+        {% if voter not in recommended %}
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
             data-bs-toggle="dropdown" aria-expanded="false" {% if not request.user.is_authenticated %}disabled{% endif %}>
             <span class="visually-hidden">Toggle Dropdown</span>
         </button>
@@ -128,20 +134,11 @@
 
             <li><h6 class="dropdown-header">More options:</h6></li>
 
-            {% if voter in recommended %}
-            <li><button class="btn btn-sm btn-danger"
-                hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                hx-vals='{ "ignore": true }'
-                hx-trigger="click"
-                hx-target="closest tr"
-                hx-swap="outerHTML">
-                <span class="text-nowrap">⊖ Ignore Suggestion</span>
-            </button></li>
-            {% elif voter.user != request.user %}
-            <li><a class="btn btn-sm btn-primary" href="mailto:{{ voter.user.email }}">
+            {% if voter.user != request.user %}
+            <li><a class="btn btn-primary" href="mailto:{{ voter.user.email }}">
                 <span class="text-nowrap">@ Send Email</span>
             </a></li>
-            <li><button class="btn btn-sm btn-danger mt-2"
+            <li><button class="btn btn-danger mt-2"
                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
                 hx-vals='{ "ignore": true }'
                 hx-trigger="click"
@@ -150,7 +147,7 @@
                 <span class="text-nowrap">⊖ Unfollow Voter</span>
             </button></li>
             {% else %}
-            <li><button class="btn btn-sm btn-secondary"
+            <li><button class="btn btn-secondary"
                 {% if not request.user.is_authenticated %}disabled{% endif %}
                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
                 hx-trigger="click"
@@ -160,7 +157,17 @@
                 <span class="d-inline d-sm-none">↺</span>
             </button></li>
             {% endif %}
+
+            {% if voter.updated %}
+            <li class="mt-2">
+                <small class="text-muted fst-italic">
+                    Last updated: {{ voter.updated_humanized }}
+                </small>
+            </li>
+            {% endif %}
+
         </ul>
+        {% endif %}
         {% endif %}
 
         </div>

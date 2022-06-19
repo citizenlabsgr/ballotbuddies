@@ -38,8 +38,8 @@
                             Election
                         </th>
 
-                        <th scope="col" colspan="2" rowspan="2" class="align-middle">
-                            <span class="d-none d-sm-inline">Last</span> Updated
+                        <th scope="col" rowspan="2" class="align-middle">
+                            Actions
                         </th>
                     </tr>
                     <tr>
@@ -71,10 +71,10 @@
                 {{ form|crispy }}
 
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary" type="submit">Invite friends</button>
+                    <button class="btn btn-primary" type="submit">Invite Friends</button>
                     <button class="btn btn-secondary" type="button"
                             data-clipboard-text="http://{{ request.get_host }}?referrer={{ request.user.voter.slug }}">
-                        Copy invitation link
+                        Copy Invitation Link
                     </button>
                 </div>
             </form>
