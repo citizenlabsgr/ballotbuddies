@@ -121,6 +121,10 @@ class Voter(models.Model):
         return self.user.email
 
     @cached_property
+    def name(self) -> str:
+        return self.first_name or "Friend"
+
+    @cached_property
     def first_name(self) -> str:
         return self.user.first_name
 

@@ -138,11 +138,33 @@ def friends(request):
 
 
 @login_required
-def friend(request, slug: str):
+def friends_profile(request, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
     form = VoterForm(initial=voter.data, locked=True)
     context = {"voter": voter, "form": form}
     return render(request, "friends/detail.html", context)
+
+
+@login_required
+def friends_setup(request, slug: str):
+    voter: Voter = Voter.objects.get(slug=slug)
+
+    if request.method == "POST":
+        form = VoterForm(request.POST, instance=voter, initial=voter.data)
+        if form.is_valid():
+            voter = form.save()
+            voter.update_status()
+            voter.save()
+            voter.user.update_name(  # type: ignore
+                request, form.cleaned_data["first_name"], form.cleaned_data["last_name"]
+            )
+            messages.success(request, "Successfully updated your friend's information.")
+            return redirect("buddies:friends-profile", slug=slug)
+    else:
+        form = VoterForm(instance=voter, initial=voter.data)
+
+    context = {"voter": voter, "form": form}
+    return render(request, "friends/setup.html", context)
 
 
 @login_required
@@ -185,6 +207,6 @@ def status(request, slug: str):
     context = {"voter": voter, "recommended": []}
 
     if render_as_table:
-        return render(request, "profile/_status.html", context)
+        return render(request, "profile/_table.html", context)
 
-    return render(request, "friends/_voter.html", context)
+    return render(request, "friends/_row.html", context)
