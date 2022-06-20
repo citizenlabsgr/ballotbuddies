@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block main %}
+
+<h1>{{ voter.name }}'s Voter Information</h1>
+
+<form method="post" novalidate>
+  {% csrf_token %}
+
+  {{ form|crispy }}
+
+  <button class="btn btn-primary" type="submit">Save</button>
+
+  <a class="btn btn-secondary" href="{% url 'buddies:friends-profile' slug=voter.slug %}">Cancel</a>
+
+</form>
+
+{% endblock main %}

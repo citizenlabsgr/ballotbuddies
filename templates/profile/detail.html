@@ -23,7 +23,7 @@
     <div hx-get="{% url 'buddies:status' slug=voter.slug %}"
          hx-trigger="load delay:1s"
          hx-swap="outerHTML">
-        {% include "profile/_status.html" %}
+        {% include "profile/_table.html" %}
     </div>
 </div>
 

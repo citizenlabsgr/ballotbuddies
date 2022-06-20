@@ -1,0 +1,15 @@
+{% load crispy_forms_tags %}
+
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-primary" type="submit">Invite Friends</button>
+        <button class="btn btn-secondary" type="button"
+                data-clipboard-text="http://{{ request.get_host }}?referrer={{ request.user.voter.slug }}">
+            Copy Invitation Link
+        </button>
+    </div>
+</form>
