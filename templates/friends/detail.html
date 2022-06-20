@@ -10,16 +10,20 @@
     {{ voter.email }}
 </p>
 
+{% if not voter.complete or not voter.progress.registered %}
+
 <div class="d-flex justify-content-between align-items-center">
     <h2 class="pt-2">Voter Information</h2>
-    {% if not voter.complete %}
-    <a class="btn btn-primary" href="{% url 'buddies:friends-setup' slug=voter.slug %}">Enter details</a>
-    {% elif not voter.progress.registered %}
+    {% if voter.complete %}
     <a class="btn btn-primary" href="{% url 'buddies:friends-setup' slug=voter.slug %}">Update details</a>
+    {% else %}
+    <a class="btn btn-primary" href="{% url 'buddies:friends-setup' slug=voter.slug %}">Enter details</a>
     {% endif %}
 </div>
 
 {{ form|crispy }}
+
+{% endif %}
 
 <h2 class="pt-2">Ballot Status</h2>
 

@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import login as force_login
 from django.contrib.auth import logout as force_logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
@@ -16,8 +17,8 @@ from .helpers import generate_sample_voters
 from .models import Voter
 
 
-def index(request):
-    if referrer := request.GET.get("referrer"):
+def index(request: HttpRequest):
+    if referrer := request.GET.get("referrer", ""):
         request.session["referrer"] = referrer
 
     if request.user.is_authenticated and not referrer:
@@ -34,13 +35,13 @@ def about(request):
     return render(request, "about/index.html")
 
 
-def login(request):
+def login(request: HttpRequest):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
             voter: Voter = Voter.objects.from_email(
                 form.cleaned_data["email"],
-                request.session.get("referrer"),
+                request.session.get("referrer", ""),
             )
 
             if "debug" in request.POST and allow_debug(request):
@@ -59,13 +60,14 @@ def login(request):
     return render(request, "login.html", context)
 
 
-def logout(request):
+def logout(request: HttpRequest):
     force_logout(request)
     return redirect("buddies:index")
 
 
 @login_required
-def profile(request):
+def profile(request: HttpRequest):
+    assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
     if not voter.complete:
@@ -85,7 +87,8 @@ def profile(request):
 
 
 @login_required
-def setup(request):
+def setup(request: HttpRequest):
+    assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
     if request.method == "POST":
@@ -107,7 +110,8 @@ def setup(request):
 
 
 @login_required
-def friends(request):
+def friends(request: HttpRequest):
+    assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
     if not voter.complete:
@@ -138,15 +142,18 @@ def friends(request):
 
 
 @login_required
-def friends_profile(request, slug: str):
+def friends_profile(request: HttpRequest, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
+    if voter.user == request.user:
+        return redirect("buddies:profile")
+
     form = VoterForm(initial=voter.data, locked=True)
     context = {"voter": voter, "form": form}
     return render(request, "friends/detail.html", context)
 
 
 @login_required
-def friends_setup(request, slug: str):
+def friends_setup(request: HttpRequest, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
 
     if request.method == "POST":
@@ -168,7 +175,8 @@ def friends_setup(request, slug: str):
 
 
 @login_required
-def status(request, slug: str):
+def status(request: HttpRequest, slug: str):
+    assert isinstance(request.user, User)
     voter: Voter = Voter.objects.get(slug=slug)
     render_as_table = request.method == "GET"
 
@@ -213,7 +221,8 @@ def status(request, slug: str):
 
 
 @login_required
-def invite(request):
+def invite(request: HttpRequest):
+    assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
     if request.method == "POST":
