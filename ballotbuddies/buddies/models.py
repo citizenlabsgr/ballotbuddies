@@ -156,7 +156,7 @@ class Voter(models.Model):
                 name=self.state.lower()
             )
 
-        if not self.absentee and not progress.absentee_requested:
+        if not self.absentee:
             progress.absentee_requested.icon = "✕"
             progress.absentee_received.icon = "−"
 
