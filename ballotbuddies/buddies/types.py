@@ -96,11 +96,14 @@ class Progress:
     registered: State = field(default_factory=State)
     registered_deadline: State = field(default_factory=State)
     absentee_requested: State = field(default_factory=State)
+    absentee_requested_deadline: State = field(default_factory=State)
     absentee_received: State = field(default_factory=State)
+    absentee_received_deadline: State = field(default_factory=State)
     ballot_available: State = field(default_factory=State)
     ballot_available_deadline: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
+    ballot_received_deadline: State = field(default_factory=State)
     election: State = field(default_factory=State)
     voted: State = field(default_factory=State)
 
@@ -138,8 +141,21 @@ class Progress:
             progress.registered_deadline.date = str(
                 to_date(progress.election.date) - constants.REGISTRATION_DEADLINE_DELTA
             )
+            progress.absentee_requested_deadline.date = str(
+                to_date(progress.election.date)
+                - constants.ABSENTEE_REQUESTED_DEADLINE_DELTA
+            )
+            progress.absentee_received_deadline.date = str(
+                to_date(progress.election.date)
+                - constants.ABSENTEE_RECEIVED_DEADLINE_DELTA
+            )
             progress.ballot_available_deadline.date = str(
-                to_date(progress.election.date) - constants.BALLOT_DEADLINE_DELTA
+                to_date(progress.election.date)
+                - constants.BALLOT_AVAILABLE_DEADLINE_DELTA
+            )
+            progress.ballot_received_deadline.date = str(
+                to_date(progress.election.date)
+                - constants.BALLOT_RECEIVED_DEADLINE_DELTA
             )
 
         if not status:
@@ -180,7 +196,10 @@ class Progress:
 
         if progress.election.days < constants.PAST_ELECTION_DAYS:
             progress.registered_deadline = State()
+            progress.absentee_requested_deadline = State()
+            progress.absentee_received_deadline = State()
             progress.ballot_available_deadline = State()
+            progress.ballot_received_deadline = State()
             progress.election = State()
             return progress
 
@@ -198,7 +217,10 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
-        if not ballot and progress.election.days < constants.BALLOT_DEADLINE_DAYS:
+        if (
+            not ballot
+            and progress.election.days < constants.BALLOT_AVAILABLE_DEADLINE_DAYS
+        ):
             progress.absentee_requested.color = "success text-muted"
             progress.absentee_received.color = "success text-muted"
             progress.ballot_available.icon = "🚫"

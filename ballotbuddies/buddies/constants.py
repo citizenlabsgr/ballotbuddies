@@ -7,10 +7,13 @@ OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
 ABSENTEE_URL = "https://absentee.michiganelections.io/"
 PREVIEW_URL = "https://share.michiganelections.io/elections/{election}/precincts/{precinct}?name={name}"
 
-REGISTRATION_DEADLINE_DELTA = timedelta(days=15)
-BALLOT_DEADLINE_DAYS = 30
-BALLOT_DEADLINE_DELTA = timedelta(days=BALLOT_DEADLINE_DAYS)
-ABSENTEE_WARNING_DAYS = 7
+REGISTRATION_DEADLINE_DELTA = timedelta(days=15)  # common guidance
+ABSENTEE_REQUESTED_DEADLINE_DELTA = timedelta(weeks=4)  # buffer for mail service
+ABSENTEE_RECEIVED_DEADLINE_DELTA = timedelta(weeks=2)  # buffer for mail service
+BALLOT_AVAILABLE_DEADLINE_DAYS = 30  # SOS is supposed to finalize ballots a month out
+BALLOT_AVAILABLE_DEADLINE_DELTA = timedelta(days=BALLOT_AVAILABLE_DEADLINE_DAYS)
+BALLOT_RECEIVED_DEADLINE_DELTA = timedelta(days=4)  # Friday before the election
+ABSENTEE_WARNING_DAYS = 7  # buffer for mail service
 PAST_ELECTION_DAYS = -21
 
 
@@ -43,11 +46,23 @@ UNREGISTERED = VoterData(
             "url": "",
             "date": "",
         },
+        "absentee_requested_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-05",
+        },
         "absentee_received": {
             "icon": "",
             "color": "default",
             "url": "",
             "date": "",
+        },
+        "absentee_received_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-19",
         },
         "ballot_available": {
             "icon": "",
@@ -72,6 +87,12 @@ UNREGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
+        },
+        "ballot_received_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-29",
         },
         "election": {
             "color": "default",
@@ -112,11 +133,23 @@ REGISTERED = VoterData(
             "url": "https://absentee.michiganelections.io/",
             "date": "",
         },
-        "absentee_received": {
+        "absentee_requested_deadline": {
+            "icon": "",
             "color": "default",
-            "date": "",
-            "icon": "−",
             "url": "",
+            "date": "2021-10-05",
+        },
+        "absentee_received": {
+            "icon": "−",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+        "absentee_received_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-19",
         },
         "ballot_available": {
             "icon": "🟡",
@@ -142,11 +175,17 @@ REGISTERED = VoterData(
             "url": "",
             "date": "",
         },
-        "election": {
-            "color": "default",
-            "date": "2021-11-02",
+        "ballot_received_deadline": {
             "icon": "",
+            "color": "default",
             "url": "",
+            "date": "2021-10-29",
+        },
+        "election": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-11-02",
         },
         "voted": {
             "icon": "",
@@ -204,11 +243,23 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "url": "",
             "date": "",
         },
-        "absentee_received": {
+        "absentee_requested_deadline": {
+            "icon": "",
             "color": "default",
-            "date": "",
-            "icon": "🟡",
             "url": "",
+            "date": "2021-10-05",
+        },
+        "absentee_received": {
+            "icon": "🟡",
+            "color": "default",
+            "url": "",
+            "date": "",
+        },
+        "absentee_received_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-19",
         },
         "ballot_available": {
             "icon": "🟡",
@@ -233,6 +284,12 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "color": "default",
             "url": "",
             "date": "",
+        },
+        "ballot_received_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-29",
         },
         "election": {
             "icon": "",
@@ -295,11 +352,23 @@ VOTED = VoterData(
             "url": "",
             "date": "",
         },
+        "absentee_requested_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-05",
+        },
         "absentee_received": {
             "icon": "",
             "color": "success text-muted",
             "url": "",
             "date": "2021-09-15",
+        },
+        "absentee_received_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-19",
         },
         "ballot_available": {
             "icon": "",
@@ -310,8 +379,8 @@ VOTED = VoterData(
         "ballot_available_deadline": {
             "icon": "",
             "color": "default",
-            "date": "2021-10-03",
             "url": "",
+            "date": "2021-10-03",
         },
         "ballot_sent": {
             "icon": "",
@@ -324,6 +393,12 @@ VOTED = VoterData(
             "color": "success text-muted",
             "url": "",
             "date": "2021-10-15",
+        },
+        "ballot_received_deadline": {
+            "icon": "",
+            "color": "default",
+            "url": "",
+            "date": "2021-10-29",
         },
         "election": {
             "icon": "",

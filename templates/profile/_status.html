@@ -45,7 +45,9 @@
                 {{ voter.progress.absentee_requested }}
             </td>
 
-            <td class="text-center border-start"></td>
+            <td class="text-center border-start {% if voter.progress.absentee_requested %} text-muted {% endif %}">
+                {{ voter.progress.absentee_requested_deadline.full_date }}
+            </td>
         </tr>
 
         <tr class="align-middle">
@@ -57,7 +59,9 @@
                 {{ voter.progress.absentee_received }}
             </td>
 
-            <td class="text-center border-start"></td>
+            <td class="text-center border-start {% if voter.progress.absentee_received %} text-muted {% endif %}">
+                {{ voter.progress.absentee_received_deadline.full_date }}
+            </td>
         </tr>
 
         <tr class="align-middle">
@@ -98,7 +102,9 @@
                 {{ voter.progress.ballot_received }}
             </td>
 
-            <td class="text-center border-start"></td>
+            <td class="text-center border-start {% if voter.progress.ballot_received %} text-muted {% endif %}">
+                {{ voter.progress.ballot_received_deadline.full_date }}
+            </td>
         </tr>
 
         <tr class="align-middle">
