@@ -210,3 +210,21 @@ def status(request, slug: str):
         return render(request, "profile/_table.html", context)
 
     return render(request, "friends/_row.html", context)
+
+
+@login_required
+def invite(request):
+    voter: Voter = Voter.objects.from_user(request.user)
+
+    if request.method == "POST":
+        form = FriendsForm(request.POST)
+        if form.is_valid():
+            voters = Voter.objects.invite(voter, form.cleaned_data["emails"])
+            s = "" if len(voters) == 1 else "s"
+            messages.success(request, f"Successfully added {len(voters)} friend{s}.")
+            return redirect("buddies:friends")
+    else:
+        form = FriendsForm()
+
+    context = {"form": form}
+    return render(request, "invite/index.html", context)

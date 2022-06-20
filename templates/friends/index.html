@@ -62,59 +62,14 @@
         </div>
 
         <div class="col-lg-6 col-md-8 col-12 mb-4">
-
             {% if request.user.is_authenticated and not referrer %}
-
-            <form method="post" novalidate>
-                {% csrf_token %}
-
-                {{ form|crispy }}
-
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary" type="submit">Invite Friends</button>
-                    <button class="btn btn-secondary" type="button"
-                            data-clipboard-text="http://{{ request.get_host }}?referrer={{ request.user.voter.slug }}">
-                        Copy Invitation Link
-                    </button>
-                </div>
-            </form>
-
+                {% include "friends/_invite.html" %}
             {% else %}
-
-            {% include "about/_details.html" %}
-
+                {% include "about/_details.html" %}
             {% endif %}
-
         </div>
+
     </div>
 </div>
 
 {% endblock content %}
-{% block scripts %}
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"
-    integrity="sha512-PIisRT8mFfdxx99gMs7WAY5Gp+CtjYYxKvF93w8yWAvX548UBNADHu7Qkavgr6yRG+asocqfuk5crjNd5z9s6Q=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script>
-
-    var clipboard = new ClipboardJS('.btn');
-
-    clipboard.on('success', function(e) {
-        $(e.trigger).attr('title', 'Link Copied').tooltip('show');
-    });
-
-    clipboard.on('error', function(e) {
-        console.log(e);
-    });
-
-    $(function() {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-
-</script>
-
-{% endblock scripts %}
