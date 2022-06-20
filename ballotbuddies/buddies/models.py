@@ -158,6 +158,7 @@ class Voter(models.Model):
 
         if not self.absentee:
             progress.absentee_requested.icon = "✕"
+            progress.absentee_requested.url = ""
             progress.absentee_received.icon = "−"
 
         if progress.voted.date and not self.voted:

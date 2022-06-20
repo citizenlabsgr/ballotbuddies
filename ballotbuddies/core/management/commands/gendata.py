@@ -127,6 +127,8 @@ class Command(BaseCommand):
         birth_date: str,
         zip_code: str,
         status=None,
+        *,
+        absentee: bool = True,
     ):
         user = self.get_or_create_user(base_email)
         user.first_name = first_name
@@ -144,6 +146,7 @@ class Command(BaseCommand):
 
         if status:
             voter.status = status
+            voter.absentee = absentee
             voter.updated = timezone.now()
             voter.save()
 
@@ -209,12 +212,26 @@ class Command(BaseCommand):
         status["status"]["absentee_application_received"] = None  # type: ignore
         status["status"]["ballot"] = False  # type: ignore
         yield self.get_or_create_voter(
+            "test+missing@example.com",
+            "Missing",
+            "Absentee",
+            "1970-01-01",
+            "49503",
+            status,
+        )
+
+        status = deepcopy(STATUS)
+        status["status"]["absentee"] = False  # type: ignore
+        status["status"]["absentee_application_received"] = None  # type: ignore
+        status["status"]["ballot"] = False  # type: ignore
+        yield self.get_or_create_voter(
             "test+inperson@example.com",
             "Not",
             "Absentee",
             "1970-01-01",
             "49503",
             status,
+            absentee=False,
         )
 
         status = deepcopy(STATUS)
