@@ -88,7 +88,7 @@ class State:
         return f"{self.icon} {self.short_date}".strip()
 
     def __bool__(self):
-        return self.color != "default" and self.icon not in {"🚫"}
+        return self.color != "default" and self.icon not in {"🟡", "⚠️", "🚫"}
 
 
 @dataclass
