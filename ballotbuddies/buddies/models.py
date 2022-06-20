@@ -84,7 +84,14 @@ class Voter(models.Model):
     state = models.CharField(max_length=20, default="Michigan", editable=False)
 
     status = models.JSONField(null=True, blank=True)
-    voted = models.DateTimeField(null=True, blank=True)
+    absentee = models.BooleanField(
+        default=True, help_text="Voter plans to vote by mail."
+    )
+    voted = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Voter has participated in the upcoming election.",
+    )
 
     referrer = models.ForeignKey(
         "Voter", null=True, blank=True, on_delete=models.SET_NULL
@@ -149,6 +156,10 @@ class Voter(models.Model):
                 name=self.state.lower()
             )
 
+        if not self.absentee and not progress.absentee_requested:
+            progress.absentee_requested.icon = "✕"
+            progress.absentee_received.icon = "−"
+
         if progress.voted.date and not self.voted:
             log.info("Recording vote for current election")
             datetime = to_datetime(progress.voted.date)
@@ -157,6 +168,7 @@ class Voter(models.Model):
 
         if not progress.ballot_available.url and self.voted:
             log.info("Clearing recorded vote for past election")
+            self.absentee = True
             self.voted = None
             self.save()
 
