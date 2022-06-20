@@ -20,7 +20,7 @@ class VoterAdmin(admin.ModelAdmin):
 
     search_fields = ["user__email", "user__first_name", "user__last_name"]
 
-    list_filter = ["state"]
+    list_filter = ["state", "absentee"]
     list_display = [
         "email",
         "first_name",
@@ -29,6 +29,7 @@ class VoterAdmin(admin.ModelAdmin):
         "zip_code",
         "state",
         "status",
+        "absentee",
         "voted",
         "updated",
         "created",
@@ -38,4 +39,4 @@ class VoterAdmin(admin.ModelAdmin):
 
     filter_horizontal = ["friends", "neighbors", "strangers"]
 
-    readonly_fields = ["status", "voted", "updated", "created"]
+    readonly_fields = ["status", "absentee", "voted", "updated", "created"]

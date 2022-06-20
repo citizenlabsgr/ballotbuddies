@@ -45,6 +45,7 @@
     "runserver",
     "Unfollowing",
     "whitenoise",
-    "wsgi"
+    "wsgi",
+    "zipcodes"
   ]
 }

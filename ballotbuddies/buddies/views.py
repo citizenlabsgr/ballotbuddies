@@ -156,6 +156,12 @@ def status(request, slug: str):
         request.user.voter.friends.add(voter)
         request.user.voter.save()
 
+    if "absentee" in request.POST:
+        log.info(f"Recording in-person intention: {voter}")
+        assert request.POST["absentee"] == "false"
+        voter.absentee = False
+        render_as_table = True
+
     if "voted" in request.POST:
         log.info(f"Recording vote: {voter}")
         voter.voted = timezone.now()
