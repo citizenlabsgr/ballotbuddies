@@ -138,6 +138,14 @@ def friends(request):
 
 
 @login_required
+def friend(request, slug: str):
+    voter: Voter = Voter.objects.get(slug=slug)
+    form = VoterForm(initial=voter.data, locked=True)
+    context = {"voter": voter, "form": form}
+    return render(request, "friends/detail.html", context)
+
+
+@login_required
 def status(request, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
     render_as_table = request.method == "GET"

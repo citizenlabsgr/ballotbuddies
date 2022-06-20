@@ -146,6 +146,9 @@
                 hx-swap="outerHTML">
                 <span class="text-nowrap">⊖ Unfollow Voter</span>
             </button></li>
+            <li><a class="btn btn-secondary mt-2" href="{%  url 'buddies:friend' slug=voter.slug %}">
+                <span class="text-nowrap">✎ View Profile</span>
+            </a></li>
             {% else %}
             <li><button class="btn btn-secondary"
                 {% if not request.user.is_authenticated %}disabled{% endif %}

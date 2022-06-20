@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block main %}
+
+<h1>Friend's Profile</h1>
+
+<p>
+    {{ voter.email }}
+</p>
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2 class="pt-2">Voter Information</h2>
+</div>
+
+{{ form|crispy }}
+
+<h2 class="pt-2">Ballot Status</h2>
+
+<div>
+    <div>
+        {% include "profile/_status.html" %}
+    </div>
+</div>
+
+<h2 class="pt-2">Last Updated</h2>
+
+<p>
+    {{ voter.updated }}
+</p>
+
+{% endblock main %}

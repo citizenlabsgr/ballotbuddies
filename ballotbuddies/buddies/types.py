@@ -30,6 +30,7 @@ COLOR_VALUES = {
 ICON_VALUES = {
     "🔗": 0.32,
     "✅": 0.31,
+    "✕": 0.30,
     "🟡": 0.22,
     "⚠️": 0.21,
     "🚫": 0.1,
@@ -87,7 +88,7 @@ class State:
         return f"{self.icon} {self.short_date}".strip()
 
     def __bool__(self):
-        return self.color != "default"
+        return self.color != "default" and self.icon not in {"🚫"}
 
 
 @dataclass
