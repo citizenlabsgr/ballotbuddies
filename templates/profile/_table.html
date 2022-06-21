@@ -42,21 +42,7 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.absentee_requested.color }} text-nowrap border-start">
-                <form>{% csrf_token %}
-
-                    {{ voter.progress.absentee_requested }}
-
-                    {% if voter.absentee and voter.progress.absentee_requested.icon != '✅' %}
-                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                        hx-vals='{ "absentee": false }'
-                        hx-trigger="click"
-                        hx-target="closest table"
-                        hx-swap="outerHTML">
-                        Voting in person
-                    </button>
-                    {% endif %}
-                </form>
+                {{ voter.progress.absentee_requested }}
             </td>
 
             <td class="text-center border-start {% if voter.progress.absentee_requested %} text-muted {% endif %}">
@@ -70,7 +56,21 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.absentee_received.color }} border-start">
-                {{ voter.progress.absentee_received }}
+                <form>{% csrf_token %}
+
+                    {{ voter.progress.absentee_received }}
+
+                    {% if voter.absentee and not voter.progress.absentee_received %}
+                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                        hx-vals='{ "absentee": false }'
+                        hx-trigger="click"
+                        hx-target="closest table"
+                        hx-swap="outerHTML">
+                        Voting in person
+                    </button>
+                    {% endif %}
+                </form>
             </td>
 
             <td class="text-center border-start {% if voter.progress.absentee_received %} text-muted {% endif %}">
