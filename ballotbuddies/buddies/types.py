@@ -50,7 +50,9 @@ class State:
     @property
     def value(self) -> float:
         color = self.color.split(" ", maxsplit=1)[0]
-        return COLOR_VALUES[color] + ICON_VALUES[self.icon]
+        icon = "🔗" if self.url and not self.icon else self.icon
+        date_value = ICON_VALUES["✅"] + abs(self.days) / 1000 if self.date else 0
+        return COLOR_VALUES[color] + ICON_VALUES[icon] + date_value
 
     @property
     def short_date(self) -> str:
@@ -121,6 +123,8 @@ class Progress:
             self.ballot_sent.value,
             self.voted.value,
             self.ballot_available.value,
+            self.absentee_received.value,
+            self.absentee_requested.value,
             self.registered.value,
         )
 
