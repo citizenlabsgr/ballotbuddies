@@ -166,13 +166,13 @@ class Voter(models.Model):
             progress.absentee_received.icon = "−"
 
         if progress.voted.date and not self.voted:
-            log.info("Recording vote for current election")
+            log.info(f"Recording vote for current election: {self}")
             datetime = to_datetime(progress.voted.date)
             self.voted = timezone.make_aware(datetime)
             self.save()
 
         if not progress.ballot_available.url and self.voted:
-            log.info("Clearing recorded vote for past election")
+            log.info(f"Clearing recorded vote for past election: {self}")
             self.absentee = True
             self.voted = None
             self.save()
@@ -182,6 +182,8 @@ class Voter(models.Model):
             progress.election.color = "success text-muted"
             progress.voted.icon = "✅"
             progress.voted.color = "success"
+        elif not self.absentee:
+            progress.voted.icon = "🟡"
 
         return progress
 

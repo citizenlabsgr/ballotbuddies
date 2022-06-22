@@ -52,6 +52,7 @@
                 {{ voter.progress.absentee_requested }}
                 {% endif %}
 
+                {% if voter.progress.registered %}
                 {% if not voter.absentee %}
                 <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
                         hx-post="{% url 'buddies:status' slug=voter.slug %}"
@@ -70,6 +71,7 @@
                     hx-swap="outerHTML">
                     Voting in person
                 </button>
+                {% endif %}
                 {% endif %}
 
             </form>

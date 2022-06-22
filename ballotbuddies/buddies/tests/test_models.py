@@ -7,7 +7,7 @@ from django.utils import timezone
 
 import pytest
 
-from ..constants import SAMPLE_DATA
+from ..constants import REGISTERED, SAMPLE_DATA, VOTED
 from ..models import User, Voter
 
 
@@ -40,13 +40,21 @@ def describe_voter():
             voter.voted = timezone.now()
             voter.user.save()
 
-            voter.status = SAMPLE_DATA[-1].status
+            voter.status = VOTED.status
 
             expect(voter.progress.voted.date) == ""
             expect(voter.voted) == None
 
-        def with_manual_voter(expect, voter):
-            voter.status = SAMPLE_DATA[-1].status
+        @pytest.mark.django_db
+        def with_planned_present_voter(expect, voter):
+            voter.status = REGISTERED.status
+            voter.absentee = False
+            voter.user.save()
+
+            expect(voter.progress.voted.icon) == "🟡"
+
+        def with_completed_present_voter(expect, voter):
+            voter.status = VOTED.status
             voter.voted = timezone.now()
 
             expect(voter.progress.voted.color) == "success"
