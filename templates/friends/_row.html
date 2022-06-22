@@ -13,7 +13,7 @@
 
     <td class="text-center table-{{ voter.progress.registered.color }}" style="white-space: nowrap;">
         {% if voter.progress.registered.url %}
-        <a href="{{ voter.progress.registered.url }}" target="_blank" class="ms-1 text-decoration-none">
+        <a href="{{ voter.progress.registered.url }}" target="_blank" class="text-decoration-none">
             {{ voter.progress.registered }}
         </a>
         {% else %}
@@ -40,13 +40,13 @@
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-lg-none">
         {{ voter.progress.ballot_available }}
         {% if voter.progress.ballot_available.url %}
-        <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+        <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="text-decoration-none">🔗</a>
         {% endif %}
     </td>
 
     <td class="text-center table-{{ voter.progress.absentee_requested.color }} d-none d-lg-table-cell">
         {% if voter.progress.absentee_requested.url %}
-        <a href="{{ voter.progress.absentee_requested.url }}" target="_blank" class="ms-1 text-decoration-none">
+        <a href="{{ voter.progress.absentee_requested.url }}" target="_blank" class="text-decoration-none">
             {{ voter.progress.absentee_requested }}
         </a>
         {% else %}
@@ -56,13 +56,12 @@
 
     <td class="text-center table-{{ voter.progress.absentee_received.color }} d-none d-lg-table-cell">
         {{ voter.progress.absentee_received }}
-        <!-- Value: {{ voter.progress.absentee_received.value }} -->
     </td>
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-lg-table-cell">
         {{ voter.progress.ballot_available }}
         {% if voter.progress.ballot_available.url %}
-        <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="ms-1 text-decoration-none">🔗</a>
+        <a href="{{ voter.progress.ballot_available.url }}" target="_blank" class="text-decoration-none">🔗</a>
         {% endif %}
     </td>
 

@@ -42,7 +42,13 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.absentee_requested.color }} text-nowrap border-start">
+                {% if voter.progress.absentee_requested.url %}
+                <a href="{{ voter.progress.absentee_requested.url }}" target="_blank" class="text-decoration-none">
+                    {{ voter.progress.absentee_requested }}
+                </a>
+                {% else %}
                 {{ voter.progress.absentee_requested }}
+                {% endif %}
             </td>
 
             <td class="text-center border-start {% if voter.progress.absentee_requested %} text-muted {% endif %}">
