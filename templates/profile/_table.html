@@ -61,6 +61,15 @@
                         hx-swap="outerHTML">
                     Voting absentee
                 </button>
+                {% elif not voter.progress.absentee_requested %}
+                <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                    hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                    hx-vals='{ "absentee": false }'
+                    hx-trigger="click"
+                    hx-target="closest table"
+                    hx-swap="outerHTML">
+                    Voting in person
+                </button>
                 {% endif %}
 
             </form>
