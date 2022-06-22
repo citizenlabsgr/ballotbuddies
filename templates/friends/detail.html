@@ -28,9 +28,18 @@
 <h2 class="pt-2">Ballot Status</h2>
 
 <div>
+    {% if voter.progress.registered %}
     <div>
         {% include "profile/_table.html" %}
     </div>
+    {% else %}
+    <div
+        hx-get="{% url 'buddies:status' slug=voter.slug %}"
+        hx-trigger="load delay:1s"
+        hx-swap="outerHTML">
+        {% include "profile/_table.html" %}
+    </div>
+    {% endif %}
 </div>
 
 <h2 class="pt-2">Last Updated</h2>
