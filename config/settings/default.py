@@ -101,7 +101,7 @@ SITE_ID = 1
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 LOGIN_URL = "/login"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/profile"
 LOGOUT_REDIRECT_URL = "/"
 
 ###############################################################################
