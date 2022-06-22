@@ -64,9 +64,11 @@
             <td class="text-center table-{{ voter.progress.absentee_received.color }} border-start">
                 <form>{% csrf_token %}
 
+                    {% if voter.absentee %}
+
                     {{ voter.progress.absentee_received }}
 
-                    {% if voter.absentee and not voter.progress.absentee_received %}
+                    {% if not voter.progress.absentee_received %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
                         hx-post="{% url 'buddies:status' slug=voter.slug %}"
                         hx-vals='{ "absentee": false }'
@@ -76,6 +78,19 @@
                         Voting in person
                     </button>
                     {% endif %}
+
+                    {% else %}
+                    <button class="btn btn-sm btn-outline-dark text-nowrap"
+                        aria-label="Reset"
+                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                        hx-vals='{ "reset": true }'
+                        hx-trigger="click"
+                        hx-target="closest table"
+                        hx-swap="outerHTML">
+                        Voting absentee
+                    </button>
+                    {% endif %}
+
                 </form>
             </td>
 

@@ -198,6 +198,7 @@ class Voter(models.Model):
     def reset_status(self):
         self.status = None
         self.updated = None
+        self.absentee = True
         self.voted = None
 
     def update_status(self) -> tuple[bool, str]:
