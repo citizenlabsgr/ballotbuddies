@@ -110,6 +110,10 @@ format-backend: install
 	$(RUN) isort $(PYTHON_PACKAGES) tests
 	$(RUN) black $(PYTHON_PACKAGES) tests
 
+ifdef DISABLE_COVERAGE
+PYTEST_OPTIONS := --no-cov --disable-warnings
+endif
+
 .PHONY: test
 test: test-backend ## Run all tests
 
@@ -119,22 +123,24 @@ test-backend: test-backend-all
 .PHONY: test-backend-unit
 test-backend-unit: install
 	@ ( mv $(FAILURES) $(FAILURES).bak || true ) > /dev/null 2>&1
-	$(RUN) pytest $(PYTHON_PACKAGES) tests/unit -m "not django_db"
+	$(RUN) pytest $(PYTHON_PACKAGES) tests/unit -m "not django_db" $(PYTEST_OPTIONS)
 	@ ( mv $(FAILURES).bak $(FAILURES) || true ) > /dev/null 2>&1
+ifndef DISABLE_COVERAGE
 	$(RUN) coveragespace update unit
+endif
 
 .PHONY: test-backend-integration
 test-backend-integration: install
 	@ if test -e $(FAILURES); then $(RUN) pytest tests/integration; fi
 	@ rm -rf $(FAILURES)
-	$(RUN) pytest tests/integration
+	$(RUN) pytest tests/integration $(PYTEST_OPTIONS)
 	$(RUN) coveragespace update integration
 
 .PHONY: test-backend-all
 test-backend-all: install
 	@ if test -e $(FAILURES); then $(RUN) pytest $(PYTHON_PACKAGES) tests/unit tests/integration; fi
 	@ rm -rf $(FAILURES)
-	$(RUN) pytest $(PYTHON_PACKAGES) tests/unit tests/integration
+	$(RUN) pytest $(PYTHON_PACKAGES) tests/unit tests/integration $(PYTEST_OPTIONS)
 	$(RUN) coveragespace update overall
 
 .PHONY: test-system
