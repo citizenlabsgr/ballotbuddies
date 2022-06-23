@@ -56,12 +56,32 @@ class State:
         return COLOR_VALUES[color] + ICON_VALUES[icon] + date_value
 
     @property
-    def short_date(self) -> str:
+    def days(self) -> int:
+        if self.date:
+            delta = to_date(self.date) - today()
+            return delta.days
+        return 0
+
+    @property
+    def date_short(self) -> str:
         _date = to_date(self.date)
         return f"{_date:%-m/%-d}" if _date else ""
 
     @property
-    def full_date(self) -> str:
+    def date_delta(self) -> str:
+        if self.icon:
+            return self.icon
+        if _date := to_date(self.date):
+            delta = (_date - today()).days
+            if delta > 1:
+                return f"{delta} days"
+            if delta == 1:
+                return "Tomorrow"
+            return self.date_short if delta else "Today"
+        return ""
+
+    @property
+    def date_humanized(self) -> str:
         if _date := to_date(self.date):
             ordinal = to_ordinal(_date.day)
             return f"{_date:%A, %B %-d}{ordinal}"
@@ -74,28 +94,8 @@ class State:
             return f"{dt:%A, %B %-d}{ordinal}"
         return "−"
 
-    @property
-    def days(self) -> int:
-        if self.date:
-            delta = to_date(self.date) - today()
-            return delta.days
-        return 0
-
-    @property
-    def delta_date(self) -> str:
-        if self.icon:
-            return self.icon
-        if _date := to_date(self.date):
-            delta = (_date - today()).days
-            if delta > 1:
-                return f"{delta} days"
-            if delta == 1:
-                return "Tomorrow"
-            return self.short_date if delta else "Today"
-        return ""
-
     def __str__(self):
-        return f"{self.icon} {self.short_date}".strip()
+        return f"{self.icon} {self.date_short}".strip()
 
     def __bool__(self):
         return self.color != "default" and self.icon not in {"🟡", "⚠️", "🚫"}
