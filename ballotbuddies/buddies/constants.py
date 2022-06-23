@@ -12,6 +12,7 @@ ABSENTEE_REQUESTED_DEADLINE_DELTA = timedelta(weeks=4)  # buffer for mail servic
 ABSENTEE_RECEIVED_DEADLINE_DELTA = timedelta(weeks=2)  # buffer for mail service
 BALLOT_AVAILABLE_DEADLINE_DAYS = 30  # SOS is supposed to finalize ballots a month out
 BALLOT_AVAILABLE_DEADLINE_DELTA = timedelta(days=BALLOT_AVAILABLE_DEADLINE_DAYS)
+BALLOT_SENT_DEADLINE_DELTA = timedelta(weeks=3)  # buffer for mail service
 BALLOT_RECEIVED_DEADLINE_DELTA = timedelta(days=4)  # Friday before the election
 ABSENTEE_WARNING_DAYS = 7  # buffer for mail service
 PAST_ELECTION_DAYS = -21
@@ -61,7 +62,7 @@ UNREGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
-            "deadline": "",
+            "deadline": "2021-10-12",
         },
         "ballot_received": {
             "icon": "",
@@ -126,7 +127,7 @@ REGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
-            "deadline": "",
+            "deadline": "2021-10-12",
         },
         "ballot_received": {
             "icon": "−",
@@ -214,7 +215,7 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "color": "default",
             "url": "",
             "date": "",
-            "deadline": "",
+            "deadline": "2021-10-12",
         },
         "ballot_received": {
             "icon": "−",
@@ -301,7 +302,7 @@ VOTED = VoterData(
             "color": "success text-muted",
             "url": "",
             "date": "2021-09-30",
-            "deadline": "",
+            "deadline": "2021-10-12",
         },
         "ballot_received": {
             "icon": "",

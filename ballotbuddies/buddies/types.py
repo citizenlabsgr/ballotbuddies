@@ -63,7 +63,7 @@ class State:
         return 0
 
     @property
-    def date_short(self) -> str:
+    def date_shortened(self) -> str:
         _date = to_date(self.date)
         return f"{_date:%-m/%-d}" if _date else ""
 
@@ -77,7 +77,7 @@ class State:
                 return f"{delta} days"
             if delta == 1:
                 return "Tomorrow"
-            return self.date_short if delta else "Today"
+            return self.date_shortened if delta else "Today"
         return ""
 
     @property
@@ -95,7 +95,7 @@ class State:
         return "−"
 
     def __str__(self):
-        return f"{self.icon} {self.date_short}".strip()
+        return f"{self.icon} {self.date_shortened}".strip()
 
     def __bool__(self):
         return self.color != "default" and self.icon not in {"🟡", "⚠️", "🚫"}
@@ -146,24 +146,27 @@ class Progress:
 
         progress.election.date = election.get("date")
         if progress.election.date:
+            election_date = to_date(progress.election.date)
             progress.registered.deadline = str(
-                to_date(progress.election.date) - constants.REGISTRATION_DEADLINE_DELTA
+                election_date - constants.REGISTRATION_DEADLINE_DELTA
             )
             progress.absentee_requested.deadline = str(
-                to_date(progress.election.date)
-                - constants.ABSENTEE_REQUESTED_DEADLINE_DELTA
+                election_date - constants.ABSENTEE_REQUESTED_DEADLINE_DELTA
             )
             progress.absentee_received.deadline = str(
-                to_date(progress.election.date)
-                - constants.ABSENTEE_RECEIVED_DEADLINE_DELTA
+                election_date - constants.ABSENTEE_RECEIVED_DEADLINE_DELTA
             )
             progress.ballot_available.deadline = str(
-                to_date(progress.election.date)
-                - constants.BALLOT_AVAILABLE_DEADLINE_DELTA
+                election_date - constants.BALLOT_AVAILABLE_DEADLINE_DELTA
+            )
+            progress.ballot_sent.deadline = str(
+                election_date - constants.BALLOT_RECEIVED_DEADLINE_DELTA
+            )
+            progress.ballot_sent.deadline = str(
+                election_date - constants.BALLOT_SENT_DEADLINE_DELTA
             )
             progress.ballot_received.deadline = str(
-                to_date(progress.election.date)
-                - constants.BALLOT_RECEIVED_DEADLINE_DELTA
+                election_date - constants.BALLOT_RECEIVED_DEADLINE_DELTA
             )
 
         if not status:
@@ -207,6 +210,7 @@ class Progress:
             progress.absentee_requested.deadline = ""
             progress.absentee_received.deadline = ""
             progress.ballot_available.deadline = ""
+            progress.ballot_sent.deadline = ""
             progress.ballot_received.deadline = ""
             progress.election = State()
             return progress
