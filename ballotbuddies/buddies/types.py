@@ -46,6 +46,7 @@ class State:
     color: str = "default"
     url: str = ""
     date: str = ""
+    deadline: str = ""
 
     @property
     def value(self) -> float:
@@ -55,18 +56,6 @@ class State:
         return COLOR_VALUES[color] + ICON_VALUES[icon] + date_value
 
     @property
-    def short_date(self) -> str:
-        _date = to_date(self.date)
-        return f"{_date:%-m/%-d}" if _date else ""
-
-    @property
-    def full_date(self) -> str:
-        if _date := to_date(self.date):
-            ordinal = to_ordinal(_date.day)
-            return f"{_date:%A, %B %-d}{ordinal}"
-        return "−"
-
-    @property
     def days(self) -> int:
         if self.date:
             delta = to_date(self.date) - today()
@@ -74,7 +63,12 @@ class State:
         return 0
 
     @property
-    def delta_date(self) -> str:
+    def date_shortened(self) -> str:
+        _date = to_date(self.date)
+        return f"{_date:%-m/%-d}" if _date else ""
+
+    @property
+    def date_delta(self) -> str:
         if self.icon:
             return self.icon
         if _date := to_date(self.date):
@@ -83,11 +77,25 @@ class State:
                 return f"{delta} days"
             if delta == 1:
                 return "Tomorrow"
-            return self.short_date if delta else "Today"
+            return self.date_shortened if delta else "Today"
         return ""
 
+    @property
+    def date_humanized(self) -> str:
+        if _date := to_date(self.date):
+            ordinal = to_ordinal(_date.day)
+            return f"{_date:%A, %B %-d}{ordinal}"
+        return "−"
+
+    @property
+    def deadline_humanized(self) -> str:
+        if dt := to_date(self.deadline):
+            ordinal = to_ordinal(dt.day)
+            return f"{dt:%A, %B %-d}{ordinal}"
+        return "−"
+
     def __str__(self):
-        return f"{self.icon} {self.short_date}".strip()
+        return f"{self.icon} {self.date_shortened}".strip()
 
     def __bool__(self):
         return self.color != "default" and self.icon not in {"🟡", "⚠️", "🚫"}
@@ -97,16 +105,11 @@ class State:
 class Progress:
 
     registered: State = field(default_factory=State)
-    registered_deadline: State = field(default_factory=State)
     absentee_requested: State = field(default_factory=State)
-    absentee_requested_deadline: State = field(default_factory=State)
     absentee_received: State = field(default_factory=State)
-    absentee_received_deadline: State = field(default_factory=State)
     ballot_available: State = field(default_factory=State)
-    ballot_available_deadline: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
-    ballot_received_deadline: State = field(default_factory=State)
     election: State = field(default_factory=State)
     voted: State = field(default_factory=State)
 
@@ -143,24 +146,27 @@ class Progress:
 
         progress.election.date = election.get("date")
         if progress.election.date:
-            progress.registered_deadline.date = str(
-                to_date(progress.election.date) - constants.REGISTRATION_DEADLINE_DELTA
+            election_date = to_date(progress.election.date)
+            progress.registered.deadline = str(
+                election_date - constants.REGISTRATION_DEADLINE_DELTA
             )
-            progress.absentee_requested_deadline.date = str(
-                to_date(progress.election.date)
-                - constants.ABSENTEE_REQUESTED_DEADLINE_DELTA
+            progress.absentee_requested.deadline = str(
+                election_date - constants.ABSENTEE_REQUESTED_DEADLINE_DELTA
             )
-            progress.absentee_received_deadline.date = str(
-                to_date(progress.election.date)
-                - constants.ABSENTEE_RECEIVED_DEADLINE_DELTA
+            progress.absentee_received.deadline = str(
+                election_date - constants.ABSENTEE_RECEIVED_DEADLINE_DELTA
             )
-            progress.ballot_available_deadline.date = str(
-                to_date(progress.election.date)
-                - constants.BALLOT_AVAILABLE_DEADLINE_DELTA
+            progress.ballot_available.deadline = str(
+                election_date - constants.BALLOT_AVAILABLE_DEADLINE_DELTA
             )
-            progress.ballot_received_deadline.date = str(
-                to_date(progress.election.date)
-                - constants.BALLOT_RECEIVED_DEADLINE_DELTA
+            progress.ballot_sent.deadline = str(
+                election_date - constants.BALLOT_RECEIVED_DEADLINE_DELTA
+            )
+            progress.ballot_sent.deadline = str(
+                election_date - constants.BALLOT_SENT_DEADLINE_DELTA
+            )
+            progress.ballot_received.deadline = str(
+                election_date - constants.BALLOT_RECEIVED_DEADLINE_DELTA
             )
 
         if not status:
@@ -200,11 +206,12 @@ class Progress:
             progress.ballot_received.icon = "−"
 
         if progress.election.days < constants.PAST_ELECTION_DAYS:
-            progress.registered_deadline = State()
-            progress.absentee_requested_deadline = State()
-            progress.absentee_received_deadline = State()
-            progress.ballot_available_deadline = State()
-            progress.ballot_received_deadline = State()
+            progress.registered.deadline = ""
+            progress.absentee_requested.deadline = ""
+            progress.absentee_received.deadline = ""
+            progress.ballot_available.deadline = ""
+            progress.ballot_sent.deadline = ""
+            progress.ballot_received.deadline = ""
             progress.election = State()
             return progress
 

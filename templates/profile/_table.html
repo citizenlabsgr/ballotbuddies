@@ -32,7 +32,7 @@
             </td>
 
             <td class="text-center border-start {% if voter.progress.registered %} text-muted {% endif %}">
-                {{ voter.progress.registered_deadline.full_date }}
+                {{ voter.progress.registered.deadline_humanized }}
             </td>
         </tr>
 
@@ -78,7 +78,7 @@
             </td>
 
             <td class="text-center border-start {% if voter.progress.absentee_requested %} text-muted {% endif %}">
-                {{ voter.progress.absentee_requested_deadline.full_date }}
+                {{ voter.progress.absentee_requested.deadline_humanized }}
             </td>
         </tr>
 
@@ -107,7 +107,7 @@
             </td>
 
             <td class="text-center border-start {% if voter.progress.absentee_received %} text-muted {% endif %}">
-                {{ voter.progress.absentee_received_deadline.full_date }}
+                {{ voter.progress.absentee_received.deadline_humanized }}
             </td>
         </tr>
 
@@ -124,7 +124,7 @@
             </td>
 
             <td class="text-center border-start {% if voter.progress.ballot_available %} text-muted {% endif %}">
-                {{ voter.progress.ballot_available_deadline.full_date }}
+                {{ voter.progress.ballot_available.deadline_humanized }}
             </td>
         </tr>
 
@@ -137,7 +137,9 @@
                 {{ voter.progress.ballot_sent }}
             </td>
 
-            <td class="text-center border-start"></td>
+            <td class="text-center border-start {% if voter.progress.ballot_sent %} text-muted {% endif %}">
+                {{ voter.progress.ballot_sent.deadline_humanized }}
+            </td><td class="text-center border-start"></td>
         </tr>
 
         <tr class="align-middle">
@@ -150,7 +152,7 @@
             </td>
 
             <td class="text-center border-start {% if voter.progress.ballot_received %} text-muted {% endif %}">
-                {{ voter.progress.ballot_received_deadline.full_date }}
+                {{ voter.progress.ballot_received.deadline_humanized }}
             </td>
         </tr>
 
@@ -190,7 +192,7 @@
             </td>
 
             <td class="text-center border-start  {% if voter.progress.voted %} text-muted {% endif %}">
-                {{ voter.progress.election.full_date }}
+                {{ voter.progress.election.date_humanized }}
             </td>
         </tr>
 
