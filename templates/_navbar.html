@@ -1,6 +1,7 @@
 {% url 'buddies:friends' as friends_url %}
 {% url 'buddies:profile' as profile_url %}
 {% url 'buddies:about' as about_url %}
+{% url 'buddies:login' as login_url %}
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
@@ -33,7 +34,9 @@
 			{% endif %}
 
             {% if request.user.is_authenticated %}
-	        <a class="btn btn-outline-secondary" href="{% url 'buddies:logout' %}">Log out</a>
+            <a class="btn btn-outline-secondary" href="{% url 'buddies:logout' %}">Log out</a>
+            {% elif request.path != login_url %}
+            <a class="btn btn-outline-secondary" href="{% url 'buddies:login' %}">Log in</a>
             {% endif %}
 
 	    </div>

@@ -7,8 +7,7 @@ class Profile(models.Model):
 
     voter = models.OneToOneField(Voter, on_delete=models.CASCADE)
 
+    always_alert = models.BooleanField(default=False)
 
-#     viewed_at
-#     alerted_at
-#
-#     always_alert
+    last_viewed = models.DateTimeField(auto_now_add=True)
+    last_alerted = models.DateTimeField(auto_now_add=True)

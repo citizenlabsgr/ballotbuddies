@@ -15,7 +15,7 @@ django-grappelli==3.0.2
 django-multi-email-field @ git+https://github.com/aht007/django-multi-email-field@99a27ccdad465ff13a08cdfdd6b2612f817d32fc
 django-redis==4.12.1; python_version >= "3.5"
 django-sesame==2.4; python_version >= "3.6" and python_version < "4.0"
-django==4.0.3; python_version >= "3.8"
+django==4.0.5; python_version >= "3.8"
 gunicorn==20.1.0; python_version >= "3.5"
 h11==0.13.0; python_version >= "3.7"
 idna==3.3; python_version >= "3.5" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.5"

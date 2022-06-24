@@ -49,7 +49,7 @@ def login(request: HttpRequest):
                 force_login(
                     request, voter.user, backend=settings.AUTHENTICATION_BACKENDS[0]
                 )
-                return redirect("buddies:profile")
+                return redirect("buddies:index")
 
             send_login_email(voter.user)
             domain = voter.email.split("@")[-1]
