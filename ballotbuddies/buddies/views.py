@@ -82,6 +82,7 @@ def profile(request: HttpRequest):
             messages.error(request, error)
 
     form = VoterForm(initial=voter.data, locked=True)
+    voter.profile.mark_viewed()  # type: ignore
 
     context = {"voter": voter, "form": form}
     return render(request, "profile/detail.html", context)
