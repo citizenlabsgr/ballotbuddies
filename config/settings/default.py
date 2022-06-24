@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "multi_email_field",
     "ballotbuddies.core",
     "ballotbuddies.buddies",
+    "ballotbuddies.alerts",
 ]
 
 MIDDLEWARE = [
