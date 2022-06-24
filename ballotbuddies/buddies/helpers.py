@@ -15,21 +15,15 @@ def generate_sample_voters(referrer: str = ""):
     if voter := Voter.objects.filter(slug=referrer).first():
         yield voter
 
-    user = User(first_name="Jane", last_name="Doe")
-    voter = Voter(
-        user=user, slug="1", updated=timezone.now() - timedelta(days=randint(7, 180))
-    )
-    voter.complete = True
-    voter.progress = Progress.parse(SAMPLE_DATA[0].status)
-    yield voter
-
-    user = User(first_name="John", last_name="Doe")
-    voter = Voter(
-        user=user, slug="2", updated=timezone.now() - timedelta(days=randint(7, 180))
-    )
-    voter.complete = True
-    voter.progress = Progress.parse(SAMPLE_DATA[1].status)
-    yield voter
+    for value in SAMPLE_DATA:
+        user = User(first_name=value.first_name, last_name=value.last_name)
+        voter = Voter(
+            user=user,
+            updated=timezone.now() - timedelta(days=randint(7, 180)),
+        )
+        voter.complete = True
+        voter.progress = Progress.parse(value.status)
+        yield voter
 
 
 def update_neighbors() -> int:

@@ -19,6 +19,7 @@ from .models import Voter
 
 def index(request: HttpRequest):
     if referrer := request.GET.get("referrer", ""):
+        log.info(f"Referrer: {referrer}")
         request.session["referrer"] = referrer
 
     if request.user.is_authenticated and not referrer:
