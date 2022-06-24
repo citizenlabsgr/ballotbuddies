@@ -49,7 +49,7 @@ def login(request: HttpRequest):
                 force_login(
                     request, voter.user, backend=settings.AUTHENTICATION_BACKENDS[0]
                 )
-                return redirect("buddies:profile")
+                return redirect("buddies:index")
 
             send_login_email(voter.user)
             domain = voter.email.split("@")[-1]
@@ -82,6 +82,7 @@ def profile(request: HttpRequest):
             messages.error(request, error)
 
     form = VoterForm(initial=voter.data, locked=True)
+    voter.profile.mark_viewed()  # type: ignore
 
     context = {"voter": voter, "form": form}
     return render(request, "profile/detail.html", context)

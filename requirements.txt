@@ -7,6 +7,7 @@ colorama==0.4.4; python_version >= "3.7" and python_full_version < "3.0.0" and p
 crispy-bootstrap5==0.6; python_version >= "3.6"
 deprecated==1.2.13; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.6"
 dj-database-url==0.4.2
+django-annoying==0.10.6
 django-browser-reload==1.3.0; python_version >= "3.7"
 django-cors-headers==3.11.0; python_version >= "3.7"
 django-crispy-forms==1.14.0; python_version >= "3.7"
@@ -15,7 +16,7 @@ django-grappelli==3.0.2
 django-multi-email-field @ git+https://github.com/aht007/django-multi-email-field@99a27ccdad465ff13a08cdfdd6b2612f817d32fc
 django-redis==4.12.1; python_version >= "3.5"
 django-sesame==2.4; python_version >= "3.6" and python_version < "4.0"
-django==4.0.3; python_version >= "3.8"
+django==4.0.5; python_version >= "3.8"
 gunicorn==20.1.0; python_version >= "3.5"
 h11==0.13.0; python_version >= "3.7"
 idna==3.3; python_version >= "3.5" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.5"
@@ -26,6 +27,7 @@ psycopg2-binary==2.9.3; python_version >= "3.6"
 pyparsing==3.0.7; python_version >= "3.6"
 redis==4.1.3; python_version >= "3.6"
 requests==2.27.1; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.6.0")
+six==1.16.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0"
 sqlparse==0.4.2; python_version >= "3.8" and python_version < "4.0"
 tzdata==2021.5; sys_platform == "win32" and python_version >= "3.8" and python_version < "4.0"
 ua-parser==0.10.0

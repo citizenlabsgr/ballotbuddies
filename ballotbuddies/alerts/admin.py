@@ -14,11 +14,12 @@ class ProfileAdmin(admin.ModelAdmin):
         "voter__user__last_name",
     ]
 
-    # list_filter = []
+    list_filter = ["always_alert"]
     list_display = [
         "voter",
+        "always_alert",
+        "last_viewed",
+        "last_alerted",
     ]
 
-    # actions = []
-
-    # readonly_fields = []
+    readonly_fields = ["last_viewed", "last_alerted"]
