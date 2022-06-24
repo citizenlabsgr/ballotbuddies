@@ -11,6 +11,25 @@ def voter(admin_user):
     return Voter.objects.from_user(admin_user, VOTED.status)
 
 
+@pytest.mark.django_db
+def describe_index():
+    def it_disables_buttons_when_unauthenticated(expect, client, voter):
+        response = client.get("/")
+
+        html = response.content.decode()
+        expect(html).excludes("View Profile")
+        expect(html.count("disabled")) == 4
+
+    def it_disables_buttons_with_referrer(expect, client, voter):
+        client.force_login(voter.user)
+
+        response = client.get(f"/?referrer={voter.slug}")
+
+        html = response.content.decode()
+        expect(html).excludes("View Profile")
+        expect(html.count("disabled")) >= 4  # TODO: should be 5 including the voter
+
+
 @pytest.mark.vcr
 @pytest.mark.django_db
 def describe_status():

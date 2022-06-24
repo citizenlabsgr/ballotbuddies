@@ -19,11 +19,15 @@ PAST_ELECTION_DAYS = -21
 
 
 class VoterData(NamedTuple):
+    first_name: str
+    last_name: str
     status: dict
     progress: dict
 
 
 UNREGISTERED = VoterData(
+    "Ulrich",
+    "Unregistered",
     {
         "election": {"date": "2021-11-02"},
         "status": {"registered": False},
@@ -89,6 +93,8 @@ UNREGISTERED = VoterData(
 )
 
 REGISTERED = VoterData(
+    "Reggie",
+    "Registered",
     {
         "election": {"date": "2021-11-02"},
         "status": {"registered": True},
@@ -155,6 +161,8 @@ REGISTERED = VoterData(
 
 
 REGISTERED_BUT_NO_ELECTION = VoterData(
+    "Abby",
+    "Absentee",
     {
         "status": {
             "ballot": False,
@@ -242,6 +250,8 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
 )
 
 VOTED = VoterData(
+    "Vicky",
+    "Voterson",
     {
         "status": {
             "ballot": True,

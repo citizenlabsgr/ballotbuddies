@@ -19,13 +19,13 @@ def describe_voter():
 
     def describe_progress():
         @pytest.mark.django_db
-        @pytest.mark.parametrize(("status", "progress"), SAMPLE_DATA)
-        def with_samples(expect, voter, status, progress):
+        @pytest.mark.parametrize("sample", SAMPLE_DATA)
+        def with_samples(expect, voter, sample):
             voter.user.save()
 
-            voter.status = status
+            voter.status = sample.status
 
-            expect(asdict(voter.progress)) == progress
+            expect(asdict(voter.progress)) == sample.progress
 
         def with_non_michigander(expect, voter):
             voter.state = "Ohio"

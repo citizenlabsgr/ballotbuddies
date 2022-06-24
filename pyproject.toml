@@ -109,6 +109,7 @@ addopts = """
 
 --quiet
 -r sxX
+--show-capture=log
 
 --fail-on-template-vars
 

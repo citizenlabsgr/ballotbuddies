@@ -23,10 +23,10 @@ def test_to_ordinal(expect, days, ordinal):
 
 def describe_progress():
     def describe_parse():
-        @pytest.mark.parametrize(("status", "progress"), SAMPLE_DATA)
-        def with_samples(expect, status, progress):
-            result = Progress.parse(status)
-            expect(asdict(result)) == progress
+        @pytest.mark.parametrize("sample", SAMPLE_DATA)
+        def with_samples(expect, sample):
+            result = Progress.parse(sample.status)
+            expect(asdict(result)) == sample.progress
 
     def test_sort(expect):
         items = [Progress.parse(voter.progress) for voter in SAMPLE_DATA]
