@@ -23,7 +23,7 @@ def get_login_email(user: User, path: str) -> EmailMessage | None:
 def send_login_email(user: User, path: str = "/"):
     if message := get_login_email(user, path):
         if message.send(fail_silently=False):
-            user.profile.mark_last_alerted()  # type: ignore
+            user.voter.profile.mark_last_alerted()  # type: ignore
 
 
 def get_invite_email(user: User, friend: User, path: str, *, extra: str = ""):
@@ -43,4 +43,4 @@ def send_invite_email(user: User, friend: User, path: str = "/profile", *, debug
     extra = " [debug]" if debug else ""
     if message := get_invite_email(user, friend, path, extra=extra):
         if message.send(fail_silently=False):
-            user.profile.mark_last_alerted()  # type: ignore
+            user.voter.profile.mark_last_alerted()  # type: ignore
