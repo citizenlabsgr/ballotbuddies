@@ -6,7 +6,7 @@ from sesame.utils import get_query_string
 
 from ballotbuddies.core.helpers import build_url
 
-from .models import Profile
+from .models import Message, Profile
 
 
 def get_login_email(user: User, path: str):
@@ -50,3 +50,12 @@ def send_invite_email(user: User, friend: User, path: str = "/profile", *, debug
             log.warn(f"Skipped email for test user: {user}")
         elif message.send(fail_silently=False):
             profile.mark_alerted()
+
+
+def get_activity_email(message: Message):
+    pass
+
+
+def send_activity_email(message: Message):
+    pass
+    message.mark_sent()

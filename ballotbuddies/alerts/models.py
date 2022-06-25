@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+import log
 from annoying.fields import AutoOneToOneField
 
 
@@ -26,6 +27,18 @@ class Profile(models.Model):
     def last_alerted_days(self) -> int:
         return (timezone.now() - self.last_alerted).days if self.last_alerted else 0
 
+    def alert(self, voter):
+        message, created = Message.objects.get_or_create(profile=self, sent=False)
+        if created:
+            log.info(f"Drafted new message: {message}")
+        message.activity[voter.id] = voter.status["message"]
+        message.save()
+
+    def mark_viewed(self, *, save=True):
+        self.last_viewed = timezone.now()
+        if save:
+            self.save()
+
     def _should_alert(self):
         if self.never_alert:
             return False
@@ -42,11 +55,35 @@ class Profile(models.Model):
         if save:
             self.save()
 
-    def mark_viewed(self, *, save=True):
-        self.last_viewed = timezone.now()
-        if save:
-            self.save()
-
     def save(self, **kwargs):
         self.should_alert = self._should_alert()
-        super().save(**kwargs)
+        super().save()
+        super().save()
+
+
+class Message(models.Model):
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    activity = models.JSONField(blank=True, default=dict)
+    sent = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    sent_at = models.DateTimeField(null=True, blank=True, editable=False)
+
+    def __str__(self):
+        return f"{len(self.activity)} activities"
+
+    @property
+    def subject(self) -> str:
+        return "TODO: subject "
+
+    @property
+    def body(self) -> str:
+        return "TODO: body"
+
+    def mark_sent(self):
+        self.sent = True
+        self.sent_at = timezone.now()
+        self.save()

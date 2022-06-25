@@ -232,9 +232,15 @@ class Voter(models.Model):
         log.info(f"{response.status_code} response: {data}")
         self.status = data
         self.updated = timezone.now()
+        changed = self._status != previous_status
 
-        return self._status != previous_status, ""
+        if changed:
+            for friend in self.friends.all():
+                friend.profile.alert(self)
 
+        return changed, ""
+
+    # TODO: Rename to fingerprint?
     @property
     def _status(self) -> str:
         return (self.status or {}).get("id", "")
