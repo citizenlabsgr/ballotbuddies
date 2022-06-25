@@ -11,6 +11,7 @@ class Profile(models.Model):
     voter = AutoOneToOneField(Voter, on_delete=models.CASCADE)
 
     always_alert = models.BooleanField(default=False)
+    should_alert = models.BooleanField(default=False)
 
     last_viewed = models.DateTimeField(auto_now_add=True)
     last_alerted = models.DateTimeField(auto_now_add=True)
@@ -26,8 +27,7 @@ class Profile(models.Model):
     def last_alerted_days(self) -> int:
         return (timezone.now() - self.last_alerted).days
 
-    @property
-    def should_alert(self):
+    def _should_alert(self):
         if self.always_alert:
             return True
         if self.last_viewed_days < 30:
@@ -38,5 +38,6 @@ class Profile(models.Model):
 
     def mark_viewed(self, *, save=True):
         self.last_viewed = timezone.now()
+        self.should_alert = self._should_alert()
         if save:
             self.save()
