@@ -22,11 +22,11 @@ class Profile(models.Model):
 
     @property
     def last_viewed_days(self) -> int:
-        return (timezone.now() - self.last_viewed).days
+        return (timezone.now() - self.last_viewed).days if self.last_viewed else 0
 
     @property
     def last_alerted_days(self) -> int:
-        return (timezone.now() - self.last_alerted).days
+        return (timezone.now() - self.last_alerted).days if self.last_alerted else 0
 
     def _should_alert(self):
         if self.never_alert:
