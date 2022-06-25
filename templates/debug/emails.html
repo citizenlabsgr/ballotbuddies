@@ -1,4 +1,6 @@
-{% load django_browser_reload %}
+{% extends "base.html" %}
+
+{% block main %}
 
 <h1>Email Debugger</h1>
 
@@ -6,20 +8,20 @@
 
 {% for email in emails %}
 
-<hr>
+    <hr>
 
-<p>
-    <b>Subject:</b> {{ email.subject }}
-</p>
+    <p>
+        <b>Subject:</b> {{ email.subject }}
+    </p>
 
-<p>
-    <b>Body:</b>
+    <p>
+        <b>Body:</b>
 
-    <br>
+        <br>
 
-    {{ email.body|linebreaks }}
-</p>
+        {{ email.body|linebreaks }}
+    </p>
 
 {% endfor %}
 
-{% django_browser_reload_script %}
+{% endblock %}

@@ -2,6 +2,7 @@
 {% url 'buddies:profile' as profile_url %}
 {% url 'buddies:about' as about_url %}
 {% url 'buddies:login' as login_url %}
+{% url 'alerts:index' as emails_url %}
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
@@ -27,6 +28,12 @@
 		            <a class="nav-link {% if request.path == about_url %} active {% endif %}"
                         href="{% url 'buddies:about' %}">About</a>
 		        </li>
+				{% if debug or allow_debug %}
+				<li class="nav-item">
+		            <a class="nav-link {% if request.path == emails_url %} active {% else %} text-danger {% endif %}"
+                        href="{% url 'alerts:index' %}">Emails</a>
+		        </li>
+				{% endif %}
 	        </ul>
 
 			{% if request.user.is_superuser %}

@@ -11,6 +11,8 @@ from .default import *
 # None of the commands that rely on these values should run during tests
 BASE_URL = "http://example.com"
 
+ALLOW_DEBUG = True
+
 TODAY = date(2021, 10, 1)
 
 ###############################################################################
