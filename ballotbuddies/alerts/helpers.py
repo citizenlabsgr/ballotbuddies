@@ -6,9 +6,12 @@ from sesame.utils import get_query_string
 
 from ballotbuddies.core.helpers import build_url
 
+from .models import Profile
+
 
 def get_login_email(user: User, path: str):
     url = build_url(path) + get_query_string(user)
+
     return EmailMessage(
         "Welcome to Michigan Ballot Buddies",
         f"Please click this link to log in: {url}",
@@ -18,11 +21,12 @@ def get_login_email(user: User, path: str):
 
 
 def send_login_email(user: User, path: str = "/"):
+    profile: Profile = user.voter.profile
     if message := get_login_email(user, path):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped email for test user: {user}")
         elif message.send(fail_silently=False):
-            user.voter.profile.mark_last_alerted()  # type: ignore
+            profile.mark_alerted()
 
 
 def get_invite_email(user: User, friend: User, path: str, *, extra: str = ""):
@@ -39,9 +43,10 @@ def get_invite_email(user: User, friend: User, path: str, *, extra: str = ""):
 
 
 def send_invite_email(user: User, friend: User, path: str = "/profile", *, debug=False):
+    profile: Profile = user.voter.profile
     extra = " [debug]" if debug else ""
     if message := get_invite_email(user, friend, path, extra=extra):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped email for test user: {user}")
         elif message.send(fail_silently=False):
-            user.voter.profile.mark_last_alerted()  # type: ignore
+            profile.mark_alerted()
