@@ -16,6 +16,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
     list_filter = [
         "always_alert",
+        "never_alert",
         "should_alert",
     ]
     list_display = [
@@ -25,6 +26,7 @@ class ProfileAdmin(admin.ModelAdmin):
         "last_alerted",
         "last_alerted_days",
         "always_alert",
+        "never_alert",
         "should_alert",
     ]
 
