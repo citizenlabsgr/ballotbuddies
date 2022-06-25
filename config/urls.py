@@ -6,13 +6,13 @@ import debug_toolbar
 
 urlpatterns = [
     path("", include("ballotbuddies.buddies.urls", namespace="buddies")),
-    path("_emails/", include("ballotbuddies.alerts.urls")),
     path("admin/", admin.site.urls),
     path("grappelli/", include("grappelli.urls")),
 ]
 
 if settings.ALLOW_DEBUG:
     urlpatterns = [
+        path("emails/", include("ballotbuddies.alerts.urls")),
         path("__debug__/", include(debug_toolbar.urls)),
         path("__reload__/", include("django_browser_reload.urls")),
     ] + urlpatterns
