@@ -44,6 +44,6 @@ class Profile(models.Model):
         if save:
             self.save()
 
-    def save(self):
+    def save(self, **kwargs):
         self.should_alert = self._should_alert()
-        super().save()
+        super().save(**kwargs)
