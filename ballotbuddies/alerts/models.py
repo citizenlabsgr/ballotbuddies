@@ -18,6 +18,25 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.voter)
 
-    def mark_viewed(self):
+    @property
+    def last_viewed_days(self) -> int:
+        return (timezone.now() - self.last_viewed).days
+
+    @property
+    def last_alerted_days(self) -> int:
+        return (timezone.now() - self.last_alerted).days
+
+    @property
+    def should_alert(self):
+        if self.always_alert:
+            return True
+        if self.last_viewed_days < 30:
+            return False
+        if self.last_alerted_days < 14:
+            return False
+        return True
+
+    def mark_viewed(self, *, save=True):
         self.last_viewed = timezone.now()
-        self.save()
+        if save:
+            self.save()

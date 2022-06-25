@@ -146,6 +146,7 @@ def friends(request: HttpRequest):
 @login_required
 def friends_profile(request: HttpRequest, slug: str):
     voter: Voter = Voter.objects.get(slug=slug)
+    getattr(voter, "profile")  # ensure Profile exists
     if voter.user == request.user:
         return redirect("buddies:profile")
 

@@ -1,4 +1,4 @@
-# pylint: disable=unused-argument
+# pylint: disable=unused-argument,no-self-use
 
 from django.contrib import admin
 
@@ -17,9 +17,18 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ["always_alert"]
     list_display = [
         "voter",
-        "always_alert",
         "last_viewed",
+        "last_viewed_days",
         "last_alerted",
+        "last_alerted_days",
+        "always_alert",
+        "should_alert_",
     ]
+
+    def should_alert_(self, profile: Profile):
+        return profile.should_alert
+
+    should_alert_.boolean = True  # type: ignore
+    should_alert_.short_description = "Should alert?"  # type: ignore
 
     readonly_fields = ["last_viewed", "last_alerted"]
