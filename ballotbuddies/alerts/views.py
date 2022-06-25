@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from ballotbuddies.core.models import User
@@ -5,6 +6,7 @@ from ballotbuddies.core.models import User
 from . import helpers
 
 
+@login_required
 def debug(request):
     friend = User(first_name="Firstname", last_name="Lastname")
     emails = [

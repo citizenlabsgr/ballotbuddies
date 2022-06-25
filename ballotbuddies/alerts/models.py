@@ -3,12 +3,10 @@ from django.utils import timezone
 
 from annoying.fields import AutoOneToOneField
 
-from ballotbuddies.buddies.models import Voter
-
 
 class Profile(models.Model):
 
-    voter = AutoOneToOneField(Voter, on_delete=models.CASCADE)
+    voter = AutoOneToOneField("buddies.Voter", on_delete=models.CASCADE)
 
     always_alert = models.BooleanField(default=False)
     never_alert = models.BooleanField(default=False)
@@ -38,6 +36,11 @@ class Profile(models.Model):
         if self.last_alerted_days < 14:
             return False
         return True
+
+    def mark_alerted(self, *, save=True):
+        self.last_alerted = timezone.now()
+        if save:
+            self.save()
 
     def mark_viewed(self, *, save=True):
         self.last_viewed = timezone.now()

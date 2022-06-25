@@ -26,6 +26,7 @@ ALLOWED_HOSTS = [
     "localhost",
     ".ngrok.io",
 ]
+INTERNAL_IPS = ALLOWED_HOSTS
 
 INSTALLED_APPS += [
     "django_browser_reload",
