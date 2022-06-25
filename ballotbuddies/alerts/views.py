@@ -21,6 +21,7 @@ def debug(request, slug=""):
     emails = [
         helpers.get_login_email(user, "/test-login"),
         helpers.get_invite_email(user, friend, "/test-invite"),
+        helpers.get_activity_email(user),
     ]
     context = {"profile": profile, "emails": emails}
 

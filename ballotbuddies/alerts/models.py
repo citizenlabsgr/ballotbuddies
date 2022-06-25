@@ -28,9 +28,7 @@ class Profile(models.Model):
         return (timezone.now() - self.last_alerted).days if self.last_alerted else 0
 
     def alert(self, voter):
-        message, created = Message.objects.get_or_create(profile=self, sent=False)
-        if created:
-            log.info(f"Drafted new message: {message}")
+        message = Message.objects.get_draft(self)
         message.activity[voter.id] = voter.status["message"]
         message.save()
 
@@ -57,8 +55,15 @@ class Profile(models.Model):
 
     def save(self, **kwargs):
         self.should_alert = self._should_alert()
-        super().save()
-        super().save()
+        super().save(**kwargs)
+
+
+class MessageManager(models.Manager):
+    def get_draft(self, profile: Profile):
+        message, created = self.get_or_create(profile=profile, sent=False)
+        if created:
+            log.info(f"Drafted new message: {message}")
+        return message
 
 
 class Message(models.Model):
@@ -72,16 +77,21 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     sent_at = models.DateTimeField(null=True, blank=True, editable=False)
 
+    objects = MessageManager()
+
     def __str__(self):
         return f"{len(self.activity)} activities"
 
     @property
     def subject(self) -> str:
-        return "TODO: subject "
+        return "Your Friends are Preparing to Vote"
 
     @property
     def body(self) -> str:
-        return "TODO: body"
+        count = len(self.activity)
+        s = "" if count == 1 else "s"
+        have = "has" if count == 1 else "have"
+        return f"Your {count} friend{s} on Michigan Ballot Buddies {have} been progressing towards casting their vote."
 
     def mark_sent(self):
         self.sent = True

@@ -234,7 +234,7 @@ class Voter(models.Model):
         self.updated = timezone.now()
         changed = self._status != previous_status
 
-        if changed:
+        if changed and previous_status:
             for friend in self.friends.all():
                 friend.profile.alert(self)
 
