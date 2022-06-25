@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 import log
 from sesame.utils import get_query_string
@@ -7,29 +7,40 @@ from sesame.utils import get_query_string
 from ballotbuddies.core.helpers import build_url
 
 
-def send_login_email(user: User, path: str = "/"):
+def get_login_email(user: User, path: str) -> EmailMessage | None:
     if user.email.endswith("@example.com"):
         log.warn(f"Skipped email for test user: {user}")
-        return
+        return None
     url = build_url(path) + get_query_string(user)
-    send_mail(
-        "Welcome to Ballot Buddies",
+    return EmailMessage(
+        "Welcome to Michigan Ballot Buddies",
         f"Please click this link to log in: {url}",
         "no-reply@michiganelections.io",
         [user.email],
-        fail_silently=False,
     )
 
 
-def send_invite_email(user: User, friend: User, path: str = "/profile"):
+def send_login_email(user: User, path: str = "/"):
+    if message := get_login_email(user, path):
+        if message.send(fail_silently=False):
+            user.profile.mark_last_alerted()  # type: ignore
+
+
+def get_invite_email(user: User, friend: User, path: str, *, extra: str = ""):
     url = build_url(path) + get_query_string(user)
     name = friend.display_name  # type: ignore
-    send_mail(
-        f"Join {name} on Ballot Buddies",
-        "Your friend has challenged you to vote in every election!"
+    return EmailMessage(
+        f"Join {name} on Michigan Ballot Buddies{extra}",
+        "Your friend has challenged you to vote in every election. Let's keep each other accountable!"
         "\n\n"
         f"Please click this link to view your profile: {url}",
         "no-reply@michiganelections.io",
         [user.email],
-        fail_silently=False,
     )
+
+
+def send_invite_email(user: User, friend: User, path: str = "/profile", *, debug=False):
+    extra = " [debug]" if debug else ""
+    if message := get_invite_email(user, friend, path, extra=extra):
+        if message.send(fail_silently=False):
+            user.profile.mark_last_alerted()  # type: ignore

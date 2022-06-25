@@ -6,6 +6,7 @@ import debug_toolbar
 
 urlpatterns = [
     path("", include("ballotbuddies.buddies.urls", namespace="buddies")),
+    path("_emails/", include("ballotbuddies.alerts.urls")),
     path("admin/", admin.site.urls),
     path("grappelli/", include("grappelli.urls")),
 ]

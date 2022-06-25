@@ -4,6 +4,7 @@ from contextlib import suppress
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
+from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from django.contrib.auth.models import User
@@ -20,6 +21,9 @@ from ballotbuddies.core.helpers import generate_key
 
 from . import constants
 from .types import Progress, to_datetime
+
+if TYPE_CHECKING:
+    from ballotbuddies.alerts.models import Profile
 
 
 class VoterManager(models.Manager):
@@ -57,9 +61,10 @@ class VoterManager(models.Manager):
             user, created = User.objects.get_or_create(
                 email=email, defaults=dict(username=email)
             )
-            if created:
+            profile: Profile = user.profile  # type: ignore
+            if created or profile.should_alert:
                 log.info(f"Created user: {user}")
-                send_invite_email(user, voter.user)
+                send_invite_email(user, voter.user, debug=profile.always_alert)
 
             other = self.from_user(user)
             other.referrer = other.referrer or voter

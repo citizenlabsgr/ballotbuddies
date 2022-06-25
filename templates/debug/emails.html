@@ -1,0 +1,25 @@
+{% load django_browser_reload %}
+
+<h1>Email Debugger</h1>
+
+<p>{{ profile }}</p>
+
+{% for email in emails %}
+
+<hr>
+
+<p>
+    <b>Subject:</b> {{ email.subject }}
+</p>
+
+<p>
+    <b>Body:</b>
+
+    <br>
+
+    {{ email.body|linebreaks }}
+</p>
+
+{% endfor %}
+
+{% django_browser_reload_script %}
