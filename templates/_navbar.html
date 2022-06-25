@@ -2,7 +2,6 @@
 {% url 'buddies:profile' as profile_url %}
 {% url 'buddies:about' as about_url %}
 {% url 'buddies:login' as login_url %}
-{% url 'alerts:index' as emails_url %}
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
@@ -30,8 +29,12 @@
 		        </li>
 				{% if debug or allow_debug %}
 				<li class="nav-item">
-		            <a class="nav-link {% if request.path == emails_url %} active {% else %} text-danger {% endif %}"
-                        href="{% url 'alerts:index' %}">Emails</a>
+		            <a class="nav-link {% if 'emails' in request.path %} active {% else %} text-danger {% endif %}"
+						{% if voter %}
+                        href="{% url 'alerts:detail' slug=voter.slug %}"
+						{% else %}
+						href="{% url 'alerts:index' %}"
+						{% endif %}>Emails</a>
 		        </li>
 				{% endif %}
 	        </ul>

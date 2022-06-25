@@ -19,3 +19,14 @@ def describe_index():
 
         html = response.content.decode()
         expect(html).contains("Join Firstname Lastname on Michigan Ballot Buddies")
+
+
+@pytest.mark.django_db
+def describe_detail():
+    def it_displays_emails(expect, client, voter):
+        client.force_login(voter.user)
+
+        response = client.get(f"/emails/{voter.slug}")
+
+        html = response.content.decode()
+        expect(html).contains(voter.email)
