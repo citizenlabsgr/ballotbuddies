@@ -28,7 +28,7 @@
 <h2 class="pt-2">Ballot Status</h2>
 
 <div>
-    {% if voter.progress.registered %}
+    {% if voter.user.is_test %}
     <div>
         {% include "profile/_table.html" %}
     </div>
