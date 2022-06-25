@@ -15,7 +15,8 @@ import requests
 import us
 import zipcodes
 
-from ballotbuddies.core.helpers import generate_key, send_invite_email
+from ballotbuddies.alerts.helpers import send_invite_email
+from ballotbuddies.core.helpers import generate_key
 
 from . import constants
 from .types import Progress, to_datetime

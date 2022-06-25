@@ -10,7 +10,8 @@ from django.utils import timezone
 
 import log
 
-from ballotbuddies.core.helpers import allow_debug, send_login_email
+from ballotbuddies.alerts.helpers import send_login_email
+from ballotbuddies.core.helpers import allow_debug
 
 from .forms import FriendsForm, LoginForm, VoterForm
 from .helpers import generate_sample_voters
