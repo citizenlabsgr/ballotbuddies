@@ -210,7 +210,7 @@ class Voter(models.Model):
         self.voted = None
 
     def update_status(self) -> tuple[bool, str]:
-        previous_status = self._status
+        previous_fingerprint = self.fingerprint
 
         if self.state != "Michigan":
             self.updated = timezone.now()
@@ -232,17 +232,16 @@ class Voter(models.Model):
         log.info(f"{response.status_code} response: {data}")
         self.status = data
         self.updated = timezone.now()
-        changed = self._status != previous_status
 
-        if changed and previous_status:
+        changed = self.fingerprint != previous_fingerprint
+        if changed and previous_fingerprint:
             for friend in self.friends.all():
                 friend.profile.alert(self)
 
         return changed, ""
 
-    # TODO: Rename to fingerprint?
     @property
-    def _status(self) -> str:
+    def fingerprint(self) -> str:
         return (self.status or {}).get("id", "")
 
     def update_neighbors(self, limit=0) -> int:

@@ -72,3 +72,4 @@ def send_activity_email(user: User):
             # TODO: There's a potential race condition here
             message: Message = Message.objects.get_draft(profile)
             message.mark_sent()
+            profile.mark_alerted()

@@ -13,8 +13,8 @@ class Profile(models.Model):
     never_alert = models.BooleanField(default=False)
     should_alert = models.BooleanField(default=False, editable=False)
 
-    last_viewed = models.DateTimeField(auto_now_add=True)
     last_alerted = models.DateTimeField(auto_now_add=True)
+    last_viewed = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.voter)
@@ -32,6 +32,11 @@ class Profile(models.Model):
         message.activity[voter.id] = voter.status["message"]
         message.save()
 
+    def mark_alerted(self, *, save=True):
+        self.last_alerted = timezone.now()
+        if save:
+            self.save()
+
     def mark_viewed(self, *, save=True):
         self.last_viewed = timezone.now()
         if save:
@@ -47,11 +52,6 @@ class Profile(models.Model):
         if self.last_alerted_days < 14:
             return False
         return True
-
-    def mark_alerted(self, *, save=True):
-        self.last_alerted = timezone.now()
-        if save:
-            self.save()
 
     def save(self, **kwargs):
         self.should_alert = self._should_alert()
