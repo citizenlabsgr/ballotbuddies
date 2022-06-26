@@ -29,7 +29,10 @@ class Profile(models.Model):
 
     def alert(self, voter):
         message = Message.objects.get_draft(self)
-        message.activity[voter.id] = voter.status["message"]
+        text = voter.status["message"]
+        text = text.split(" for the")[0]
+        text = text.replace("your", "a").replace("you", "them")
+        message.activity[voter.id] = text
         message.save()
 
     def mark_alerted(self, *, save=True):

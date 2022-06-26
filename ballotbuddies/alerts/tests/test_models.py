@@ -27,12 +27,18 @@ def describe_profile():
         expect(profile.should_alert) == False
 
     @pytest.mark.django_db
-    def it_can_update_activity(expect, profile, voter):
-        voter.status = {"message": "Doing stuff"}
+    def it_can_update_activity(expect, profile: Profile, voter: Voter):
+        voter.status = {
+            "message": "Jane Doe is registered to vote absentee and your "
+            "ballot was mailed to you on 2022-06-24 for the State Primary "
+            "election on 2022-08-02 and a sample ballot is available."
+        }
         profile.alert(voter)
         voter.id = 2
-        voter.status = {"message": "Doing more stuff"}
         profile.alert(voter)
 
         message: Message = Message.objects.get_draft(profile)
         expect(message.body).contains("2 friends")
+        expect(message.body).contains(
+            "Jane Doe is registered to vote absentee and a ballot was mailed to them on 2022-06-24"
+        )
