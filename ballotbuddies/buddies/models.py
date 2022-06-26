@@ -248,6 +248,9 @@ class Voter(models.Model):
         for friend in self.friends.all():
             friend.profile.alert(self)
             count += 1
+        for friend in self.neighbors.all():
+            friend.profile.alert(self)
+            count += 1
         return count
 
     def update_neighbors(self, limit=0) -> int:
