@@ -11,27 +11,26 @@ interactions:
       User-Agent:
       - python-requests/2.27.1
     method: GET
-    uri: https://michiganelections.io/api/status/?email=admin%40example.com&first_name=&last_name=&birth_date=None&zip_code=None
+    uri: https://michiganelections.io/api/status/?email=admin%40example.com&first_name=Jane&last_name=Doe&birth_date=None&zip_code=None
   response:
     body:
-      string: '{"first_name":["This field may not be blank."],"last_name":["This field
-        may not be blank."],"birth_date":["Date has wrong format. Use one of these
-        formats instead: YYYY-MM-DD."]}'
+      string: '{"birth_date":["Date has wrong format. Use one of these formats instead:
+        YYYY-MM-DD."]}'
     headers:
       Allow:
       - GET, HEAD, OPTIONS
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6f7aa80f0d752b3f-ORD
+      - 7218ff142aa89c84-IAD
       Connection:
       - keep-alive
       Content-Length:
-      - '178'
+      - '87'
       Content-Type:
       - application/json
       Date:
-      - Wed, 06 Apr 2022 12:51:42 GMT
+      - Sun, 26 Jun 2022 21:22:06 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       NEL:
@@ -39,7 +38,7 @@ interactions:
       Referrer-Policy:
       - same-origin
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=2JNfJ1Ab%2F1q2zBbAP21C0v%2B1o9gWhym4XNhFU%2F8Jn5LYTil7arCjTg41OTltqU9jLOiGcXpWr4nfuWTWuigeab1GLpAQJ7d18EIf9Q68Bmz2h7A%2FWmXpXXqBXsVjbYb%2BwpVtNncvkg%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=4CAJKbGweYlw2%2BCO1whvnVw2iXlwsJkXj6GAy5dKYayhW8J5rcPKHIBGGz61G9Db7nWv82mocqFBkpfNTe5NYXUofdUvv1UhgQADHDY%2FdpbMWkra0W6AwhpcqV09NW0q2Wy7t06RYw%3D%3D"}],"group":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Vary:

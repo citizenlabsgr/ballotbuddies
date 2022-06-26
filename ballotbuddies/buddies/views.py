@@ -76,6 +76,17 @@ def profile(request: HttpRequest):
         messages.info(request, "Please finish setting up your profile to continue.")
         return redirect("buddies:setup")
 
+    if request.method == "POST":
+        if voter.profile.never_alert:
+            message = "You will now receive periodic reminder emails."
+            voter.profile.never_alert = False
+        else:
+            message = "You will no longer receive reminder emails."
+            voter.profile.never_alert = True
+        voter.profile.save()
+        messages.info(request, message)
+        return redirect("buddies:profile")
+
     if not voter.updated:
         _updated, error = voter.update_status()
         voter.save()

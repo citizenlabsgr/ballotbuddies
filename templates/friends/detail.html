@@ -13,7 +13,7 @@
 {% if not voter.complete or not voter.progress.registered %}
 
 <div class="d-flex justify-content-between align-items-center">
-    <h2 class="pt-2">Voter Information</h2>
+    <h2 class="pt-4">Voter Information</h2>
     {% if voter.complete %}
     <a class="btn btn-primary" href="{% url 'buddies:friends-setup' slug=voter.slug %}">Update details</a>
     {% else %}
@@ -25,7 +25,7 @@
 
 {% endif %}
 
-<h2 class="pt-2">Ballot Status</h2>
+<h2 class="pt-4">Ballot Status</h2>
 
 <div>
     {% if voter.user.is_test %}
@@ -42,7 +42,7 @@
     {% endif %}
 </div>
 
-<h2 class="pt-2">Last Updated</h2>
+<h2 class="pt-4">Last Updated</h2>
 
 <p>
     {{ voter.updated }}
