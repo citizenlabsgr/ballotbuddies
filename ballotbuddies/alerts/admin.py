@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import Profile
+from .models import Message, Profile
 
 
 @admin.register(Profile)
@@ -31,3 +31,33 @@ class ProfileAdmin(admin.ModelAdmin):
     ]
 
     readonly_fields = ["last_viewed", "last_alerted"]
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+
+    search_fields = [
+        "profile__voter__user__email",
+        "profile__voter__user__first_name",
+        "profile__voter__user__last_name",
+    ]
+
+    list_filter = [
+        "sent",
+    ]
+    list_display = [
+        "profile",
+        "activity",
+        "created_at",
+        "updated_at",
+        "sent",
+        "sent_at",
+    ]
+
+    readonly_fields = [
+        "subject",
+        "body",
+        "sent",
+        "sent_at",
+        "created_at",
+    ]
