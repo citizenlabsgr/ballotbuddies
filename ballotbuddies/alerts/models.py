@@ -16,6 +16,9 @@ class Profile(models.Model):
     last_alerted = models.DateTimeField(auto_now_add=True)
     last_viewed = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ["last_alerted", "last_viewed"]
+
     def __str__(self):
         return str(self.voter)
 
@@ -29,7 +32,7 @@ class Profile(models.Model):
 
     def alert(self, voter):
         message = Message.objects.get_draft(self)
-        text = voter.status["message"]
+        text = voter.status["message"] if voter.status else "Planning to vote"
         text = text.split(" for the")[0]
         text = text.replace("your", "a").replace("you", "them")
         message.activity[voter.id] = text
@@ -81,6 +84,9 @@ class Message(models.Model):
     sent_at = models.DateTimeField(null=True, blank=True, editable=False)
 
     objects = MessageManager()
+
+    class Meta:
+        ordering = ["-sent_at", "created_at"]
 
     def __str__(self):
         return f"{len(self.activity)} activities"

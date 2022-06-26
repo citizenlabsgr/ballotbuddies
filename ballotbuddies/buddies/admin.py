@@ -22,7 +22,7 @@ def share_selected_voters(modeladmin, request, queryset):
     voter: Voter
     for voter in queryset:
         count += voter.share_status()
-    messages.info(request, f"Shared status to {count} friend(s).")
+    messages.info(request, f"Shared status {count} times(s).")
 
 
 @admin.register(Voter)
