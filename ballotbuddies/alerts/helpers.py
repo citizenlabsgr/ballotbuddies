@@ -9,8 +9,8 @@ from ballotbuddies.core.helpers import build_url
 from .models import Message, Profile
 
 
-def get_login_email(user: User, path: str):
-    url = build_url(path) + get_query_string(user)
+def get_login_email(user: User):
+    url = build_url("/") + get_query_string(user)
     return EmailMessage(
         "Welcome to Michigan Ballot Buddies",
         f"Click this link to log in: {url}",
@@ -19,17 +19,17 @@ def get_login_email(user: User, path: str):
     )
 
 
-def send_login_email(user: User, path: str = "/"):
+def send_login_email(user: User):
     profile: Profile = user.voter.profile
-    if message := get_login_email(user, path):
+    if message := get_login_email(user):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped email for test user: {user}")
         elif message.send(fail_silently=False):
             profile.mark_alerted()
 
 
-def get_invite_email(user: User, friend: User, path: str, *, extra: str = ""):
-    url = build_url(path) + get_query_string(user)
+def get_invite_email(user: User, friend: User, *, extra: str = ""):
+    url = build_url("/profile") + get_query_string(user)
     name = friend.display_name  # type: ignore
     return EmailMessage(
         f"Join {name} on Michigan Ballot Buddies{extra}",
@@ -41,20 +41,19 @@ def get_invite_email(user: User, friend: User, path: str, *, extra: str = ""):
     )
 
 
-# TODO: hard-code path?
-def send_invite_email(user: User, friend: User, path: str = "/profile", *, debug=False):
+def send_invite_email(user: User, friend: User, *, debug=False):
     profile: Profile = user.voter.profile
     extra = " [debug]" if debug else ""
-    if message := get_invite_email(user, friend, path, extra=extra):
+    if message := get_invite_email(user, friend, extra=extra):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped email for test user: {user}")
         elif message.send(fail_silently=False):
             profile.mark_alerted()
 
 
-def get_activity_email(user: User):
+def get_activity_email(user: User, message: Message | None = None):
     profile: Profile = user.voter.profile
-    message: Message = Message.objects.get_draft(profile)
+    message = message or Message.objects.get_draft(profile)
     url = build_url("/profile") + get_query_string(user)
     return EmailMessage(
         message.subject,
@@ -65,10 +64,11 @@ def get_activity_email(user: User):
 
 
 def send_activity_email(user: User):
+    profile: Profile = user.voter.profile
     if email := get_activity_email(user):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped email for test user: {user}")
         elif email.send(fail_silently=False):
-            # TODO: mark sent
-            # message.mark_sent()
-            pass
+            # TODO: There's a potential race condition here
+            message: Message = Message.objects.get_draft(profile)
+            message.mark_sent()

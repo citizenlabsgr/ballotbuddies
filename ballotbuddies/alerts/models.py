@@ -91,7 +91,10 @@ class Message(models.Model):
         count = len(self.activity)
         s = "" if count == 1 else "s"
         have = "has" if count == 1 else "have"
-        return f"Your {count} friend{s} on Michigan Ballot Buddies {have} been progressing towards casting their vote."
+        text = f"Your {count} friend{s} on Michigan Ballot Buddies {have} been making progress towards casting their vote.\n\nHere's what they're up to:\n"
+        for value in self.activity.values():
+            text += f"\n- {value}"
+        return text
 
     def mark_sent(self):
         self.sent = True
