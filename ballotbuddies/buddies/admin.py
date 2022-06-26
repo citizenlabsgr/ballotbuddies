@@ -6,6 +6,7 @@ from .models import Voter
 
 
 def update_selected_voters(modeladmin, request, queryset):
+    count = 0
     voter: Voter
     for voter in queryset:
         updated, error = voter.update_status()
@@ -13,6 +14,15 @@ def update_selected_voters(modeladmin, request, queryset):
             voter.save()
         if error:
             messages.error(request, error)
+    messages.info(request, f"Updated {count} voter(s).")
+
+
+def share_selected_voters(modeladmin, request, queryset):
+    count = 0
+    voter: Voter
+    for voter in queryset:
+        count += voter.share_status()
+    messages.info(request, f"Shared status to {count} friend(s).")
 
 
 @admin.register(Voter)
@@ -35,7 +45,7 @@ class VoterAdmin(admin.ModelAdmin):
         "created",
     ]
 
-    actions = [update_selected_voters]
+    actions = [update_selected_voters, share_selected_voters]
 
     filter_horizontal = ["friends", "neighbors", "strangers"]
 

@@ -235,14 +235,20 @@ class Voter(models.Model):
 
         changed = self.fingerprint != previous_fingerprint
         if changed and previous_fingerprint:
-            for friend in self.friends.all():
-                friend.profile.alert(self)
+            self.share_status()
 
         return changed, ""
 
     @property
     def fingerprint(self) -> str:
         return (self.status or {}).get("id", "")
+
+    def share_status(self) -> int:
+        count = 0
+        for friend in self.friends.all():
+            friend.profile.alert(self)
+            count += 1
+        return count
 
     def update_neighbors(self, limit=0) -> int:
         added = 0
