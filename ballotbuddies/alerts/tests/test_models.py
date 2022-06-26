@@ -34,7 +34,7 @@ def describe_profile():
             "election on 2022-08-02 and a sample ballot is available."
         }
         profile.alert(voter)
-        voter.id = 2
+        voter.id = voter.id + 1
         profile.alert(voter)
 
         message: Message = Message.objects.get_draft(profile)
