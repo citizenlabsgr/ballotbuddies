@@ -1,7 +1,8 @@
 # pylint: disable=unused-argument,no-self-use
 
-from django.contrib import admin
+from django.contrib import admin, messages
 
+from . import helpers
 from .models import Message, Profile
 
 
@@ -33,6 +34,14 @@ class ProfileAdmin(admin.ModelAdmin):
     readonly_fields = ["last_viewed", "last_alerted"]
 
 
+def send_selected_messages(modeladmin, request, queryset):
+    count = 0
+    for message in queryset:
+        helpers.send_activity_email(message.profile.voter.user)
+        count += 1
+    messages.success(request, f"Sent {count} email(s).")
+
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
 
@@ -61,3 +70,5 @@ class MessageAdmin(admin.ModelAdmin):
         "sent_at",
         "created_at",
     ]
+
+    actions = [send_selected_messages]
