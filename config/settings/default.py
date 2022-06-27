@@ -29,7 +29,9 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "multi_email_field",
     "annoying",
+    "rest_framework",
     "ballotbuddies.core",
+    "ballotbuddies.api",
     "ballotbuddies.buddies",
     "ballotbuddies.alerts",
 ]

@@ -22,6 +22,9 @@ django-multi-email-field = { git = "https://github.com/aht007/django-multi-email
 django-sesame = "^2.4"
 crispy-bootstrap5 = "*"
 
+# API
+djangorestframework = "~3.13"
+
 # Storage
 dj-database-url = "~0.4.2"
 psycopg2-binary = "^2.6"
