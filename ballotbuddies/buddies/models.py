@@ -61,10 +61,14 @@ class VoterManager(models.Manager):
             user, created = User.objects.get_or_create(
                 email=email, defaults=dict(username=email)
             )
-            profile: Profile = user.profile  # type: ignore
-            if created or profile.should_alert:
+
+            if created:
                 log.info(f"Created user: {user}")
-                send_invite_email(user, voter.user, debug=profile.always_alert)
+                send_invite_email(user, voter.user)
+            elif hasattr(user, "profile") and user.profile.always_alert:  # type: ignore
+                send_invite_email(user, voter.user, debug=True)
+            else:
+                send_invite_email(user, voter.user)
 
             other = self.from_user(user)
             other.referrer = other.referrer or voter
