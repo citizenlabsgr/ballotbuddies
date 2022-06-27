@@ -61,7 +61,7 @@
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-lg-table-cell">
         {{ voter.progress.ballot_available }}
         {% if voter.progress.ballot_available.url %}
-        <a href="{% firstof voter.ballot voter.progress.ballot_available.url %}" target="_blank" class="text-decoration-none">🔗</a>
+        <a href="{% firstof voter.ballot voter.progress.ballot_available.url %}&slug={{ voter.slug }}" target="_blank" class="text-decoration-none">🔗</a>
         {% endif %}
     </td>
 
