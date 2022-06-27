@@ -31,6 +31,7 @@
     <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Requested -->
     <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Recieved -->
     <td class="d-none d-sm-table-cell"></td> <!-- Ballot: Available -->
+    <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Completed -->
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Sent -->
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Recieved -->
     <td class=""></td> <!-- Election: Voted -->
@@ -63,6 +64,10 @@
         {% if voter.progress.ballot_available.url %}
         <a href="{% firstof voter.ballot voter.progress.ballot_available.url %}&slug={{ voter.slug }}" target="_blank" class="text-decoration-none">🔗</a>
         {% endif %}
+    </td>
+
+    <td class="text-center table-{{ voter.progress.ballot_completed.color }} d-none d-lg-table-cell">
+        {{ voter.progress.ballot_completed }}
     </td>
 
     <td class="text-center table-{{ voter.progress.ballot_sent.color }} d-none d-lg-table-cell">
