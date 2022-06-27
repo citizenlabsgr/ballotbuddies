@@ -1,6 +1,7 @@
 # pylint: disable=unused-argument,no-self-use
 
 from django.contrib import admin, messages
+from django.utils.html import format_html
 
 from . import helpers
 from .models import Message, Profile
@@ -56,12 +57,15 @@ class MessageAdmin(admin.ModelAdmin):
     ]
     list_display = [
         "profile",
-        "activity_lines",
+        "Activity",
         "created_at",
         "updated_at",
         "sent",
         "sent_at",
     ]
+
+    def Activity(self, message: Message):
+        return format_html("<br><br>".join(message.activity_lines))
 
     readonly_fields = [
         "subject",
