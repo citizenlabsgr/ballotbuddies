@@ -52,7 +52,6 @@ class VoterAdmin(admin.ModelAdmin):
     readonly_fields = [
         "status",
         "absentee",
-        "ballot",
         "voted",
         "updated",
         "created",
