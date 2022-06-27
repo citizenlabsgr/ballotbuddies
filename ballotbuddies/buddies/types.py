@@ -197,7 +197,7 @@ class Progress:
             progress.absentee_received.date = absentee_date
             progress.absentee_received.color = "success"
         elif absentee:
-            progress.absentee_received.icon = "🟡"
+            progress.absentee_received.icon = "🚫"
             progress.ballot_sent.icon = "−"
             progress.ballot_received.icon = "−"
         else:
@@ -265,9 +265,9 @@ class Progress:
             progress.voted.date = received_date
         elif sent_date:
             if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
-                progress.ballot_received.icon = "⚠️"
+                progress.ballot_received.icon = "🚫"
                 progress.ballot_received.color = "warning"
             else:
-                progress.ballot_received.icon = "🟡"
+                progress.ballot_received.icon = "🚫"
 
         return progress

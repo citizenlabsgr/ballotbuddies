@@ -205,7 +205,7 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "deadline": "2021-10-05",
         },
         "absentee_received": {
-            "icon": "🟡",
+            "icon": "🚫",
             "color": "default",
             "url": "",
             "date": "",
