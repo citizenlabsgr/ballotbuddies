@@ -1,8 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from django.db import models
 from django.utils import timezone
 
 import log
 from annoying.fields import AutoOneToOneField
+
+if TYPE_CHECKING:
+    from ballotbuddies.buddies.models import Voter
 
 
 class Profile(models.Model):
@@ -30,13 +37,9 @@ class Profile(models.Model):
     def last_alerted_days(self) -> int:
         return (timezone.now() - self.last_alerted).days if self.last_alerted else 0
 
-    def alert(self, voter):
-        message = Message.objects.get_draft(self)
-        text = voter.status["message"] if voter.status else "Planning to vote"
-        text = text.split(" for the")[0]
-        text = text.replace("your", "a").replace("you", "them")
-        message.activity[voter.id] = text
-        message.save()
+    def alert(self, voter: Voter):
+        message: Message = Message.objects.get_draft(self)
+        message.add(voter)
 
     def mark_alerted(self, *, save=True):
         self.last_alerted = timezone.now()
@@ -100,10 +103,28 @@ class Message(models.Model):
         count = len(self.activity)
         s = "" if count == 1 else "s"
         have = "has" if count == 1 else "have"
-        text = f"Your {count} friend{s} on Michigan Ballot Buddies {have} been making progress towards casting their vote.\n\nHere's what they're up to:\n"
+        text = (
+            f"Your {count} friend{s} on Michigan Ballot Buddies {have} "
+            "been making progress towards casting their vote.\n\n"
+            "Here's what they're up to:\n"
+        )
         for value in self.activity.values():
             text += f"\n  - {value}"
         return text
+
+    def add(self, voter: Voter, *, save=True):
+        if voter.status:
+            text = voter.status["message"]
+            text = text.split(" for the")[0]
+            text = text.replace("your", "a").replace("you", "them")
+        else:
+            text = f"{voter.first_name} {voter.last_name} is planning to vote"
+
+        # pylint: disable=unsupported-assignment-operation
+        self.activity[voter.id] = text
+
+        if save:
+            self.save()
 
     def mark_sent(self):
         self.sent = True

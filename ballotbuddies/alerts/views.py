@@ -16,11 +16,13 @@ def debug(request, slug=""):
         profile = voter.profile
     else:
         user = request.user
-        profile = user.voter.profile
+        voter = user.voter
+        profile = voter.profile
 
     friend = User(first_name="Firstname", last_name="Lastname")
-    message: Message = Message.objects.get_draft(profile)
-    message.activity[friend.id] = f"{friend.first_name} is doing stuff"
+    message = Message(profile=profile)
+    message.add(Voter(user=friend), save=False)
+    message.add(voter, save=False)
 
     emails = [
         helpers.get_login_email(user),
