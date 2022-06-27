@@ -185,8 +185,13 @@ class Voter(models.Model):
         if not progress.ballot_available.url and self.voted:
             log.info(f"Clearing recorded vote for past election: {self}")
             self.absentee = True
+            self.ballot = None
             self.voted = None
             self.save()
+
+        if self.ballot:
+            progress.ballot_completed.color = "success"
+            progress.ballot_completed.icon = "✅"
 
         if self.voted:
             progress.ballot_received.color = "success text-muted"

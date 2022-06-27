@@ -130,6 +130,20 @@
 
         <tr class="align-middle">
             <th scope="row">
+                Sample Ballot Completed
+            </th>
+
+            <td class="text-center table-{{ voter.progress.ballot_completed.color }} border-start">
+                {{ voter.progress.ballot_completed }}
+            </td>
+
+            <td class="text-center border-start {% if voter.progress.ballot_completed %} text-muted {% endif %}">
+                {{ voter.progress.ballot_completed.deadline_humanized }}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
                 Absentee Ballot Sent
             </th>
 

@@ -61,6 +61,13 @@ UNREGISTERED = VoterData(
             "date": "",
             "deadline": "2021-10-03",
         },
+        "ballot_completed": {
+            "color": "default",
+            "date": "",
+            "deadline": "",
+            "icon": "",
+            "url": "",
+        },
         "ballot_sent": {
             "icon": "",
             "color": "default",
@@ -127,6 +134,13 @@ REGISTERED = VoterData(
             "url": "",
             "date": "",
             "deadline": "2021-10-03",
+        },
+        "ballot_completed": {
+            "color": "default",
+            "date": "",
+            "deadline": "",
+            "icon": "",
+            "url": "",
         },
         "ballot_sent": {
             "icon": "−",
@@ -218,6 +232,13 @@ REGISTERED_BUT_NO_ELECTION = VoterData(
             "date": "",
             "deadline": "2021-10-03",
         },
+        "ballot_completed": {
+            "color": "default",
+            "date": "",
+            "deadline": "",
+            "icon": "",
+            "url": "",
+        },
         "ballot_sent": {
             "icon": "−",
             "color": "default",
@@ -306,6 +327,13 @@ VOTED = VoterData(
             "url": "https://share.michiganelections.io/elections/45/precincts/5943?name=Jane",
             "date": "",
             "deadline": "2021-10-03",
+        },
+        "ballot_completed": {
+            "color": "success text-muted",
+            "date": "",
+            "deadline": "",
+            "icon": "−",
+            "url": "",
         },
         "ballot_sent": {
             "icon": "",

@@ -108,6 +108,7 @@ class Progress:
     absentee_requested: State = field(default_factory=State)
     absentee_received: State = field(default_factory=State)
     ballot_available: State = field(default_factory=State)
+    ballot_completed: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
     election: State = field(default_factory=State)
@@ -125,6 +126,7 @@ class Progress:
             self.ballot_received.value,
             self.ballot_sent.value,
             self.voted.value,
+            self.ballot_completed.value,
             self.ballot_available.value,
             self.absentee_received.value,
             self.absentee_requested.value,
@@ -224,6 +226,7 @@ class Progress:
                 name=data.get("message", "").split(" ")[0],
             )
             progress.ballot_available.color = "success"
+            progress.ballot_completed.icon = "🚫"
             if not absentee:
                 progress.voted.icon = "🟡"
         else:
@@ -247,6 +250,7 @@ class Progress:
             return progress
 
         if sent_date := status.get("absentee_ballot_sent"):
+            progress.ballot_completed.color = "success text-muted"
             progress.ballot_sent.date = sent_date
             progress.ballot_sent.color = "success"
         else:
@@ -256,6 +260,7 @@ class Progress:
             return progress
 
         if received_date := status.get("absentee_ballot_received"):
+            progress.ballot_completed.icon = "−"
             progress.ballot_sent.color = "success text-muted"
             progress.ballot_received.date = received_date
             progress.ballot_received.color = "success text-muted"
