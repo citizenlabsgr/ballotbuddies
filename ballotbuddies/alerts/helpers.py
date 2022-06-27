@@ -29,13 +29,13 @@ def send_login_email(user: User):
 
 
 def get_invite_email(user: User, friend: User, *, extra: str = ""):
-    url = build_url("/profile") + get_query_string(user)
+    url = build_url("/about") + get_query_string(user)
     name = friend.display_name  # type: ignore
     return EmailMessage(
         f"Join {name} on Michigan Ballot Buddies{extra}",
         "Your friend has challenged you to vote in every election. Let's keep each other accountable!"
         "\n\n"
-        f"Click this link to view your profile: {url}",
+        f"Click this link to get started: {url}",
         "no-reply@michiganelections.io",
         [user.email],
     )
@@ -54,7 +54,7 @@ def send_invite_email(user: User, friend: User, *, debug=False):
 def get_activity_email(user: User, message: Message | None = None):
     profile: Profile = user.voter.profile
     message = message or Message.objects.get_draft(profile)
-    url = build_url("/profile") + get_query_string(user)
+    url = build_url("/about") + get_query_string(user)
     return EmailMessage(
         message.subject,
         message.body + "\n\n" + f"Click this link to view your progress: {url}",
@@ -69,7 +69,6 @@ def send_activity_email(user: User):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped email for test user: {user}")
         elif email.send(fail_silently=False):
-            # TODO: There's a potential race condition here
             message: Message = Message.objects.get_draft(profile)
             message.mark_sent()
             profile.mark_alerted()
