@@ -49,4 +49,11 @@ class VoterAdmin(admin.ModelAdmin):
 
     filter_horizontal = ["friends", "neighbors", "strangers"]
 
-    readonly_fields = ["status", "absentee", "voted", "updated", "created"]
+    readonly_fields = [
+        "status",
+        "absentee",
+        "ballot",
+        "voted",
+        "updated",
+        "created",
+    ]
