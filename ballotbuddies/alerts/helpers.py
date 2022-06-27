@@ -20,12 +20,11 @@ def get_login_email(user: User):
 
 
 def send_login_email(user: User):
-    profile: Profile = user.voter.profile
     if message := get_login_email(user):
         if user.email.endswith("@example.com"):
-            log.warn(f"Skipped email for test user: {user}")
+            log.warn(f"Skipped login email for test user: {user}")
         elif message.send(fail_silently=False):
-            profile.mark_alerted()
+            log.info(f"Sent login email: {user}")
 
 
 def get_invite_email(user: User, friend: User, *, extra: str = ""):
@@ -42,13 +41,12 @@ def get_invite_email(user: User, friend: User, *, extra: str = ""):
 
 
 def send_invite_email(user: User, friend: User, *, debug=False):
-    profile: Profile = user.voter.profile
     extra = " [debug]" if debug else ""
     if message := get_invite_email(user, friend, extra=extra):
         if user.email.endswith("@example.com"):
-            log.warn(f"Skipped email for test user: {user}")
+            log.warn(f"Skipped invite email for test user: {user}")
         elif message.send(fail_silently=False):
-            profile.mark_alerted()
+            log.info(f"Sent invite email: {user}")
 
 
 def get_activity_email(user: User, message: Message | None = None):
@@ -67,8 +65,9 @@ def send_activity_email(user: User):
     profile: Profile = user.voter.profile
     if email := get_activity_email(user):
         if user.email.endswith("@example.com"):
-            log.warn(f"Skipped email for test user: {user}")
+            log.warn(f"Skipped activity email for test user: {user}")
         elif email.send(fail_silently=False):
+            log.info(f"Sent activity email: {user}")
             message: Message = Message.objects.get_draft(profile)
             message.mark_sent()
             profile.mark_alerted()
