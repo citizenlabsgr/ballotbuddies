@@ -103,14 +103,15 @@ class Message(models.Model):
         count = len(self.activity)
         s = "" if count == 1 else "s"
         have = "has" if count == 1 else "have"
-        text = (
+        return (
             f"Your {count} friend{s} on Michigan Ballot Buddies {have} "
             "been making progress towards casting their vote.\n\n"
-            "Here's what they're up to:\n"
+            f"Here's what they've been up to:\n\n{self.activity_lines}"
         )
-        for value in self.activity.values():
-            text += f"\n  - {value}"
-        return text
+
+    @property
+    def activity_lines(self) -> str:
+        return "\n".join(f"  - {value}" for value in self.activity.values())
 
     def add(self, voter: Voter, *, save=True):
         if voter.status:

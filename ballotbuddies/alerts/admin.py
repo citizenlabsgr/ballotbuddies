@@ -56,7 +56,7 @@ class MessageAdmin(admin.ModelAdmin):
     ]
     list_display = [
         "profile",
-        "activity",
+        "activity_lines",
         "created_at",
         "updated_at",
         "sent",
