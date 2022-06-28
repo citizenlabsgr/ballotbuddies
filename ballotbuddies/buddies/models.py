@@ -97,7 +97,7 @@ class Voter(models.Model):
     absentee = models.BooleanField(
         default=True, help_text="Voter plans to vote by mail."
     )
-    ballot = models.URLField(null=True, blank=True)
+    ballot = models.URLField(null=True, blank=True, max_length=2000)
     voted = models.DateTimeField(
         null=True,
         blank=True,
