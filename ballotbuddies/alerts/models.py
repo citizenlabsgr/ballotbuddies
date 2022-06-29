@@ -26,7 +26,7 @@ class Profile(models.Model):
     staleness = models.DurationField(default=timedelta(days=0))
 
     class Meta:
-        ordering = ["staleness"]
+        ordering = ["-staleness"]
 
     def __str__(self):
         return str(self.voter)
