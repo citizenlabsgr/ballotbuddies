@@ -161,6 +161,9 @@ class Progress:
             progress.ballot_available.deadline = str(
                 election_date - constants.BALLOT_AVAILABLE_DEADLINE_DELTA
             )
+            progress.ballot_completed.deadline = str(
+                election_date - constants.BALLOT_COMPLETED_DEADLINE_DELTA
+            )
             progress.ballot_sent.deadline = str(
                 election_date - constants.BALLOT_RECEIVED_DEADLINE_DELTA
             )
@@ -212,6 +215,7 @@ class Progress:
             progress.absentee_requested.deadline = ""
             progress.absentee_received.deadline = ""
             progress.ballot_available.deadline = ""
+            progress.ballot_completed.deadline = ""
             progress.ballot_sent.deadline = ""
             progress.ballot_received.deadline = ""
             progress.election = State()
