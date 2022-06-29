@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from datetime import timedelta
+from typing import TYPE_CHECKING
 
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
@@ -9,6 +12,9 @@ from sesame.utils import get_query_string
 from ballotbuddies.core.helpers import build_url
 
 from .models import Message, Profile
+
+if TYPE_CHECKING:
+    from ballotbuddies.buddies.models import Voter
 
 
 def update_profiles():
@@ -37,11 +43,10 @@ def send_login_email(user: User):
             log.info(f"Sent login email: {user}")
 
 
-def get_invite_email(user: User, friend: User, *, extra: str = ""):
+def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
     url = build_url("/about") + get_query_string(user)
-    name = friend.display_name  # type: ignore
     return EmailMessage(
-        f"Join {name} on Michigan Ballot Buddies{extra}",
+        f"Join {friend.display_name} on Michigan Ballot Buddies{extra}",
         "Your friend has challenged you to vote in every election. Let's keep each other accountable!"
         "\n\n"
         f"Click this link to get started: {url}",
@@ -50,7 +55,7 @@ def get_invite_email(user: User, friend: User, *, extra: str = ""):
     )
 
 
-def send_invite_email(user: User, friend: User, *, debug=False):
+def send_invite_email(user: User, friend: Voter, *, debug=False):
     extra = " [debug]" if debug else ""
     if message := get_invite_email(user, friend, extra=extra):
         if user.email.endswith("@example.com"):

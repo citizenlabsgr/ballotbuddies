@@ -25,6 +25,8 @@ from .types import Progress, to_datetime
 if TYPE_CHECKING:
     from ballotbuddies.alerts.models import Profile
 
+ZERO_WIDTH_SPACE = "\u200b"
+
 
 class VoterManager(models.Manager):
     def from_email(self, email: str, referrer: str) -> Voter:
@@ -64,11 +66,11 @@ class VoterManager(models.Manager):
 
             if created:
                 log.info(f"Created user: {user}")
-                send_invite_email(user, voter.user)
+                send_invite_email(user, voter)
             elif hasattr(user, "profile") and user.profile.always_alert:  # type: ignore
-                send_invite_email(user, voter.user, debug=True)
+                send_invite_email(user, voter, debug=True)
             else:
-                send_invite_email(user, voter.user)
+                send_invite_email(user, voter)
 
             other = self.from_user(user)
             other.referrer = other.referrer or voter
@@ -87,6 +89,7 @@ class Voter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.CharField(max_length=100, default=generate_key)
 
+    nickname = models.CharField(blank=True, max_length=100)
     birth_date = models.DateField(null=True, blank=True)
     zip_code = models.CharField(
         null=True, blank=True, max_length=5, verbose_name="ZIP code"
@@ -128,31 +131,30 @@ class Voter(models.Model):
         return self.progress > other.progress
 
     @cached_property
-    def email(self) -> str:
-        return self.user.email
+    def legal_name(self) -> str:
+        return self.user.get_full_name()
 
     @cached_property
-    def name(self) -> str:
-        return self.first_name or "Friend"
-
-    @cached_property
-    def first_name(self) -> str:
-        return self.user.first_name
-
-    @cached_property
-    def last_name(self) -> str:
-        return self.user.last_name
+    def short_name(self) -> str:
+        return self.nickname or self.user.first_name or "Friend"
 
     @cached_property
     def display_name(self) -> str:
-        return self.user.display_name  # type: ignore
+        if self.nickname:
+            return f"{self.nickname} {self.user.last_name}"
+        if name := self.legal_name:
+            return name
+        email = self.user.email
+        for character in ["@", "."]:
+            email = email.replace(character, ZERO_WIDTH_SPACE + character)
+        return email
 
     @cached_property
     def data(self) -> dict:
         return dict(
-            email=self.email,
-            first_name=self.first_name,
-            last_name=self.last_name,
+            email=self.user.email,
+            first_name=self.user.first_name,
+            last_name=self.user.last_name,
             birth_date=self.birth_date,
             zip_code=self.zip_code,
         )

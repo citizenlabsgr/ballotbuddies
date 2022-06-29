@@ -116,11 +116,12 @@ class Message(models.Model):
 
     def add(self, voter: Voter, *, save=True):
         if voter.status:
+            # TODO: Replace legal_name with display_name
             text = voter.status["message"]
             text = text.split(" for the")[0]
             text = text.replace("your", "a").replace("you", "them")
         else:
-            text = f"{voter.first_name} {voter.last_name} is planning to vote"
+            text = f"{voter.display_name} is planning to vote"
 
         # pylint: disable=unsupported-assignment-operation
         self.activity[voter.id] = text

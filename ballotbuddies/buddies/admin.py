@@ -32,9 +32,8 @@ class VoterAdmin(admin.ModelAdmin):
 
     list_filter = ["state", "absentee"]
     list_display = [
-        "email",
-        "first_name",
-        "last_name",
+        "display_name",
+        "legal_name",
         "birth_date",
         "zip_code",
         "state",

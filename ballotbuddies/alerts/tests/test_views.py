@@ -29,4 +29,4 @@ def describe_detail():
         response = client.get(f"/emails/{voter.slug}")
 
         html = response.content.decode()
-        expect(html).contains(voter.email)
+        expect(html).contains(voter.user.email)

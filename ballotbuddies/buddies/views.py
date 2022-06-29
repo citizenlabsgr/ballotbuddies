@@ -53,7 +53,7 @@ def login(request: HttpRequest):
                 return redirect(request.GET.get("next") or "buddies:index")
 
             send_login_email(voter.user)
-            domain = voter.email.split("@")[-1]
+            domain = voter.user.email.split("@")[-1]
             return render(request, "login.html", {"domain": domain})
     else:
         form = LoginForm()

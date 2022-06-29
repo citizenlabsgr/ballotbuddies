@@ -4,10 +4,10 @@
 
 {% block main %}
 
-<h1>{{ voter.name }}'s Profile</h1>
+<h1>{{ voter.short_name }}'s Profile</h1>
 
 <p>
-    {{ voter.email }}
+    {{ voter.user.email }}
 </p>
 
 {% if not voter.complete or not voter.progress.registered %}
