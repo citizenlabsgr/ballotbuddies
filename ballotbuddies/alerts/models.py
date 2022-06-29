@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import timedelta
 from typing import TYPE_CHECKING
 
 from django.db import models
@@ -22,20 +23,13 @@ class Profile(models.Model):
 
     last_alerted = models.DateTimeField(auto_now_add=True)
     last_viewed = models.DateTimeField(auto_now_add=True)
+    staleness = models.DurationField(default=timedelta(days=0))
 
     class Meta:
-        ordering = ["last_alerted", "last_viewed"]
+        ordering = ["staleness"]
 
     def __str__(self):
         return str(self.voter)
-
-    @property
-    def last_viewed_days(self) -> int:
-        return (timezone.now() - self.last_viewed).days if self.last_viewed else 0
-
-    @property
-    def last_alerted_days(self) -> int:
-        return (timezone.now() - self.last_alerted).days if self.last_alerted else 0
 
     def alert(self, voter: Voter):
         message: Message = Message.objects.get_draft(self)
@@ -51,18 +45,21 @@ class Profile(models.Model):
         if save:
             self.save()
 
-    def _should_alert(self):
+    def _staleness(self) -> timedelta:
+        now = timezone.now()
+        self.last_alerted = self.last_alerted or now
+        self.last_viewed = self.last_viewed or now
+        return min(now - self.last_alerted, now - self.last_viewed)
+
+    def _should_alert(self) -> bool:
         if self.never_alert:
             return False
         if self.always_alert:
             return True
-        if self.last_viewed_days < 30:
-            return False
-        if self.last_alerted_days < 14:
-            return False
-        return True
+        return self.staleness > timedelta(days=14)
 
     def save(self, **kwargs):
+        self.staleness = self._staleness()
         self.should_alert = self._should_alert()
         super().save(**kwargs)
 
@@ -89,10 +86,13 @@ class Message(models.Model):
     objects = MessageManager()
 
     class Meta:
-        ordering = ["-sent_at", "created_at"]
+        ordering = ["-updated_at"]
 
     def __str__(self):
-        return f"{len(self.activity)} activities"
+        sent = "Sent" if self.sent else "Draft"
+        count = len(self.activity)
+        activities = "Activity" if count == 1 else "Activities"
+        return f"{sent}: {count} {activities}"
 
     @property
     def subject(self) -> str:

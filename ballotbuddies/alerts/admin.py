@@ -37,9 +37,8 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = [
         "voter",
         "last_viewed",
-        "last_viewed_days",
         "last_alerted",
-        "last_alerted_days",
+        "staleness",
         "always_alert",
         "never_alert",
         "should_alert",
@@ -72,14 +71,14 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
     ]
     list_display = [
         "profile",
-        "Activity",
-        "created_at",
-        "updated_at",
+        "Activities",
         "sent",
         "sent_at",
+        "created_at",
+        "updated_at",
     ]
 
-    def Activity(self, message: Message):
+    def Activities(self, message: Message):
         return format_html("<br><br>".join(message.activity_lines))
 
     readonly_fields = [
@@ -87,6 +86,7 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "body",
         "sent",
         "sent_at",
+        "updated_at",
         "created_at",
     ]
 

@@ -1,6 +1,8 @@
 # pylint: disable=expression-not-assigned,singleton-comparison,unused-variable,redefined-outer-name
 
 
+from datetime import timedelta
+
 import pytest
 
 from ballotbuddies.alerts.models import Message, Profile
@@ -23,7 +25,7 @@ def describe_profile():
 
         profile.mark_viewed(save=False)
 
-        expect(profile.last_viewed_days) == 0
+        expect(profile.staleness) == timedelta(0)
         expect(profile.should_alert) == False
 
     @pytest.mark.django_db
