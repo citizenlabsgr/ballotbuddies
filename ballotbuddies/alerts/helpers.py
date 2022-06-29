@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
@@ -7,6 +9,14 @@ from sesame.utils import get_query_string
 from ballotbuddies.core.helpers import build_url
 
 from .models import Message, Profile
+
+
+def update_profiles():
+    query = Profile.objects.filter(staleness__lte=timedelta(days=0))
+    log.info(f"Updating {query.count()} profiles(s)")
+    profile: Profile
+    for profile in query:
+        profile.save()
 
 
 def get_login_email(user: User):
