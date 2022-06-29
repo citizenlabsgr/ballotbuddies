@@ -38,11 +38,10 @@
     {{ voter.updated }}
 </p>
 
-<div class="d-flex justify-content-between align-items-center">
-    <h2 class="pt-4">Voter Information</h2>
-    <a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">Edit details</a>
-</div>
+<h2 class="pt-4">Voter Information</h2>
 
 {{ form|crispy }}
+
+<a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">Edit details</a>
 
 {% endblock main %}
