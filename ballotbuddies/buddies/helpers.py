@@ -44,7 +44,7 @@ def update_neighbors() -> int:
 def update_statuses() -> int:
     total = 0
 
-    age = timezone.now() - timedelta(days=7)
+    age = timezone.now() - timedelta(days=1, hours=1)
     query = Voter.objects.filter(updated__lte=age)
     log.info(f"Updating status for {query.count()} voter(s)")
     voter: Voter
