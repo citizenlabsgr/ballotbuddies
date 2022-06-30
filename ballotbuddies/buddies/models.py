@@ -153,6 +153,7 @@ class Voter(models.Model):
     def data(self) -> dict:
         return dict(
             email=self.user.email,
+            nickname=self.nickname,
             first_name=self.user.first_name,
             last_name=self.user.last_name,
             birth_date=self.birth_date,
@@ -161,7 +162,9 @@ class Voter(models.Model):
 
     @cached_property
     def complete(self) -> bool:
-        return all(self.data.values())
+        data = self.data.copy()
+        data.pop("nickname")
+        return all(data.values())
 
     @cached_property
     def progress(self) -> Progress:

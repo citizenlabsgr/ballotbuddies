@@ -32,8 +32,7 @@ class VoterForm(forms.ModelForm):
         model = Voter
         fields = [
             "email",
-            # TODO: Enable this field
-            # "nickname",
+            "nickname",
             "first_name",
             "last_name",
             "birth_date",
@@ -42,14 +41,15 @@ class VoterForm(forms.ModelForm):
 
     def __init__(self, *args, locked: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
-        # TODO: Enable this field
-        # self.fields["nickname"].widget.attrs["placeholder"] = "Preferred first name"
+        self.fields["nickname"].widget.attrs["placeholder"] = "Preferred first name"
         self.fields["birth_date"].required = True
         self.fields["birth_date"].widget.attrs["placeholder"] = "mm/dd/yyyy"
         self.fields["birth_date"].widget.attrs["data-date-format"] = "mm/dd/yyyy"
         self.fields["zip_code"].required = True
         if locked:
             del self.fields["email"]
+            if not kwargs["initial"].get("nickname"):
+                del self.fields["nickname"]
             for name in self.fields:
                 self.fields[name].required = False
                 self.fields[name].widget.attrs["autofocus"] = False
