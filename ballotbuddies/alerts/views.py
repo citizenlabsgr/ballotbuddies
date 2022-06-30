@@ -19,9 +19,9 @@ def debug(request, slug=""):
         voter = user.voter
         profile = voter.profile
 
-    friend = User(first_name="Firstname", last_name="Lastname")
+    friend = Voter(user=User(first_name="Firstname", last_name="Lastname"))
     message = Message(profile=profile)
-    message.add(Voter(user=friend), save=False)
+    message.add(friend, save=False)
     message.add(voter, save=False)
 
     emails = [

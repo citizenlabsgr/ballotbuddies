@@ -68,7 +68,7 @@ class Command(BaseCommand):
         for count, voter in enumerate(real_voters, start=1):
             friend = self.get_or_create_voter(
                 f"friend+{count}@example.com",
-                voter.first_name,
+                voter.user.first_name,
                 "Friend",
                 "1970-01-01",
                 "49503",

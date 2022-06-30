@@ -30,10 +30,20 @@ class VoterForm(forms.ModelForm):
 
     class Meta:
         model = Voter
-        fields = ["email", "first_name", "last_name", "birth_date", "zip_code"]
+        fields = [
+            "email",
+            # TODO: Enable this field
+            # "nickname",
+            "first_name",
+            "last_name",
+            "birth_date",
+            "zip_code",
+        ]
 
     def __init__(self, *args, locked: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
+        # TODO: Enable this field
+        # self.fields["nickname"].widget.attrs["placeholder"] = "Preferred first name"
         self.fields["birth_date"].required = True
         self.fields["birth_date"].widget.attrs["placeholder"] = "mm/dd/yyyy"
         self.fields["birth_date"].widget.attrs["data-date-format"] = "mm/dd/yyyy"

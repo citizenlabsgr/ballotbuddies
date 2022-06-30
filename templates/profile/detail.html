@@ -7,7 +7,7 @@
 <h1>Your Profile</h1>
 
 <p>
-    {{ voter.email }}
+    {{ voter.user.email }}
 </p>
 
 <form method="post">{% csrf_token %}
