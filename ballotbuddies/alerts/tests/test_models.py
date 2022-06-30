@@ -6,7 +6,7 @@ from datetime import timedelta
 import pytest
 
 from ballotbuddies.alerts.models import Message, Profile
-from ballotbuddies.buddies.models import Voter
+from ballotbuddies.buddies.models import User, Voter
 
 
 @pytest.fixture
@@ -44,3 +44,18 @@ def describe_profile():
         expect(message.body).contains(
             "Jane Doe is registered to vote absentee and a ballot was mailed to them on 2022-06-24"
         )
+
+
+def describe_message():
+    def describe_add():
+        def it_replaces_legal_name(expect):
+            voter = Voter(
+                user=User(first_name="Michael", last_name="Doe"),
+                status={"message": "Michael Doe is registered to vote."},
+                nickname="Mike",
+            )
+
+            message = Message()
+            message.add(voter, save=False)
+
+            expect(message.body).contains("Mike Doe is")

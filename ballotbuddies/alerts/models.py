@@ -116,10 +116,11 @@ class Message(models.Model):
 
     def add(self, voter: Voter, *, save=True):
         if voter.status:
-            # TODO: Replace legal_name with display_name
             text = voter.status["message"]
             text = text.split(" for the")[0]
             text = text.replace("your", "a").replace("you", "them")
+            if "@" not in voter.display_name:
+                text = text.replace(voter.legal_name, voter.display_name)
         else:
             text = f"{voter.display_name} is planning to vote"
 
