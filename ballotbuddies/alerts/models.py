@@ -31,9 +31,16 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.voter)
 
+    @property
+    def message(self) -> Message:
+        return Message.objects.get_draft(self)
+
+    @property
+    def can_alert(self) -> bool:
+        return self.should_alert and bool(self.message)
+
     def alert(self, voter: Voter):
-        message: Message = Message.objects.get_draft(self)
-        message.add(voter)
+        self.message.add(voter)
 
     def mark_alerted(self, *, save=True):
         self.last_alerted = timezone.now()
@@ -93,6 +100,9 @@ class Message(models.Model):
         count = len(self.activity)
         activities = "Activity" if count == 1 else "Activities"
         return f"{sent}: {count} {activities}"
+
+    def __bool__(self):
+        return bool(self.activity)
 
     @property
     def subject(self) -> str:

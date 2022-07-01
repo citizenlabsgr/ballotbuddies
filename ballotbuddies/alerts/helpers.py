@@ -66,7 +66,7 @@ def send_invite_email(user: User, friend: Voter, *, debug=False):
 
 def get_activity_email(user: User, message: Message | None = None):
     profile: Profile = user.voter.profile
-    message = message or Message.objects.get_draft(profile)
+    message = message or profile.message
     url = build_url("/about") + get_query_string(user)
     return EmailMessage(
         message.subject,
@@ -83,6 +83,5 @@ def send_activity_email(user: User):
             log.warn(f"Skipped activity email for test user: {user}")
         elif email.send(fail_silently=False):
             log.info(f"Sent activity email: {user}")
-            message: Message = Message.objects.get_draft(profile)
-            message.mark_sent()
+            profile.message.mark_sent()
             profile.mark_alerted()

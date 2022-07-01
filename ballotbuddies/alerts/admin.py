@@ -42,7 +42,13 @@ class ProfileAdmin(admin.ModelAdmin):
         "always_alert",
         "never_alert",
         "should_alert",
+        "Can_alert",
     ]
+
+    def Can_alert(self, profile: Profile):
+        return profile.can_alert
+
+    Can_alert.boolean = True  # type: ignore
 
     readonly_fields = ["last_viewed", "last_alerted"]
 

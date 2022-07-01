@@ -39,9 +39,8 @@ def describe_profile():
         voter.id = voter.id + 1
         profile.alert(voter)
 
-        message: Message = Message.objects.get_draft(profile)
-        expect(message.body).contains("2 friends")
-        expect(message.body).contains(
+        expect(profile.message.body).contains("2 friends")
+        expect(profile.message.body).contains(
             "Jane Doe is registered to vote absentee and a ballot was mailed to them on 2022-06-24"
         )
 
