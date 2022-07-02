@@ -71,6 +71,7 @@ def logout(request: HttpRequest):
 def profile(request: HttpRequest):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
+    voter.profile.mark_viewed()
 
     if not voter.complete:
         messages.info(request, "Please finish setting up your profile to continue.")
@@ -94,7 +95,6 @@ def profile(request: HttpRequest):
             messages.error(request, error)
 
     form = VoterForm(initial=voter.data, locked=True)
-    voter.profile.mark_viewed()  # type: ignore
 
     context = {"voter": voter, "form": form}
     return render(request, "profile/detail.html", context)

@@ -80,12 +80,18 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "Activities",
         "sent",
         "sent_at",
+        "Dismissed",
         "created_at",
         "updated_at",
     ]
 
     def Activities(self, message: Message):
         return format_html("<br><br>".join(message.activity_lines))
+
+    def Dismissed(self, message: Message):
+        return message.dismissed
+
+    Dismissed.boolean = True  # type: ignore
 
     readonly_fields = [
         "subject",

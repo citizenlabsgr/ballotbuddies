@@ -58,3 +58,21 @@ def describe_message():
             message.add(voter, save=False)
 
             expect(message.body).contains("Mike Doe is")
+
+    def describe_dismissed():
+        def is_none_by_default(expect):
+            message = Message()
+
+            expect(message.dismissed) == None
+
+        def is_false_when_sent(expect):
+            message = Message()
+            message.mark_sent(save=False)
+
+            expect(message.dismissed) == False
+
+        def is_true_when_read(expect):
+            message = Message()
+            message.mark_sent(save=False)
+
+            expect(message.dismissed) == False
