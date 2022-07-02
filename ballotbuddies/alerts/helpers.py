@@ -83,5 +83,4 @@ def send_activity_email(user: User):
             log.warn(f"Skipped activity email for test user: {user}")
         elif email.send(fail_silently=False):
             log.info(f"Sent activity email: {user}")
-            profile.message.mark_sent()
             profile.mark_alerted()

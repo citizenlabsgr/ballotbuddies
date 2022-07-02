@@ -45,11 +45,13 @@ class Profile(models.Model):
     def mark_alerted(self, *, save=True):
         self.last_alerted = timezone.now()
         if save:
+            self.message.mark_sent()
             self.save()
 
     def mark_viewed(self, *, save=True):
         self.last_viewed = timezone.now()
         if save:
+            self.message.mark_read()
             self.save()
 
     def _staleness(self) -> timedelta:
@@ -124,6 +126,14 @@ class Message(models.Model):
     def activity_lines(self) -> list[str]:
         return list(self.activity.values())
 
+    @property
+    def dismissed(self) -> bool | None:
+        if self.sent_at:
+            return False
+        if self.sent:
+            return True
+        return None
+
     def add(self, voter: Voter, *, save=True):
         if voter.status:
             text = voter.status["message"]
@@ -140,7 +150,13 @@ class Message(models.Model):
         if save:
             self.save()
 
-    def mark_sent(self):
+    def mark_sent(self, *, save=True):
         self.sent = True
         self.sent_at = timezone.now()
-        self.save()
+        if save:
+            self.save()
+
+    def mark_read(self, *, save=True):
+        self.sent = True
+        if save:
+            self.save()
