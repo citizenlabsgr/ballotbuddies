@@ -8,7 +8,6 @@ urlpatterns = [
     path("", include("ballotbuddies.buddies.urls", namespace="buddies")),
     path("api/", include("ballotbuddies.api.urls")),
     path("admin/", admin.site.urls),
-    path("grappelli/", include("grappelli.urls")),
 ]
 
 if settings.ALLOW_DEBUG:

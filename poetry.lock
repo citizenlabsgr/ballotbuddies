@@ -289,14 +289,6 @@ Django = ">=2.2"
 sqlparse = ">=0.2.0"
 
 [[package]]
-name = "django-grappelli"
-version = "3.0.2"
-description = "A jazzy skin for the Django Admin-Interface."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "django-multi-email-field"
 version = "0.6.2"
 description = ""
@@ -1216,7 +1208,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.10"
-content-hash = "a49d78893bd80077ca0217aac0f46ce7954cdd09d520bb88c4a783c0dc071381"
+content-hash = "0cf83d76cc3dfaa5494378ebb9ce5e1a16a48890ee5d07cebe1f174300b0b660"
 
 [metadata.files]
 appnope = [
@@ -1389,10 +1381,6 @@ django-crispy-forms = [
 django-debug-toolbar = [
     {file = "django-debug-toolbar-3.2.4.tar.gz", hash = "sha256:644bbd5c428d3283aa9115722471769cac1bec189edf3a0c855fd8ff870375a9"},
     {file = "django_debug_toolbar-3.2.4-py3-none-any.whl", hash = "sha256:6b633b6cfee24f232d73569870f19aa86c819d750e7f3e833f2344a9eb4b4409"},
-]
-django-grappelli = [
-    {file = "django-grappelli-3.0.2.tar.gz", hash = "sha256:604cfce601a5246690e4e2d9b3c6a0db57bccbefdba5e81733f2db9a7ba62fac"},
-    {file = "django_grappelli-3.0.2-py2.py3-none-any.whl", hash = "sha256:c04a4a93c18e8790976def56e487a6f2d59b6894a3fe75473e0e5826d1145a04"},
 ]
 django-multi-email-field = []
 django-redis = [
