@@ -40,8 +40,8 @@
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-lg-none">
         {{ voter.progress.ballot_available }}
-        {% if voter.progress.ballot_available.url %}
-        <a href="{% firstof voter.ballot voter.progress.ballot_available.url %}" class="text-decoration-none">🔗</a>
+        {% if voter.ballot_url %}
+        <a href="{{ voter.ballot_url }}" class="text-decoration-none">🔗</a>
         {% endif %}
     </td>
 
@@ -61,8 +61,8 @@
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-lg-table-cell">
         {{ voter.progress.ballot_available }}
-        {% if voter.progress.ballot_available.url %}
-        <a href="{% firstof voter.ballot voter.progress.ballot_available.url %}&slug={{ voter.slug }}" class="text-decoration-none">🔗</a>
+        {% if voter.ballot_url %}
+        <a href="{{ voter.ballot_url }}" class="text-decoration-none">🔗</a>
         {% endif %}
     </td>
 

@@ -225,9 +225,7 @@ class Progress:
             progress.absentee_requested.color = "success text-muted"
             progress.absentee_received.color = "success text-muted"
             progress.ballot_available.url = constants.PREVIEW_URL.format(
-                election=election["id"],
-                precinct=precinct["id"],
-                name=data.get("message", "").split(" ")[0],
+                election=election["id"], precinct=precinct["id"]
             )
             progress.ballot_available.color = "success"
             progress.ballot_completed.icon = "🚫"

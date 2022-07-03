@@ -118,8 +118,8 @@
 
             <td class="text-center table-{{ voter.progress.ballot_available.color }} border-start">
                 {{ voter.progress.ballot_available }}
-                {% if voter.progress.ballot_available.url %}
-                <a href="{% firstof voter.ballot voter.progress.ballot_available.url %}&slug={{ voter.slug }}" class="ms-1 text-decoration-none">🔗</a>
+                {% if voter.ballot_url %}
+                <a href="{{ voter.ballot_url }}" class="ms-1 text-decoration-none">🔗</a>
                 {% endif %}
             </td>
 

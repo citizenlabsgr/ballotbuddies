@@ -167,6 +167,14 @@ class Voter(models.Model):
         return all(data.values())
 
     @cached_property
+    def ballot_url(self) -> str:
+        url = self.ballot or self.progress.ballot_available.url
+        if url:
+            joiner = "&" if "?" in url else "?"
+            url += f"{joiner}name={self.short_name}&slug={self.slug}"
+        return url
+
+    @cached_property
     def progress(self) -> Progress:
         progress = Progress.parse(self.status)
 

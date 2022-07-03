@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 from typing import NamedTuple
 
@@ -5,7 +6,8 @@ STATUS_API = "https://michiganelections.io/api/status/"
 MICHIGAN_REGISTRATION_URL = "https://mvic.sos.state.mi.us/RegisterVoter/Index"
 OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
 ABSENTEE_URL = "https://absentee.michiganelections.io/"
-PREVIEW_URL = "https://share.michiganelections.io/elections/{election}/precincts/{precinct}?name={name}"
+PREVIEW_HOST = os.getenv("PREVIEW_HOST", "https://share.michiganelections.io")
+PREVIEW_URL = PREVIEW_HOST + "/elections/{election}/precincts/{precinct}"
 
 REGISTRATION_DEADLINE_DELTA = timedelta(days=15)  # common guidance
 ABSENTEE_REQUESTED_DEADLINE_DELTA = timedelta(weeks=4)  # buffer for mail service
@@ -325,7 +327,7 @@ VOTED = VoterData(
         "ballot_available": {
             "icon": "",
             "color": "success",
-            "url": "https://share.michiganelections.io/elections/45/precincts/5943?name=Jane",
+            "url": "https://share.michiganelections.io/elections/45/precincts/5943",
             "date": "",
             "deadline": "2021-10-03",
         },
