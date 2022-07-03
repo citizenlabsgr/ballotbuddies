@@ -14,7 +14,6 @@ TODAY = None
 # Core
 
 INSTALLED_APPS = [
-    "grappelli",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -139,11 +138,6 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
 # CORS
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-###############################################################################
-# Grappelli
-
-GRAPPELLI_ADMIN_TITLE = "Ballot Buddies Admin"
 
 ###############################################################################
 # Django Debug Toolbar
