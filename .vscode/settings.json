@@ -31,7 +31,6 @@
     "corsheaders",
     "createdb",
     "direnv",
-    "grappelli",
     "gunicorn",
     "herokuapp",
     "htmlcov",
