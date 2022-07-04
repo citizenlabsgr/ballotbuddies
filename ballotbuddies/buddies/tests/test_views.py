@@ -31,7 +31,7 @@ def describe_index():
 
         html = response.content.decode()
         expect(html).excludes("View Profile")
-        expect(html.count("disabled")) == 4
+        expect(html.count("disabled")) == 3
 
     def it_disables_buttons_with_referrer(expect, client, voter):
         client.force_login(voter.user)
@@ -40,7 +40,7 @@ def describe_index():
 
         html = response.content.decode()
         expect(html).excludes("View Profile")
-        expect(html.count("disabled")) >= 4  # TODO: should be 5 including the voter
+        expect(html.count("disabled")) >= 3  # TODO: should be 4 including the voter
 
 
 @pytest.mark.django_db

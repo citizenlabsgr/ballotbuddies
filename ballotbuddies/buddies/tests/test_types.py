@@ -4,7 +4,7 @@ from dataclasses import asdict
 
 import pytest
 
-from ..constants import SAMPLE_DATA, UNREGISTERED, VOTED
+from ..constants import SAMPLE_DATA
 from ..types import Progress, to_ordinal
 
 
@@ -30,7 +30,11 @@ def describe_progress():
     def describe_percent():
         @pytest.mark.parametrize(
             ("status", "percent"),
-            [(UNREGISTERED.status, 0), (VOTED.status, 100)],
+            [
+                (SAMPLE_DATA[0].status, 0),
+                (SAMPLE_DATA[1].status, 50),
+                (SAMPLE_DATA[2].status, 100),
+            ],
         )
         def is_based_on_progress(expect, status, percent):
             progress = Progress.parse(status)

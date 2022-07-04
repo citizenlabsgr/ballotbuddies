@@ -177,102 +177,6 @@ REGISTERED = VoterData(
 )
 
 
-REGISTERED_BUT_NO_ELECTION = VoterData(
-    "Abby",
-    "Absentee",
-    {
-        "status": {
-            "ballot": False,
-            "absentee": True,
-            "ballot_url": None,
-            "registered": True,
-            "absentee_ballot_sent": None,
-            "absentee_ballot_received": None,
-            "absentee_application_received": None,
-        },
-        "message": "Jane Doe is registered to vote absentee and your ballot was mailed to you on 2021-09-30 for the November Consolidated election on 2021-11-02 and a sample ballot is available.",
-        "election": {
-            "id": 45,
-            "date": "2021-11-02",
-            "name": "November Consolidated",
-            "description": "",
-            "reference_url": None,
-        },
-        "precinct": {
-            "id": 5943,
-            "ward": "2",
-            "county": "Kent",
-            "number": "10",
-            "jurisdiction": "City of Kentwood",
-        },
-    },
-    {
-        "registered": {
-            "icon": "✅",
-            "color": "success",
-            "url": "",
-            "date": "",
-            "deadline": "2021-10-18",
-        },
-        "absentee_requested": {
-            "icon": "✅",
-            "color": "success",
-            "url": "",
-            "date": "",
-            "deadline": "2021-10-05",
-        },
-        "absentee_received": {
-            "icon": "🚫",
-            "color": "default",
-            "url": "",
-            "date": "",
-            "deadline": "2021-10-19",
-        },
-        "ballot_available": {
-            "icon": "🟡",
-            "color": "default",
-            "url": "",
-            "date": "",
-            "deadline": "2021-10-03",
-        },
-        "ballot_completed": {
-            "color": "default",
-            "date": "",
-            "deadline": "2021-11-01",
-            "icon": "",
-            "url": "",
-        },
-        "ballot_sent": {
-            "icon": "−",
-            "color": "default",
-            "url": "",
-            "date": "",
-            "deadline": "2021-10-12",
-        },
-        "ballot_received": {
-            "icon": "−",
-            "color": "default",
-            "url": "",
-            "date": "",
-            "deadline": "2021-10-29",
-        },
-        "election": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "2021-11-02",
-            "deadline": "",
-        },
-        "voted": {
-            "icon": "",
-            "color": "default",
-            "url": "",
-            "date": "",
-            "deadline": "",
-        },
-    },
-)
-
 VOTED = VoterData(
     "Vicky",
     "Voterson",
@@ -370,9 +274,4 @@ VOTED = VoterData(
 )
 
 
-SAMPLE_DATA: list[VoterData] = [
-    UNREGISTERED,
-    REGISTERED,
-    REGISTERED_BUT_NO_ELECTION,
-    VOTED,
-]
+SAMPLE_DATA: list[VoterData] = [UNREGISTERED, REGISTERED, VOTED]

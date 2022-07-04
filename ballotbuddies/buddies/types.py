@@ -140,6 +140,8 @@ class Progress:
 
     @cached_property
     def percent(self) -> int:
+        if not self.registered.complete:
+            return 0
         if not self.election.date:
             return 100
         states = [
