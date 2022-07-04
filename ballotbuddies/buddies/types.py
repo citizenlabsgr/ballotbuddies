@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date, datetime
+from functools import cached_property
 
 from ballotbuddies.core.helpers import today
 
@@ -54,6 +55,10 @@ class State:
         icon = "🔗" if self.url and not self.icon else self.icon
         date_value = ICON_VALUES["✅"] + abs(self.days) / 1000 if self.date else 0
         return COLOR_VALUES[color] + ICON_VALUES[icon] + date_value
+
+    @property
+    def complete(self) -> bool:
+        return "success" in self.color or self.icon == "−"
 
     @property
     def days(self) -> int:
@@ -132,6 +137,21 @@ class Progress:
             self.absentee_requested.value,
             self.registered.value,
         )
+
+    @cached_property
+    def percent(self) -> int:
+        if not self.election.date:
+            return 100
+        states = [
+            self.registered,
+            self.absentee_requested,
+            self.absentee_received,
+            self.ballot_completed,
+            self.ballot_sent,
+            self.voted,
+        ]
+        ratio = sum(state.complete for state in states) / len(states)
+        return int(ratio * 100)
 
     @classmethod
     def parse(cls, data: dict) -> Progress:

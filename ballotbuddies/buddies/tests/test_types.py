@@ -4,7 +4,7 @@ from dataclasses import asdict
 
 import pytest
 
-from ..constants import SAMPLE_DATA
+from ..constants import SAMPLE_DATA, UNREGISTERED, VOTED
 from ..types import Progress, to_ordinal
 
 
@@ -22,12 +22,22 @@ def test_to_ordinal(expect, days, ordinal):
 
 
 def describe_progress():
+    def describe_sort():
+        def is_based_on_values(expect):
+            items = [Progress.parse(voter.progress) for voter in SAMPLE_DATA]
+            expect(sorted(items)) == items  # type: ignore
+
+    def describe_percent():
+        @pytest.mark.parametrize(
+            ("status", "percent"),
+            [(UNREGISTERED.status, 0), (VOTED.status, 100)],
+        )
+        def is_based_on_progress(expect, status, percent):
+            progress = Progress.parse(status)
+            expect(progress.percent) == percent
+
     def describe_parse():
         @pytest.mark.parametrize("sample", SAMPLE_DATA)
         def with_samples(expect, sample):
             result = Progress.parse(sample.status)
             expect(asdict(result)) == sample.progress
-
-    def test_sort(expect):
-        items = [Progress.parse(voter.progress) for voter in SAMPLE_DATA]
-        expect(sorted(items)) == items  # type: ignore

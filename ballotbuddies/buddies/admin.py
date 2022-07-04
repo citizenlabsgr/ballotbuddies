@@ -1,4 +1,4 @@
-# pylint: disable=unused-argument
+# pylint: disable=unused-argument,no-self-use
 
 from django.contrib import admin, messages
 
@@ -33,16 +33,19 @@ class VoterAdmin(admin.ModelAdmin):
     list_filter = ["state", "absentee"]
     list_display = [
         "display_name",
+        "Percent",
         "legal_name",
         "birth_date",
         "zip_code",
         "state",
-        "status",
         "absentee",
         "voted",
         "updated",
         "created",
     ]
+
+    def Percent(self, voter: Voter):
+        return voter.progress.percent
 
     actions = [update_selected_voters, share_selected_voters]
 
