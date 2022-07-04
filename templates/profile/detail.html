@@ -23,6 +23,8 @@
 
 <h2 class="pt-4">Ballot Status</h2>
 
+{% include "profile/_progress.html" %}
+
 <div>
     <div
         hx-get="{% url 'buddies:status' slug=voter.slug %}"

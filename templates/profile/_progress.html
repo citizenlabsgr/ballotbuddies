@@ -1,0 +1,14 @@
+{% if voter.progress.percent %}
+
+<div class="progress mt-2 mb-3">
+    <div
+        class="progress-bar bg-secondary"
+        role="progressbar"
+        style="width: {{ voter.progress.percent }}%;"
+        aria-valuenow="{{ voter.progress.percent }}"
+        aria-valuemin="0" aria-valuemax="100">
+            {{ voter.progress.percent }}%
+    </div>
+</div>
+
+{% endif %}
