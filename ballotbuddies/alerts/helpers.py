@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+from django.utils import timezone
 
 import log
 from sesame.utils import get_query_string
@@ -18,7 +19,8 @@ if TYPE_CHECKING:
 
 
 def update_profiles():
-    query = Profile.objects.filter(staleness__lte=timedelta(days=0))
+    age = timezone.now() - timedelta(days=1, hours=1)
+    query = Profile.objects.filter(updated_at__lte=age)
     log.info(f"Updating {query.count()} profiles(s)")
     profile: Profile
     for profile in query:

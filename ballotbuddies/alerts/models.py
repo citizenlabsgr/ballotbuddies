@@ -25,6 +25,8 @@ class Profile(models.Model):
     last_viewed = models.DateTimeField(auto_now_add=True)
     staleness = models.DurationField(default=timedelta(days=0))
 
+    updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         ordering = ["-staleness"]
 
