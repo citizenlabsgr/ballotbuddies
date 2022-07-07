@@ -1,5 +1,7 @@
 {% load crispy_forms_tags %}
 
+{% if form %}
+
 <form method="post" novalidate>
     {% csrf_token %}
 
@@ -13,3 +15,5 @@
         </button>
     </div>
 </form>
+
+{% endif %}

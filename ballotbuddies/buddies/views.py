@@ -4,6 +4,7 @@ from django.contrib.auth import login as force_login
 from django.contrib.auth import logout as force_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -152,6 +153,28 @@ def friends(request: HttpRequest):
         "form": form,
         "allow_debug": allow_debug(request),
     }
+    return render(request, "friends/index.html", context)
+
+
+@login_required
+def friends_search(request: HttpRequest):
+    assert isinstance(request.user, User)
+    voter: Voter = Voter.objects.from_user(request.user)
+
+    queryset = voter.friends.select_related("user")
+    partial = False
+    if "q" in request.GET:
+        partial = True
+        queryset = queryset.filter(
+            Q(nickname__icontains=request.GET["q"])
+            | Q(user__first_name__icontains=request.GET["q"])
+            | Q(user__last_name__icontains=request.GET["q"])
+        )
+
+    community = sorted(queryset, key=lambda voter: voter.display_name)
+    context = {"community": community, "search": True}
+    if partial:
+        return render(request, "friends/_results.html", context)
     return render(request, "friends/index.html", context)
 
 

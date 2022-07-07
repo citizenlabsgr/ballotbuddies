@@ -30,11 +30,15 @@ ZERO_WIDTH_SPACE = "\u200b"
 
 class VoterManager(models.Manager):
     def from_email(self, email: str, referrer: str) -> Voter:
-        user, created = User.objects.get_or_create(
-            email=email, defaults=dict(username=email)
-        )
-        if created:
-            log.info(f"Created user: {user}")
+        try:
+            user, created = User.objects.get_or_create(
+                email=email, defaults=dict(username=email)
+            )
+            if created:
+                log.info(f"Created user: {user}")
+        except User.MultipleObjectsReturned:
+            log.error(f"Multiple users: {email}")
+            user = User.objects.filter(email=email).first()  # type: ignore
 
         voter = self.from_user(user)
 

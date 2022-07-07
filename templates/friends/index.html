@@ -8,11 +8,20 @@
 
     {% include "_messages.html" %}
 
+    {% if search %}
+    <input class="form-control mb-3" type="search"
+       name="q" placeholder="Begin typing to search your friends..." autofocus
+       hx-get="{% url 'buddies:search' %}"
+       hx-trigger="keyup changed delay:500ms, search"
+       hx-target="#search-results"
+       _hx-indicator=".htmx-indicator">
+    {% endif %}
+
     <div class="row justify-content-center">
         <div class="col-12">
 
             <table class="table">
-                <thead class="text-center">
+                <thead class="text-center {% if search %} border-top {% endif %}">
                     <tr>
                         <th scope="col" colspan="2" rowspan="2" class="border-end align-middle">
                             Registered <span class="d-none d-sm-inline">to Vote</span>
@@ -57,10 +66,8 @@
                         <th class="border d-none d-md-table-cell" style="width: 6em">Voted</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for voter in community %}
-                    {% include "friends/_row.html" %}
-                    {% endfor %}
+                <tbody id="search-results">
+                    {% include "friends/_results.html" %}
                 </tbody>
             </table>
 
