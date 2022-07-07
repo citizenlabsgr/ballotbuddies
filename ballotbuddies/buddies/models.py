@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from contextlib import suppress
+from copy import deepcopy
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
@@ -52,12 +53,12 @@ class VoterManager(models.Manager):
 
         return voter
 
-    def from_user(self, user: User, status=None) -> Voter:
+    def from_user(self, user: User, status: dict | None = None) -> Voter:
         voter, created = self.get_or_create(user=user)
         if created:
             log.info(f"Created voter: {voter}")
         if status:
-            voter.status = status
+            voter.status = deepcopy(status)
             voter.save()
         return voter
 

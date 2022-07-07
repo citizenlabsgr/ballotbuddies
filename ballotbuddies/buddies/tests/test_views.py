@@ -113,6 +113,8 @@ def describe_status():
         return f"/friends/{voter.slug}/_status"
 
     def it_can_manually_record_voting(expect, client, url, voter):
+        voter.status["status"]["absentee_ballot_received"] = None
+        voter.save()
         client.force_login(voter.user)
 
         response = client.post(url, {"voted": True})
