@@ -169,6 +169,7 @@ def friends_search(request: HttpRequest):
             Q(nickname__icontains=request.GET["q"])
             | Q(user__first_name__icontains=request.GET["q"])
             | Q(user__last_name__icontains=request.GET["q"])
+            | Q(user__email__icontains=request.GET["q"])
         )
 
     community = sorted(queryset, key=lambda voter: voter.display_name)
