@@ -53,7 +53,8 @@ class Profile(models.Model):
     def mark_viewed(self, *, save=True):
         self.last_viewed = timezone.now()
         if save:
-            self.message.mark_read()
+            if not self.always_alert:
+                self.message.mark_read()
             self.save()
 
     def _staleness(self) -> timedelta:
