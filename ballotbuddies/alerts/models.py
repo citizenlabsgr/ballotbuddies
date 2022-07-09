@@ -33,13 +33,16 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.voter)
 
+    def __repr__(self):
+        return repr(self.voter)
+
     @property
     def message(self) -> Message:
         return Message.objects.get_draft(self)
 
     @property
     def can_alert(self) -> bool:
-        return self.should_alert and bool(self.message)
+        return bool(self.message)
 
     def alert(self, voter: Voter):
         self.message.add(voter)

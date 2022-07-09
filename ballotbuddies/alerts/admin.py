@@ -20,6 +20,14 @@ class DefaultQueryMixin(admin.ModelAdmin):
         return view
 
 
+def alert_selected_profiles(modeladmin, request, queryset):
+    count = 0
+    for profile in queryset:
+        helpers.send_activity_email(profile.voter.user)
+        count += 1
+    messages.success(request, f"Sent {count} email(s).")
+
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
 
@@ -29,6 +37,8 @@ class ProfileAdmin(admin.ModelAdmin):
         "voter__user__last_name",
     ]
 
+    actions = [alert_selected_profiles]
+
     list_filter = [
         "always_alert",
         "never_alert",
@@ -36,13 +46,11 @@ class ProfileAdmin(admin.ModelAdmin):
     ]
     list_display = [
         "voter",
+        "Can_alert",
         "last_viewed",
         "last_alerted",
         "staleness",
-        "always_alert",
-        "never_alert",
         "should_alert",
-        "Can_alert",
     ]
 
     def Can_alert(self, profile: Profile):
@@ -71,6 +79,8 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "profile__voter__user__first_name",
         "profile__voter__user__last_name",
     ]
+
+    actions = [send_selected_messages]
 
     list_filter = [
         "sent",
@@ -101,5 +111,3 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "updated_at",
         "created_at",
     ]
-
-    actions = [send_selected_messages]

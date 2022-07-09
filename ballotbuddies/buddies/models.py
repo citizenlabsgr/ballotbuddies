@@ -128,6 +128,9 @@ class Voter(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
+        return self.display_name
+
+    def __repr__(self):
         return f"{self.user.get_full_name()} <{self.user.email}>"
 
     def __lt__(self, other):
