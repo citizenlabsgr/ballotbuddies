@@ -91,7 +91,6 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "sent",
         "sent_at",
         "Dismissed",
-        "created_at",
         "updated_at",
     ]
 
