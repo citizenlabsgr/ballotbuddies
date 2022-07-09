@@ -34,6 +34,7 @@ class VoterAdmin(admin.ModelAdmin):
     list_display = [
         "display_name",
         "Percent",
+        "Actions",
         "legal_name",
         "birth_date",
         "zip_code",
@@ -46,6 +47,9 @@ class VoterAdmin(admin.ModelAdmin):
 
     def Percent(self, voter: Voter):
         return voter.progress.percent
+
+    def Actions(self, voter: Voter):
+        return voter.progress.actions
 
     actions = [update_selected_voters, share_selected_voters]
 

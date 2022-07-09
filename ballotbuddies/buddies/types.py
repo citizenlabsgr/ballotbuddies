@@ -57,6 +57,10 @@ class State:
         return COLOR_VALUES[color] + ICON_VALUES[icon] + date_value
 
     @property
+    def actionable(self) -> bool:
+        return self.icon in {"🟡", "⚠️", "🚫"}
+
+    @property
     def complete(self) -> bool:
         return "success" in self.color or self.icon == "−"
 
@@ -154,6 +158,19 @@ class Progress:
         ]
         ratio = sum(state.complete for state in states) / len(states)
         return int(ratio * 100)
+
+    @cached_property
+    def actions(self) -> int:
+        states = [
+            self.registered,
+            self.absentee_requested,
+            self.absentee_received,
+            self.ballot_completed,
+            self.ballot_sent,
+            self.ballot_received,
+            self.voted,
+        ]
+        return sum(1 for state in states if state.actionable)
 
     @classmethod
     def parse(cls, data: dict) -> Progress:

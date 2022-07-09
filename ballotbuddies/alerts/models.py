@@ -19,11 +19,10 @@ class Profile(models.Model):
 
     always_alert = models.BooleanField(default=False)
     never_alert = models.BooleanField(default=False)
-    should_alert = models.BooleanField(default=False, editable=False)
 
     last_alerted = models.DateTimeField(auto_now_add=True)
     last_viewed = models.DateTimeField(auto_now_add=True)
-    staleness = models.DurationField(default=timedelta(days=0))
+    staleness = models.DurationField(default=timedelta(days=0), editable=False)
 
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -43,6 +42,16 @@ class Profile(models.Model):
     @property
     def can_alert(self) -> bool:
         return bool(self.message)
+
+    @property
+    def should_alert(self) -> bool:
+        if self.never_alert:
+            return False
+        if self.always_alert:
+            return True
+        if not self.voter.progress.actions:
+            return False
+        return self.staleness > timedelta(days=14)
 
     def alert(self, voter: Voter):
         self.message.add(voter)
@@ -67,16 +76,8 @@ class Profile(models.Model):
         delta = min(now - self.last_alerted, now - self.last_viewed)
         return timedelta(days=delta.days)
 
-    def _should_alert(self) -> bool:
-        if self.never_alert:
-            return False
-        if self.always_alert:
-            return True
-        return self.staleness > timedelta(days=14)
-
     def save(self, **kwargs):
         self.staleness = self._staleness()
-        self.should_alert = self._should_alert()
         super().save(**kwargs)
 
 

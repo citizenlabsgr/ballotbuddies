@@ -42,7 +42,6 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = [
         "always_alert",
         "never_alert",
-        "should_alert",
     ]
     list_display = [
         "voter",
@@ -50,7 +49,7 @@ class ProfileAdmin(admin.ModelAdmin):
         "last_viewed",
         "last_alerted",
         "staleness",
-        "should_alert",
+        "Should_alert",
     ]
 
     def Can_alert(self, profile: Profile):
@@ -58,7 +57,18 @@ class ProfileAdmin(admin.ModelAdmin):
 
     Can_alert.boolean = True  # type: ignore
 
-    readonly_fields = ["last_viewed", "last_alerted"]
+    def Should_alert(self, profile: Profile):
+        return profile.should_alert
+
+    Should_alert.boolean = True  # type: ignore
+
+    readonly_fields = [
+        "Can_alert",
+        "staleness",
+        "Should_alert",
+        "last_viewed",
+        "last_alerted",
+    ]
 
 
 def send_selected_messages(modeladmin, request, queryset):

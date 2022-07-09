@@ -20,12 +20,12 @@ def profile(voter):
 
 
 def describe_profile():
-    def it_can_mark_viewed(expect):
-        profile = Profile()
-
-        profile.mark_viewed(save=False)
+    @pytest.mark.django_db
+    def it_can_mark_viewed(expect, profile: Profile):
+        profile.mark_viewed()
 
         expect(profile.staleness) == timedelta(0)
+        expect(profile.can_alert) == False
         expect(profile.should_alert) == False
 
     @pytest.mark.django_db
@@ -39,6 +39,7 @@ def describe_profile():
         voter.id = voter.id + 1
         profile.alert(voter)
 
+        expect(profile.can_alert) == True
         expect(profile.message.body).contains("2 friends")
         expect(profile.message.body).contains(
             "Jane Doe is registered to vote absentee and a ballot was mailed to them on 2022-06-24"
