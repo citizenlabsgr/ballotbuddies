@@ -25,7 +25,8 @@ def alert_selected_profiles(modeladmin, request, queryset):
     for profile in queryset:
         helpers.send_activity_email(profile.voter.user)
         count += 1
-    messages.success(request, f"Sent {count} email(s).")
+    s = "" if count == 1 else "s"
+    messages.success(request, f"Sent {count} email{s}.")
 
 
 @admin.register(Profile)
@@ -76,7 +77,8 @@ def send_selected_messages(modeladmin, request, queryset):
     for message in queryset:
         helpers.send_activity_email(message.profile.voter.user)
         count += 1
-    messages.success(request, f"Sent {count} email(s).")
+    s = "" if count == 1 else "s"
+    messages.success(request, f"Sent {count} email{s}.")
 
 
 @admin.register(Message)

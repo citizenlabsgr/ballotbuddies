@@ -14,7 +14,8 @@ def update_selected_voters(modeladmin, request, queryset):
             voter.save()
         if error:
             messages.error(request, error)
-    messages.info(request, f"Updated {count} voter(s).")
+    s = "" if count == 1 else "s"
+    messages.info(request, f"Updated {count} voter{s}.")
 
 
 def share_selected_voters(modeladmin, request, queryset):
@@ -22,7 +23,8 @@ def share_selected_voters(modeladmin, request, queryset):
     voter: Voter
     for voter in queryset:
         count += voter.share_status()
-    messages.info(request, f"Shared status {count} times(s).")
+    s = "" if count == 1 else "s"
+    messages.info(request, f"Shared status {count} times{s}.")
 
 
 @admin.register(Voter)
