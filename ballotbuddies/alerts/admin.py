@@ -33,6 +33,7 @@ def alert_selected_profiles(modeladmin, request, queryset):
 class ProfileAdmin(admin.ModelAdmin):
 
     search_fields = [
+        "voter__nickname",
         "voter__user__email",
         "voter__user__first_name",
         "voter__user__last_name",
@@ -87,6 +88,7 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
     default_query = "sent__exact=0"
 
     search_fields = [
+        "profile__voter__nickname",
         "profile__voter__user__email",
         "profile__voter__user__first_name",
         "profile__voter__user__last_name",
