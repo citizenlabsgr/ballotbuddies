@@ -47,6 +47,7 @@ class VoterAdmin(admin.ModelAdmin):
         "zip_code",
         "state",
         "absentee",
+        "ballot_returned",
         "voted",
         "updated",
         "created",
