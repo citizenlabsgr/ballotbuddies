@@ -222,6 +222,7 @@ class Voter(models.Model):
 
         if self.ballot_returned:
             progress.ballot_returned.icon = "✅"
+            progress.ballot_returned.date = self.ballot_returned
             progress.ballot_returned.color = "success text-muted"
 
         if self.voted:

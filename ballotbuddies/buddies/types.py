@@ -13,7 +13,9 @@ def to_date(value: str) -> date:
     return to_datetime(value).date() if value else value  # type: ignore
 
 
-def to_datetime(value: str) -> datetime:
+def to_datetime(value: str | datetime) -> datetime:
+    if isinstance(value, datetime):
+        return value
     return datetime.strptime(value, "%Y-%m-%d")
 
 
@@ -104,7 +106,7 @@ class State:
         return "−"
 
     def __str__(self):
-        return f"{self.icon} {self.date_shortened}".strip()
+        return self.date_shortened if self.date else self.icon
 
     def __bool__(self):
         return self.color != "default" and self.icon not in {"🟡", "⚠️", "🚫"}
@@ -310,7 +312,7 @@ class Progress:
         if received_date := status.get("absentee_ballot_received"):
             progress.ballot_completed.icon = "−"
             progress.ballot_sent.color = "success text-muted"
-            progress.ballot_returned.date = sent_date
+            progress.ballot_returned.icon = "✅"
             progress.ballot_returned.color = "success text-muted"
             progress.ballot_received.date = received_date
             progress.ballot_received.color = "success text-muted"

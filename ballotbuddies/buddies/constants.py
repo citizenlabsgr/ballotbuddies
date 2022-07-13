@@ -265,10 +265,10 @@ VOTED = VoterData(
             "deadline": "2021-10-12",
         },
         "ballot_returned": {
-            "icon": "",
+            "icon": "✅",
             "color": "success text-muted",
             "url": "",
-            "date": "2021-09-30",
+            "date": "",
             "deadline": "2021-10-19",
         },
         "ballot_received": {
