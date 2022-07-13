@@ -21,7 +21,7 @@ from ballotbuddies.alerts.helpers import send_invite_email
 from ballotbuddies.core.helpers import generate_key
 
 from . import constants
-from .types import Progress, to_datetime
+from .types import Progress, to_datetime, to_string
 
 if TYPE_CHECKING:
     from ballotbuddies.alerts.models import Profile
@@ -222,7 +222,7 @@ class Voter(models.Model):
 
         if self.ballot_returned:
             progress.ballot_returned.icon = "✅"
-            progress.ballot_returned.date = self.ballot_returned
+            progress.ballot_returned.date = to_string(self.ballot_returned)
             progress.ballot_returned.color = "success text-muted"
 
         if self.voted:

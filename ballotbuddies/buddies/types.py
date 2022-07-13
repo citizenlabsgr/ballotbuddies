@@ -13,14 +13,16 @@ def to_date(value: str) -> date:
     return to_datetime(value).date() if value else value  # type: ignore
 
 
-def to_datetime(value: str | datetime) -> datetime:
-    if isinstance(value, datetime):
-        return value
+def to_datetime(value: str) -> datetime:
     return datetime.strptime(value, "%Y-%m-%d")
 
 
 def to_ordinal(day: int) -> str:
     return "th" if 11 <= day <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+
+
+def to_string(value: datetime) -> str:
+    return value.strftime(value, "%Y-%m-%d")
 
 
 COLOR_VALUES = {
