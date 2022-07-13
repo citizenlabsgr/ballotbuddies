@@ -106,6 +106,11 @@ class Voter(models.Model):
         default=True, help_text="Voter plans to vote by mail."
     )
     ballot = models.URLField(null=True, blank=True, max_length=2000)
+    ballot_returned = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Voter has returned their absentee ballot.",
+    )
     voted = models.DateTimeField(
         null=True,
         blank=True,
@@ -207,6 +212,7 @@ class Voter(models.Model):
             log.info(f"Clearing recorded vote for past election: {self}")
             self.absentee = True
             self.ballot = None
+            self.ballot_returned = None
             self.voted = None
             self.save()
 
@@ -214,11 +220,17 @@ class Voter(models.Model):
             progress.ballot_completed.color = "success"
             progress.ballot_completed.icon = "✅"
 
+        if self.ballot_returned:
+            progress.ballot_returned.icon = "✅"
+            progress.ballot_returned.color = "success text-muted"
+
         if self.voted:
             progress.ballot_received.color = "success text-muted"
             progress.election.color = "success text-muted"
             progress.voted.icon = "✅"
             progress.voted.color = "success"
+        elif self.ballot_returned:
+            progress.ballot_received.icon = "🚫"
         elif not self.absentee:
             progress.voted.icon = "🟡"
 

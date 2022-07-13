@@ -32,7 +32,7 @@ def describe_progress():
             ("status", "percent"),
             [
                 (SAMPLE_DATA[0].status, 0),
-                (SAMPLE_DATA[1].status, 50),
+                (SAMPLE_DATA[1].status, 57),
                 (SAMPLE_DATA[2].status, 100),
             ],
         )
