@@ -22,7 +22,7 @@ def to_ordinal(day: int) -> str:
 
 
 def to_string(value: datetime) -> str:
-    return value.strftime(value, "%Y-%m-%d")
+    return value.strftime("%Y-%m-%d")
 
 
 COLOR_VALUES = {
