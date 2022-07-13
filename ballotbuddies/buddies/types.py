@@ -119,6 +119,7 @@ class Progress:
     ballot_available: State = field(default_factory=State)
     ballot_completed: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
+    ballot_returned: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
     election: State = field(default_factory=State)
     voted: State = field(default_factory=State)
@@ -154,6 +155,7 @@ class Progress:
             self.absentee_received,
             self.ballot_completed,
             self.ballot_sent,
+            self.ballot_returned,
             self.voted,
         ]
         ratio = sum(state.complete for state in states) / len(states)
@@ -167,6 +169,7 @@ class Progress:
             self.absentee_received,
             self.ballot_completed,
             self.ballot_sent,
+            self.ballot_returned,
             self.ballot_received,
             self.voted,
         ]
@@ -204,10 +207,10 @@ class Progress:
                 election_date - constants.BALLOT_COMPLETED_DEADLINE_DELTA
             )
             progress.ballot_sent.deadline = str(
-                election_date - constants.BALLOT_RECEIVED_DEADLINE_DELTA
-            )
-            progress.ballot_sent.deadline = str(
                 election_date - constants.BALLOT_SENT_DEADLINE_DELTA
+            )
+            progress.ballot_returned.deadline = str(
+                election_date - constants.BALLOT_RETURNED_DEADLINE_DELTA
             )
             progress.ballot_received.deadline = str(
                 election_date - constants.BALLOT_RECEIVED_DEADLINE_DELTA
@@ -243,10 +246,12 @@ class Progress:
         elif absentee:
             progress.absentee_received.icon = "🚫"
             progress.ballot_sent.icon = "−"
+            progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
         else:
             progress.absentee_received.icon = "−"
             progress.ballot_sent.icon = "−"
+            progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
 
         if progress.election.days < constants.PAST_ELECTION_DAYS:
@@ -256,6 +261,7 @@ class Progress:
             progress.ballot_available.deadline = ""
             progress.ballot_completed.deadline = ""
             progress.ballot_sent.deadline = ""
+            progress.ballot_returned.deadline = ""
             progress.ballot_received.deadline = ""
             progress.election = State()
             return progress
@@ -282,6 +288,7 @@ class Progress:
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
             progress.ballot_sent.icon = "−"
+            progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
             progress.election.icon = "−"
             progress.election.date = ""
@@ -303,6 +310,8 @@ class Progress:
         if received_date := status.get("absentee_ballot_received"):
             progress.ballot_completed.icon = "−"
             progress.ballot_sent.color = "success text-muted"
+            progress.ballot_returned.date = sent_date
+            progress.ballot_returned.color = "success text-muted"
             progress.ballot_received.date = received_date
             progress.ballot_received.color = "success text-muted"
             progress.election.color = "success text-muted"
@@ -311,9 +320,9 @@ class Progress:
             progress.voted.date = received_date
         elif sent_date:
             if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
-                progress.ballot_received.icon = "🚫"
-                progress.ballot_received.color = "warning"
+                progress.ballot_returned.icon = "🚫"
+                progress.ballot_returned.color = "warning"
             else:
-                progress.ballot_received.icon = "🚫"
+                progress.ballot_returned.icon = "🚫"
 
         return progress

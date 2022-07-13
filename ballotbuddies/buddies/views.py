@@ -238,6 +238,11 @@ def status(request: HttpRequest, slug: str):
         voter.absentee = False
         render_as_table = True
 
+    if "mailed" in request.POST:
+        log.info(f"Recording returned ballot: {voter}")
+        voter.ballot_returned = timezone.now()
+        render_as_table = True
+
     if "voted" in request.POST:
         log.info(f"Recording vote: {voter}")
         voter.voted = timezone.now()

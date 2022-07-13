@@ -158,6 +158,35 @@
 
         <tr class="align-middle">
             <th scope="row">
+                Absentee Ballot Returned
+            </th>
+
+            <td class="text-center table-{{ voter.progress.ballot_returned.color }} border-start">
+            <form>{% csrf_token %}
+
+                {{ voter.progress.ballot_returned }}
+
+                {% if voter.progress.ballot_sent and not voter.progress.ballot_returned %}
+                <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                        hx-vals='{ "mailed": true }'
+                        hx-trigger="click"
+                        hx-target="closest table"
+                        hx-swap="outerHTML">
+                    In mailbox
+                </button>
+                {% endif %}
+
+            </form>
+            </td>
+
+            <td class="text-center border-start {% if voter.progress.ballot_returned %} text-muted {% endif %}">
+                {{ voter.progress.ballot_returned.deadline_humanized }}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
                 Absentee Ballot Received
             </th>
 
@@ -181,7 +210,7 @@
                 {{ voter.progress.voted.icon }}
 
                 {% if voter.progress.ballot_available.url %}
-                {% if voter.progress.ballot_received %}
+                {% if voter.progress.ballot_returned %}
                     <!-- No action available -->
                 {% elif voter.progress.voted %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
