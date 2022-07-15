@@ -45,6 +45,12 @@ def describe_profile():
             "Jane Doe is registered to vote absentee and a ballot was mailed to them on 2022-06-24"
         )
 
+    def describe_should_alert():
+        def is_false_with_incomplete_voter(expect):
+            profile = Profile(voter=Voter(user=User()))
+
+            expect(profile.should_alert) == False
+
 
 def describe_message():
     def describe_add():

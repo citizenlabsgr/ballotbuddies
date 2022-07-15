@@ -49,6 +49,8 @@ class Profile(models.Model):
             return False
         if self.always_alert:
             return True
+        if not self.voter.complete:
+            return False
         if not self.voter.progress.actions:
             return False
         return self.staleness > timedelta(days=14)
