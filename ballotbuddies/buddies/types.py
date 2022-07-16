@@ -113,6 +113,14 @@ class State:
     def __bool__(self):
         return self.color != "default" and self.icon not in {"🟡", "⚠️", "🚫"}
 
+    def check(self):
+        self.icon = "✅"
+        self.color = "success text-muted"
+
+    def disable(self):
+        self.icon = "−"
+        self.color = "success text-muted"
+
 
 @dataclass
 class Progress:
@@ -226,8 +234,7 @@ class Progress:
             return progress
 
         if registered := status.get("registered"):
-            progress.registered.icon = "✅"
-            progress.registered.color = "success"
+            progress.registered.check()
         else:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
@@ -237,8 +244,7 @@ class Progress:
             return progress
 
         if absentee := status.get("absentee"):
-            progress.absentee_requested.icon = "✅"
-            progress.absentee_requested.color = "success"
+            progress.absentee_requested.check()
         else:
             progress.absentee_requested.icon = "🚫"
             progress.absentee_requested.url = constants.ABSENTEE_URL
@@ -314,13 +320,11 @@ class Progress:
         if received_date := status.get("absentee_ballot_received"):
             progress.ballot_completed.icon = "−"
             progress.ballot_sent.color = "success text-muted"
-            progress.ballot_returned.icon = "✅"
-            progress.ballot_returned.color = "success text-muted"
+            progress.ballot_returned.check()
             progress.ballot_received.date = received_date
             progress.ballot_received.color = "success text-muted"
-            progress.election.color = "success text-muted"
-            progress.voted.icon = "✅"
-            progress.voted.color = "success"
+            progress.election.disable()
+            progress.voted.check()
             progress.voted.date = received_date
         elif sent_date:
             if progress.election.days < constants.ABSENTEE_WARNING_DAYS:

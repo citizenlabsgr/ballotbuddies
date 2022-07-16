@@ -57,7 +57,7 @@ def describe_voter():
             voter.status = VOTED.status
             voter.voted = timezone.now()
 
-            expect(voter.progress.voted.color) == "success"
+            expect(voter.progress.voted.color) == "success text-muted"
 
     def describe_update_status():
         @pytest.mark.vcr

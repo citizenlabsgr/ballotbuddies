@@ -217,20 +217,17 @@ class Voter(models.Model):
             self.save()
 
         if self.ballot:
-            progress.ballot_completed.color = "success"
-            progress.ballot_completed.icon = "✅"
+            progress.ballot_completed.check()
 
         if self.ballot_returned:
             progress.ballot_sent.color = "success text-muted"
-            progress.ballot_returned.icon = "✅"
             progress.ballot_returned.date = to_string(self.ballot_returned)
-            progress.ballot_returned.color = "success"
+            progress.ballot_returned.check()
 
         if self.voted:
             progress.ballot_received.color = "success text-muted"
-            progress.election.color = "success text-muted"
-            progress.voted.icon = "✅"
-            progress.voted.color = "success"
+            progress.election.disable()
+            progress.voted.check()
         elif self.ballot_returned:
             progress.ballot_received.icon = "🚫"
         elif not self.absentee:

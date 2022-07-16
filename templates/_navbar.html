@@ -40,7 +40,7 @@
 				{% endif %}
 	        </ul>
 
-			{% if request.user.is_superuser or allow_debug %}
+			{% if request.user.is_superuser or debug or allow_debug %}
 			<a class="btn btn-outline-danger me-2" href="{% url 'admin:index' %}">Admin</a>
 			{% endif %}
 

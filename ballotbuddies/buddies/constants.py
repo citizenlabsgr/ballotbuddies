@@ -120,7 +120,7 @@ REGISTERED = VoterData(
     {
         "registered": {
             "icon": "✅",
-            "color": "success",
+            "color": "success text-muted",
             "url": "",
             "date": "",
             "deadline": "2021-10-18",
@@ -224,7 +224,7 @@ VOTED = VoterData(
     {
         "registered": {
             "icon": "✅",
-            "color": "success",
+            "color": "success text-muted",
             "url": "",
             "date": "",
             "deadline": "2021-10-18",
@@ -279,7 +279,7 @@ VOTED = VoterData(
             "deadline": "2021-10-29",
         },
         "election": {
-            "icon": "",
+            "icon": "−",
             "color": "success text-muted",
             "url": "",
             "date": "2021-11-02",
@@ -287,7 +287,7 @@ VOTED = VoterData(
         },
         "voted": {
             "icon": "✅",
-            "color": "success",
+            "color": "success text-muted",
             "url": "",
             "date": "2021-10-15",
             "deadline": "",
