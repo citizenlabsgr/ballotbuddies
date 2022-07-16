@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import suppress
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
@@ -23,6 +24,7 @@ class Profile(models.Model):
     last_alerted = models.DateTimeField(auto_now_add=True)
     last_viewed = models.DateTimeField(auto_now_add=True)
     staleness = models.DurationField(default=timedelta(days=0), editable=False)
+    will_alert = models.BooleanField(default=False, editable=False)
 
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -80,6 +82,8 @@ class Profile(models.Model):
 
     def save(self, **kwargs):
         self.staleness = self._staleness()
+        with suppress(ValueError):
+            self.will_alert = self.can_alert and self.should_alert
         super().save(**kwargs)
 
 
