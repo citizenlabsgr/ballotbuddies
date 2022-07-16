@@ -61,24 +61,41 @@ def describe_index():
         expect(html.count("disabled")) >= 3  # TODO: should be 4 including the voter
 
 
+@pytest.mark.django_db
 def describe_friends():
-    def it_can_filter_by_name(expect, client, voter, friend):
-        client.force_login(voter.user)
+    def describe_index():
+        def it_displays_friends(expect, client, voter, friend):
+            client.force_login(voter.user)
 
-        response = client.get("/friends/search/")
-        html = decode(response)
-        expect(html.count('id="toggle-')) == 1
-        expect(html).contains(friend.nickname)
+            response = client.get("/friends/")
+            html = decode(response)
+            expect(html).contains(friend.nickname)
 
-        response = client.get("/friends/search/?q=friend")
-        html = decode(response)
-        expect(html.count('id="toggle-')) == 1
-        expect(html).contains(friend.nickname)
+        def it_can_filter_by_name(expect, client, voter, friend):
+            client.force_login(voter.user)
 
-        response = client.get("/friends/search/?q=foobar")
-        html = decode(response)
-        expect(html.count('id="toggle-')) == 0
-        expect(html).excludes(friend.nickname)
+            response = client.get("/friends/search/")
+            html = decode(response)
+            expect(html.count('id="toggle-')) == 1
+            expect(html).contains(friend.nickname)
+
+            response = client.get("/friends/search/?q=friend")
+            html = decode(response)
+            expect(html.count('id="toggle-')) == 1
+            expect(html).contains(friend.nickname)
+
+            response = client.get("/friends/search/?q=foobar")
+            html = decode(response)
+            expect(html.count('id="toggle-')) == 0
+            expect(html).excludes(friend.nickname)
+
+    def describe_detail():
+        def it_redirects_for_invalid_slugs(expect, client, voter):
+            client.force_login(voter.user)
+
+            response = client.get("/friends/foobar")
+
+            expect(response.url) == "/friends/"
 
 
 @pytest.mark.django_db
