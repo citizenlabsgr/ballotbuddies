@@ -63,13 +63,14 @@ class Profile(models.Model):
     def mark_alerted(self, *, save=True):
         self.last_alerted = timezone.now()
         if save:
-            self.message.mark_sent()
+            if self.message:
+                self.message.mark_sent()
             self.save()
 
     def mark_viewed(self, *, save=True):
         self.last_viewed = timezone.now()
         if save:
-            if not self.always_alert:
+            if self.message and not self.always_alert:
                 self.message.mark_read()
             self.save()
 
