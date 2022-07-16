@@ -129,10 +129,6 @@ def friends(request: HttpRequest):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
-    if not voter.complete:
-        messages.info(request, "Please finish setting up your profile to continue.")
-        return redirect("buddies:setup")
-
     if not voter.updated:
         voter.update_status()
         voter.save()
