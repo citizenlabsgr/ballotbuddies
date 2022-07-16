@@ -60,7 +60,7 @@ class Command(BaseCommand):
         test_voters = []
 
         for info in voters:
-            voter = self.get_or_create_voter(*info.split(","))
+            voter = self.get_or_create_voter(*info.split(","), admin=True)
             real_voters.append(voter)
 
         test_voters = list(self.generate_test_voters())
@@ -129,10 +129,14 @@ class Command(BaseCommand):
         status=None,
         *,
         absentee: bool = True,
+        admin: bool = False,
     ):
-        user = self.get_or_create_user(base_email)
+        user: User = self.get_or_create_user(base_email)
         user.first_name = first_name
         user.last_name = last_name
+        if admin:
+            user.is_staff = True
+            user.is_superuser = True
         user.save()
 
         voter, created = Voter.objects.update_or_create(
