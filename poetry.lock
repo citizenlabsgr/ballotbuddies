@@ -219,7 +219,7 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "4.0.5"
+version = "4.0.6"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -1208,7 +1208,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.10"
-content-hash = "0cf83d76cc3dfaa5494378ebb9ce5e1a16a48890ee5d07cebe1f174300b0b660"
+content-hash = "8fea316276b2573836616d09d55e0387f587aa6a9dab587e7d5843e0ceda7246"
 
 [metadata.files]
 appnope = [
@@ -1358,10 +1358,7 @@ dj-database-url = [
     {file = "dj-database-url-0.4.2.tar.gz", hash = "sha256:a6832d8445ee9d788c5baa48aef8130bf61fdc442f7d9a548424d25cd85c9f08"},
     {file = "dj_database_url-0.4.2-py2.py3-none-any.whl", hash = "sha256:e16d94c382ea0564c48038fa7fe8d9c890ef1ab1a8ec4cb48e732c124b9482fd"},
 ]
-django = [
-    {file = "Django-4.0.5-py3-none-any.whl", hash = "sha256:502ae42b6ab1b612c933fb50d5ff850facf858a4c212f76946ecd8ea5b3bf2d9"},
-    {file = "Django-4.0.5.tar.gz", hash = "sha256:f7431a5de7277966f3785557c3928433347d998c1e6459324501378a291e5aab"},
-]
+django = []
 django-annoying = [
     {file = "django-annoying-0.10.6.tar.gz", hash = "sha256:083b5e26f140f86178fcb47931f69b7ff75181ccd1e318d9c218ae9babc1805e"},
     {file = "django_annoying-0.10.6-py2.py3-none-any.whl", hash = "sha256:e230f28fec0559b4fdb621ff202068a78170ada2ac1ec7a73ba822cc1f737791"},
