@@ -177,7 +177,12 @@ def friends_search(request: HttpRequest):
 
 @login_required
 def friends_profile(request: HttpRequest, slug: str):
-    voter: Voter = Voter.objects.get(slug=slug)
+    try:
+        voter: Voter = Voter.objects.get(slug=slug)
+    except Voter.DoesNotExist:
+        messages.error(request, "The requested voter could not be found.")
+        return redirect("buddies:friends")
+
     getattr(voter, "profile")  # ensure Profile exists
     if voter.user == request.user:
         return redirect("buddies:profile")
