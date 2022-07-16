@@ -33,10 +33,10 @@
     <td class="d-none d-sm-table-cell"></td> <!-- Ballot: Available -->
     <td class="d-none d-md-table-cell"></td> <!-- Ballot: Completed -->
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Sent -->
-    <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Returned -->
+    <td class="d-none d-xl-table-cell"></td> <!-- Ballot: Returned -->
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Recieved -->
-    <td class=""></td> <!-- Election: Voted -->
     <td class="d-none d-md-table-cell"></td> <!-- Election: Deadline -->
+    <td class=""></td> <!-- Election: Voted -->
     {% else %}
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-lg-none">
@@ -45,6 +45,8 @@
         <a href="{{ voter.ballot_url }}" class="text-decoration-none">🔗</a>
         {% endif %}
     </td>
+
+    <!-- Absentee: Requested -->
 
     <td class="text-center table-{{ voter.progress.absentee_requested.color }} d-none d-lg-table-cell">
         {% if voter.progress.absentee_requested.url %}
@@ -56,9 +58,13 @@
         {% endif %}
     </td>
 
+    <!-- Absentee: Recieved -->
+
     <td class="text-center table-{{ voter.progress.absentee_received.color }} d-none d-lg-table-cell">
         {{ voter.progress.absentee_received }}
     </td>
+
+    <!-- Ballot: Available -->
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-lg-table-cell">
         {{ voter.progress.ballot_available }}
@@ -67,25 +73,37 @@
         {% endif %}
     </td>
 
+    <!-- Ballot: Completed -->
+
     <td class="text-center table-{{ voter.progress.ballot_completed.color }} d-none d-md-table-cell">
         {{ voter.progress.ballot_completed }}
     </td>
+
+    <!-- Ballot: Sent -->
 
     <td class="text-center table-{{ voter.progress.ballot_sent.color }} d-none d-lg-table-cell">
         {{ voter.progress.ballot_sent }}
     </td>
 
-    <td class="text-center table-{{ voter.progress.ballot_returned.color }} d-none d-lg-table-cell">
+    <!-- Ballot: Returned -->
+
+    <td class="text-center table-{{ voter.progress.ballot_returned.color }} d-none d-xl-table-cell">
         {{ voter.progress.ballot_returned }}
     </td>
+
+    <!-- Ballot: Recieved -->
 
     <td class="text-center table-{{ voter.progress.ballot_received.color }} d-none d-lg-table-cell">
         {{ voter.progress.ballot_received }}
     </td>
 
+    <!-- Election: Deadline -->
+
     <td class="text-center table-{{ voter.progress.election.color }} d-none d-md-table-cell">
         {{ voter.progress.election.date_delta }}
     </td>
+
+    <!-- Election: Voted -->
 
     <td class="text-center table-{{ voter.progress.voted.color }}">
         {{ voter.progress.voted.icon }}
