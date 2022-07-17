@@ -15,7 +15,7 @@ from ballotbuddies.alerts.helpers import send_login_email
 from ballotbuddies.core.helpers import allow_debug
 
 from .forms import FriendsForm, LoginForm, VoterForm
-from .helpers import generate_sample_voters
+from .helpers import generate_sample_voters, parse_domain
 from .models import Voter
 
 
@@ -54,8 +54,10 @@ def login(request: HttpRequest):
                 return redirect(request.GET.get("next") or "buddies:index")
 
             send_login_email(voter.user)
-            domain = voter.user.email.split("@")[-1]
-            return render(request, "login.html", {"domain": domain})
+            domain, standard = parse_domain(voter.user.email)
+            return render(
+                request, "login.html", {"domain": domain, "standard": standard}
+            )
     else:
         form = LoginForm()
 

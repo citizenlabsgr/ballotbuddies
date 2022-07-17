@@ -10,7 +10,13 @@
 
 {% if domain %}
 
-<a class="btn btn-primary" href="http://{{ domain }}"> Open {{ domain }}<a>
+  {% if standard %}
+    <a class="btn btn-primary" href="http://{{ domain }}"> Open {{ domain }}<a>
+  {% else %}
+    <div class="alert alert-success" role="alert">
+      An email was sent to your <b>{{ domain }}</b> address.
+    </div>
+  {% endif %}
 
 {% else %}
 

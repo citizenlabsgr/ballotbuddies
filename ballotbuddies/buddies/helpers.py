@@ -11,6 +11,21 @@ from .models import User, Voter
 from .types import Progress
 
 
+def parse_domain(email: str) -> tuple[str, bool]:
+    domain = email.split("@")[-1]
+    standard = domain in {
+        "aol.com",
+        "comcast.net",
+        "gmail.com",
+        "hotmail.com",
+        "live.com",
+        "msn.com",
+        "outlook.com",
+        "yahoo.com",
+    }
+    return domain, standard
+
+
 def generate_sample_voters(referrer: str = ""):
     if voter := Voter.objects.filter(slug=referrer).first():
         yield voter

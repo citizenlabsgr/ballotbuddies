@@ -62,6 +62,21 @@ def describe_index():
 
 
 @pytest.mark.django_db
+def describe_login():
+    def it_displays_button_for_standard_email_domains(expect, client):
+        response = client.post("/login/", {"email": "test@gmail.com"})
+
+        html = decode(response)
+        expect(html).contains("Open gmail.com")
+
+    def it_displays_message_for_non_standard_email_domains(expect, client):
+        response = client.post("/login/", {"email": "test@example.com"})
+
+        html = decode(response)
+        expect(html).contains("was sent")
+
+
+@pytest.mark.django_db
 def describe_friends():
     def describe_index():
         def it_displays_friends(expect, client, voter, friend):
