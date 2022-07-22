@@ -52,10 +52,10 @@ class Profile(models.Model):
         if self.always_alert:
             return True
         if not self.voter.complete:
-            return False
+            return self.staleness > timedelta(days=7 * 4)
         if not self.voter.progress.actions:
-            return False
-        return self.staleness > timedelta(days=14)
+            return self.staleness > timedelta(days=7 * 8)
+        return self.staleness > timedelta(days=7 * 2)
 
     def alert(self, voter: Voter):
         self.message.add(voter)
@@ -152,18 +152,7 @@ class Message(models.Model):
         return None
 
     def add(self, voter: Voter, *, save=True):
-        if voter.status:
-            text = voter.status["message"]
-            text = text.split(" for the")[0]
-            text = text.replace("your", "a").replace("you", "them")
-            if "@" not in voter.display_name:
-                text = text.replace(voter.legal_name, voter.display_name)
-        else:
-            text = f"{voter.display_name} is planning to vote"
-
-        # pylint: disable=unsupported-assignment-operation
-        self.activity[voter.id] = text
-
+        self.activity[voter.id] = voter.activity
         if save:
             self.save()
 

@@ -5,7 +5,6 @@ from copy import deepcopy
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
-from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from django.contrib.auth.models import User
@@ -22,9 +21,6 @@ from ballotbuddies.core.helpers import generate_key
 
 from . import constants
 from .types import Progress, to_datetime, to_string
-
-if TYPE_CHECKING:
-    from ballotbuddies.alerts.models import Profile
 
 ZERO_WIDTH_SPACE = "\u200b"
 
@@ -234,6 +230,28 @@ class Voter(models.Model):
             progress.voted.icon = "🟡"
 
         return progress
+
+    @cached_property
+    def activity(self) -> str:
+        if self.progress.voted:
+            action = "cast their vote"
+        elif self.ballot_returned:
+            action = "returned their absentee ballot"
+        elif self.progress.ballot_sent:
+            action = "was mailed their absentee ballot"
+        elif self.progress.ballot_completed:
+            action = "filled out their sample ballot"
+        elif self.progress.ballot_available:
+            action = "has a sample ballot available"
+        elif self.progress.absentee_received:
+            action = "plans to vote by mail"
+        elif self.progress.absentee_requested:
+            action = "requested an absentee ballot"
+        elif self.progress.registered:
+            action = "registered to vote"
+        else:
+            action = "started following you"
+        return f"{self.display_name} {action}"
 
     @cached_property
     def community(self) -> list[Voter]:
