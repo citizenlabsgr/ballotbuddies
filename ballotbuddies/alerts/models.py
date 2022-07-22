@@ -152,18 +152,7 @@ class Message(models.Model):
         return None
 
     def add(self, voter: Voter, *, save=True):
-        if voter.status:
-            text = voter.status["message"]
-            text = text.split(" for the")[0]
-            text = text.replace("your", "a").replace("you", "them")
-            if "@" not in voter.display_name:
-                text = text.replace(voter.legal_name, voter.display_name)
-        else:
-            text = f"{voter.display_name} is planning to vote"
-
-        # pylint: disable=unsupported-assignment-operation
-        self.activity[voter.id] = text
-
+        self.activity[voter.id] = voter.activity
         if save:
             self.save()
 

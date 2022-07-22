@@ -7,7 +7,7 @@ from django.utils import timezone
 
 import pytest
 
-from ..constants import REGISTERED, SAMPLE_DATA, VOTED
+from ..constants import REGISTERED, SAMPLE_DATA, UNREGISTERED, VOTED
 from ..models import User, Voter
 
 
@@ -58,6 +58,23 @@ def describe_voter():
             voter.voted = timezone.now()
 
             expect(voter.progress.voted.color) == "success text-muted"
+
+    def describe_activity():
+        @pytest.mark.django_db
+        @pytest.mark.parametrize(
+            ("status", "activity"),
+            [
+                (UNREGISTERED.status, "Rosalynn Bliss started following you"),
+                (REGISTERED.status, "Rosalynn Bliss registered to vote"),
+                (VOTED.status, "Rosalynn Bliss cast their vote"),
+            ],
+        )
+        def with_samples(expect, voter, status, activity):
+            voter.user.save()
+
+            voter.status = status
+
+            expect(voter.activity) == activity
 
     def describe_update_status():
         @pytest.mark.vcr

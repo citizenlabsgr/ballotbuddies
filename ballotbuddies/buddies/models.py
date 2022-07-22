@@ -236,6 +236,28 @@ class Voter(models.Model):
         return progress
 
     @cached_property
+    def activity(self) -> str:
+        if self.progress.voted:
+            action = "cast their vote"
+        elif self.ballot_returned:
+            action = "returned their absentee ballot"
+        elif self.progress.ballot_sent:
+            action = "was mailed their absentee ballot"
+        elif self.progress.ballot_completed:
+            action = "filled out their sample ballot"
+        elif self.progress.ballot_available:
+            action = "has a sample ballot available"
+        elif self.progress.absentee_received:
+            action = "plans to vote by mail"
+        elif self.progress.absentee_requested:
+            action = "requested an absentee ballot"
+        elif self.progress.registered:
+            action = "registered to vote"
+        else:
+            action = "started following you"
+        return f"{self.display_name} {action}"
+
+    @cached_property
     def community(self) -> list[Voter]:
         return sorted(
             chain(

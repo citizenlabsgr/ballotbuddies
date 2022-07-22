@@ -6,12 +6,13 @@ from datetime import timedelta
 import pytest
 
 from ballotbuddies.alerts.models import Message, Profile
+from ballotbuddies.buddies.constants import REGISTERED
 from ballotbuddies.buddies.models import User, Voter
 
 
 @pytest.fixture
 def voter(admin_user):
-    return Voter.objects.from_user(admin_user)
+    return Voter.objects.from_user(admin_user, REGISTERED.status)
 
 
 @pytest.fixture
@@ -30,20 +31,13 @@ def describe_profile():
 
     @pytest.mark.django_db
     def it_can_update_activity(expect, profile: Profile, voter: Voter):
-        voter.status = {
-            "message": "Jane Doe is registered to vote absentee and your "
-            "ballot was mailed to you on 2022-06-24 for the State Primary "
-            "election on 2022-08-02 and a sample ballot is available."
-        }
         profile.alert(voter)
         voter.id = voter.id + 1
         profile.alert(voter)
 
         expect(profile.can_alert) == True
         expect(profile.message.body).contains("2 friends")
-        expect(profile.message.body).contains(
-            "Jane Doe is registered to vote absentee and a ballot was mailed to them on 2022-06-24"
-        )
+        expect(profile.message.body).contains("registered to vote")
 
     def describe_should_alert():
         def is_false_with_incomplete_voter(expect):
@@ -64,7 +58,7 @@ def describe_message():
             message = Message()
             message.add(voter, save=False)
 
-            expect(message.body).contains("Mike Doe is")
+            expect(message.body).contains("Mike Doe started following you")
 
     def describe_dismissed():
         def is_none_by_default(expect):
