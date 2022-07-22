@@ -5,7 +5,6 @@ from copy import deepcopy
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
-from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from django.contrib.auth.models import User
@@ -22,9 +21,6 @@ from ballotbuddies.core.helpers import generate_key
 
 from . import constants
 from .types import Progress, to_datetime, to_string
-
-if TYPE_CHECKING:
-    from ballotbuddies.alerts.models import Profile
 
 ZERO_WIDTH_SPACE = "\u200b"
 

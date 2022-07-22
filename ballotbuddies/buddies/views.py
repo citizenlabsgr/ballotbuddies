@@ -234,6 +234,7 @@ def status(request: HttpRequest, slug: str):
         request.user.voter.neighbors.remove(voter)
         request.user.voter.friends.add(voter)
         request.user.voter.save()
+        voter.profile.alert(request.user.voter)
 
     if "absentee" in request.POST:
         log.info(f"Recording in-person intention: {voter}")
