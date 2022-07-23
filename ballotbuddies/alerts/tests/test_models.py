@@ -5,19 +5,22 @@ from datetime import timedelta
 
 import pytest
 
-from ballotbuddies.alerts.models import Message, Profile
-from ballotbuddies.buddies.constants import REGISTERED
+
 from ballotbuddies.buddies.models import User, Voter
+from ballotbuddies.buddies.tests.factories import VoterFactory
+
+from ..models import Message, Profile
+from .factories import ProfileFactory
 
 
 @pytest.fixture
-def voter(admin_user):
-    return Voter.objects.from_user(admin_user, REGISTERED.status)
+def voter():
+    return VoterFactory.build()
 
 
 @pytest.fixture
 def profile(voter):
-    return Profile.objects.create(voter=voter)
+    return ProfileFactory.build(voter=voter)
 
 
 def describe_profile():
