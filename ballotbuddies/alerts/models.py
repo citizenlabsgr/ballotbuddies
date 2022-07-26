@@ -94,7 +94,7 @@ class MessageManager(models.Manager):
         if not message:
             message, created = self.get_or_create(profile=profile, sent=False)
         if created:
-            log.info(f"Drafted new message: {message}")
+            log.debug(f"Drafted new message: {message}")
         return message
 
 
