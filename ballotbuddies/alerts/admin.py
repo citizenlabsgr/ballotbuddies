@@ -72,11 +72,15 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
 
     readonly_fields = [
         "Can_alert",
+        "Message",
         "staleness",
         "Should_alert",
         "last_viewed",
         "last_alerted",
     ]
+
+    def Message(self, profile: Profile):
+        return format_html("<br><br>".join(profile.message.activity_lines))
 
 
 def rebuild_selected_messages(modeladmin, request, queryset):
