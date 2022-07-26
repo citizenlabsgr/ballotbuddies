@@ -95,7 +95,7 @@ class Voter(models.Model):
     zip_code = models.CharField(
         null=True, blank=True, max_length=5, verbose_name="ZIP code"
     )
-    state = models.CharField(max_length=20, default="Michigan", editable=False)
+    state = models.CharField(max_length=20, default="", editable=False)
 
     status = models.JSONField(null=True, blank=True)
     absentee = models.BooleanField(

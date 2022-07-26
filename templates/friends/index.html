@@ -9,12 +9,7 @@
     {% include "_messages.html" %}
 
     {% if search %}
-    <input class="form-control mb-3" type="search"
-       name="q" placeholder="Begin typing to search your friends..." autofocus
-       hx-get="{% url 'buddies:search' %}"
-       hx-trigger="keyup changed delay:500ms, search"
-       hx-target="#search-results"
-       _hx-indicator=".htmx-indicator">
+    {% include "friends/_search.html" %}
     {% endif %}
 
     <div class="row justify-content-center">

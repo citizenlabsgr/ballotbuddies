@@ -53,6 +53,7 @@ def describe_message():
                 user=User(first_name="Michael", last_name="Doe"),
                 status={"message": "Michael Doe is registered to vote."},
                 nickname="Mike",
+                state="Michigan",
             )
 
             message = Message()

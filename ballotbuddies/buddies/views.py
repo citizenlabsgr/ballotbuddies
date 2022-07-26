@@ -159,8 +159,11 @@ def friends_search(request: HttpRequest):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
-    queryset = voter.friends.select_related("user")
     partial = False
+    ballot = request.GET.get("ballot") == "yes"
+    voted = request.GET.get("voted") != "no"
+
+    queryset = voter.friends.select_related("user")
     if "q" in request.GET:
         partial = True
         queryset = queryset.filter(
@@ -169,9 +172,18 @@ def friends_search(request: HttpRequest):
             | Q(user__last_name__icontains=request.GET["q"])
             | Q(user__email__icontains=request.GET["q"])
         )
+    if ballot:
+        queryset = queryset.filter(state="Michigan")
+    if not voted:
+        queryset = queryset.filter(voted__isnull=True)
 
     community = sorted(queryset, key=lambda voter: voter.display_name)
-    context = {"community": community, "search": True}
+    context = {
+        "community": community,
+        "search": True,
+        "ballot": ballot,
+        "voted": voted,
+    }
     if partial:
         return render(request, "friends/_results.html", context)
     return render(request, "friends/index.html", context)
