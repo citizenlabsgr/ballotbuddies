@@ -4,6 +4,8 @@ from django.contrib import admin, messages
 from django.shortcuts import redirect
 from django.utils.html import format_html
 
+from ballotbuddies.buddies.models import Voter
+
 from . import helpers
 from .models import Message, Profile
 
@@ -77,6 +79,18 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
     ]
 
 
+def rebuild_selected_messages(modeladmin, request, queryset):
+    count = 0
+    for message in queryset:
+        if voter_ids := message.activity.keys():
+            for voter in Voter.objects.filter(id__in=voter_ids):
+                message.add(voter, save=False)
+            message.save()
+        count += 1
+    s = "" if count == 1 else "s"
+    messages.success(request, f"Rebuilt {count} message{s}.")
+
+
 def send_selected_messages(modeladmin, request, queryset):
     count = 0
     for message in queryset:
@@ -98,7 +112,7 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "profile__voter__user__last_name",
     ]
 
-    actions = [send_selected_messages]
+    actions = [rebuild_selected_messages, send_selected_messages]
 
     list_filter = [
         "sent",

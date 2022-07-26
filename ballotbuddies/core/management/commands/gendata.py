@@ -57,10 +57,8 @@ class Command(BaseCommand):
         self.get_or_create_user("newbie@example.com")
 
         real_voters = []
-        test_voters = []
-
         for info in voters:
-            voter = self.get_or_create_voter(*info.split(","), admin=True)
+            voter: Voter = self.get_or_create_voter(*info.split(","), admin=True)
             real_voters.append(voter)
 
         test_voters = list(self.generate_test_voters())
@@ -77,6 +75,7 @@ class Command(BaseCommand):
             voter.save()
 
         for voter in Voter.objects.all():
+            voter.share_status()
             if count := voter.update_neighbors():
                 self.stdout.write(f"Recommended {count} friend(s) to {voter}")
                 voter.save()
