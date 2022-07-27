@@ -134,7 +134,7 @@ class Voter(models.Model):
     def __repr__(self):
         return f"{self.user.get_full_name()} <{self.user.email}>"
 
-    def __lt__(self, other):
+    def __lt__(self, other: Voter):
         if self.progress == other.progress:
             return self.display_name.lower() < other.display_name.lower()
         return self.progress > other.progress
