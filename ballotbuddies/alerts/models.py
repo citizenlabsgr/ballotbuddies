@@ -43,7 +43,9 @@ class Profile(models.Model):
 
     @property
     def can_alert(self) -> bool:
-        return bool(self.message)
+        if self.voter.complete:
+            return bool(self.message)
+        return len(self.message) > 1
 
     @property
     def should_alert(self) -> bool:
@@ -51,11 +53,12 @@ class Profile(models.Model):
             return False
         if self.always_alert:
             return True
-        if not self.voter.complete:
-            return self.staleness > timedelta(days=7 * 4)
-        if not self.voter.progress.actions:
-            return self.staleness > timedelta(days=7 * 8)
-        return self.staleness > timedelta(days=7 * 2)
+        if self.voter.complete:
+            if self.voter.progress.actions:
+                return self.staleness > timedelta(days=14)
+            return self.staleness > timedelta(days=60)
+        else:
+            return self.staleness > timedelta(days=30)
 
     def alert(self, voter: Voter):
         self.message.add(voter)
@@ -122,6 +125,9 @@ class Message(models.Model):
 
     def __bool__(self):
         return bool(self.activity)
+
+    def __len__(self):
+        return len(self.activity)
 
     @property
     def subject(self) -> str:
