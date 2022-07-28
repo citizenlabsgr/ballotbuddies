@@ -15,7 +15,9 @@ def describe_voter():
     @pytest.fixture
     def voter():
         user = User(first_name="Rosalynn", last_name="Bliss")
-        return Voter(user=user, birth_date="1975-08-03", zip_code="49503")
+        return Voter(
+            user=user, birth_date="1975-08-03", zip_code="49503", state="Michigan"
+        )
 
     def describe_progress():
         @pytest.mark.django_db
