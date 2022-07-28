@@ -86,3 +86,15 @@ def send_activity_email(user: User):
         elif email.send(fail_silently=False):
             log.info(f"Sent activity email: {user}")
             profile.mark_alerted()
+
+
+def send_activity_emails(day: str) -> int:
+    if day and timezone.now().strftime("%A") != day:
+        log.warn(f"Emails are only sent on {day}")
+        return 0
+
+    count = 0
+    for profile in Profile.objects.filter(will_alert=True):
+        send_activity_email(profile.voter.user)
+        count += 1
+    return count
