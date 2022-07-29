@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 class Profile(models.Model):
 
-    voter = AutoOneToOneField("buddies.Voter", on_delete=models.CASCADE)
+    voter: Voter = AutoOneToOneField("buddies.Voter", on_delete=models.CASCADE)
 
     always_alert = models.BooleanField(default=False)
     never_alert = models.BooleanField(default=False)
@@ -55,6 +55,8 @@ class Profile(models.Model):
             return True
         if self.voter.complete:
             if self.voter.progress.actions:
+                if 0 < self.voter.progress.election.days < 7:
+                    return self.staleness > timedelta(days=1)
                 return self.staleness > timedelta(days=14)
             return self.staleness > timedelta(days=60)
         else:
