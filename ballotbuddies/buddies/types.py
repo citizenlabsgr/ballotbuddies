@@ -330,6 +330,7 @@ class Progress:
             if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
                 progress.ballot_returned.icon = "🚫"
                 progress.ballot_returned.color = "warning"
+                progress.ballot_received.color = "warning"
             else:
                 progress.ballot_returned.icon = "🚫"
 

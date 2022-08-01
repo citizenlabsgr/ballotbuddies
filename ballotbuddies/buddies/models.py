@@ -226,7 +226,9 @@ class Voter(models.Model):
             progress.voted.check()
         elif self.ballot_returned:
             progress.ballot_received.icon = "🚫"
-        elif not self.absentee:
+        elif (
+            progress.ballot_available.url and not progress.ballot_sent
+        ) or not self.absentee:
             progress.voted.icon = "🟡"
 
         return progress
