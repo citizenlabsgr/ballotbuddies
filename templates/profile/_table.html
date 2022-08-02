@@ -210,7 +210,7 @@
                 {{ voter.progress.voted.icon }}
 
                 {% if voter.progress.ballot_available.url %}
-                {% if voter.progress.ballot_returned %}
+                {% if voter.progress.ballot_received.date %}
                     <!-- No action available -->
                 {% elif voter.progress.voted %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"

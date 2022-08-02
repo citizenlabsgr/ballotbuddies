@@ -20,7 +20,7 @@ from ballotbuddies.alerts.helpers import send_invite_email
 from ballotbuddies.core.helpers import generate_key
 
 from . import constants
-from .types import Progress, to_datetime, to_string
+from .types import Progress, to_datetime
 
 ZERO_WIDTH_SPACE = "\u200b"
 
@@ -185,7 +185,9 @@ class Voter(models.Model):
 
     @cached_property
     def progress(self) -> Progress:
-        progress = Progress.parse(self.status)
+        progress = Progress.parse(
+            self.status, voted=self.voted, returned_date=self.ballot_returned
+        )
 
         if self.state != "Michigan":
             progress.registered.icon = "🔗"
@@ -214,21 +216,7 @@ class Voter(models.Model):
 
         if self.ballot:
             progress.ballot_completed.check()
-
-        if self.ballot_returned:
-            progress.ballot_sent.color = "success text-muted"
-            progress.ballot_returned.date = to_string(self.ballot_returned)
-            progress.ballot_returned.check()
-
-        if self.voted:
-            progress.ballot_received.color = "success text-muted"
-            progress.election.disable()
-            progress.voted.check()
-        elif self.ballot_returned:
-            progress.ballot_received.icon = "🚫"
-        elif (
-            progress.ballot_available.url and not progress.ballot_sent
-        ) or not self.absentee:
+        if not self.absentee and not self.voted:
             progress.voted.icon = "🟡"
 
         return progress

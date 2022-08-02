@@ -36,9 +36,12 @@ def friend(voter):
     return voter2
 
 
-def decode(response) -> str:
+def decode(response, verbose=True) -> str:
     html = response.content.decode().strip()
-    log.info(f"{response.status_code} response:\n\n{html}\n\n")
+    message = f"{response.status_code} response"
+    if verbose:
+        message += f"\n\n{html}\n\n"
+    log.info(f"{response.status_code} response")
     return html
 
 
@@ -151,7 +154,7 @@ def describe_status():
 
         response = client.post(url, {"voted": True})
 
-        html = decode(response)
+        html = decode(response, verbose=False)
         expect(html).includes("Didn't vote")
 
     def it_can_manually_clear_voting(expect, client, url, voter):
@@ -159,5 +162,5 @@ def describe_status():
 
         response = client.post(url, {"reset": True})
 
-        html = decode(response)
+        html = decode(response, verbose=False)
         expect(html).excludes("Didn't vote")

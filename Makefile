@@ -32,7 +32,6 @@ doctor: ## Check for required system dependencies
 	echo >> $@
 	echo export PREVIEW_HOST=https://share.michiganelections.io >> $@
 	echo export TEST_VOTERS=you@yourdomain.com,First,Last,YYYY-MM-DD,ZIP/test@example.com,Rosalynn,Bliss,1975-08-03,49503 >> $@
-	echo export FREEZE_TIME=false >> $@
 	- direnv allow
 
 # PROJECT DEPENDENCIES ########################################################
