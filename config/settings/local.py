@@ -13,7 +13,7 @@ BASE_URL = f"http://{BASE_DOMAIN}:8000"
 
 ALLOW_DEBUG = True
 
-TODAY = date(2021, 10, 1) if os.getenv("FREEZE_TIME") == "true" else None
+TODAY = date(2021, 10, 1) if "localhost" in os.getenv("DATABASE_URL") else None
 
 ###############################################################################
 # Core

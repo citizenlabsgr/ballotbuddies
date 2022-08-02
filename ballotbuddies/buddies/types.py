@@ -188,7 +188,13 @@ class Progress:
         return sum(1 for state in states if state.actionable)
 
     @classmethod
-    def parse(cls, data: dict) -> Progress:
+    def parse(
+        cls,
+        data: dict,
+        *,
+        voted: datetime | None = None,
+        returned_date: datetime | None = None,
+    ) -> Progress:
         progress = cls()
 
         try:
@@ -289,6 +295,16 @@ class Progress:
         else:
             progress.ballot_available.icon = "🟡"
 
+        if voted:
+            progress.absentee_received.disable()
+            progress.ballot_completed.disable()
+            progress.ballot_sent.disable()
+            progress.ballot_sent.disable()
+            progress.ballot_returned.disable()
+            progress.ballot_received.disable()
+            progress.election.disable()
+            progress.voted.check()
+
         if (
             not ballot
             and progress.election.days < constants.BALLOT_AVAILABLE_DEADLINE_DAYS
@@ -326,12 +342,19 @@ class Progress:
             progress.election.disable()
             progress.voted.check()
             progress.voted.date = received_date
-        elif sent_date:
+        elif returned_date:
+            progress.ballot_sent.disable()
+            progress.ballot_returned.date = to_string(returned_date)
+            progress.ballot_returned.color = "success"
+            progress.ballot_received.icon = "🚫"
             if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
-                progress.ballot_returned.icon = "🚫"
-                progress.ballot_returned.color = "warning"
                 progress.ballot_received.color = "warning"
+        elif sent_date:
+            if voted:
+                progress.ballot_sent.disable()
             else:
                 progress.ballot_returned.icon = "🚫"
+                if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
+                    progress.ballot_returned.color = "warning"
 
         return progress
