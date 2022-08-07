@@ -83,8 +83,19 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
         return format_html("<br><br>".join(profile.message.activity_lines))
 
 
+def clear_selected_messages(modeladmin, request, queryset):
+    count = 0
+    message: Message
+    for message in queryset:
+        message.clear()
+        count += 1
+    s = "" if count == 1 else "s"
+    messages.success(request, f"Cleared {count} message{s}.")
+
+
 def rebuild_selected_messages(modeladmin, request, queryset):
     count = 0
+    message: Message
     for message in queryset:
         if voter_ids := message.activity.keys():
             for voter in Voter.objects.filter(id__in=voter_ids):
@@ -97,6 +108,7 @@ def rebuild_selected_messages(modeladmin, request, queryset):
 
 def send_selected_messages(modeladmin, request, queryset):
     count = 0
+    message: Message
     for message in queryset:
         helpers.send_activity_email(message.profile.voter.user)
         count += 1
@@ -116,7 +128,11 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "profile__voter__user__last_name",
     ]
 
-    actions = [rebuild_selected_messages, send_selected_messages]
+    actions = [
+        clear_selected_messages,
+        rebuild_selected_messages,
+        send_selected_messages,
+    ]
 
     list_filter = [
         "sent",
