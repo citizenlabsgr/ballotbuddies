@@ -105,7 +105,7 @@ class MessageManager(models.Manager):
 
 class Message(models.Model):
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile: Profile = models.ForeignKey(Profile, on_delete=models.CASCADE)  # type: ignore
 
     activity = models.JSONField(blank=True, default=dict)
     sent = models.BooleanField(default=False)
@@ -163,6 +163,11 @@ class Message(models.Model):
         self.activity[voter.id] = voter.activity
         if save:
             self.save()
+
+    def clear(self):
+        log.info(f"Clearing unset message to {self.profile}")
+        self.activity = {}
+        self.save()
 
     def mark_sent(self, *, save=True):
         self.sent = True

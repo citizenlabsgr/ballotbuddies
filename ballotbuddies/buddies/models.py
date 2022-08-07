@@ -213,6 +213,7 @@ class Voter(models.Model):
             self.ballot_returned = None
             self.voted = None
             self.save()
+            self.profile.message.clear()
 
         if self.ballot:
             progress.ballot_completed.check()
