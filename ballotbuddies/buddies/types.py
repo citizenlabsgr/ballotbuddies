@@ -62,6 +62,8 @@ class State:
 
     @property
     def actionable(self) -> bool:
+        if self.days <= 0:
+            return False
         return self.icon in {"🟡", "⚠️", "🚫"}
 
     @property

@@ -7,6 +7,8 @@ import pytest
 from ..constants import SAMPLE_DATA
 from ..types import Progress, to_ordinal
 
+from django.conf import settings
+
 
 @pytest.mark.parametrize(
     ("days", "ordinal"),
@@ -39,6 +41,12 @@ def describe_progress():
         def is_based_on_progress(expect, status, percent):
             progress = Progress.parse(status)
             expect(progress.percent) == percent
+
+    def describe_actions():
+        def is_zero_for_past_elections(expect, monkeypatch):
+            monkeypatch.setattr(settings, "TODAY", None)
+            progress = Progress.parse(SAMPLE_DATA[1].status)
+            expect(progress.actions) == 0
 
     def describe_parse():
         @pytest.mark.parametrize("sample", SAMPLE_DATA)
