@@ -206,7 +206,7 @@ class Voter(models.Model):
             self.voted = timezone.make_aware(datetime)
             self.save()
 
-        if not progress.ballot_available.url and self.voted:
+        if not progress.election and self.voted:
             log.info(f"Clearing recorded vote for past election: {self}")
             self.absentee = True
             self.ballot = None
