@@ -2,12 +2,12 @@
 
 from dataclasses import asdict
 
+from django.conf import settings
+
 import pytest
 
 from ..constants import SAMPLE_DATA
 from ..types import Progress, to_ordinal
-
-from django.conf import settings
 
 
 @pytest.mark.parametrize(

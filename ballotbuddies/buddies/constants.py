@@ -19,7 +19,7 @@ BALLOT_SENT_DEADLINE_DELTA = timedelta(weeks=3)  # buffer for mail service
 BALLOT_RETURNED_DEADLINE_DELTA = timedelta(weeks=2)  # buffer for mail service
 BALLOT_RECEIVED_DEADLINE_DELTA = timedelta(days=4)  # Friday before the election
 ABSENTEE_WARNING_DAYS = 7  # buffer for mail service
-PAST_ELECTION_DAYS = -21
+PAST_ELECTION_DAYS = -14
 
 
 class VoterData(NamedTuple):
