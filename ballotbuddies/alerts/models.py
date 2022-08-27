@@ -58,7 +58,7 @@ class Profile(models.Model):
                 if 0 < self.voter.progress.election.days < 7:
                     return self.staleness > timedelta(days=1)
                 return self.staleness > timedelta(days=14)
-            return self.staleness > timedelta(days=60)
+            return self.staleness > timedelta(days=90)
         else:
             return self.staleness > timedelta(days=30)
 
