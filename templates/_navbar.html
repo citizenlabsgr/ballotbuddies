@@ -4,7 +4,7 @@
 {% url 'buddies:about' as about_url %}
 {% url 'buddies:login' as login_url %}
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" hx-boost="true">
     <div class="container-fluid">
 
 	    <a class="navbar-brand" href="{% url 'buddies:index' %}">Ballot Buddies</a>
@@ -41,7 +41,7 @@
 	        </ul>
 
 			{% if request.user.is_superuser or debug or allow_debug %}
-			<a class="btn btn-outline-danger me-2" href="{% url 'admin:index' %}">Admin</a>
+			<a class="btn btn-outline-danger me-2" href="{% url 'admin:index' %}" hx-boost="false" >Admin</a>
 			{% endif %}
 
             {% if request.user.is_authenticated %}
