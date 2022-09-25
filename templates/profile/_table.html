@@ -119,7 +119,8 @@
             <td class="text-center table-{{ voter.progress.ballot_available.color }} border-start">
                 {{ voter.progress.ballot_available }}
                 {% if voter.ballot_url %}
-                <a href="{{ voter.ballot_url }}" class="ms-1 text-decoration-none">🔗</a>
+                <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}"
+                    class="ms-1 text-decoration-none">🔗</a>
                 {% endif %}
             </td>
 
