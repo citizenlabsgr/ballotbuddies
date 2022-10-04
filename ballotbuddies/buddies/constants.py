@@ -16,7 +16,7 @@ BALLOT_AVAILABLE_DEADLINE_DAYS = 30  # SOS is supposed to finalize ballots a mon
 BALLOT_AVAILABLE_DEADLINE_DELTA = timedelta(days=BALLOT_AVAILABLE_DEADLINE_DAYS)
 BALLOT_COMPLETED_DEADLINE_DELTA = timedelta(days=1)  # common guidance
 BALLOT_SENT_DEADLINE_DELTA = timedelta(weeks=3)  # buffer for mail service
-BALLOT_RETURNED_DEADLINE_DELTA = timedelta(weeks=2)  # buffer for mail service
+BALLOT_RETURNED_DEADLINE_DELTA = timedelta(weeks=2, days=2)  # buffer for mail service
 BALLOT_RECEIVED_DEADLINE_DELTA = timedelta(days=4)  # Friday before the election
 ABSENTEE_WARNING_DAYS = 7  # buffer for mail service
 PAST_ELECTION_DAYS = -14
@@ -84,7 +84,7 @@ UNREGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
-            "deadline": "2021-10-19",
+            "deadline": "2021-10-17",
         },
         "ballot_received": {
             "icon": "",
@@ -165,7 +165,7 @@ REGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
-            "deadline": "2021-10-19",
+            "deadline": "2021-10-17",
         },
         "ballot_received": {
             "icon": "−",
@@ -269,7 +269,7 @@ VOTED = VoterData(
             "color": "success text-muted",
             "url": "",
             "date": "",
-            "deadline": "2021-10-19",
+            "deadline": "2021-10-17",
         },
         "ballot_received": {
             "icon": "",
