@@ -114,7 +114,10 @@ REGISTERED = VoterData(
     "Reggie",
     "Registered",
     {
-        "election": {"date": "2021-11-02"},
+        "election": {
+            "name": "Test Election",
+            "date": "2021-11-02",
+        },
         "status": {"registered": True},
     },
     {

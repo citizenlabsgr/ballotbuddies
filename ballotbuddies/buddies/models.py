@@ -176,6 +176,10 @@ class Voter(models.Model):
         return all(data.values())
 
     @cached_property
+    def election(self) -> dict:
+        return (self.status or {}).get("election", {})
+
+    @cached_property
     def ballot_url(self) -> str:
         url = self.ballot or self.progress.ballot_available.url
         if url:
