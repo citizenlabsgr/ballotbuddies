@@ -53,6 +53,14 @@ def describe_message():
 
             expect(message.subject) == "Your Friends are Preparing to Vote in 32 Days"
 
+    def describe_body():
+        def it_includes_election_name(expect, voter):
+            message = Message(profile=Profile(voter=voter))
+
+            expect(message.body).contains(
+                "vote in the upcoming Test Election election on Tuesday, November 2nd."
+            )
+
     def describe_add():
         def it_replaces_legal_name(expect):
             voter = Voter(
