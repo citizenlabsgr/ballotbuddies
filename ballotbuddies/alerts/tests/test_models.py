@@ -47,6 +47,12 @@ def describe_profile():
 
 
 def describe_message():
+    def describe_subject():
+        def it_includes_days_to_election(expect, voter):
+            message = Message(profile=Profile(voter=voter))
+
+            expect(message.subject) == "Your Friends are Preparing to Vote in 32 Days"
+
     def describe_add():
         def it_replaces_legal_name(expect):
             voter = Voter(
@@ -56,7 +62,7 @@ def describe_message():
                 state="Michigan",
             )
 
-            message = Message()
+            message = Message(profile=Profile(voter=Voter()))
             message.add(voter, save=False)
 
             expect(message.body).contains("Mike Doe started following you")

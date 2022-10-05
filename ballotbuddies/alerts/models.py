@@ -10,6 +10,9 @@ from django.utils import timezone
 import log
 from annoying.fields import AutoOneToOneField
 
+from ballotbuddies.buddies.types import to_date
+from ballotbuddies.core.helpers import today
+
 if TYPE_CHECKING:
     from ballotbuddies.buddies.models import Voter
 
@@ -133,17 +136,30 @@ class Message(models.Model):
 
     @property
     def subject(self) -> str:
-        return "Your Friends are Preparing to Vote"
+        if self.profile.voter.election:
+            date = self.profile.voter.election["date"]
+            delta = to_date(date) - today()
+            days = round(delta.total_seconds() / 60 / 60 / 24)
+            _in_days = f" in {days} Days"
+        else:
+            _in_days = ""
+        return f"Your Friends are Preparing to Vote{_in_days}"
 
     @property
     def body(self) -> str:
         count = len(self.activity)
         s = "" if count == 1 else "s"
         have = "has" if count == 1 else "have"
+        if self.profile.voter.election:
+            name = self.profile.voter.election["name"]
+            date = self.profile.voter.election["date"]
+            _in_election = f" in the upcoming {name} election on {date}"
+        else:
+            _in_election = ""
         activity = "  - " + "\n  - ".join(self.activity_lines)
         return (
             f"Your {count} friend{s} on Michigan Ballot Buddies {have} "
-            "been making progress towards casting their vote.\n\n"
+            f"been making progress towards casting their vote{_in_election}.\n\n"
             f"Here's what they've been up to:\n\n{activity}"
         )
 
