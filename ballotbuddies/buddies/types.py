@@ -291,7 +291,7 @@ class Progress:
                 election=election["id"], precinct=precinct["id"]
             )
             progress.ballot_available.color = "success"
-            progress.ballot_completed.icon = "🚫"
+            progress.ballot_completed.icon = "🟡"
             if not absentee:
                 progress.voted.icon = "🟡"
         else:
@@ -348,14 +348,14 @@ class Progress:
             progress.ballot_sent.disable()
             progress.ballot_returned.date = to_string(returned_date)
             progress.ballot_returned.color = "success"
-            progress.ballot_received.icon = "🚫"
+            progress.ballot_received.icon = "🟡"
             if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
                 progress.ballot_received.color = "warning"
         elif sent_date:
             if voted:
                 progress.ballot_sent.disable()
             else:
-                progress.ballot_returned.icon = "🚫"
+                progress.ballot_returned.icon = "🟡"
                 if progress.election.days < constants.ABSENTEE_WARNING_DAYS:
                     progress.ballot_returned.color = "warning"
 
