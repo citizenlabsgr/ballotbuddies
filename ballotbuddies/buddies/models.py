@@ -221,6 +221,8 @@ class Voter(models.Model):
 
         if self.ballot:
             progress.ballot_completed.check()
+        elif not self.voted and progress.ballot_sent:
+            progress.ballot_completed.icon = "🚫"
         if not self.absentee and not self.voted:
             progress.voted.icon = "🟡"
 
