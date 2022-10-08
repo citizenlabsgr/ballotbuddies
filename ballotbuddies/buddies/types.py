@@ -62,8 +62,6 @@ class State:
 
     @property
     def actionable(self) -> bool:
-        if self.days <= 0:
-            return False
         return self.icon in {"🟡", "⚠️", "🚫"}
 
     @property
@@ -177,6 +175,8 @@ class Progress:
 
     @cached_property
     def actions(self) -> int:
+        if self.election.days <= 0:
+            return 0
         states = [
             self.registered,
             self.absentee_requested,
