@@ -62,8 +62,8 @@ class State:
 
     @property
     def actionable(self) -> bool:
-        if dt := to_date(self.deadline):
-            if dt > today():
+        if deadline := to_date(self.deadline):
+            if today() > deadline:
                 return False
         return self.icon in {"🟡", "⚠️", "🚫"}
 
