@@ -292,8 +292,6 @@ class Progress:
             )
             progress.ballot_available.color = "success"
             progress.ballot_completed.icon = "🟡"
-            if not absentee:
-                progress.voted.icon = "🟡"
         else:
             progress.ballot_available.icon = "🟡"
 
