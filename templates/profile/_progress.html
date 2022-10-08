@@ -7,7 +7,12 @@
         style="width: {{ voter.progress.percent }}%;"
         aria-valuenow="{{ voter.progress.percent }}"
         aria-valuemin="0" aria-valuemax="100">
-            {{ voter.progress.percent }}%
+            {{ voter.progress.percent }}% complete
+
+            {% if voter.progress.actions %}
+            &nbsp
+            ({{ voter.progress.actions }} action{{ voter.progress.actions|pluralize }} remaining)
+            {% endif %}
     </div>
 </div>
 
