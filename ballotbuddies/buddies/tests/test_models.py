@@ -51,6 +51,7 @@ def describe_voter():
         def with_planned_present_voter(expect, voter):
             voter.status = REGISTERED.status
             voter.absentee = False
+            voter.ballot = "http://example.com"
             voter.user.save()
 
             expect(voter.progress.voted.icon) == "🟡"

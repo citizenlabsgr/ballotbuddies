@@ -128,6 +128,7 @@ class Command(BaseCommand):
         status=None,
         *,
         absentee: bool = True,
+        ballot: str | None = None,
         admin: bool = False,
     ):
         user: User = self.get_or_create_user(base_email)
@@ -138,6 +139,7 @@ class Command(BaseCommand):
             user.is_superuser = True
         user.save()
 
+        voter: Voter
         voter, created = Voter.objects.update_or_create(
             user=user, defaults=dict(birth_date=birth_date, zip_code=zip_code)
         )
@@ -150,6 +152,7 @@ class Command(BaseCommand):
         if status:
             voter.status = status
             voter.absentee = absentee
+            voter.ballot = ballot
             voter.updated = timezone.now()
             voter.save()
 
@@ -313,4 +316,5 @@ class Command(BaseCommand):
             "1970-01-01",
             "49503",
             status,
+            ballot="https://share.michiganelections.io/elections/49/precincts/1193/",
         )
