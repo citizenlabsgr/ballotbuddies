@@ -149,6 +149,7 @@ class Progress:
     def values(self):
         return (
             self.ballot_received.value,
+            self.ballot_returned.value,
             self.ballot_completed.value,
             self.ballot_sent.value,
             self.voted.value,
