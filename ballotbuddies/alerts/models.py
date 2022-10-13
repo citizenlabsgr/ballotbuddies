@@ -43,9 +43,7 @@ class Profile(models.Model):
 
     @property
     def can_alert(self) -> bool:
-        if self.voter.complete:
-            return bool(self.message)
-        return len(self.message) > 1
+        return bool(self.message)
 
     @property
     def should_alert(self) -> bool:
