@@ -118,11 +118,12 @@ def describe_friends():
 
 @pytest.mark.django_db
 def describe_profile():
-    def it_redirects_to_finish_setup(expect, client, voter):
+    def it_prompts_to_finish_setup(expect, client, voter):
         client.force_login(voter.user)
 
         response = client.get("/profile/")
-        expect(response.url) == "/profile/setup/"
+        html = decode(response)
+        expect(html).contains("Enter details")
 
     def it_can_update_reminder_emails_preference(expect, client, complete_voter):
         client.force_login(complete_voter.user)

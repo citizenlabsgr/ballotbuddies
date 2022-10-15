@@ -7,18 +7,13 @@
 <h1>Your Voter Information</h1>
 
 <form method="post" novalidate>
-  {% csrf_token %}
+    {% csrf_token %}
 
-  {{ form|crispy }}
+    {{ form|crispy }}
 
-  <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit">Save</button>
 
-  {% if voter.complete %}
-  <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">Cancel</a>
-  {% else %}
-  <a class="btn btn-secondary" href="{% url 'buddies:login' %}">Cancel</a>
-  {% endif %}
-
+    <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">Cancel</a>
 </form>
 
 {% endblock main %}

@@ -76,10 +76,6 @@ def profile(request: HttpRequest):
     voter: Voter = Voter.objects.from_user(request.user)
     voter.profile.mark_viewed()
 
-    if not voter.complete:
-        messages.info(request, "Please finish setting up your profile to continue.")
-        return redirect("buddies:setup")
-
     if request.method == "POST":
         if voter.profile.never_alert:
             message = "You will now receive periodic reminder emails."

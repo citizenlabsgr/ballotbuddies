@@ -21,6 +21,8 @@
     </div>
 </form>
 
+{% if voter.complete %}
+
 <h2 class="pt-4">Ballot Status</h2>
 
 {% include "profile/_progress.html" %}
@@ -45,5 +47,16 @@
 {{ form|crispy }}
 
 <a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">Edit details</a>
+
+{% else %}
+
+<div class="d-flex justify-content-between align-items-center pt-4">
+    <h2>Voter Information</h2>
+    <a class="btn btn-primary" href="{% url 'buddies:setup' %}">Enter details</a>
+</div>
+
+{{ form|crispy }}
+
+{% endif %}
 
 {% endblock main %}
