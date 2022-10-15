@@ -132,7 +132,12 @@ class Message(models.Model):
     @property
     def subject(self) -> str:
         days = self.profile.voter.progress.election.days
-        _in_days = f" in {days} Days" if days > 0 else ""
+        if days == 1:
+            _in_days = " Tomorrow"
+        elif days > 0:
+            _in_days = f" in {days} Days"
+        else:
+            _in_days = ""
         return f"Your Friends are Preparing to Vote{_in_days}"
 
     @property
