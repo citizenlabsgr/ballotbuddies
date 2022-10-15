@@ -165,17 +165,17 @@
             <td class="text-center table-{{ voter.progress.ballot_returned.color }} border-start">
             <form>{% csrf_token %}
 
-                {{ voter.progress.ballot_returned }}
-
                 {% if voter.progress.ballot_sent and not voter.progress.ballot_returned %}
-                <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                        hx-vals='{ "mailed": true }'
-                        hx-trigger="click"
-                        hx-target="closest table"
-                        hx-swap="outerHTML">
-                    In mailbox
-                </button>
+                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                            hx-vals='{ "mailed": true }'
+                            hx-trigger="click"
+                            hx-target="closest table"
+                            hx-swap="outerHTML">
+                        ✅ Voted by-mail
+                    </button>
+                {% else %}
+                    {{ voter.progress.ballot_returned }}
                 {% endif %}
 
             </form>
@@ -208,30 +208,28 @@
             <td class="text-center table-{{ voter.progress.voted.color }} text-nowrap border-start">
             <form>{% csrf_token %}
 
-                {{ voter.progress.voted.icon }}
-
                 {% if voter.progress.ballot_available.url %}
-                {% if voter.progress.ballot_received.date %}
-                    <!-- No action available -->
-                {% elif voter.progress.voted %}
-                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                        hx-vals='{ "reset": true }'
-                        hx-trigger="click"
-                        hx-target="closest table"
-                        hx-swap="outerHTML">
-                        Didn't vote
-                    </button>
-                {% else %}
-                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                        hx-vals='{ "voted": true }'
-                        hx-trigger="click"
-                        hx-target="closest table"
-                        hx-swap="outerHTML">
-                        Voted in person
-                    </button>
-                {% endif %}
+                    {% if voter.progress.ballot_received.date %}
+                        {{ voter.progress.voted.icon }}
+                    {% elif voter.progress.voted %}
+                        <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                            hx-vals='{ "reset": true }'
+                            hx-trigger="click"
+                            hx-target="closest table"
+                            hx-swap="outerHTML">
+                            Didn't vote
+                        </button>
+                    {% else %}
+                        <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                            hx-vals='{ "voted": true }'
+                            hx-trigger="click"
+                            hx-target="closest table"
+                            hx-swap="outerHTML">
+                            ✅ Voted in-person
+                        </button>
+                    {% endif %}
                 {% endif %}
 
             </form>
