@@ -273,6 +273,9 @@ class Voter(models.Model):
             self.updated = timezone.now()
             return False, "Voter registration can only be fetched for Michigan."
 
+        if self.staleness < 60 * 15:
+            return False, "Voter registration fetched recently."
+
         url = constants.STATUS_API + "?" + urlencode(self.data)
         log.info(f"GET {url}")
         response = requests.get(url)
@@ -299,6 +302,11 @@ class Voter(models.Model):
     @property
     def fingerprint(self) -> str:
         return (self.status or {}).get("id", "")
+
+    @property
+    def staleness(self) -> float:
+        delta = timezone.now() - self.updated if self.updated else timedelta(days=1)
+        return delta.total_seconds()
 
     def share_status(self) -> int:
         count = 0
