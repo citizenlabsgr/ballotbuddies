@@ -172,6 +172,7 @@ class Voter(models.Model):
     @cached_property
     def complete(self) -> bool:
         data = self.data.copy()
+        data.pop("email")
         data.pop("nickname")
         return all(data.values())
 
@@ -194,10 +195,14 @@ class Voter(models.Model):
         )
 
         if self.state != "Michigan":
-            progress.registered.icon = "🔗"
-            progress.registered.url = constants.OTHER_REGISTRATION_URL.format(
-                name=self.state.lower()
-            )
+            if self.complete:
+                progress.registered.icon = "🔗"
+                progress.registered.url = constants.OTHER_REGISTRATION_URL.format(
+                    name=self.state.lower()
+                )
+            else:
+                progress.registered.icon = ""
+                progress.registered.color = "default"
 
         if not self.absentee:
             progress.absentee_requested.icon = "✕"
