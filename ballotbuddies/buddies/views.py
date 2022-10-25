@@ -173,7 +173,7 @@ def friends_search(request: HttpRequest):
     if not voted:
         queryset = queryset.filter(voted__isnull=True)
 
-    community = sorted(queryset, key=lambda voter: voter.display_name)
+    community = sorted(queryset, key=lambda voter: voter.display_name.lower())
     context = {
         "community": community,
         "search": True,
