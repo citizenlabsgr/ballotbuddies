@@ -12,7 +12,14 @@ from ballotbuddies.buddies.models import User, Voter
 
 @pytest.fixture
 def voter(admin_user):
-    return Voter.objects.from_user(admin_user, REGISTERED.status)
+    v = Voter.objects.from_user(admin_user, REGISTERED.status)
+    v.user.first_name = REGISTERED.first_name
+    v.user.last_name = REGISTERED.last_name
+    v.user.save()
+    v.birth_date = "1975-08-03"
+    v.zip_code = "49503"
+    v.save()
+    return v
 
 
 @pytest.fixture
