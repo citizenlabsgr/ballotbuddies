@@ -176,6 +176,7 @@ def friends_search(request: HttpRequest):
     community = sorted(queryset, key=lambda voter: voter.display_name.lower())
     context = {
         "community": community,
+        "recommended": [],
         "search": True,
         "ballot": ballot,
         "voted": voted,
