@@ -56,9 +56,11 @@ def describe_voter():
 
             expect(voter.progress.voted.icon) == "🟡"
 
+        @pytest.mark.django_db
         def with_completed_present_voter(expect, voter):
             voter.status = VOTED.status
             voter.voted = timezone.now()
+            voter.user.save()
 
             expect(voter.progress.voted.color) == "success text-muted"
 

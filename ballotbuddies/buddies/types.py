@@ -341,6 +341,8 @@ class Progress:
             progress.ballot_completed.icon = "−"
             progress.ballot_sent.color = "success text-muted"
             progress.ballot_returned.check()
+            if returned_date:
+                progress.ballot_returned.date = to_string(returned_date)
             progress.ballot_received.date = received_date
             progress.ballot_received.color = "success text-muted"
             progress.election.disable()

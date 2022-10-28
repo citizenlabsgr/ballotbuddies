@@ -209,6 +209,12 @@ class Voter(models.Model):
             progress.absentee_requested.url = ""
             progress.absentee_received.icon = "−"
 
+        if progress.ballot_received.date and not self.ballot_returned:
+            log.info(f"Assuming ballot was returned: {self}")
+            datetime = to_datetime(progress.ballot_received.date)
+            self.ballot_returned = timezone.make_aware(datetime)
+            self.save()
+
         if progress.voted.date and not self.voted:
             log.info(f"Recording vote for current election: {self}")
             datetime = to_datetime(progress.voted.date)
