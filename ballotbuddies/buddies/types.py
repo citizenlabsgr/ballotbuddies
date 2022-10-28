@@ -116,12 +116,15 @@ class State:
     def __bool__(self):
         return self.color != "default" and self.icon not in {"🟡", "⚠️", "🚫"}
 
-    def check(self):
+    def check(self, when: str = ""):
         self.icon = "✅"
         self.color = "success text-muted"
+        if when:
+            self.date = when
 
     def disable(self):
-        self.icon = "−"
+        if self.icon != "✅":
+            self.icon = "−"
         self.color = "success text-muted"
 
 
@@ -263,8 +266,7 @@ class Progress:
             progress.absentee_requested.color = "warning"
 
         if absentee_date := status.get("absentee_application_received"):
-            progress.absentee_received.date = absentee_date
-            progress.absentee_received.color = "success"
+            progress.absentee_received.check(absentee_date)
         elif absentee:
             progress.absentee_received.icon = "🚫"
             progress.ballot_sent.icon = "−"
@@ -329,8 +331,7 @@ class Progress:
 
         if sent_date := status.get("absentee_ballot_sent"):
             progress.ballot_completed.color = "success text-muted"
-            progress.ballot_sent.date = sent_date
-            progress.ballot_sent.color = "success"
+            progress.ballot_sent.check(sent_date)
         else:
             progress.ballot_sent.icon = "🟡"
 
@@ -342,12 +343,10 @@ class Progress:
             progress.ballot_sent.color = "success text-muted"
             progress.ballot_returned.check()
             if returned_date:
-                progress.ballot_returned.date = to_string(returned_date)
-            progress.ballot_received.date = received_date
-            progress.ballot_received.color = "success text-muted"
+                progress.ballot_returned.check(to_string(returned_date))
+            progress.ballot_received.check(received_date)
             progress.election.disable()
-            progress.voted.check()
-            progress.voted.date = received_date
+            progress.voted.check(received_date)
         elif returned_date:
             progress.ballot_sent.disable()
             progress.ballot_returned.date = to_string(returned_date)
