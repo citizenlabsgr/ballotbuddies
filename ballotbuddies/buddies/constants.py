@@ -240,7 +240,7 @@ VOTED = VoterData(
             "deadline": "2021-10-05",
         },
         "absentee_received": {
-            "icon": "",
+            "icon": "✅",
             "color": "success text-muted",
             "url": "",
             "date": "2021-09-15",
@@ -261,7 +261,7 @@ VOTED = VoterData(
             "url": "",
         },
         "ballot_sent": {
-            "icon": "",
+            "icon": "✅",
             "color": "success text-muted",
             "url": "",
             "date": "2021-09-30",
@@ -275,7 +275,7 @@ VOTED = VoterData(
             "deadline": "2021-10-17",
         },
         "ballot_received": {
-            "icon": "",
+            "icon": "✅",
             "color": "success text-muted",
             "url": "",
             "date": "2021-10-15",

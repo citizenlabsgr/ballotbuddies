@@ -90,7 +90,8 @@
             <td class="text-center table-{{ voter.progress.absentee_received.color }} border-start">
             <form>{% csrf_token %}
 
-                {{ voter.progress.absentee_received }}
+                {{ voter.progress.absentee_received.icon }}
+                {{ voter.progress.absentee_received.date_shortened }}
 
                 {% if not voter.progress.absentee_received %}
                 <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
@@ -149,7 +150,8 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.ballot_sent.color }} border-start">
-                {{ voter.progress.ballot_sent }}
+                {{ voter.progress.ballot_sent.icon }}
+                {{ voter.progress.ballot_sent.date_shortened }}
             </td>
 
             <td class="text-center border-start {% if voter.progress.ballot_sent %} text-muted {% endif %}">
@@ -175,7 +177,8 @@
                         ✅ Voted by-mail
                     </button>
                 {% else %}
-                    {{ voter.progress.ballot_returned }}
+                    {{ voter.progress.ballot_returned.icon }}
+                    {{ voter.progress.ballot_returned.date_shortened }}
                 {% endif %}
 
             </form>
@@ -192,7 +195,8 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.ballot_received.color }} border-start">
-                {{ voter.progress.ballot_received }}
+                {{ voter.progress.ballot_received.icon }}
+                {{ voter.progress.ballot_received.date_shortened }}
             </td>
 
             <td class="text-center border-start {% if voter.progress.ballot_received %} text-muted {% endif %}">
