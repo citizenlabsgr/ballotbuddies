@@ -29,19 +29,11 @@
 
 {% include "profile/_progress.html" %}
 
-<div>
-    {% if voter.user.is_test %}
-    <div>
-        {% include "profile/_table.html" %}
-    </div>
-    {% else %}
-    <div
-        hx-get="{% url 'buddies:status' slug=voter.slug %}"
-        hx-trigger="load delay:1s"
-        hx-swap="outerHTML">
-        {% include "profile/_table.html" %}
-    </div>
-    {% endif %}
+<div
+    hx-get="{% url 'buddies:status' slug=voter.slug %}"
+    hx-trigger="load delay:1s"
+    hx-swap="outerHTML">
+    {% include "profile/_table.html" %}
 </div>
 
 <h2 class="pt-4">Last Updated</h2>

@@ -272,10 +272,11 @@ class Voter(models.Model):
         )
 
     def reset_status(self):
-        self.status = None
-        self.updated = None
         self.absentee = True
         self.voted = None
+        if not self.user.is_test:  # type: ignore
+            self.status = None
+            self.updated = None
 
     def update_status(self) -> tuple[bool, str]:
         previous_fingerprint = self.fingerprint
@@ -286,6 +287,9 @@ class Voter(models.Model):
 
         if self.staleness < 60 * 15:
             return False, "Voter registration fetched recently."
+
+        if self.user.is_test:  # type: ignore
+            return False, "Voter registration can only be fetched for real people."
 
         url = constants.STATUS_API + "?" + urlencode(self.data)
         log.info(f"GET {url}")
