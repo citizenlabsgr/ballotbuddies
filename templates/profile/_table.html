@@ -5,7 +5,7 @@
                 Election Step
             </th>
 
-            <th scope="col" class="text-center align-middle border">
+            <th scope="col" colspan="2" class="text-center align-middle border">
                 Progress
             </th>
 
@@ -31,6 +31,8 @@
                 {% endif %}
             </td>
 
+            <td class="text-center table-{{ voter.progress.registered.color }}"></td>
+
             <td class="text-center border-start {% if voter.progress.registered %} text-muted {% endif %}">
                 {{ voter.progress.registered.deadline_humanized }}
             </td>
@@ -41,9 +43,7 @@
                 Absentee Application Requested
             </th>
 
-            <td class="text-center table-{{ voter.progress.absentee_requested.color }} text-nowrap border-start">
-            <form>{% csrf_token %}
-
+            <td class="text-center table-{{ voter.progress.absentee_requested.color }} border-start">
                 {% if voter.progress.absentee_requested.url %}
                 <a href="{{ voter.progress.absentee_requested.url }}" target="_blank" class="text-decoration-none">
                     {{ voter.progress.absentee_requested }}
@@ -51,31 +51,37 @@
                 {% else %}
                 {{ voter.progress.absentee_requested }}
                 {% endif %}
+            </td>
 
-                {% if voter.progress.registered %}
+            {% if voter.progress.registered %}
+            <td class="text-center table-{{ voter.progress.absentee_requested.color }}">
                 {% if not voter.absentee %}
-                <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                <form>{% csrf_token %}
+                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                            hx-vals='{ "reset": true }'
+                            hx-trigger="click"
+                            hx-target="closest table"
+                            hx-swap="outerHTML">
+                        Voting absentee
+                    </button>
+                </form>
+                {% elif not voter.progress.absentee_requested %}
+                <form>{% csrf_token %}
+                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
                         hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                        hx-vals='{ "reset": true }'
+                        hx-vals='{ "absentee": false }'
                         hx-trigger="click"
                         hx-target="closest table"
                         hx-swap="outerHTML">
-                    Voting absentee
-                </button>
-                {% elif not voter.progress.absentee_requested %}
-                <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                    hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                    hx-vals='{ "absentee": false }'
-                    hx-trigger="click"
-                    hx-target="closest table"
-                    hx-swap="outerHTML">
-                    Voting in person
-                </button>
+                        Voting in-person
+                    </button>
+                </form>
                 {% endif %}
-                {% endif %}
-
-            </form>
             </td>
+            {% else %}
+            <td class="text-center table-{{ voter.progress.absentee_requested.color }}"></td>
+            {% endif %}
 
             <td class="text-center border-start {% if voter.progress.absentee_requested %} text-muted {% endif %}">
                 {{ voter.progress.absentee_requested.deadline_humanized }}
@@ -88,23 +94,24 @@
             </th>
 
             <td class="text-center table-{{ voter.progress.absentee_received.color }} border-start">
-            <form>{% csrf_token %}
-
                 {{ voter.progress.absentee_received.icon }}
+            </td>
+
+            <td class="text-center table-{{ voter.progress.absentee_received.color }}">
+                {% if voter.progress.absentee_received %}
                 {{ voter.progress.absentee_received.date_shortened }}
-
-                {% if not voter.progress.absentee_received %}
-                <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                    hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                    hx-vals='{ "absentee": false }'
-                    hx-trigger="click"
-                    hx-target="closest table"
-                    hx-swap="outerHTML">
-                    Voting in person
-                </button>
+                {% else %}
+                <form>{% csrf_token %}
+                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                        hx-vals='{ "absentee": false }'
+                        hx-trigger="click"
+                        hx-target="closest table"
+                        hx-swap="outerHTML">
+                        Voting in-person
+                    </button>
+                </form>
                 {% endif %}
-
-            </form>
             </td>
 
             <td class="text-center border-start {% if voter.progress.absentee_received %} text-muted {% endif %}">
@@ -125,6 +132,8 @@
                 {% endif %}
             </td>
 
+            <td class="text-center table-{{ voter.progress.ballot_available.color }}"></td>
+
             <td class="text-center border-start {% if voter.progress.ballot_available %} text-muted {% endif %}">
                 {{ voter.progress.ballot_available.deadline_humanized }}
             </td>
@@ -139,6 +148,8 @@
                 {{ voter.progress.ballot_completed }}
             </td>
 
+            <td class="text-center table-{{ voter.progress.ballot_completed.color }}"></td>
+
             <td class="text-center border-start {% if voter.progress.ballot_completed %} text-muted {% endif %}">
                 {{ voter.progress.ballot_completed.deadline_humanized }}
             </td>
@@ -151,6 +162,9 @@
 
             <td class="text-center table-{{ voter.progress.ballot_sent.color }} border-start">
                 {{ voter.progress.ballot_sent.icon }}
+            </td>
+
+            <td class="text-center table-{{ voter.progress.ballot_sent.color }}">
                 {{ voter.progress.ballot_sent.date_shortened }}
             </td>
 
@@ -164,10 +178,9 @@
                 Absentee Ballot Returned
             </th>
 
-            <td class="text-center table-{{ voter.progress.ballot_returned.color }} border-start">
-            <form>{% csrf_token %}
-
-                {% if voter.progress.ballot_sent and not voter.progress.ballot_returned %}
+            {% if voter.progress.ballot_sent and not voter.progress.ballot_returned %}
+            <td colspan="2" class="text-center table-{{ voter.progress.ballot_returned.color }} border-start">
+                <form>{% csrf_token %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
                             hx-post="{% url 'buddies:status' slug=voter.slug %}"
                             hx-vals='{ "mailed": true }'
@@ -176,13 +189,17 @@
                             hx-swap="outerHTML">
                         ✅ Voted by-mail
                     </button>
-                {% else %}
-                    {{ voter.progress.ballot_returned.icon }}
-                    {{ voter.progress.ballot_returned.date_shortened }}
-                {% endif %}
-
-            </form>
+                </form>
             </td>
+            {% else %}
+            <td class="text-center table-{{ voter.progress.ballot_returned.color }} border-start">
+                {{ voter.progress.ballot_returned.icon }}
+            </td>
+
+            <td class="text-center table-{{ voter.progress.ballot_returned.color }}">
+                {{ voter.progress.ballot_returned.date_shortened }}
+            </td>
+            {% endif %}
 
             <td class="text-center border-start {% if voter.progress.ballot_returned %} text-muted {% endif %}">
                 {{ voter.progress.ballot_returned.deadline_humanized }}
@@ -196,6 +213,9 @@
 
             <td class="text-center table-{{ voter.progress.ballot_received.color }} border-start">
                 {{ voter.progress.ballot_received.icon }}
+            </td>
+
+            <td class="text-center table-{{ voter.progress.ballot_received.color }}">
                 {{ voter.progress.ballot_received.date_shortened }}
             </td>
 
@@ -209,37 +229,47 @@
                 Election Day
             </th>
 
-            <td class="text-center table-{{ voter.progress.voted.color }} text-nowrap border-start">
-            <form>{% csrf_token %}
-
-                {% if voter.progress.ballot_available.url %}
-                    {% if voter.progress.ballot_received.date %}
+            {% if voter.progress.ballot_available.url %}
+                {% if voter.progress.ballot_received.date %}
+                    <td class="text-center table-{{ voter.progress.voted.color }} border-start">
                         {{ voter.progress.voted.icon }}
-                    {% elif voter.progress.voted %}
-                        <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                            hx-vals='{ "reset": true }'
-                            hx-trigger="click"
-                            hx-target="closest table"
-                            hx-swap="outerHTML">
-                            Didn't vote
-                        </button>
-                    {% else %}
-                        <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                            hx-vals='{ "voted": true }'
-                            hx-trigger="click"
-                            hx-target="closest table"
-                            hx-swap="outerHTML">
-                            ✅ Voted in-person
-                        </button>
-                    {% endif %}
+                    </td>
+                    <td class="text-center table-{{ voter.progress.voted.color }}"></td>
+                {% elif voter.progress.voted %}
+                    <td class="text-center table-{{ voter.progress.voted.color }} border-start">
+                        {{ voter.progress.voted.icon }}
+                    </td>
+                    <td class="text-center table-{{ voter.progress.voted.color }}">
+                        <form>{% csrf_token %}
+                            <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                                hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                                hx-vals='{ "reset": true }'
+                                hx-trigger="click"
+                                hx-target="closest table"
+                                hx-swap="outerHTML">
+                                Didn't vote
+                            </button>
+                        </form>
+                    </td>
+                {% else %}
+                    <td colspan="2" class="text-center table-{{ voter.progress.voted.color }} text-nowrap border-start">
+                        <form>{% csrf_token %}
+                            <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                                hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                                hx-vals='{ "voted": true }'
+                                hx-trigger="click"
+                                hx-target="closest table"
+                                hx-swap="outerHTML">
+                                ✅ Voted in-person
+                            </button>
+                        </form>
+                    </td>
                 {% endif %}
+            {% else %}
+            <td colspan="2" class="text-center table-{{ voter.progress.voted.color }} border-start">
+            {% endif %}
 
-            </form>
-            </td>
-
-            <td class="text-center border-start  {% if voter.progress.voted %} text-muted {% endif %}">
+            <td class="text-center border-start {% if voter.progress.voted %} text-muted {% endif %}">
                 {{ voter.progress.election.date_humanized }}
             </td>
         </tr>
