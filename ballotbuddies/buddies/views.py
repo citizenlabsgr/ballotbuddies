@@ -87,7 +87,7 @@ def profile(request: HttpRequest):
         messages.info(request, message)
         return redirect("buddies:profile")
 
-    if not voter.updated:
+    if voter.complete and not voter.updated:
         _updated, error = voter.update_status()
         voter.save()
         if error:
