@@ -1,0 +1,14 @@
+{% with friends=request.user.voter.friends.count neighbors=request.user.voter.neighbors.count %}
+
+<p class="text-center text-muted fst-italic py-2">
+    {% if neighbors %}
+    You follow {{ friends }} voter{{ friends|pluralize }}
+    and have {{ neighbors }} recommended friend{{ neighbors|pluralize }}.
+    {% else %}
+    You follow {{ friends }} voter{{ friends|pluralize }}.
+    {% endif %}
+    <a href="{% url 'buddies:invite' %}" class="text-decoration-none">Invite more</a>
+    to promote democracy!
+</p>
+
+{% endwith %}
