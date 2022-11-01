@@ -10,13 +10,15 @@
 
     {% if search %}
     {% include "friends/_search.html" %}
+    {% elif request.user.is_authenticated %}
+    {% include "friends/_cta.html" %}
     {% endif %}
 
     <div class="row justify-content-center">
         <div class="col-12">
 
             <table class="table">
-                <thead class="text-center {% if search %} border-top {% endif %}">
+                <thead class="text-center {% if request.user.is_authenticated %} border-top {% endif %}">
                     {% include "friends/_header.html" %}
                 </thead>
                 <tbody id="search-results">
