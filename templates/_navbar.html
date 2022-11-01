@@ -11,7 +11,12 @@
 
 		<div class="navbar-nav d-flex flex-row">
 			<a class="nav-link {% if request.path == friends_url or request.path == search_url %} active {% endif %}"
-					href="{% url 'buddies:friends' %}">Friends</a>
+					href="{% url 'buddies:friends' %}">
+				Friends
+				{% if user.voter.neighbors.exists %}
+				<span class="text-warning">⊕</span>
+				{% endif %}
+			</a>
 
 			<a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-sm-0"
 					href="{% url 'buddies:profile' %}">Profile</a>
