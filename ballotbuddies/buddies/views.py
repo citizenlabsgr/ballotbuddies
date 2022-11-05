@@ -142,6 +142,7 @@ def friends(request: HttpRequest):
         form = FriendsForm()
 
     context = {
+        "cta": voter.cta,
         "community": voter.community,
         "recommended": voter.neighbors.all(),
         "form": form,
