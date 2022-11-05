@@ -4,21 +4,19 @@
 
 {% block content %}
 
-<div class="container-fluid my-3">
+<div class="container-xxl my-3">
 
     {% include "_messages.html" %}
 
     {% if search %}
     {% include "friends/_search.html" %}
-    {% elif request.user.is_authenticated %}
-    {% include "friends/_cta.html" %}
     {% endif %}
 
     <div class="row justify-content-center">
         <div class="col-12">
 
             <table class="table">
-                <thead class="text-center {% if request.user.is_authenticated %} border-top {% endif %}">
+                <thead class="text-center {% if search %} border-top {% endif %}">
                     {% include "friends/_header.html" %}
                 </thead>
                 <tbody id="search-results">
@@ -28,10 +26,14 @@
 
         </div>
 
+        {% if cta %}
+        <p class="text-center text-muted py-2">{{ cta }}</p>
+        {% endif %}
+
         <div class="col-lg-6 col-md-8 col-12 mb-4">
-            {% if request.user.is_authenticated and not referrer %}
+            {% if cta %}
                 {% include "friends/_invite.html" %}
-            {% else %}
+            {% elif not search %}
                 {% include "about/_details.html" %}
             {% endif %}
         </div>

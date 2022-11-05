@@ -159,6 +159,30 @@ class Voter(models.Model):
         return email
 
     @cached_property
+    def cta(self) -> str:
+        friends = self.friends.count()
+        neighbors = self.neighbors.count()
+        voters = (
+            self.friends.exclude(voted__isnull=True).count()
+            + self.neighbors.exclude(voted__isnull=True).count()
+        )
+
+        s = "" if friends == 1 else "s"
+        text = f"You follow {friends} voter{s}"
+
+        if neighbors:
+            s = "" if neighbors == 1 else "s"
+            text += f" and have {neighbors} recommended friend{s}"
+
+        if voters:
+            text += f". {voters} of them have already cast their ballot"
+            text += ". Invite more friends to promote democracy!"
+        else:
+            text += ". Invite more to promote democracy!"
+
+        return text
+
+    @cached_property
     def data(self) -> dict:
         return dict(
             email=self.user.email,
