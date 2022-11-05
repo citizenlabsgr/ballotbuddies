@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="container-fluid my-3">
+<div class="container-xxl my-3">
 
     {% include "_messages.html" %}
 
@@ -26,9 +26,12 @@
 
         </div>
 
+        {% if cta %}
+        <p class="text-center text-muted py-2">{{ cta }}</p>
+        {% endif %}
+
         <div class="col-lg-6 col-md-8 col-12 mb-4">
             {% if cta %}
-                <p class="text-muted py-2">{{ cta }}</p>
                 {% include "friends/_invite.html" %}
             {% elif not search %}
                 {% include "about/_details.html" %}
