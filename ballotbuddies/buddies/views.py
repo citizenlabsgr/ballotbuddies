@@ -132,8 +132,11 @@ def friends(request: HttpRequest):
         voter.save()
 
     if request.method == "POST":
-        form = FriendsForm(request.POST)
+        form = FriendsForm(request.POST, required=len(voter.community) < 10)
         if form.is_valid():
+            if not form.cleaned_data["emails"]:
+                return redirect("buddies:invite")
+
             voters = Voter.objects.invite(voter, form.cleaned_data["emails"])
             s = "" if len(voters) == 1 else "s"
             messages.success(request, f"Successfully added {len(voters)} friend{s}.")

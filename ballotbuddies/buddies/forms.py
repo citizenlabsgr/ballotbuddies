@@ -65,9 +65,10 @@ class VoterForm(forms.ModelForm):
 class FriendsForm(forms.Form):
     emails = MultiEmailField()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, required=True, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["emails"].widget.attrs["rows"] = "4"
+        self.fields["emails"].required = required
 
     def clean_emails(self):
         values = self.cleaned_data["emails"]
