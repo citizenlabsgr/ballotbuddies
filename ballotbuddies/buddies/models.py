@@ -38,15 +38,7 @@ class VoterManager(models.Manager):
             user = User.objects.filter(email=email).first()  # type: ignore
 
         voter = self.from_user(user)
-
-        if other := self.from_slug(referrer):
-            other.friends.add(voter)
-            other.save()
-
-            voter.referrer = voter.referrer or other
-            voter.friends.add(other)
-            voter.save()
-
+        voter.add_friend(referrer)
         return voter
 
     def from_user(self, user: User, status: dict | None = None) -> Voter:
