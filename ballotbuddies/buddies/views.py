@@ -27,11 +27,8 @@ def index(request: HttpRequest):
     if request.user.is_authenticated:
         if not referrer:
             return redirect("buddies:friends")
-        voter = Voter.objects.from_user(request.user)
-        other = Voter.objects.from_slug(referrer)
-        if other and voter != other:
-            voter.friends.add(other)
-            voter.save()
+
+        if request.user.voter.add_friend(referrer):
             messages.success(request, "Successfully added 1 friend.")
             return redirect("buddies:friends")
 

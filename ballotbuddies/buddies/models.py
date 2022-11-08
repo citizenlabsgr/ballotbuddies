@@ -360,6 +360,18 @@ class Voter(models.Model):
             count += 1
         return count
 
+    def add_friend(self, referrer: str) -> bool:
+        if voter := Voter.objects.from_slug(referrer):
+            if self != voter:
+                self.referrer = self.referrer or voter
+                self.friends.add(voter)
+                self.save()
+                voter.referrer = voter.referrer or self
+                voter.friends.add(self)
+                voter.save()
+                return True
+        return False
+
     def update_neighbors(self, limit=0) -> int:
         added = 0
         for friend in self.friends.all():
