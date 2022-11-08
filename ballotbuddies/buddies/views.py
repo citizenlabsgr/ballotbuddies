@@ -24,8 +24,16 @@ def index(request: HttpRequest):
         log.info(f"Referrer: {referrer}")
         request.session["referrer"] = referrer
 
-    if request.user.is_authenticated and not referrer:
-        return redirect("buddies:friends")
+    if request.user.is_authenticated:
+        if not referrer:
+            return redirect("buddies:friends")
+        voter = Voter.objects.from_user(request.user)
+        other = Voter.objects.from_slug(referrer)
+        if other and voter != other:
+            voter.friends.add(other)
+            voter.save()
+            messages.success(request, "Successfully added 1 friend.")
+            return redirect("buddies:friends")
 
     context = {
         "community": sorted(generate_sample_voters(referrer)),

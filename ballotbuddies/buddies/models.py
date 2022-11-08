@@ -39,7 +39,7 @@ class VoterManager(models.Manager):
 
         voter = self.from_user(user)
 
-        if other := self.filter(slug=referrer).first():
+        if other := self.from_slug(referrer):
             other.friends.add(voter)
             other.save()
 
@@ -57,6 +57,9 @@ class VoterManager(models.Manager):
             voter.status = deepcopy(status)
             voter.save()
         return voter
+
+    def from_slug(self, referrer: str) -> Voter | None:
+        return self.filter(slug=referrer).first()
 
     def invite(self, voter: Voter, emails: list[str]) -> list[Voter]:
         friends = []
