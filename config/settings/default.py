@@ -164,6 +164,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 ###############################################################################
 # Email
 
+EMAIL = "Ballot Buddies <no-reply@michiganelections.io>"
+
 EMAIL_HOST = "smtp.mandrillapp.com"
 EMAIL_HOST_USER = "Citizen Labs"
 EMAIL_HOST_PASSWORD = os.getenv("MANDRILL_API_KEY")

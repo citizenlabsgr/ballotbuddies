@@ -123,7 +123,7 @@ def describe_profile():
 
         response = client.get("/profile/")
         html = decode(response)
-        expect(html).contains("Enter details")
+        expect(html).contains("Finish Setup")
 
     def it_can_update_reminder_emails_preference(expect, client, complete_voter):
         client.force_login(complete_voter.user)
