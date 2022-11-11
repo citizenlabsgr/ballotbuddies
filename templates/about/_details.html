@@ -8,7 +8,11 @@
 
 <div class="text-center pt-2">
     <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+        {% if request.user.is_authenticated %}
+        View Profle
+        {% else %}
         Get Started
+        {% endif %}
     </a>
     <a class="btn btn-secondary" href="{% url 'buddies:invite' %}">
         Invite Friends
