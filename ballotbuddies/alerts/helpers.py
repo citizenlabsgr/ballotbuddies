@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.utils import timezone
@@ -32,7 +33,7 @@ def get_login_email(user: User):
     return EmailMessage(
         "Welcome to Michigan Ballot Buddies",
         f"Click this link to log in: {url}",
-        "no-reply@michiganelections.io",
+        settings.EMAIL,
         [user.email],
     )
 
@@ -52,7 +53,7 @@ def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
         "Your friend has challenged you to vote in every election. Let's keep each other accountable!"
         "\n\n"
         f"Click this link to get started: {url}",
-        "no-reply@michiganelections.io",
+        settings.EMAIL,
         [user.email],
     )
 
@@ -73,7 +74,7 @@ def get_activity_email(user: User, message: Message | None = None):
     return EmailMessage(
         message.subject,
         message.body + "\n\n" + f"Click this link to view your progress: {url}",
-        "no-reply@michiganelections.io",
+        settings.EMAIL,
         [user.email],
     )
 
