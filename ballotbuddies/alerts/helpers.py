@@ -29,7 +29,7 @@ def update_profiles():
 
 
 def get_login_email(user: User):
-    url = build_url("/") + get_query_string(user)
+    url = build_url("/about") + get_query_string(user)
     return EmailMessage(
         "Welcome to Michigan Ballot Buddies",
         f"Click this link to log in: {url}",
