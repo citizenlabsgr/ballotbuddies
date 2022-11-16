@@ -4,8 +4,11 @@ from django.urls import include, path
 
 import debug_toolbar
 
-urlpatterns = [
+from ballotbuddies.core.views import zapier
+
+urlpatterns: list = [
     path("", include("ballotbuddies.buddies.urls", namespace="buddies")),
+    path("zapier/", zapier),
     path("api/", include("ballotbuddies.api.urls")),
     path("admin/", admin.site.urls),
 ]
