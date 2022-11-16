@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-xl my-4">
+
+    <zapier-app-directory
+    app="michigan-elections"
+    link-target="same-tab"
+    theme="light"
+    categories="-marketing,-project-management,-content-files,-spreadsheets"
+    applimit="8"
+    zapstyle="row"
+    create-without-template="show"
+    use-this-zap="show"
+    ></zapier-app-directory>
+
+</div>
+
+<script type="module" src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"></script>
+<link rel="stylesheet" href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css"/>
+
+{% endblock %}
