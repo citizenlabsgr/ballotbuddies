@@ -12,7 +12,7 @@ if BASE_NAME.count("-") >= 2:
     DEBUG = True
     TODAY = date(2021, 10, 1)
 else:
-    BASE_DOMAIN = "staging-buddies.michiganelections.io"
+    BASE_DOMAIN = "staging-app.michiganelections.io"
 BASE_URL = f"https://{BASE_DOMAIN}"
 
 

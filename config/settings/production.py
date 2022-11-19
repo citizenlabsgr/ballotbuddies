@@ -6,7 +6,7 @@ import dj_database_url
 from .default import *
 
 BASE_NAME = os.environ["HEROKU_APP_NAME"]
-BASE_DOMAIN = "buddies.michiganelections.io"
+BASE_DOMAIN = "app.michiganelections.io"
 BASE_URL = f"https://{BASE_DOMAIN}"
 
 if BASE_NAME == "local":
