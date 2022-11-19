@@ -352,17 +352,21 @@ class Voter(models.Model):
             count += 1
         return count
 
-    def add_friend(self, referrer: str) -> bool:
-        if voter := Voter.objects.from_slug(referrer):
-            if self != voter:
-                self.referrer = self.referrer or voter
-                self.friends.add(voter)
-                self.save()
-                voter.referrer = voter.referrer or self
-                voter.friends.add(self)
-                voter.save()
-                return True
-        return False
+    def add_friend(self, referrer: str) -> tuple[Voter | None, bool]:
+        voter = Voter.objects.from_slug(referrer)
+        if voter is None or voter == self:
+            return None, False
+        if voter in self.friends.all():
+            log.info(f"Friendship exists: {self} + {voter}")
+            return voter, False
+        log.info(f"Creating friendship: {self} + {voter}")
+        self.referrer = self.referrer or voter
+        self.friends.add(voter)
+        self.save()
+        voter.referrer = voter.referrer or self
+        voter.friends.add(self)
+        voter.save()
+        return voter, True
 
     def update_neighbors(self, limit=0) -> int:
         added = 0

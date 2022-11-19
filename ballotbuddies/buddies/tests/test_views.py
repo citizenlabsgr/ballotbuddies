@@ -63,6 +63,22 @@ def describe_index():
         expect(html).excludes("View Profile")
         expect(html.count("disabled")) >= 3  # TODO: should be 4 including the voter
 
+    def it_adds_friend_from_referrer(expect, client, voter, friend):
+        voter.friends.clear()
+        client.force_login(voter.user)
+
+        response = client.get(f"/?referrer={friend.slug}", follow=True)
+
+        html = decode(response)
+        expect(html).includes("Successfully added 1 friend.")
+        expect(html).includes("Friendo")
+
+        response = client.get(f"/?referrer={friend.slug}", follow=True)
+
+        html = decode(response)
+        expect(html).excludes("Successfully added 1 friend.")
+        expect(html).includes("Friendo")
+
 
 @pytest.mark.django_db
 def describe_login():

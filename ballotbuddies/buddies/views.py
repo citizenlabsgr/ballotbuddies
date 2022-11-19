@@ -28,8 +28,10 @@ def index(request: HttpRequest):
         if not referrer:
             return redirect("buddies:friends")
 
-        if request.user.voter.add_friend(referrer):
+        friend, added = request.user.voter.add_friend(referrer)
+        if added:
             messages.success(request, "Successfully added 1 friend.")
+        if friend:
             return redirect("buddies:friends")
 
     context = {
