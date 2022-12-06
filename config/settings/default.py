@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "debug_toolbar",
+    "django_user_agents",
     "corsheaders",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "sesame.middleware.AuthenticationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django_user_agents.middleware.UserAgentMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
