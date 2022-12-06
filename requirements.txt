@@ -15,6 +15,7 @@ django-debug-toolbar==3.2.4; python_version >= "3.6"
 django-multi-email-field @ git+https://github.com/aht007/django-multi-email-field@99a27ccdad465ff13a08cdfdd6b2612f817d32fc
 django-redis==4.12.1; python_version >= "3.5"
 django-sesame==2.4; python_version >= "3.6" and python_version < "4.0"
+django-user-agents==0.4.0
 django==4.1; python_version >= "3.8"
 djangorestframework==3.13.1; python_version >= "3.6"
 gunicorn==20.1.0; python_version >= "3.5"
@@ -34,6 +35,7 @@ tzdata==2021.5; sys_platform == "win32" and python_version >= "3.8" and python_v
 ua-parser==0.10.0
 urllib3==1.26.8; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version < "4"
 us==2.0.2
+user-agents==2.2.0
 uvicorn==0.17.6; python_version >= "3.7"
 webob==1.8.7; python_version >= "3.5" and python_full_version < "3.0.0" and python_version < "4" or python_version >= "3.5" and python_version < "4" and python_full_version >= "3.3.0"
 whitenoise==5.3.0; python_version >= "3.5" and python_version < "4"

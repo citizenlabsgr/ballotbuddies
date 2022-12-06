@@ -13,6 +13,7 @@
     {% endif %}
 
     <div class="row justify-content-center">
+        {% if not request.user_agent.is_bot %}
         <div class="col-12">
 
             <table class="table">
@@ -25,6 +26,7 @@
             </table>
 
         </div>
+        {% endif %}
 
         {% if cta %}
         <p class="text-center text-muted py-2">{{ cta }}</p>
