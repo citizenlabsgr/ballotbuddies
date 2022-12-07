@@ -2,22 +2,19 @@
 
 {% block content %}
 
+<script type="module" src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"></script>
+
+<link rel="stylesheet" href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css"/>
+
 <div class="container-xl my-4">
 
-    <zapier-app-directory
-    app="michigan-elections"
-    link-target="same-tab"
-    theme="light"
-    categories="-marketing,-project-management,-content-files,-spreadsheets"
-    applimit="8"
-    zapstyle="row"
-    create-without-template="show"
-    use-this-zap="show"
-    ></zapier-app-directory>
+    <zapier-full-experience
+      client-id="xlARLrn0FNA5qXC6adCFDtIyfDVLtRhzYnPKbF51"
+      theme="light"
+      app-search-bar-display="show"
+      app-exclusions="google-sheets,google-drive,facebook-lead-ads">
+    </zapier-full-experience>
 
 </div>
-
-<script type="module" src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"></script>
-<link rel="stylesheet" href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css"/>
 
 {% endblock %}
