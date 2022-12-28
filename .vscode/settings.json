@@ -32,6 +32,8 @@
     "corsheaders",
     "createdb",
     "direnv",
+    "envrc",
+    "favicons",
     "Friendo",
     "gunicorn",
     "herokuapp",
