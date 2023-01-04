@@ -42,7 +42,8 @@ class VoterManager(models.Manager):
         return voter
 
     def from_user(self, user: User, status: dict | None = None) -> Voter:
-        voter, created = self.get_or_create(user=user)
+        voter: Voter
+        voter, created = self.get_or_create(user=user)  # type: ignore
         if created:
             log.info(f"Created voter: {voter}")
         if status:
@@ -51,7 +52,7 @@ class VoterManager(models.Manager):
         return voter
 
     def from_slug(self, referrer: str) -> Voter | None:
-        return self.filter(slug=referrer).first()
+        return self.filter(slug=referrer).first()  # type: ignore
 
     def invite(self, voter: Voter, emails: list[str]) -> list[Voter]:
         friends = []
@@ -312,7 +313,7 @@ class Voter(models.Model):
 
         url = constants.STATUS_API + "?" + urlencode(self.data)
         log.info(f"GET {url}")
-        response = requests.get(url)
+        response = requests.get(url, timeout=20)
         if response.status_code == 202:
             data = response.json()
             log.error(f"{response.status_code} response: {data}")

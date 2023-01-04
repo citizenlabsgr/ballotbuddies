@@ -119,6 +119,9 @@ test: test-backend ## Run all tests
 
 .PHONY: test-backend
 test-backend: test-backend-all
+ifdef COVERALLS_REPO_TOKEN
+	poetry run coveralls
+endif
 
 .PHONY: test-backend-unit
 test-backend-unit: install

@@ -1,3 +1,6 @@
+# TODO: Upgrade mypy to 0.991+ when django-stubs supports it
+# mypy: ignore_errors
+
 from __future__ import annotations
 
 from datetime import timedelta
