@@ -313,7 +313,7 @@ class Voter(models.Model):
 
         url = constants.STATUS_API + "?" + urlencode(self.data)
         log.info(f"GET {url}")
-        response = requests.get(url)
+        response = requests.get(url, timeout=20)
         if response.status_code == 202:
             data = response.json()
             log.error(f"{response.status_code} response: {data}")
