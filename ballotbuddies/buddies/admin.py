@@ -1,4 +1,4 @@
-# pylint: disable=unused-argument,no-self-use
+# pylint: disable=unused-argument
 
 from django.contrib import admin, messages
 
