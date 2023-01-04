@@ -42,7 +42,8 @@ class VoterManager(models.Manager):
         return voter
 
     def from_user(self, user: User, status: dict | None = None) -> Voter:
-        voter, created = self.get_or_create(user=user)
+        voter: Voter
+        voter, created = self.get_or_create(user=user)  # type: ignore
         if created:
             log.info(f"Created voter: {voter}")
         if status:
@@ -51,7 +52,7 @@ class VoterManager(models.Manager):
         return voter
 
     def from_slug(self, referrer: str) -> Voter | None:
-        return self.filter(slug=referrer).first()
+        return self.filter(slug=referrer).first()  # type: ignore
 
     def invite(self, voter: Voter, emails: list[str]) -> list[Voter]:
         friends = []

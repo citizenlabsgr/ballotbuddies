@@ -102,7 +102,7 @@ plugins = ["mypy_django_plugin.main"]
 
 [tool.django-stubs]
 
-django_settings_module = "config.settings.local"
+django_settings_module = "config.settings.test"
 
 [tool.pytest.ini_options]
 
