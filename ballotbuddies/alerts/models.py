@@ -147,6 +147,7 @@ class Message(models.Model):
         have = "has" if count == 1 else "have"
         if name := self.profile.voter.election:
             date = self.profile.voter.progress.election.date_humanized
+            assert date
             _in_election = f" in the upcoming {name} election on {date}"
         else:
             _in_election = ""
