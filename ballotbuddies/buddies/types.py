@@ -207,15 +207,15 @@ class Progress:
         progress = cls()
 
         try:
-            status = data["status"]
-            election = data["election"]
+            status = data["status"] or {}
+            election = data["election"] or {}
         except (TypeError, KeyError):
             status = {}
             election = {}
         else:
             precinct = data.get("precinct", {})
 
-        progress.election.date = election.get("date")
+        progress.election.date = election.get("date") or ""
         if progress.election.date:
             election_date = to_date(progress.election.date)
             progress.registered.deadline = str(
