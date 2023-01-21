@@ -1,0 +1,12 @@
+<p>
+    Hello {{ name }},
+</p>
+
+<p>
+    {{ message.body|safe|linebreaks }}
+</p>
+
+<p>
+    Please click this link to view your progress:
+    <a href="{{ url }}{{ query_string }}">{{ url }}</a>
+</p>

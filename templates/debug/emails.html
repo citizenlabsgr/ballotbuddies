@@ -19,7 +19,7 @@
 
         <br>
 
-        {{ email.body|linebreaks }}
+        {{ email.body|safe }}
     </p>
 
 {% endfor %}

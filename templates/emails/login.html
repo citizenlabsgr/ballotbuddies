@@ -1,0 +1,27 @@
+<p>
+    Hello {{ name }},
+</p>
+
+{% if complete %}
+
+<p>
+    Welcome back to Michigan <b>Ballot Buddies</b>! This app helps friends hold each other accountable to vote in every election.
+</p>
+
+<p>
+    Please click this link to log in:
+    <a href="{{ url }}{{ query_string }}">{{ url }}</a>
+</p>
+
+{% else %}
+
+<p>
+    Welcome to Michigan <b>Ballot Buddies</b>! This app helps friends hold each other accountable to vote in every election.
+</p>
+
+<p>
+    Please click this link to set up your profile:
+    <a href="{{ url }}{{ query_string }}">{{ url }}</a>
+</p>
+
+{% endif %}

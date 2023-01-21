@@ -19,13 +19,16 @@ def debug(request, slug=""):
         voter = user.voter
         profile = voter.profile
 
+    newbie = Voter(user=User(pk=0))
     friend = Voter(user=User(first_name="Firstname", last_name="Lastname"))
     message = Message(profile=profile)
     message.add(friend, save=False)
     message.add(voter, save=False)
 
     emails = [
+        helpers.get_login_email(newbie.user),
         helpers.get_login_email(user),
+        helpers.get_invite_email(newbie.user, friend),
         helpers.get_invite_email(user, friend),
         helpers.get_activity_email(user, message),
     ]
