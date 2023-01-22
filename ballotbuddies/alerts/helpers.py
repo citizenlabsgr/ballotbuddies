@@ -86,13 +86,15 @@ def get_activity_email(user: User, message: Message | None = None):
     message = message or profile.message
     context = {
         "name": voter.short_name or "Voter",
-        "complete": voter.complete,
-        "message": message,
+        "items": message.activity_lines,
+        "election": voter.election,
+        "date": voter.progress.election.date_humanized,
         "url": build_url("/about"),
         "query_string": get_query_string(user),
     }
+    assert context["date"]
     body = render_to_string("emails/activity.html", context)
-    email = EmailMessage(message.subject, body, settings.EMAIL, [user.email])
+    email = EmailMessage(message, body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
     return email
 
