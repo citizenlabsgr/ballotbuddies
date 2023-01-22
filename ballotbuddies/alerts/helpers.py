@@ -34,9 +34,10 @@ def update_profiles():
 
 def get_login_email(user: User):
     subject = "Welcome to Michigan Ballot Buddies"
+    voter: Voter = user.voter
     context = {
-        "name": user.voter.nickname or user.first_name or "Voter",
-        "complete": user.voter.complete,
+        "name": voter.short_name or "Voter",
+        "complete": voter.complete,
         "url": build_url("/about"),
         "query_string": get_query_string(user),
     }
@@ -56,9 +57,10 @@ def send_login_email(user: User):
 
 def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
     subject = f"Join {friend.display_name} on Michigan Ballot Buddies{extra}"
+    voter: Voter = user.voter
     context = {
-        "name": user.voter.nickname or user.first_name or "Voter",
-        "complete": user.voter.complete,
+        "name": voter.short_name or "Voter",
+        "complete": voter.complete,
         "friend": friend,
         "url": build_url("/about"),
         "query_string": get_query_string(user),
@@ -80,11 +82,11 @@ def send_invite_email(user: User, friend: Voter, *, debug=False):
 
 def get_activity_email(user: User, message: Message | None = None):
     profile: Profile = user.voter.profile
+    voter: Voter = user.voter
     message = message or profile.message
     context = {
-        # TODO: Move this to property
-        "name": user.voter.nickname or user.first_name or "Voter",
-        "complete": user.voter.complete,
+        "name": voter.short_name or "Voter",
+        "complete": voter.complete,
         "message": message,
         "url": build_url("/about"),
         "query_string": get_query_string(user),
