@@ -65,7 +65,8 @@ def describe_message():
             message = Message(profile=Profile(voter=voter))
 
             expect(message.body).contains(
-                "vote in the upcoming Test Election election on Tuesday, November 2nd."
+                "vote in the upcoming <b>Test Election</b> election "
+                "on <b>Tuesday, November 2nd</b>."
             )
 
     def describe_add():

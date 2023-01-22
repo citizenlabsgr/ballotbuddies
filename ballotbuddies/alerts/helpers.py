@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.utils import timezone
 
 import log
@@ -32,13 +33,18 @@ def update_profiles():
 
 
 def get_login_email(user: User):
-    url = build_url("/about") + get_query_string(user)
-    return EmailMessage(
-        "Welcome to Michigan Ballot Buddies",
-        f"Click this link to log in: {url}",
-        settings.EMAIL,
-        [user.email],
-    )
+    subject = "Welcome to Michigan Ballot Buddies"
+    voter: Voter = user.voter
+    context = {
+        "name": voter.short_name or "Voter",
+        "complete": voter.complete,
+        "url": build_url("/about"),
+        "query_string": get_query_string(user),
+    }
+    body = render_to_string("emails/login.html", context)
+    email = EmailMessage(subject, body, settings.EMAIL, [user.email])
+    email.content_subtype = "html"
+    return email
 
 
 def send_login_email(user: User):
@@ -50,15 +56,19 @@ def send_login_email(user: User):
 
 
 def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
-    url = build_url("/about") + get_query_string(user)
-    return EmailMessage(
-        f"Join {friend.display_name} on Michigan Ballot Buddies{extra}",
-        "Your friend has challenged you to vote in every election. Let's keep each other accountable!"
-        "\n\n"
-        f"Click this link to get started: {url}",
-        settings.EMAIL,
-        [user.email],
-    )
+    subject = f"Join {friend.display_name} on Michigan Ballot Buddies{extra}"
+    voter: Voter = user.voter
+    context = {
+        "name": voter.short_name or "Voter",
+        "complete": voter.complete,
+        "friend": friend,
+        "url": build_url("/about"),
+        "query_string": get_query_string(user),
+    }
+    body = render_to_string("emails/invite.html", context)
+    email = EmailMessage(subject, body, settings.EMAIL, [user.email])
+    email.content_subtype = "html"
+    return email
 
 
 def send_invite_email(user: User, friend: Voter, *, debug=False):
@@ -72,14 +82,19 @@ def send_invite_email(user: User, friend: Voter, *, debug=False):
 
 def get_activity_email(user: User, message: Message | None = None):
     profile: Profile = user.voter.profile
+    voter: Voter = user.voter
     message = message or profile.message
-    url = build_url("/about") + get_query_string(user)
-    return EmailMessage(
-        message.subject,
-        message.body + "\n\n" + f"Click this link to view your progress: {url}",
-        settings.EMAIL,
-        [user.email],
-    )
+    context = {
+        "name": voter.short_name or "Voter",
+        "complete": voter.complete,
+        "message": message,
+        "url": build_url("/about"),
+        "query_string": get_query_string(user),
+    }
+    body = render_to_string("emails/activity.html", context)
+    email = EmailMessage(message.subject, body, settings.EMAIL, [user.email])
+    email.content_subtype = "html"
+    return email
 
 
 def send_activity_email(user: User):

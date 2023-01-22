@@ -1,0 +1,12 @@
+<p style="font-size: 14pt;">
+    Hello {{ name }},
+</p>
+
+<p style="font-size: 12pt;">
+    {{ message.body|safe|linebreaks }}
+</p>
+
+<p style="font-size: 13pt;">
+    Please click this link to view your progress:
+    <a href="{{ url }}{{ query_string }}">{{ url }}</a>
+</p>

@@ -1,0 +1,15 @@
+<p style="font-size: 14pt;">
+    Hello {{ name }},
+</p>
+
+<p style="font-size: 12pt;">
+    Your friend {{ friend.short_name }} has challenged you to vote in every election.
+    They're using <b>Ballot Buddies</b> to ensure every Michigander votes!
+</p>
+</font>
+
+<p style="font-size: 13pt;">
+    Please click this link to
+    {% if complete %}join them{% else %}get started{% endif %}:
+    <a href="{{ url }}{{ query_string }}">{{ url }}</a>
+</p>

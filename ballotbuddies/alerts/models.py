@@ -142,20 +142,21 @@ class Message(models.Model):
 
     @property
     def body(self) -> str:
+        # TODO: Move the HTML rendering to `emails/activity.html`
         count = len(self.activity)
         s = "" if count == 1 else "s"
         have = "has" if count == 1 else "have"
         if name := self.profile.voter.election:
             date = self.profile.voter.progress.election.date_humanized
             assert date
-            _in_election = f" in the upcoming {name} election on {date}"
+            _in_election = f" in the upcoming <b>{name}</b> election on <b>{date}</b>"
         else:
             _in_election = ""
-        activity = "  - " + "\n  - ".join(self.activity_lines)
+        activity = "<li>" + "</li><li>".join(self.activity_lines) + "</li>"
         return (
-            f"Your {count} friend{s} on Michigan Ballot Buddies {have} "
+            f"Your {count} friend{s} on Michigan <b>Ballot Buddies</b> {have} "
             f"been making progress towards casting their vote{_in_election}.\n\n"
-            f"Here's what they've been up to:\n\n{activity}"
+            f"Here's what they've been up to:\n\n<ul>{activity}</ul>"
         )
 
     @property

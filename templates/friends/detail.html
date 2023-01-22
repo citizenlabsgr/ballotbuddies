@@ -4,7 +4,7 @@
 
 {% block main %}
 
-<h1>{{ voter.short_name }}'s Profile</h1>
+<h1>{{ voter.short_name or "Friend" }}'s Profile</h1>
 
 <p>
     {{ voter.user.email }}

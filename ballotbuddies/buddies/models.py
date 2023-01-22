@@ -141,7 +141,7 @@ class Voter(models.Model):
 
     @cached_property
     def short_name(self) -> str:
-        return self.nickname or self.user.first_name or "Friend"
+        return self.nickname or self.user.first_name
 
     @cached_property
     def display_name(self) -> str:
@@ -205,7 +205,7 @@ class Voter(models.Model):
         url = self.ballot or self.progress.ballot_available.url
         if url:
             joiner = "&" if "?" in url else "?"
-            url += f"{joiner}name={self.short_name}&slug={self.slug}"
+            url += f"{joiner}name={self.short_name or 'Friend'}&slug={self.slug}"
         return url
 
     @cached_property

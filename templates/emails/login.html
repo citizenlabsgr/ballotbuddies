@@ -1,0 +1,17 @@
+<p style="font-size: 14pt;">
+    Hello {{ name }},
+</p>
+
+<p style="font-size: 12pt;">
+    Welcome {% if complete %}back{% endif %} to <b>Ballot Buddies</b>, an app
+    to help Michiganders hold each other accountable to vote in every election.
+</p>
+
+<p style="font-size: 13pt;">
+    {% if complete %}
+    Please click this link to log in:
+    {% else %}
+    Please click this link to get started:
+    {% endif %}
+    <a href="{{ url }}{{ query_string }}">{{ url }}</a>
+</p>
