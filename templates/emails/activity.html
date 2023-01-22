@@ -3,10 +3,23 @@
 </p>
 
 <p style="font-size: 12pt;">
-    {{ message.body|safe|linebreaks }}
+    Your {{ items|length }} friend{{ items|pluralize }} on Michigan
+    <b>Ballot Buddies</b> ha{{ items|pluralize:"s,ve" }} been making progress
+    towards casting their vote in the upcoming <b>{{ election }}</b> election
+    on <b>{{ date }}</b>.
+</p>
+
+<p style="font-size: 12pt;">
+    Here's what they've been up to:
+
+    <ul>
+    {% for item in items %}
+        <li>{{ item }}</li>
+    {% endfor %}
+    </ul>
 </p>
 
 <p style="font-size: 13pt;">
-    Please click this link to view your progress:
+    Click this link to view your progress:
     <a href="{{ url }}{{ query_string }}">{{ url }}</a>
 </p>

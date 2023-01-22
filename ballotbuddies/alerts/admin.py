@@ -155,8 +155,6 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
     Dismissed.boolean = True  # type: ignore
 
     readonly_fields = [
-        "subject",
-        "body",
         "sent",
         "sent_at",
         "updated_at",

@@ -39,12 +39,13 @@ def describe_profile():
     @pytest.mark.django_db
     def it_can_update_activity(expect, profile: Profile, voter: Voter):
         profile.alert(voter)
+
+        expect(len(profile.message.activity)) == 1
+
         voter.id = voter.id + 1
         profile.alert(voter)
 
-        expect(profile.can_alert) == True
-        expect(profile.message.body).contains("2 friends")
-        expect(profile.message.body).contains("registered to vote")
+        expect(len(profile.message.activity)) == 2
 
     def describe_should_alert():
         def is_false_with_incomplete_voter(expect):
@@ -54,20 +55,11 @@ def describe_profile():
 
 
 def describe_message():
-    def describe_subject():
+    def describe_str():
         def it_includes_days_to_election(expect, voter):
             message = Message(profile=Profile(voter=voter))
 
-            expect(message.subject) == "Your Friends are Preparing to Vote in 32 Days"
-
-    def describe_body():
-        def it_includes_election_name(expect, voter):
-            message = Message(profile=Profile(voter=voter))
-
-            expect(message.body).contains(
-                "vote in the upcoming <b>Test Election</b> election "
-                "on <b>Tuesday, November 2nd</b>."
-            )
+            expect(str(message)) == "Your Friends are Preparing to Vote in 32 Days"
 
     def describe_add():
         def it_replaces_legal_name(expect):
@@ -81,7 +73,7 @@ def describe_message():
             message = Message(profile=Profile(voter=Voter()))
             message.add(voter, save=False)
 
-            expect(message.body).contains("Mike Doe started following you")
+            expect(message.activity_lines).contains("Mike Doe started following you")
 
     def describe_dismissed():
         def is_none_by_default(expect):

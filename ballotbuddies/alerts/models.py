@@ -118,19 +118,6 @@ class Message(models.Model):
         ordering = ["-updated_at"]
 
     def __str__(self):
-        sent = "Sent" if self.sent else "Draft"
-        count = len(self.activity)
-        activities = "Activity" if count == 1 else "Activities"
-        return f"{sent}: {count} {activities}"
-
-    def __bool__(self):
-        return bool(self.activity)
-
-    def __len__(self):
-        return len(self.activity)
-
-    @property
-    def subject(self) -> str:
         days = self.profile.voter.progress.election.days
         if days == 1:
             _in_days = " Tomorrow"
@@ -140,24 +127,11 @@ class Message(models.Model):
             _in_days = ""
         return f"Your Friends are Preparing to Vote{_in_days}"
 
-    @property
-    def body(self) -> str:
-        # TODO: Move the HTML rendering to `emails/activity.html`
-        count = len(self.activity)
-        s = "" if count == 1 else "s"
-        have = "has" if count == 1 else "have"
-        if name := self.profile.voter.election:
-            date = self.profile.voter.progress.election.date_humanized
-            assert date
-            _in_election = f" in the upcoming <b>{name}</b> election on <b>{date}</b>"
-        else:
-            _in_election = ""
-        activity = "<li>" + "</li><li>".join(self.activity_lines) + "</li>"
-        return (
-            f"Your {count} friend{s} on Michigan <b>Ballot Buddies</b> {have} "
-            f"been making progress towards casting their vote{_in_election}.\n\n"
-            f"Here's what they've been up to:\n\n<ul>{activity}</ul>"
-        )
+    def __bool__(self):
+        return bool(self.activity)
+
+    def __len__(self):
+        return len(self.activity)
 
     @property
     def activity_lines(self) -> list[str]:
