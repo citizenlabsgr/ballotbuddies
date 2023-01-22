@@ -92,11 +92,9 @@ class Profile(models.Model):
 
 class MessageManager(models.Manager):
     def get_draft(self, profile: Profile):
-        created = False
         message = self.filter(profile=profile, sent=False).first()
         if not message:
-            message, created = self.get_or_create(profile=profile, sent=False)
-        if created:
+            message = self.create(profile=profile, sent=False)
             log.debug(f"Drafted new message: {message}")
         return message
 
