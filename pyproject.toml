@@ -52,7 +52,7 @@ isort = "^5.10"
 # Linters
 pylint = "~2.15"
 mypy = "~0.982"
-django-stubs = {extras = ["compatible-mypy"], version = "^1.13.2"}
+django-stubs = { version = "^1.13.2", extras = ["compatible-mypy"] }
 types-requests = "*"
 
 # Testing
@@ -63,17 +63,13 @@ pytest-expecter = "^3.0"
 pytest-randomly = "*"
 pytest-vcr = "*"
 pytest-cov = "^2.8.0"
+splinter = "~0.16"
 coverage = "^5.0"
 coveragespace = "^6.0"
 coveralls = "*"
 
-# Server
-honcho = "^1.1"
-
-# E2E
-splinter = "~0.16"
-
 # Tooling
+honcho = "^1.1"
 ipython = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
