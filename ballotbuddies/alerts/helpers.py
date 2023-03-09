@@ -89,7 +89,7 @@ def get_activity_email(user: User, message: Message | None = None):
         "items": message.activity_lines,
         "election": voter.election,
         "date": voter.progress.election.date_humanized,
-        "url": build_url("/about"),
+        "url": build_url("/profile"),
         "query_string": get_query_string(user),
     }
     assert context["date"]
