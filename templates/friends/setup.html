@@ -4,7 +4,7 @@
 
 {% block main %}
 
-<h1>{{ voter.short_name or "Friend" }}'s Voter Information</h1>
+<h1>{% firstof voter.short_name "Friend" %}'s Voter Information</h1>
 
 <form method="post" novalidate>
   {% csrf_token %}
