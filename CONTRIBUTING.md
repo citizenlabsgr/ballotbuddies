@@ -5,13 +5,13 @@
 ### Requirements
 
 * Make:
-    * Windows: http://mingw.org/download/installer
-    * Mac: http://developer.apple.com/xcode
-    * Linux: http://www.gnu.org/software/make
-* Python: `$ pyenv install` or `$ asdf install`
-* Poetry: https://python-poetry.org/docs/#installation
+  - macOS: `$ xcode-select --install`
+  - Linux: [https://www.gnu.org](https://www.gnu.org/software/make)
+  - Windows: `$ choco install make` [https://chocolatey.org](https://chocolatey.org/install)
+* Python: `$ asdf install` (https://asdf-vm.com)[https://asdf-vm.com/guide/getting-started.html]
+* Poetry: [https://python-poetry.org](https://python-poetry.org/docs/#installation)
 * PostgreSQL: `$ brew install postgres`
-* direnv: https://direnv.net/
+* direnv: https://direnv.net
 
 To confirm these system dependencies are configured correctly:
 
@@ -68,5 +68,5 @@ $ make check
 The CI server will report overall build status:
 
 ```
-$ make ci
+$ make all
 ```

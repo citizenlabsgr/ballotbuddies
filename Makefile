@@ -7,10 +7,7 @@ else
 endif
 
 .PHONY: all
-all: install
-
-.PHONY: ci
-ci: check test ## CI | Run all validation targets
+all: check test ## CI | Run all validation targets
 
 .PHONY: dev
 dev: install ## CI | Rerun all validation targests in a loop
@@ -56,8 +53,8 @@ ifndef CI
 poetry.lock: pyproject.toml
 	poetry lock --no-update
 	@ touch $@
-runtime.txt: .python-version
-	echo "python-$(shell cat $<)" > $@
+runtime.txt: .tool-versions
+	echo $(shell cat $< | tr ' ' '-') > $@
 requirements.txt: poetry.lock
 	poetry export --format requirements.txt --output $@ --without-hashes
 endif
@@ -187,7 +184,7 @@ promote: install
 # HELP ########################################################################
 
 .PHONY: help
-help: all
+help: install
 	@ grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .DEFAULT_GOAL := help
