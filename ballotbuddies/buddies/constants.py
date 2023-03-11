@@ -12,7 +12,7 @@ PREVIEW_URL = PREVIEW_HOST + "/elections/{election}/precincts/{precinct}"
 REGISTRATION_DEADLINE_DELTA = timedelta(days=15)  # common guidance
 ABSENTEE_REQUESTED_DEADLINE_DELTA = timedelta(weeks=4)  # buffer for mail service
 ABSENTEE_RECEIVED_DEADLINE_DELTA = timedelta(weeks=2)  # buffer for mail service
-BALLOT_AVAILABLE_DEADLINE_DAYS = 30  # SOS is supposed to finalize ballots a month out
+BALLOT_AVAILABLE_DEADLINE_DAYS = 45  # SOS is supposed to finalize ballots a month out
 BALLOT_AVAILABLE_DEADLINE_DELTA = timedelta(days=BALLOT_AVAILABLE_DEADLINE_DAYS)
 BALLOT_COMPLETED_DEADLINE_DELTA = timedelta(days=1)  # common guidance
 BALLOT_SENT_DEADLINE_DELTA = timedelta(weeks=3)  # buffer for mail service
@@ -63,7 +63,7 @@ UNREGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
-            "deadline": "2021-10-03",
+            "deadline": "2021-09-18",
         },
         "ballot_completed": {
             "color": "default",
@@ -147,7 +147,7 @@ REGISTERED = VoterData(
             "color": "default",
             "url": "",
             "date": "",
-            "deadline": "2021-10-03",
+            "deadline": "2021-09-18",
         },
         "ballot_completed": {
             "color": "default",
@@ -251,7 +251,7 @@ VOTED = VoterData(
             "color": "success",
             "url": "https://share.michiganelections.io/elections/45/precincts/5943",
             "date": "",
-            "deadline": "2021-10-03",
+            "deadline": "2021-09-18",
         },
         "ballot_completed": {
             "color": "success text-muted",

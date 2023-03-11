@@ -71,7 +71,7 @@ def describe_message():
         def it_includes_days_to_election(expect, voter):
             message = Message(profile=Profile(voter=voter))
 
-            expect(str(message)) == "Your Friends are Preparing to Vote in 32 Days"
+            expect(str(message)) == "Your Friends are Preparing to Vote in 48 Days"
 
     def describe_add():
         def it_replaces_legal_name(expect):
