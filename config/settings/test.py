@@ -13,7 +13,7 @@ BASE_URL = "http://example.com"
 
 ALLOW_DEBUG = True
 
-TODAY = date(2021, 10, 1)
+TODAY = date(2021, 9, 15)
 
 ###############################################################################
 # Core

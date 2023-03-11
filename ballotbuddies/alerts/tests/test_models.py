@@ -3,6 +3,8 @@
 
 from datetime import timedelta
 
+from django.utils import timezone
+
 import pytest
 
 from ballotbuddies.alerts.models import Message, Profile
@@ -53,13 +55,23 @@ def describe_profile():
 
             expect(profile.should_alert) == False
 
+        def is_false_with_recently_updated_voter(expect, profile: Profile):
+            assert profile.voter.complete
+            profile.staleness = timedelta(days=99)
+
+            profile.voter.updated = timezone.now() - timedelta(days=6)
+            expect(profile.should_alert) == False
+
+            profile.voter.updated = timezone.now() - timedelta(days=8)
+            expect(profile.should_alert) == True
+
 
 def describe_message():
     def describe_str():
         def it_includes_days_to_election(expect, voter):
             message = Message(profile=Profile(voter=voter))
 
-            expect(str(message)) == "Your Friends are Preparing to Vote in 32 Days"
+            expect(str(message)) == "Your Friends are Preparing to Vote in 48 Days"
 
     def describe_add():
         def it_replaces_legal_name(expect):
