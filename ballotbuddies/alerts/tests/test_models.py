@@ -3,6 +3,8 @@
 
 from datetime import timedelta
 
+from django.utils import timezone
+
 import pytest
 
 from ballotbuddies.alerts.models import Message, Profile
@@ -52,6 +54,16 @@ def describe_profile():
             profile = Profile(voter=Voter(user=User()))
 
             expect(profile.should_alert) == False
+
+        def is_false_with_recently_updated_voter(expect, profile: Profile):
+            assert profile.voter.complete
+            profile.staleness = timedelta(days=99)
+
+            profile.voter.updated = timezone.now() - timedelta(days=6)
+            expect(profile.should_alert) == False
+
+            profile.voter.updated = timezone.now() - timedelta(days=8)
+            expect(profile.should_alert) == True
 
 
 def describe_message():
