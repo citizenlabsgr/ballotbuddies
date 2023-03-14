@@ -24,6 +24,7 @@
   "cSpell.words": [
     "asdict",
     "asgi",
+    "autouse",
     "ballotbuddies",
     "bugsnag",
     "buildpacks",
@@ -34,6 +35,7 @@
     "corsheaders",
     "coveragerc",
     "createdb",
+    "delenv",
     "direnv",
     "envrc",
     "favicons",

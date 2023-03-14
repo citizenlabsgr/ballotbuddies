@@ -2,12 +2,14 @@ import os
 from datetime import timedelta
 from typing import NamedTuple
 
-STATUS_API = "https://michiganelections.io/api/status/"
+ELECTIONS_HOST = os.getenv("ELECTIONS_HOST", "https://michiganelections.io")
+STATUS_API = f"{ELECTIONS_HOST}/api/status/"
 MICHIGAN_REGISTRATION_URL = "https://mvic.sos.state.mi.us/RegisterVoter/Index"
 OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
 ABSENTEE_URL = "https://absentee.michiganelections.io/"
 PREVIEW_HOST = os.getenv("PREVIEW_HOST", "https://share.michiganelections.io")
-PREVIEW_URL = PREVIEW_HOST + "/elections/{election}/precincts/{precinct}"
+BALLOT_PREVIEW_URL = PREVIEW_HOST + "/ballots/{ballot_id}/"
+PRECINCT_PREVIEW_URL = PREVIEW_HOST + "/elections/{election_id}/precincts/{precinct_id}"
 
 REGISTRATION_DEADLINE_DELTA = timedelta(days=15)  # common guidance
 ABSENTEE_REQUESTED_DEADLINE_DELTA = timedelta(weeks=4)  # buffer for mail service

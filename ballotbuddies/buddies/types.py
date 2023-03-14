@@ -214,6 +214,7 @@ class Progress:
             election = {}
         else:
             precinct = data.get("precinct", {})
+            ballot = data.get("ballot", {})
 
         progress.election.date = election.get("date") or ""
         if progress.election.date:
@@ -290,12 +291,17 @@ class Progress:
             progress.election = State()
             return progress
 
-        if ballot := status.get("ballot"):
+        if has_ballot := status.get("ballot"):
             progress.absentee_requested.color = "success text-muted"
             progress.absentee_received.color = "success text-muted"
-            progress.ballot_available.url = constants.PREVIEW_URL.format(
-                election=election["id"], precinct=precinct["id"]
-            )
+            if ballot:
+                progress.ballot_available.url = constants.BALLOT_PREVIEW_URL.format(
+                    ballot_id=ballot["id"]
+                )
+            else:
+                progress.ballot_available.url = constants.PRECINCT_PREVIEW_URL.format(
+                    election_id=election["id"], precinct_id=precinct["id"]
+                )
             progress.ballot_available.color = "success"
             progress.ballot_completed.icon = "🟡"
         else:
@@ -312,7 +318,7 @@ class Progress:
             progress.voted.check()
 
         if (
-            not ballot
+            not has_ballot
             and progress.election.days < constants.BALLOT_AVAILABLE_DEADLINE_DAYS
         ):
             progress.absentee_requested.color = "success text-muted"
@@ -326,7 +332,7 @@ class Progress:
             progress.election.date = ""
             progress.voted.icon = "−"
 
-        if not (ballot and absentee_date):
+        if not (has_ballot and absentee_date):
             return progress
 
         if sent_date := status.get("absentee_ballot_sent"):
