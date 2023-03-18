@@ -1,9 +1,11 @@
 # pylint: disable=redefined-outer-name,unused-variable,unused-argument,expression-not-assigned
 
+from django.urls import reverse
 from django.utils import timezone
 
 import log
 import pytest
+from expecter import expect
 
 from ..constants import VOTED
 from ..models import User, Voter
@@ -155,6 +157,32 @@ def describe_profile():
         response = client.post("/profile/", follow=True)
         html = decode(response)
         expect(html).contains("checked")
+
+    def describe_delete():
+        @pytest.fixture
+        def response(client, voter: Voter):
+            client.force_login(voter.user)
+            return client.get(reverse("buddies:delete"))
+
+        def describe_GET():
+            def it_returns_200(response):
+                expect(response.status_code) == 200
+
+            def describe_POST():
+                @pytest.fixture
+                def post_response(client, response):
+                    return client.post(reverse("buddies:delete"), {"yes": ""})
+
+                def it_deletes_voter(post_response, voter: Voter):
+                    expect(post_response.status_code) == 302
+
+                    with pytest.raises(Voter.DoesNotExist):
+                        Voter.objects.get(user=voter.user)
+
+                def it_redirects_when_unauthenticated(client, response):
+                    client.logout()
+                    response = client.get(reverse("buddies:delete"))
+                    expect(response.status_code) == 302
 
 
 @pytest.mark.vcr
