@@ -130,6 +130,19 @@ def setup(request: HttpRequest):
 
 
 @login_required
+def delete(request: HttpRequest):
+    if request.method == "POST":
+        if "yes" in request.POST:
+            request.user.delete()
+            messages.info(request, "Your profile has been deleted.")
+            return redirect("buddies:about")
+        else:
+            return redirect("buddies:profile")
+
+    return render(request, "profile/delete.html")
+
+
+@login_required
 def friends(request: HttpRequest):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
