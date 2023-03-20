@@ -4,11 +4,38 @@
 
 {% block main %}
 
+<script>
+    async function redirectToEmail() {
+        try {
+            const response = await fetch('{% url "buddies:email" slug=voter.slug %}');
+            const data = await response.json();
+            const email = data.email;
+            window.location.href = `mailto:${email}`;
+        } catch (error) {
+            console.error('Error fetching email:', error);
+        }
+    }
+</script>
+
+
 <h1>{% firstof voter.short_name "Friend" %}'s Profile</h1>
 
-<p>
-    {{ voter.user.email }}
-</p>
+<div class="d-flex">
+
+    <button class="btn btn-primary" onclick="redirectToEmail()">@ Send Email</button>
+
+    <form class="ms-1">
+        {% csrf_token %}
+        <button class="btn btn-danger"
+            hx-post="{% url 'buddies:status' slug=voter.slug %}"
+            hx-vals='{ "ignore": true }'
+            hx-trigger="click"
+            hx-swap="none">
+            <span class="text-nowrap">⊖ Unfollow Voter</span>
+        </button>
+    </form>
+
+</div>
 
 {% if not voter.complete or not voter.progress.registered %}
 

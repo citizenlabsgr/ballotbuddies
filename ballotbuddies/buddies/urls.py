@@ -15,6 +15,7 @@ urlpatterns = [
     path("friends/<slug>", views.friends_profile, name="friends-profile"),
     path("friends/<slug>/setup/", views.friends_setup, name="friends-setup"),
     path("friends/<slug>/_status", views.status, name="status"),
+    path("friends/<slug>/_email", views.email, name="email"),
     path("invite/", views.invite, name="invite"),
     path("login/", views.login, name="login"),
     path("logout/", views.logout, name="logout"),

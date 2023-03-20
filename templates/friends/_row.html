@@ -111,8 +111,8 @@
 
     {% endif %}
 
-    <td>
-        <form class="float-end">{% csrf_token %}
+    <td class="float-end">
+        <form>{% csrf_token %}
         <div class="input-group flex-nowrap">
 
         {% if voter.user == request.user and not referrer %}
@@ -147,7 +147,7 @@
                 hx-target="closest tr"
                 hx-swap="outerHTML">
                 ✕
-            </button>
+        </button>
         {% elif voter.complete %}
         <button class="btn btn-secondary"
             {% if not request.user.is_authenticated or referrer %} disabled {% endif %}
@@ -178,9 +178,6 @@
             <li><h6 class="dropdown-header">More options:</h6></li>
 
             {% if voter.user != request.user %}
-            <li><a class="btn btn-primary" href="mailto:{{ voter.user.email }}">
-                <span class="text-nowrap">@ Send Email</span>
-            </a></li>
             <li><button class="btn btn-danger mt-2"
                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
                 hx-vals='{ "ignore": true }'

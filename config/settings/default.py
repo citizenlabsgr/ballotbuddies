@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "debug_toolbar",
+    "django_htmx",
     "django_user_agents",
     "corsheaders",
     "crispy_forms",
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "sesame.middleware.AuthenticationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "django_user_agents.middleware.UserAgentMiddleware",
 ]
 

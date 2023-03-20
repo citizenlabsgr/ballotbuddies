@@ -12,6 +12,7 @@ django-browser-reload==1.3.0 ; python_version >= "3.11" and python_version < "3.
 django-cors-headers==3.11.0 ; python_version >= "3.11" and python_version < "3.12"
 django-crispy-forms==1.14.0 ; python_version >= "3.11" and python_version < "3.12"
 django-debug-toolbar==3.2.4 ; python_version >= "3.11" and python_version < "3.12"
+django-htmx==1.14.0 ; python_version >= "3.11" and python_version < "3.12"
 django-multi-email-field @ git+https://github.com/aht007/django-multi-email-field@99a27ccdad465ff13a08cdfdd6b2612f817d32fc ; python_version >= "3.11" and python_version < "3.12"
 django-redis==4.12.1 ; python_version >= "3.11" and python_version < "3.12"
 django-sesame==2.4 ; python_version >= "3.11" and python_version < "3.12"
