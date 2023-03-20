@@ -195,10 +195,11 @@ def friends_search(request: HttpRequest):
             | Q(user__email__icontains=request.GET["q"])
         )
     if ballot:
-        queryset = queryset.filter(state="Michigan")
+        queryset = queryset.filter(status__status__ballot=True)
     if not voted:
         queryset = queryset.filter(voted__isnull=True)
 
+    log.info(f"Found {queryset.count()} friend(s) for {partial=} {ballot=} {voted=}")
     community = sorted(queryset, key=lambda voter: voter.display_name.lower())
     context = {
         "community": community,
