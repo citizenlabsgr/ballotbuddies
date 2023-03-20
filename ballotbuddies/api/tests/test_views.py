@@ -11,7 +11,7 @@ from ballotbuddies.buddies.models import User, Voter
 
 
 @pytest.fixture
-def voter(admin_user):
+def voter(admin_user: User):
     admin_user.first_name = "Jane"
     admin_user.last_name = "Doe"
     admin_user.save()
@@ -19,7 +19,7 @@ def voter(admin_user):
 
 
 @pytest.fixture
-def complete_voter(voter):
+def complete_voter(voter: Voter):
     voter.birth_date = timezone.now()
     voter.zip_code = "12345"
     voter.save()

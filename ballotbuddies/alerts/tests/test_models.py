@@ -13,7 +13,7 @@ from ballotbuddies.buddies.models import User, Voter
 
 
 @pytest.fixture
-def voter(admin_user):
+def voter(admin_user: User):
     v = Voter.objects.from_user(admin_user, REGISTERED.status)
     v.user.first_name = REGISTERED.first_name
     v.user.last_name = REGISTERED.last_name
@@ -25,7 +25,7 @@ def voter(admin_user):
 
 
 @pytest.fixture
-def profile(voter):
+def profile(voter: Voter):
     return Profile.objects.create(voter=voter)
 
 

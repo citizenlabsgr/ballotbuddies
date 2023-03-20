@@ -12,7 +12,7 @@ from ..models import User, Voter
 
 
 @pytest.fixture
-def voter(admin_user):
+def voter(admin_user: User):
     admin_user.first_name = "Jane"
     admin_user.last_name = "Doe"
     admin_user.save()
@@ -20,7 +20,7 @@ def voter(admin_user):
 
 
 @pytest.fixture
-def complete_voter(voter):
+def complete_voter(voter: Voter):
     voter.birth_date = timezone.now()
     voter.zip_code = "12345"
     voter.save()
@@ -28,7 +28,7 @@ def complete_voter(voter):
 
 
 @pytest.fixture
-def friend(voter):
+def friend(voter: Voter):
     user = User.objects.create_user(username="username", password="password")
     voter2 = Voter.objects.from_user(user, VOTED.status)
     voter2.nickname = "Friendo"
