@@ -99,7 +99,7 @@ class Profile(models.Model):
 class MessageManager(models.Manager):
     def get_draft(self, profile: Profile):
         message = self.filter(profile=profile, sent=False).first()
-        if not message:
+        if message is None:
             message = self.create(profile=profile, sent=False)
             log.debug(f"Drafted new message: {message}")
         return message
