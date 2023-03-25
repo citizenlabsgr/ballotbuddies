@@ -3,10 +3,10 @@
     <th scope="row">
         <a class="text-reset text-decoration-none" href="{%  url 'buddies:friends-profile' slug=voter.slug %}">
         <span class="d-block d-sm-none" {% if "@" in voter.display_name %}style="word-break: break-all;"{% endif %}>
-            {{ voter.display_name }}
+            {{ voter.display_name_breakable }}
         </span>
         <span class="d-none d-sm-block">
-            {{ voter.display_name }}
+            {{ voter.display_name_breakable }}
         </span>
         </a>
     </th>

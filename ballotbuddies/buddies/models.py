@@ -146,10 +146,16 @@ class Voter(models.Model):
             return f"{self.nickname} {self.user.last_name}"
         if name := self.legal_name:
             return name
-        email = self.user.email
-        for character in ["@", "."]:
-            email = email.replace(character, ZERO_WIDTH_SPACE + character)
-        return email
+        return self.user.email
+
+    @cached_property
+    def display_name_breakable(self) -> str:
+        if "@" in self.display_name:
+            email = self.display_name
+            for character in ["@", "."]:
+                email = email.replace(character, ZERO_WIDTH_SPACE + character)
+                return email
+        return self.display_name
 
     @cached_property
     def cta(self) -> str:
