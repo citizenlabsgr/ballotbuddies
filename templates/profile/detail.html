@@ -39,7 +39,7 @@
 <h2 class="pt-4">Last Updated</h2>
 
 <p>
-    {{ voter.updated }}
+    {{ voter.updated|default:"Never" }}
 </p>
 
 <h2 class="pt-4">Voter Information</h2>

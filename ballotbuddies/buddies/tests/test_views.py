@@ -105,9 +105,10 @@ def describe_friends():
 
             response = client.get("/friends/")
             html = decode(response)
+
             expect(html).contains(friend.nickname)
 
-        def it_can_filter_by_name(expect, client, voter, friend):
+        def it_can_filter_by_name(expect, client, voter: Voter, friend: Voter):
             client.force_login(voter.user)
 
             response = client.get("/friends/search/")
@@ -126,12 +127,25 @@ def describe_friends():
             expect(html).excludes(friend.nickname)
 
     def describe_detail():
-        def it_redirects_for_invalid_slugs(expect, client, voter):
+        def it_redirects_for_invalid_slugs(expect, client, voter: Voter):
             client.force_login(voter.user)
 
             response = client.get("/friends/foobar")
 
             expect(response.url) == "/friends/"
+
+        def it_handles_incomplete_voters(expect, client, voter: Voter, friend: Voter):
+            client.force_login(voter.user)
+            voter.status = {}
+            voter.save()
+
+            response = client.get(f"/friends/{friend.slug}")
+            html = decode(response)
+
+            expect(html).contains(friend.short_name)
+            expect(html).contains("Finish Setup")
+            expect(html).contains("Never")  # last updated
+            expect(html).excludes("None")
 
 
 @pytest.mark.django_db
