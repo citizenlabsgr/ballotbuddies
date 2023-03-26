@@ -17,10 +17,10 @@ import us
 import zipcodes
 
 from ballotbuddies.alerts.helpers import send_invite_email
-from ballotbuddies.core.helpers import generate_key
+from ballotbuddies.core.helpers import generate_key, today
 
 from . import constants
-from .types import Progress, to_datetime
+from .types import Progress, to_date, to_datetime
 
 ZERO_WIDTH_SPACE = "\u200b"
 
@@ -314,9 +314,20 @@ class Voter(models.Model):
         if self.user.is_test:  # type: ignore
             return False, "Voter registration can only be fetched for real people."
 
-        url = constants.STATUS_API + "?" + urlencode(self.data)
+        url = f"{constants.ELECTIONS_HOST}/api/elections/"
         log.info(f"GET {url}")
-        response = requests.get(url, timeout=20)
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            election = data["results"][0]
+            log.info(f"Latest election is {election['name']} on {election['date']}")
+            date = to_date(election["date"])
+            if date < today():
+                return False, "No upcoming elections."
+
+        url = f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(self.data)}"
+        log.info(f"GET {url}")
+        response = requests.get(url, timeout=10)
         if response.status_code == 202:
             data = response.json()
             log.error(f"{response.status_code} response: {data}")

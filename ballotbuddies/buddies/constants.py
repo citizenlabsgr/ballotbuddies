@@ -3,7 +3,6 @@ from datetime import timedelta
 from typing import NamedTuple
 
 ELECTIONS_HOST = os.getenv("ELECTIONS_HOST", "https://michiganelections.io")
-STATUS_API = f"{ELECTIONS_HOST}/api/status/"
 MICHIGAN_REGISTRATION_URL = "https://mvic.sos.state.mi.us/RegisterVoter/Index"
 OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
 ABSENTEE_URL = "https://absentee.michiganelections.io/"
