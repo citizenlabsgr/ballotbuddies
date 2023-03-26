@@ -325,6 +325,7 @@ class Progress:
             progress.absentee_received.color = "success text-muted"
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
+            progress.ballot_completed.icon = "−"
             progress.ballot_sent.icon = "−"
             progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
