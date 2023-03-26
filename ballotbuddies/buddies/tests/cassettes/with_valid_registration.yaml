@@ -9,22 +9,30 @@ interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - python-requests/2.26.0
+      - python-requests/2.28.1
     method: GET
-    uri: https://michiganelections.io/api/status/?first_name=Rosalynn&last_name=Bliss&birth_date=1975-08-03&zip_code=49503
+    uri: https://michiganelections.io/api/elections/
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA3SPwWrDMBBEf2XZs1xsJ2mDjum9h/yAke1JKpAlo10bSvC/F1FC2tKeltnZecvc
-        2I9sebc/VPv6eKja55cjG54g4q5gy+ckLnzESKfgRcgLZVy9KDJG0kRrUpDrBVEBuqRM+g56Syum
-        HpleU5QU/OgUIyFgUJ8ipUht3TZV01R1+8SG7w7bG0c3lcd/IthwmWz5kS87yJD9/EVgNpxxQUYc
-        0C05sI1LCJthUaeLlB+PDmw1LzB8r/Bbd26egx9cYXcZA/xaQoX47ah3ISTtivrP+5ndtk8AAAD/
-        /wMA/ZDVhHoBAAA=
+        H4sIAAAAAAAAA7SVS4+bMBRG/0rkNQQ/eIVdNa26mmqkdldVyIWbxBKYyDZJ09H89wor8bSpMjht
+        vEJYgI/vPXz3GTXDKA2qSBkhCT8MquTYdRHaKdiLYdTnewV67IxG1ddnNKoOVWhrzK5Kkl40W7Hh
+        EjpojBikXooh4TuRuIUkwwmKkGhRleEISd4DqtAjPy4eBqmHTrTcQIsiNF1RhSimLMZZjOlprd6O
+        PZfiJ7SoQl9G0C0/RovpA1RO7/HGiD2gyqgRJtI1KJAN1JZzwn+JbodOV2fodOWgPxtuYPERJCje
+        /UFMY0JiXL5J/GnYQ/8d1KI029+w17zTd+QuHXd5wf2kRM/V8YIbl3OVfjduRm0uin1n6txR536K
+        UKsIm1WEqYDUhaMuXmu9g0bw7lq1WYzJDLRqtguiTTjszGFnDtvJebXixCpO/RQPKkvq+FPHf5L0
+        DfpJdOYjelBlqGOnfqITK3o6K3oaMlSYo2Z/if7h9NglNYsp8zCdBi03ceDEI8WxVZz5KR6U243M
+        FHukOLZypz5yh9SEuZnJVn5yYyt3Nit3FpLaTUz2OjGfFGjRgjTXohxPghPsE+U4ILyL8huSnKys
+        5pmf5iFL/xrkXrqQldWlmNWl8GC2mLpKksPhsDyzLjfDPmmHZuxBGp3oQSeP/FhPW9cPvAPZclXn
+        KSOY1sVy167RPxnnhJvPJFLaZuV+zcrvePBp7/o9N6DrHGNKyX+c2MUwmU8zUto0K3zSrAgop5vU
+        9IZfq7DdKvy65U3/7eUXAAAA//8DAF2EzAupDQAA
     headers:
+      Allow:
+      - OPTIONS, GET
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6a0345c44b2c6338-ORD
+      - 7adb49210ae0241e-IAD
       Connection:
       - keep-alive
       Content-Encoding:
@@ -32,36 +40,91 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 18 Oct 2021 16:51:38 GMT
-      Expect-CT:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      - Sun, 26 Mar 2023 00:30:33 GMT
       NEL:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Referrer-Policy:
+      - same-origin
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=vBmnnrK3az9O8NwZyfCxyDLV31CBBRh0d9vxknOfdDfxsg3%2Fwjr1ZP3iQ6eX1VPfjMKtL9YJ5jPwwVUSmuHMF4GImPEbP4R5leeG8SY8Jyl58ghjAyg9KPrBPI4OJJ78irrgEQdWgw%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=QGEOj5chhDMtGN47ScKLAzw1Vg28U94lYuyDzsi4j4vme5WZ%2FpurT8VK38lvG4VRWixbV%2Bqeu6MLKAe%2F%2Bf9xFI88m%2BQ4%2Bgy5bhfCjOwpXqCZxNkeKsmHQo%2BFN1wOPYJTkP4%2Fc73Usw%3D%3D"}],"group":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Transfer-Encoding:
       - chunked
-      allow:
-      - GET, HEAD, OPTIONS
-      alt-svc:
-      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
-        ma=86400
-      cache-control:
-      - max-age=300
-      expires:
-      - Mon, 18 Oct 2021 16:56:38 GMT
-      referrer-policy:
-      - same-origin
-      vary:
+      Vary:
       - Accept, Cookie, Origin
-      via:
+      Via:
       - 1.1 vegur
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-frame-options:
+      X-Frame-Options:
       - DENY
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://michiganelections.io/api/status/?email=&nickname=&first_name=Rosalynn&last_name=Bliss&birth_date=1975-08-03&zip_code=49503
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3SQwU7DMBBEf2U1ZweFlEjgIz1wQFz6A5Ebb4qRa0f2piiq8u/ILVEBiZM1Hvvt
+        7JzhLDQ2bV091I9t1dZtA4Uj52wODI1dzMbPIdCzdzmTy5T44LJwYksS6RSFyQRLZhy9Y0tDTGQC
+        mX3mIMy0N95HuVzLO9ObmWkbQ47eWSNsiT334mKgGKipm01Vt1Xd3EFhdaDPl5RtrRDMsaT6S4FC
+        OaFxQ0Ah8cCJQ8/dlDx0mLxfFMbEvQu9rNz7ptko9HEKMkPjlYNA4WNKLlv3nQBbJzPFgV5SWXZn
+        RmczFD5NKv2VYWE67jkV8YRFIYuRKZcZt8KgJU2scO0EejA+s8La1Wqvurt02psSoUvcszsVRlnj
+        x6MrrCvqP+/33+UW4LwsXwAAAP//AwBPherKAgIAAA==
+    headers:
+      Allow:
+      - GET, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 7adb4921cb60063b-IAD
+      Cache-Control:
+      - max-age=300
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 26 Mar 2023 00:30:33 GMT
+      Expires:
+      - Sun, 26 Mar 2023 00:35:33 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Referrer-Policy:
+      - same-origin
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=XlcKFuTCLBqsXYkFrugDgZpSyzY0dgpQeK9aRruM97bC3hMsBdg4rrG5SLMKN1cACfroBJxthSJ%2FhNFZvRV2%2BrQu80vPIUhuNxblfgCPeb%2FMZNoQQ9hIExLUIMrBeKQ6pw9uyITJyQ%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept, Cookie, Origin
+      Via:
+      - 1.1 vegur
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
     status:
       code: 200
       message: OK
