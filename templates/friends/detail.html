@@ -35,7 +35,7 @@
 <h1>{% firstof voter.short_name "Friend" %}'s Profile</h1>
 
 <div class="btn-group">
-    <button class="btn btn-{% if voter.complete %}secondary{% else %}primary{% endif %}" onclick="redirectToEmail()">@ Send Email</button>
+    <button class="btn btn-{% if voter.progress.actions %}primary{% else %}secondary{% endif %}" onclick="redirectToEmail()">@ Send Email</button>
     <button class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" type="button" id="contextMenu" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="visually-hidden">Toggle Dropdown</span>
     </button>
