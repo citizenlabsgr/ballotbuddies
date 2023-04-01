@@ -20,21 +20,26 @@
 
 <h1>{% firstof voter.short_name "Friend" %}'s Profile</h1>
 
-<div class="d-flex">
-
-    <button class="btn btn-primary" onclick="redirectToEmail()">@ Send Email</button>
-
-    <form class="ms-1">
-        {% csrf_token %}
-        <button class="btn btn-danger"
-            hx-post="{% url 'buddies:status' slug=voter.slug %}"
-            hx-vals='{ "ignore": true }'
-            hx-trigger="click"
-            hx-swap="none">
-            <span class="text-nowrap">⊖ Unfollow Voter</span>
-        </button>
-    </form>
-
+<div class="btn-group">
+    <button class="btn btn-{% if voter.complete %}secondary{% else %}primary{% endif %}" onclick="redirectToEmail()">@ Send Email</button>
+    <button class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" type="button" id="contextMenu" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu px-2" aria-labelledby="contextMenu">
+        <li><p class="text-muted">More options:</p></li>
+        <li>
+            <form>
+                {% csrf_token %}
+                <button class="btn btn-danger"
+                    hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                    hx-vals='{ "ignore": true }'
+                    hx-trigger="click"
+                    hx-swap="none">
+                    <span class="text-nowrap">⊖ Unfollow Voter</span>
+                </button>
+            </form>
+        </li>
+    </ul>
 </div>
 
 {% if not voter.complete or not voter.progress.registered %}

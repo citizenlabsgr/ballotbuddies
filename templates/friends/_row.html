@@ -173,12 +173,12 @@
         </button>
 
         {% if request.user.is_authenticated %}
-        <ul class="dropdown-menu dropdown-menu-end text-center px-2 pb-3">
+        <ul class="dropdown-menu dropdown-menu-end px-2">
 
-            <li><h6 class="dropdown-header">More options:</h6></li>
+            <li><p class="text-muted">More options:</p></li>
 
             {% if voter.user != request.user %}
-            <li><button class="btn btn-danger mt-2"
+            <li><button class="btn btn-danger"
                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
                 hx-vals='{ "ignore": true }'
                 hx-trigger="click"
@@ -202,9 +202,9 @@
             {% endif %}
 
             {% if voter.updated %}
-            <li class="mt-2">
+            <li class="mt-2 text-end">
                 <small class="text-muted fst-italic">
-                    Last updated: {{ voter.updated_humanized }}
+                    last updated: {{ voter.updated_humanized }}
                 </small>
             </li>
             {% endif %}
