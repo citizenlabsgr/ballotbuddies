@@ -15,6 +15,20 @@
             console.error('Error fetching email:', error);
         }
     }
+
+    function removeEmailParamFromUrl() {
+        const urlWithoutEmail = window.location.href.replace(/([&?]email=true)(&|$)/, '$2');
+        history.replaceState(null, null, urlWithoutEmail);
+    }
+
+    function checkEmailInUrlAndRedirect() {
+        if (window.location.href.includes("email=true")) {
+            redirectToEmail();
+            removeEmailParamFromUrl();
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", checkEmailInUrlAndRedirect);
 </script>
 
 
