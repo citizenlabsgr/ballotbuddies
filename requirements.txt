@@ -17,7 +17,7 @@ django-multi-email-field @ git+https://github.com/aht007/django-multi-email-fiel
 django-redis==4.12.1 ; python_version >= "3.11" and python_version < "3.12"
 django-sesame==2.4 ; python_version >= "3.11" and python_version < "3.12"
 django-user-agents==0.4.0 ; python_version >= "3.11" and python_version < "3.12"
-django==4.2a1 ; python_version >= "3.11" and python_version < "3.12"
+django==4.2 ; python_version >= "3.11" and python_version < "3.12"
 djangorestframework==3.14.0 ; python_version >= "3.11" and python_version < "3.12"
 gunicorn==20.1.0 ; python_version >= "3.11" and python_version < "3.12"
 h11==0.13.0 ; python_version >= "3.11" and python_version < "3.12"
