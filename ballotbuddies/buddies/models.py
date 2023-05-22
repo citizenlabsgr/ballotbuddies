@@ -244,15 +244,6 @@ class Voter(models.Model):
             self.voted = timezone.make_aware(datetime)
             self.save()
 
-        if not progress.election and self.voted:
-            log.info(f"Clearing recorded vote for past election: {self}")
-            self.absentee = True
-            self.ballot = None
-            self.ballot_returned = None
-            self.voted = None
-            self.save()
-            self.profile.message.clear()
-
         if self.ballot:
             progress.ballot_completed.check()
         elif not self.voted and progress.ballot_sent:
@@ -324,6 +315,8 @@ class Voter(models.Model):
             date = to_date(election["date"])
             if date < today():
                 return False, "No upcoming elections."
+        else:
+            return False, "Election information unavailable at this time."
 
         url = f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(self.data)}"
         log.info(f"GET {url}")

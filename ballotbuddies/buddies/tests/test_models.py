@@ -2,7 +2,6 @@
 
 from dataclasses import asdict
 
-from django.conf import settings
 from django.utils import timezone
 
 import pytest
@@ -35,17 +34,6 @@ def describe_voter():
             expect(
                 voter.progress.registered.url
             ) == "https://votesaveamerica.com/state/ohio/"
-
-        @pytest.mark.django_db
-        def with_past_election(expect, voter, monkeypatch):
-            monkeypatch.setattr(settings, "TODAY", None)
-            voter.voted = timezone.now()
-            voter.user.save()
-
-            voter.status = VOTED.status
-
-            expect(voter.progress.voted.date) == ""
-            expect(voter.voted) == None
 
         @pytest.mark.django_db
         def with_planned_present_voter(expect, voter):
