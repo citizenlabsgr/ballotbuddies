@@ -125,6 +125,7 @@ class State:
     def disable(self):
         if self.icon != "✅":
             self.icon = "−"
+            self.url = ""
         self.color = "success text-muted"
 
 
@@ -268,6 +269,8 @@ class Progress:
 
         if absentee_date := status.get("absentee_application_received"):
             progress.absentee_received.check(absentee_date)
+            if not progress.absentee_requested:
+                progress.absentee_requested.disable()
         elif absentee:
             progress.absentee_received.icon = "🚫"
             progress.ballot_sent.icon = "−"
