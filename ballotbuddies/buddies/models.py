@@ -296,7 +296,6 @@ class Voter(models.Model):
         previous_fingerprint = self.fingerprint
 
         if self.state != "Michigan":
-            self.updated = timezone.now()
             return False, "Voter registration can only be fetched for Michigan."
 
         if self.staleness < 60 * 15:
@@ -324,7 +323,6 @@ class Voter(models.Model):
         if response.status_code == 202:
             data = response.json()
             log.error(f"{response.status_code} response: {data}")
-            self.updated = timezone.now()
             return False, data["message"]
         if response.status_code != 200:
             log.error(f"{response.status_code} response")
@@ -333,10 +331,10 @@ class Voter(models.Model):
         data = response.json()
         log.info(f"{response.status_code} response: {data}")
         self.status = data
-        self.updated = timezone.now()
 
         changed = self.fingerprint != previous_fingerprint
         if changed and previous_fingerprint:
+            self.updated = timezone.now()
             self.share_status()
 
         return changed, ""
