@@ -66,7 +66,6 @@ def update_statuses() -> int:
     for voter in query:
         if voter.update_status()[0]:
             total += 1
-        voter.updated = timezone.now()
         voter.save()
 
     return total
