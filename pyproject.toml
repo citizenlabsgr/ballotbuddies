@@ -64,7 +64,7 @@ pytest-expecter = "^3.0"
 pytest-randomly = "*"
 pytest-vcr = "*"
 pytest-cov = "^4.0"
-splinter = "~0.16"
+splinter = "~0.19"
 coveragespace = "^6.0"
 coveralls = "*"
 
