@@ -68,6 +68,7 @@ class VoterAdmin(admin.ModelAdmin):
         "status",
         "Percent",
         "Actions",
+        "fetched",
         "updated",
         "created",
     ]
