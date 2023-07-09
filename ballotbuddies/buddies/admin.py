@@ -49,6 +49,7 @@ class VoterAdmin(admin.ModelAdmin):
         "absentee",
         "ballot_returned",
         "voted",
+        "fetched",
         "updated",
         "created",
     ]

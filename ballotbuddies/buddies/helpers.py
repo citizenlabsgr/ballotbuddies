@@ -60,7 +60,7 @@ def update_statuses() -> int:
     total = 0
 
     age = timezone.now() - timedelta(days=1, hours=1)
-    query = Voter.objects.filter(updated__lte=age)
+    query = Voter.objects.filter(fetched__lte=age)
     log.info(f"Updating status for {query.count()} voter(s)")
     voter: Voter
     for voter in query:
