@@ -5,8 +5,13 @@
 <p style="font-size: 12pt;">
     Your {{ items|length }} friend{{ items|pluralize }} on Michigan
     <b>Ballot Buddies</b> ha{{ items|pluralize:"s,ve" }} been making progress
-    towards casting their vote in the upcoming <b>{{ election }}</b> election
-    on <b>{{ date }}</b>.
+    towards casting
+    {% if date %}
+    their vote in the upcoming
+    <b>{{ election }}</b> election on <b>{{ date }}</b>.
+    {% else %}
+    a vote in the upcoming election{{ items|pluralize }} in their respective precinct{{ items|pluralize }}.
+    {% endif %}
 </p>
 
 <p style="font-size: 12pt;">
@@ -20,6 +25,6 @@
 </p>
 
 <p style="font-size: 13pt;">
-    Click this link to view your progress:
+    Click this link to view {% if date %}your{% else %}their{% endif %} progress:
     <a href="{{ url }}{{ query_string }}">{{ url }}</a>
 </p>

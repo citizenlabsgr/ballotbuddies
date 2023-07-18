@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-from contextlib import suppress
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
@@ -81,19 +80,21 @@ def send_invite_email(user: User, friend: Voter, *, debug=False):
             log.info(f"Sent invite email: {user}")
 
 
-def get_activity_email(user: User, message: Message | None = None):
-    profile: Profile = user.voter.profile
+def get_activity_email(
+    user: User, *, profile: Profile | None = None, message: Message | None = None
+):
+    profile: Profile = profile or user.voter.profile
     voter: Voter = user.voter
     message = message or profile.message
+    date = voter.progress.election.date_humanized.strip("−")
     context = {
         "name": voter.short_name or "Voter",
         "items": message.activity_lines,
         "election": voter.election,
-        "date": voter.progress.election.date_humanized.strip("−"),
-        "url": build_url("/profile"),
+        "date": date,
+        "url": build_url("/profile") if date else build_url("/friends"),
         "query_string": get_query_string(user),
     }
-    assert profile.always_alert or all(context.values()), f"Missing values: {context}"
     body = render_to_string("emails/activity.html", context)
     email = EmailMessage(message, body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
@@ -117,7 +118,6 @@ def send_activity_emails(day: str) -> int:
 
     count = 0
     for profile in Profile.objects.filter(will_alert=True):
-        with suppress(AssertionError):
-            send_activity_email(profile.voter.user)
-            count += 1
+        send_activity_email(profile.voter.user)
+        count += 1
     return count
