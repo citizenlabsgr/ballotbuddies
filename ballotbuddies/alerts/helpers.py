@@ -89,11 +89,11 @@ def get_activity_email(user: User, message: Message | None = None):
         "name": voter.short_name or "Voter",
         "items": message.activity_lines,
         "election": voter.election,
-        "date": voter.progress.election.date_humanized,
+        "date": voter.progress.election.date_humanized.strip("−"),
         "url": build_url("/profile"),
         "query_string": get_query_string(user),
     }
-    assert profile.always_alert or voter.progress.election, f"Missing date: {context}"
+    assert profile.always_alert or all(context.values()), f"Missing values: {context}"
     body = render_to_string("emails/activity.html", context)
     email = EmailMessage(message, body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
