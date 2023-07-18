@@ -38,11 +38,15 @@ class Profile(models.Model):
         return repr(self.voter)
 
     @property
+    def has_election(self) -> bool:
+        return bool(self.voter.progress.election.date)
+
+    @property
     def message(self) -> Message:
         return Message.objects.get_draft(self)
 
     @property
-    def can_alert(self) -> bool:
+    def has_message(self) -> bool:
         return bool(self.message)
 
     @property
@@ -92,7 +96,7 @@ class Profile(models.Model):
     def save(self, **kwargs):
         self.staleness = self._staleness()
         with suppress(ValueError):
-            self.will_alert = self.can_alert and self.should_alert
+            self.will_alert = self.has_message and self.should_alert
         super().save(**kwargs)
 
 
