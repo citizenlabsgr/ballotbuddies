@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from contextlib import suppress
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
@@ -12,7 +13,6 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils import timezone
 
-import bugsnag
 import log
 from sesame.utils import get_query_string
 
@@ -117,10 +117,7 @@ def send_activity_emails(day: str) -> int:
 
     count = 0
     for profile in Profile.objects.filter(will_alert=True):
-        try:
+        with suppress(AssertionError):
             send_activity_email(profile.voter.user)
             count += 1
-        except Exception as e:
-            log.error(f"Unable send activity email: {e}")
-            bugsnag.notify(e)
     return count

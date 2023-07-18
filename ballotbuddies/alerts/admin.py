@@ -52,7 +52,8 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
     ]
     list_display = [
         "voter",
-        "Can_alert",
+        "Has_election",
+        "Has_message",
         "last_viewed",
         "last_alerted",
         "staleness",
@@ -60,10 +61,15 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "will_alert",
     ]
 
-    def Can_alert(self, profile: Profile):
-        return profile.can_alert
+    def Has_election(self, profile: Profile):
+        return profile.has_election
 
-    Can_alert.boolean = True  # type: ignore
+    Has_election.boolean = True  # type: ignore
+
+    def Has_message(self, profile: Profile):
+        return profile.has_message
+
+    Has_message.boolean = True  # type: ignore
 
     def Should_alert(self, profile: Profile):
         return profile.should_alert
@@ -71,8 +77,9 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
     Should_alert.boolean = True  # type: ignore
 
     readonly_fields = [
-        "Can_alert",
+        "Has_election",
         "Message",
+        "Has_message",
         "staleness",
         "Should_alert",
         "last_viewed",

@@ -35,7 +35,7 @@ def describe_profile():
         profile.mark_viewed()
 
         expect(profile.staleness) == timedelta(0)
-        expect(profile.can_alert) == False
+        expect(profile.has_message) == False
         expect(profile.should_alert) == False
 
     @pytest.mark.django_db
