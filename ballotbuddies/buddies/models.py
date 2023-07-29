@@ -16,7 +16,7 @@ import requests
 import us
 import zipcodes
 
-from ballotbuddies.alerts.helpers import send_invite_email
+from ballotbuddies.alerts.helpers import send_invite_email, send_voted_email
 from ballotbuddies.core.helpers import generate_key, today
 
 from . import constants
@@ -244,6 +244,7 @@ class Voter(models.Model):
             datetime = to_datetime(progress.voted.date)
             self.voted = timezone.make_aware(datetime)
             self.save()
+            send_voted_email(self.user)
 
         if self.ballot:
             progress.ballot_completed.check()

@@ -121,3 +121,28 @@ def send_activity_emails(day: str) -> int:
         send_activity_email(profile.voter.user)
         count += 1
     return count
+
+
+def get_voted_email(user: User):
+    voter: Voter = user.voter
+    context = {
+        "name": voter.short_name or "Voter",
+        "election": voter.election,
+        "url": build_url("/friends"),
+        "query_string": get_query_string(user),
+    }
+    subject = "Your Vote Has Been Cast"
+    body = render_to_string("emails/voted.html", context)
+    email = EmailMessage(subject, body, settings.EMAIL, [user.email])
+    email.content_subtype = "html"
+    return email
+
+
+def send_voted_email(user: User):
+    profile: Profile = user.voter.profile
+    email = get_voted_email(user)
+    if user.email.endswith("@example.com"):
+        log.warn(f"Skipped voted email for test user: {user}")
+    elif email.send(fail_silently=False):
+        log.info(f"Sent voted email: {user}")
+        profile.mark_alerted()
