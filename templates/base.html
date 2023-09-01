@@ -75,38 +75,39 @@
     {% django_htmx_script %}
 
     <!-- Clipboard -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"
-    integrity="sha512-PIisRT8mFfdxx99gMs7WAY5Gp+CtjYYxKvF93w8yWAvX548UBNADHu7Qkavgr6yRG+asocqfuk5crjNd5z9s6Q=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js" integrity="sha512-PIisRT8mFfdxx99gMs7WAY5Gp+CtjYYxKvF93w8yWAvX548UBNADHu7Qkavgr6yRG+asocqfuk5crjNd5z9s6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
 
-        var clipboard = new ClipboardJS('.btn');
+    // Clipboard
+    var clipboard = new ClipboardJS('.btn');
 
-        clipboard.on('success', function(e) {
-            $(e.trigger).attr('title', 'Link Copied').tooltip('show');
+    clipboard.on('success', function(e) {
+        var triggerElement = e.trigger;
+        triggerElement.setAttribute('title', 'Link Copied');
+
+        var tooltip = new bootstrap.Tooltip(triggerElement);
+        tooltip.show();
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+
+    // Bootstrap
+    document.addEventListener("DOMContentLoaded", function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
         });
+    });
 
-        clipboard.on('error', function(e) {
-            console.log(e);
-        });
-
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-
-    </script>
-
-    <!-- Service Worker -->
-    <script>
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-                .register('/service-worker.js')
-                .then(() => { console.log('Service worker registered'); });
-        }
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('/service-worker.js')
+            .then(() => { console.log('Service worker registered'); });
+    }
 
     </script>
 
