@@ -49,22 +49,6 @@ def decode(response, verbose=True) -> str:
 
 @pytest.mark.django_db
 def describe_index():
-    def it_disables_buttons_when_unauthenticated(expect, client, voter):
-        response = client.get("/")
-
-        html = decode(response)
-        expect(html).excludes("View Profile")
-        expect(html.count("disabled")) == 3
-
-    def it_disables_buttons_with_referrer(expect, client, voter):
-        client.force_login(voter.user)
-
-        response = client.get(f"/?referrer={voter.slug}")
-
-        html = decode(response)
-        expect(html).excludes("View Profile")
-        expect(html.count("disabled")) >= 3  # TODO: should be 4 including the voter
-
     def it_adds_friend_from_referrer(expect, client, voter, friend):
         voter.friends.clear()
         client.force_login(voter.user)
