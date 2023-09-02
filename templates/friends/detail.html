@@ -11,13 +11,8 @@
             const data = await response.json();
             const email = data.email;
 
-            // Open a new tab
-            const newTab = window.open('about:blank', '_blank');
+            const newTab = window.open(`mailto:${email}`, '_blank');
 
-            // Redirect the main window to the mailto link
-            window.location.href = `mailto:${email}`;
-
-            // Close the new tab after a short delay
             if (newTab) {
                 setTimeout(() => {
                     newTab.close();
