@@ -150,7 +150,8 @@
                 ✕
         </button>
         {% elif voter.complete %}
-        <a class="btn btn-secondary text-nowrap" href="{% url 'buddies:friends-profile' slug=voter.slug %}?email=true">
+        <a class="btn btn-{% if voter.progress.actions %}primary{% else %}secondary{% endif %} text-nowrap"
+            href="{% url 'buddies:friends-profile' slug=voter.slug %}?email=true">
             <span class="d-none d-md-inline text-nowrap">@ Send Email</span>
             <span class="d-none d-sm-inline d-md-none text-nowrap">@ Email</span>
             <span class="d-inline d-sm-none">@</span>
