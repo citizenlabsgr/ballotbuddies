@@ -74,25 +74,7 @@
     <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
     {% django_htmx_script %}
 
-    <!-- Clipboard -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js" integrity="sha512-PIisRT8mFfdxx99gMs7WAY5Gp+CtjYYxKvF93w8yWAvX548UBNADHu7Qkavgr6yRG+asocqfuk5crjNd5z9s6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script>
-
-    // Clipboard
-    var clipboard = new ClipboardJS('.btn');
-
-    clipboard.on('success', function(e) {
-        var triggerElement = e.trigger;
-        triggerElement.setAttribute('title', 'Link Copied');
-
-        var tooltip = new bootstrap.Tooltip(triggerElement);
-        tooltip.show();
-    });
-
-    clipboard.on('error', function(e) {
-        console.log(e);
-    });
 
     // Bootstrap
     document.addEventListener("DOMContentLoaded", function() {

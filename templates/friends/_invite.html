@@ -9,7 +9,7 @@
 
     <div class="d-flex justify-content-between">
         <button class="btn btn-primary" type="submit">Invite Friends</button>
-        <button class="btn btn-secondary" type="button"
+        <button class="btn btn-secondary" type="button" id="copy-button"
                 data-clipboard-text="http://{{ request.get_host }}?referrer={{ request.user.voter.slug }}">
             Copy Invitation Link
         </button>
@@ -17,3 +17,23 @@
 </form>
 
 {% endif %}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js" integrity="sha512-PIisRT8mFfdxx99gMs7WAY5Gp+CtjYYxKvF93w8yWAvX548UBNADHu7Qkavgr6yRG+asocqfuk5crjNd5z9s6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+var clipboard = new ClipboardJS('#copy-button');
+
+clipboard.on('success', function(e) {
+    var triggerElement = e.trigger;
+    triggerElement.setAttribute('title', 'Link Copied');
+
+    var tooltip = new bootstrap.Tooltip(triggerElement);
+    tooltip.show();
+});
+
+clipboard.on('error', function(e) {
+    console.error("ClipboardJS error: ", e);
+});
+
+</script>
