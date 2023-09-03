@@ -379,7 +379,7 @@ class Voter(models.Model):
         voter.save()
         return voter, True
 
-    def update_neighbors(self, limit=0) -> int:
+    def update_neighbors(self, *, limit=0) -> int:
         added = 0
         for friend in self.friends.all():
             for voter in friend.friends.all():

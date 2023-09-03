@@ -64,12 +64,18 @@ class Command(BaseCommand):
             voter: Voter = self.get_or_create_voter(*info.split(","), admin=True)
             real_voters.append(voter)
 
+        for voter in real_voters:
+            voter.friends.clear()
+            voter.neighbors.clear()
+            voter.strangers.clear()
+            voter.save()
+
         test_voters = list(self.generate_test_voters())
 
         for count, voter in enumerate(real_voters, start=1):
             friend = self.get_or_create_voter(
                 f"friend+{count}@example.com",
-                voter.user.first_name,
+                voter.user.first_name + "'s",
                 "Friend",
                 "1970-01-01",
                 "49503",
