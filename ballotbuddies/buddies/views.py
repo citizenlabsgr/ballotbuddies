@@ -7,11 +7,9 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.utils import timezone
 
 import log
-from django_htmx.http import HttpResponseClientRedirect
 
 from ballotbuddies.alerts.helpers import send_login_email
 from ballotbuddies.core.helpers import allow_debug
@@ -263,7 +261,6 @@ def status(request: HttpRequest, slug: str):
         request.user.voter.neighbors.remove(voter)
         request.user.voter.strangers.add(voter)
         request.user.voter.save()
-        return HttpResponseClientRedirect(reverse("buddies:friends"))
 
     if "add" in request.POST:
         log.info(f"Following voter: {voter}")

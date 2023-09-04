@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from contextlib import suppress
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
@@ -95,7 +94,7 @@ class Profile(models.Model):
 
     def save(self, **kwargs):
         self.staleness = self._staleness()
-        with suppress(ValueError):
+        if self.pk:
             self.will_alert = self.has_message and self.should_alert
         super().save(**kwargs)
 
