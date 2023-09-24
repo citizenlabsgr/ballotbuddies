@@ -1,6 +1,3 @@
-# TODO: Upgrade mypy to 0.991+ when django-stubs supports it
-# mypy: ignore_errors
-
 import random
 import string
 from datetime import date
