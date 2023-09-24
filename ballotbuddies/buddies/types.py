@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from functools import cached_property
 
+from django.utils import timezone
+
 from ballotbuddies.core.helpers import today
 
 from . import constants
@@ -77,6 +79,12 @@ class State:
             delta = to_date(self.date) - today()
             return delta.days
         return 0
+
+    @property
+    def date_comparable(self) -> datetime:
+        if self.date:
+            return timezone.make_aware(to_datetime(self.date))
+        return timezone.make_aware(datetime.min)
 
     @property
     def date_shortened(self) -> str:
