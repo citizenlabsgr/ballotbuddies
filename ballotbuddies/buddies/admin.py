@@ -1,6 +1,9 @@
 # pylint: disable=unused-argument
 
+import json
+
 from django.contrib import admin, messages
+from django.utils.safestring import mark_safe
 
 from .models import Voter
 
@@ -65,10 +68,15 @@ class VoterAdmin(admin.ModelAdmin):
     filter_horizontal = ["friends", "neighbors", "strangers"]
 
     readonly_fields = [
-        "status",
+        "Status",
         "Percent",
         "Actions",
         "fetched",
         "updated",
         "created",
     ]
+
+    def Status(self, voter: Voter):
+        text = json.dumps(voter.status, indent=4)
+        html = f"<pre>{text}</pre>"
+        return mark_safe(html)

@@ -20,7 +20,7 @@ from ballotbuddies.alerts.helpers import send_invite_email, send_voted_email
 from ballotbuddies.core.helpers import generate_key, today
 
 from . import constants
-from .types import Progress, to_date, to_datetime
+from .types import Progress, to_date
 
 ZERO_WIDTH_SPACE = "\u200b"
 
@@ -90,7 +90,7 @@ class Voter(models.Model):
     )
     state = models.CharField(max_length=20, default="", editable=False)
 
-    status = models.JSONField(null=True, blank=True)
+    status = models.JSONField(null=True, blank=True, editable=False)
     absentee = models.BooleanField(
         default=True, help_text="Voter plans to vote by mail."
     )
@@ -233,16 +233,22 @@ class Voter(models.Model):
             progress.absentee_requested.url = ""
             progress.absentee_received.icon = "−"
 
+        if self.voted and (
+            progress.election.date_comparable - self.voted
+            > timedelta(days=constants.EARLY_VOTING_DAYS)
+        ):
+            log.info(f"Clearing vote from previous election: {self}")
+            self.reset_status()
+            self.save()
+
         if progress.ballot_received.date and not self.ballot_returned:
             log.info(f"Assuming ballot was returned: {self}")
-            datetime = to_datetime(progress.ballot_received.date)
-            self.ballot_returned = timezone.make_aware(datetime)
+            self.ballot_returned = progress.ballot_received.date_comparable
             self.save()
 
         if progress.voted.date and not self.voted:
             log.info(f"Recording vote for current election: {self}")
-            datetime = to_datetime(progress.voted.date)
-            self.voted = timezone.make_aware(datetime)
+            self.voted = progress.voted.date_comparable
             self.save()
             send_voted_email(self.user)
 
@@ -250,7 +256,7 @@ class Voter(models.Model):
             progress.ballot_completed.check()
         elif not self.voted and progress.ballot_sent:
             progress.ballot_completed.icon = "🚫"
-        if progress.ballot_completed and not progress.ballot_sent:
+        if not self.voted and progress.ballot_completed and not progress.ballot_sent:
             progress.voted.icon = "🟡"
 
         return progress
@@ -289,6 +295,8 @@ class Voter(models.Model):
 
     def reset_status(self):
         self.absentee = True
+        self.ballot = None
+        self.ballot_returned = None
         self.voted = None
         if not self.user.is_test:  # type: ignore
             self.status = None
