@@ -1,6 +1,3 @@
-# TODO: Upgrade mypy to 0.991+ when django-stubs supports it
-# mypy: ignore_errors
-
 from __future__ import annotations
 
 from datetime import timedelta
@@ -83,7 +80,8 @@ def send_invite_email(user: User, friend: Voter, *, debug=False):
 def get_activity_email(
     user: User, *, profile: Profile | None = None, message: Message | None = None
 ):
-    profile: Profile = profile or user.voter.profile
+    profile = profile or user.voter.profile
+    assert profile
     voter: Voter = user.voter
     message = message or profile.message
     date = voter.progress.election.date_humanized.strip("−")
@@ -96,7 +94,7 @@ def get_activity_email(
         "query_string": get_query_string(user),
     }
     body = render_to_string("emails/activity.html", context)
-    email = EmailMessage(message, body, settings.EMAIL, [user.email])
+    email = EmailMessage(str(message), body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
     return email
 

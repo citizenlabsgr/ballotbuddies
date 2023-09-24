@@ -1,6 +1,3 @@
-# TODO: Upgrade mypy to 0.991+ when django-stubs supports it
-# mypy: ignore_errors
-
 from copy import deepcopy
 
 from django.conf import settings
@@ -91,8 +88,8 @@ class Command(BaseCommand):
 
     def update_site(self):
         site = Site.objects.get(id=1)
-        site.name = f"Ballot Buddies {settings.BASE_NAME}"
-        site.domain = settings.BASE_DOMAIN
+        site.name = f"Ballot Buddies {settings.BASE_NAME}"  # type: ignore[misc]
+        site.domain = settings.BASE_DOMAIN  # type: ignore[misc]
         site.save()
         self.stdout.write(f"Updated site: {site}")
 
@@ -100,7 +97,7 @@ class Command(BaseCommand):
         try:
             user = User.objects.create_superuser(
                 username=username,
-                email=f"{username}@{settings.BASE_DOMAIN}",
+                email=f"{username}@{settings.BASE_DOMAIN}",  # type: ignore[misc]
                 password=password,
             )
             self.stdout.write(f"Created superuser: {user}")
