@@ -1,7 +1,7 @@
 from datetime import timedelta
 from random import randint
 
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.utils import timezone
 
 import log
@@ -60,7 +60,7 @@ def update_statuses() -> int:
     total = 0
 
     age = timezone.now() - timedelta(days=1, hours=1)
-    query = Voter.objects.filter(fetched__lte=age)
+    query = Voter.objects.filter(Q(fetched__lte=age) | Q(fetched=None))
     log.info(f"Updating status for {query.count()} voter(s)")
     voter: Voter
     for voter in query:
