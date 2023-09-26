@@ -293,13 +293,13 @@ class Voter(models.Model):
             )
         )
 
-    def reset_status(self):
-        self.absentee = True
-        self.ballot = None
+    def reset_status(self, absentee=True, ballot=None, status=None):
+        self.absentee = absentee
+        self.ballot = ballot
         self.ballot_returned = None
         self.voted = None
+        self.status = status
         if not self.user.is_test:  # type: ignore
-            self.status = None
             self.updated = None
 
     def update_status(self) -> tuple[bool, str]:
@@ -346,9 +346,10 @@ class Voter(models.Model):
         self.fetched = timezone.now()
 
         changed = self.fingerprint != previous_fingerprint
-        if changed and previous_fingerprint:
+        if changed or not self.updated:
             self.updated = timezone.now()
-            self.share_status()
+            if previous_fingerprint:
+                self.share_status()
 
         return changed, ""
 

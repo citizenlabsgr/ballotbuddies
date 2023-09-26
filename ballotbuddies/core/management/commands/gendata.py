@@ -56,9 +56,9 @@ class Command(BaseCommand):
         self.get_or_create_superuser()
         self.get_or_create_user("newbie@example.com")
 
-        real_voters = []
+        real_voters: list[Voter] = []
         for info in voters:
-            voter: Voter = self.get_or_create_voter(*info.split(","), admin=True)
+            voter = self.get_or_create_voter(*info.split(","), admin=True)
             real_voters.append(voter)
 
         for voter in real_voters:
@@ -136,8 +136,8 @@ class Command(BaseCommand):
         absentee: bool = True,
         ballot: str | None = None,
         admin: bool = False,
-    ):
-        user: User = self.get_or_create_user(base_email)
+    ) -> Voter:
+        user = self.get_or_create_user(base_email)
         user.first_name = first_name
         user.last_name = last_name
         if admin:
@@ -145,7 +145,6 @@ class Command(BaseCommand):
             user.is_superuser = True
         user.save()
 
-        voter: Voter
         voter, created = Voter.objects.update_or_create(
             user=user, defaults=dict(birth_date=birth_date, zip_code=zip_code)
         )
@@ -156,9 +155,7 @@ class Command(BaseCommand):
             self.stdout.write(f"Updated voter: {voter}")
 
         if status:
-            voter.status = status
-            voter.absentee = absentee
-            voter.ballot = ballot
+            voter.reset_status(absentee, ballot, status)
             voter.updated = timezone.now()
             voter.save()
 
@@ -196,24 +193,13 @@ class Command(BaseCommand):
 
         status = deepcopy(STATUS)
         status["status"]["absentee_application_received"] = None  # type: ignore
-        status["status"]["ballot"] = False  # type: ignore
-        yield self.get_or_create_voter(
-            "test+applying@example.com",
-            "Applying",
-            "Absentee",
-            "1970-01-01",
-            "49503",
-            status,
-        )
-
-        status = deepcopy(STATUS)
-        status["status"]["absentee_application_received"] = None  # type: ignore
         status["status"]["absentee_ballot_sent"] = None  # type: ignore
         status["status"]["absentee_ballot_received"] = None  # type: ignore
+        status["status"]["ballot"] = False  # type: ignore
         yield self.get_or_create_voter(
             "test+lagging@example.com",
-            "Lagging",
             "Absentee",
+            "Requested",
             "1970-01-01",
             "49503",
             status,
@@ -225,8 +211,8 @@ class Command(BaseCommand):
         status["status"]["ballot"] = False  # type: ignore
         yield self.get_or_create_voter(
             "test+missing@example.com",
-            "Missing",
             "Absentee",
+            "Missing",
             "1970-01-01",
             "49503",
             status,
@@ -238,23 +224,12 @@ class Command(BaseCommand):
         status["status"]["ballot"] = False  # type: ignore
         yield self.get_or_create_voter(
             "test+inperson@example.com",
-            "Not",
             "Absentee",
+            "Skipped",
             "1970-01-01",
             "49503",
             status,
             absentee=False,
-        )
-
-        status = deepcopy(STATUS)
-        status["status"]["absentee"] = False  # type: ignore
-        yield self.get_or_create_voter(
-            "test+absentee@example.com",
-            "Pending",
-            "Absentee",
-            "1970-01-01",
-            "49503",
-            status,
         )
 
         status = deepcopy(STATUS)
@@ -317,10 +292,10 @@ class Command(BaseCommand):
         status["status"]["absentee_application_received"] = None  # type: ignore
         yield self.get_or_create_voter(
             "test+walking@example.com",
-            "Physical",
-            "Available",
+            "Ballot",
+            "Completed",
             "1970-01-01",
             "49503",
             status,
-            ballot="https://share.michiganelections.io/elections/49/precincts/1193/",
+            ballot="https://share.michiganelections.io/elections/49/precincts/1193/?proposal-8018=approve",
         )
