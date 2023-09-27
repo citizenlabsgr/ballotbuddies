@@ -118,7 +118,7 @@
 
         {% if voter.user == request.user and not referrer %}
             {% if voter.complete %}
-            <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+            <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">
                 <span class="d-none d-md-inline text-nowrap">➜ View Profile</span>
                 <span class="d-none d-sm-inline d-md-none text-nowrap">➜ View</span>
                 <span class="d-inline d-sm-none">➜</span>
