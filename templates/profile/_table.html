@@ -128,13 +128,7 @@
                 {{ voter.progress.ballot_available }}
             </td>
 
-            <td class="text-center table-{{ voter.progress.ballot_available.color }}">
-                {% if voter.ballot_url %}
-                <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}">
-                    View Ballot
-                </a>
-                {% endif %}
-            </td>
+            <td class="text-center table-{{ voter.progress.ballot_available.color }}"></td>
 
             <td class="text-center border-start {% if voter.progress.ballot_available %} text-muted {% endif %}">
                 {{ voter.progress.ballot_available.deadline_humanized }}
@@ -150,7 +144,13 @@
                 {{ voter.progress.ballot_completed }}
             </td>
 
-            <td class="text-center table-{{ voter.progress.ballot_completed.color }}"></td>
+            <td class="text-center table-{{ voter.progress.ballot_completed.color }}">
+                {% if voter.ballot_url %}
+                <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}">
+                    View Ballot
+                </a>
+                {% endif %}
+            </td>
 
             <td class="text-center border-start {% if voter.progress.ballot_completed %} text-muted {% endif %}">
                 {{ voter.progress.ballot_completed.deadline_humanized }}

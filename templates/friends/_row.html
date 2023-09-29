@@ -42,7 +42,7 @@
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-lg-none">
         {% if voter.ballot_url %}
         <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}" class="text-decoration-none">
-            {{ voter.progress.ballot_available }}
+            🔗
         </a>
         {% else %}
             {{ voter.progress.ballot_available }}
@@ -79,7 +79,7 @@
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-lg-table-cell">
         {% if voter.ballot_url %}
         <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}" class="text-decoration-none">
-            {{ voter.progress.ballot_available }}
+            🔗
         </a>
         {% else %}
             {{ voter.progress.ballot_available }}
