@@ -313,6 +313,7 @@ class Progress:
                 progress.ballot_available.url = constants.PRECINCT_PREVIEW_URL.format(
                     election_id=election["id"], precinct_id=precinct["id"]
                 )
+            progress.ballot_available.icon = "🔗"
             progress.ballot_available.color = "success"
             progress.ballot_completed.icon = "🟡"
         else:

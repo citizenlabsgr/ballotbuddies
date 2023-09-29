@@ -249,7 +249,7 @@ VOTED = VoterData(
             "deadline": "2021-10-19",
         },
         "ballot_available": {
-            "icon": "",
+            "icon": "🔗",
             "color": "success",
             "url": "https://share.michiganelections.io/elections/45/precincts/5943",
             "date": "",
