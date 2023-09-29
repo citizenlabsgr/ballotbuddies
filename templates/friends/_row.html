@@ -57,14 +57,21 @@
             {{ voter.progress.absentee_requested }}
         </a>
         {% else %}
-        {{ voter.progress.absentee_requested }}
+            {{ voter.progress.absentee_requested }}
         {% endif %}
     </td>
 
     <!-- Absentee: Recieved -->
 
     <td class="text-center table-{{ voter.progress.absentee_received.color }} d-none d-lg-table-cell">
-        {{ voter.progress.absentee_received }}
+        {% if voter.progress.absentee_received.url %}
+        <a href="{{ voter.progress.absentee_received.url }}" target="_blank" class="text-decoration-none">
+            {{ voter.progress.absentee_received }}
+        </a>
+        {% else %}
+            {{ voter.progress.absentee_received }}
+        {% endif %}
+    </td>
     </td>
 
     <!-- Ballot: Available -->

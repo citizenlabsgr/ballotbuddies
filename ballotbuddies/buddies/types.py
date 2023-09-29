@@ -281,6 +281,7 @@ class Progress:
                 progress.absentee_requested.disable()
         elif absentee:
             progress.absentee_received.icon = "🚫"
+            progress.absentee_received.url = constants.ABSENTEE_URL
             progress.ballot_sent.icon = "−"
             progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
