@@ -10,7 +10,7 @@
     {% if request.user.is_authenticated %}
     {% if request.user.voter.complete %}
     <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
-        View Profle
+        View Ballot
     </a>
     {% else %}
     <a class="btn btn-primary" href="{% url 'buddies:setup' %}">
