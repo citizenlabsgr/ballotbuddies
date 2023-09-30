@@ -63,7 +63,7 @@
                             hx-trigger="click"
                             hx-target="closest table"
                             hx-swap="outerHTML">
-                        Voting absentee
+                        I'm voting absentee
                     </button>
                 </form>
                 {% elif not voter.progress.absentee_requested %}
@@ -74,7 +74,7 @@
                         hx-trigger="click"
                         hx-target="closest table"
                         hx-swap="outerHTML">
-                        Voting in-person
+                        I'm voting in-person
                     </button>
                 </form>
                 {% endif %}
@@ -108,7 +108,7 @@
                         hx-trigger="click"
                         hx-target="closest table"
                         hx-swap="outerHTML">
-                        Voting in-person
+                        I'm voting in-person
                     </button>
                 </form>
                 {% endif %}
@@ -183,13 +183,13 @@
             {% if voter.progress.ballot_sent and not voter.progress.ballot_returned %}
             <td colspan="2" class="text-center table-{{ voter.progress.ballot_returned.color }} border-start">
                 <form>{% csrf_token %}
-                    <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                    <button class="btn btn-sm btn-outline-secondary text-nowrap ms-1"
                             hx-post="{% url 'buddies:status' slug=voter.slug %}"
                             hx-vals='{ "mailed": true }'
                             hx-trigger="click"
                             hx-target="closest table"
                             hx-swap="outerHTML">
-                        ✅ Voted by-mail
+                        ✓ &nbsp I dropped it off
                     </button>
                 </form>
             </td>
@@ -249,20 +249,20 @@
                                 hx-trigger="click"
                                 hx-target="closest table"
                                 hx-swap="outerHTML">
-                                Didn't vote
+                                ✕ &nbsp I didn't vote
                             </button>
                         </form>
                     </td>
                 {% else %}
                     <td colspan="2" class="text-center table-{{ voter.progress.voted.color }} text-nowrap border-start">
                         <form>{% csrf_token %}
-                            <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
+                            <button class="btn btn-sm btn-outline-secondary text-nowrap ms-1"
                                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
                                 hx-vals='{ "voted": true }'
                                 hx-trigger="click"
                                 hx-target="closest table"
                                 hx-swap="outerHTML">
-                                ✅ Voted in-person
+                                ✓ &nbsp I voted in-person
                             </button>
                         </form>
                     </td>
