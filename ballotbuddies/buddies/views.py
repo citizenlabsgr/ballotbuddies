@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.utils.html import format_html
 
 import log
 
@@ -101,6 +102,15 @@ def profile(request: HttpRequest):
             messages.error(request, error)
 
     form = VoterForm(initial=voter.data, locked=True)
+    if not voter.ballot and voter.ballot_url:
+        messages.info(
+            request,
+            format_html(
+                'Your sample ballot is ready: <a href="{0}">{1}</a>',
+                voter.ballot_url,
+                voter.ballot_url.split("?")[0],
+            ),
+        )
 
     context = {"voter": voter, "form": form}
     return render(request, "profile/detail.html", context)
