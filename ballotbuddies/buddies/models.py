@@ -233,14 +233,6 @@ class Voter(models.Model):
             progress.absentee_requested.url = ""
             progress.absentee_received.icon = "−"
 
-        if self.voted and (
-            progress.election.date_comparable - self.voted
-            > timedelta(days=constants.EARLY_VOTING_DAYS)
-        ):
-            log.info(f"Clearing vote from previous election: {self}")
-            self.reset_status()
-            self.save()
-
         if progress.ballot_received.date and not self.ballot_returned:
             log.info(f"Assuming ballot was returned: {self}")
             self.ballot_returned = progress.ballot_received.date_comparable
