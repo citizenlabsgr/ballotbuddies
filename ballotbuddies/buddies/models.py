@@ -242,7 +242,8 @@ class Voter(models.Model):
             log.info(f"Recording vote for current election: {self}")
             self.voted = progress.voted.date_comparable
             self.save()
-            send_voted_email(self.user)
+            if not self.profile.never_alert:
+                send_voted_email(self.user)
 
         if self.ballot:
             progress.ballot_completed.check()
