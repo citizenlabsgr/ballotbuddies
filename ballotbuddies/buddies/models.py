@@ -231,7 +231,7 @@ class Voter(models.Model):
         if not self.absentee:
             progress.absentee_requested.icon = "✕"
             progress.absentee_requested.url = ""
-            progress.absentee_received.icon = "−"
+            progress.absentee_received.disable()
 
         if progress.ballot_received.date and not self.ballot_returned:
             log.info(f"Assuming ballot was returned: {self}")
