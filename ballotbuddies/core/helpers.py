@@ -7,7 +7,7 @@ from django.utils import timezone
 
 
 def today() -> date:
-    return settings.TODAY or timezone.now().date()
+    return settings.TODAY or timezone.localtime(timezone.now()).date()
 
 
 def build_url(path: str) -> str:
