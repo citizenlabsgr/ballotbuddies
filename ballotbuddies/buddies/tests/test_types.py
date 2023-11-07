@@ -1,6 +1,7 @@
 # pylint: disable=expression-not-assigned,singleton-comparison,unused-variable
 
 from dataclasses import asdict
+from datetime import date
 
 from django.conf import settings
 
@@ -43,8 +44,13 @@ def describe_progress():
             expect(progress.percent) == percent
 
     def describe_actions():
-        def is_zero_for_past_elections(expect, monkeypatch):
+        def is_one_for_election_today(expect, monkeypatch):
             monkeypatch.setattr(settings, "TODAY", None)
+            progress = Progress.parse(SAMPLE_DATA[1].status)
+            expect(progress.actions) == 1
+
+        def is_zero_for_past_elections(expect, monkeypatch):
+            monkeypatch.setattr(settings, "TODAY", date(2021, 11, 3))
             progress = Progress.parse(SAMPLE_DATA[1].status)
             expect(progress.actions) == 0
 

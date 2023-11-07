@@ -48,7 +48,6 @@ ICON_VALUES = {
 
 @dataclass
 class State:
-
     icon: str = ""
     color: str = "default"
     url: str = ""
@@ -139,7 +138,6 @@ class State:
 
 @dataclass
 class Progress:
-
     registered: State = field(default_factory=State)
     absentee_requested: State = field(default_factory=State)
     absentee_received: State = field(default_factory=State)
@@ -191,7 +189,7 @@ class Progress:
 
     @cached_property
     def actions(self) -> int:
-        if self.election.days <= 0:
+        if self.election.days < 0:
             return 0
         states = [
             self.registered,

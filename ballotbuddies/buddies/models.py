@@ -79,7 +79,6 @@ class VoterManager(models.Manager):
 
 
 class Voter(models.Model):
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.CharField(max_length=100, default=generate_key)
 
@@ -249,8 +248,12 @@ class Voter(models.Model):
             progress.ballot_completed.check()
         elif not self.voted and progress.ballot_sent:
             progress.ballot_completed.icon = "🚫"
-        if not self.voted and progress.ballot_completed and not progress.ballot_sent:
-            progress.voted.icon = "🟡"
+
+        if not self.voted:
+            if progress.ballot_completed and not progress.ballot_sent:
+                progress.voted.icon = "🟡"
+            if progress.ballot_available and progress.election.days == 0:
+                progress.voted.icon = "🟡"
 
         return progress
 
