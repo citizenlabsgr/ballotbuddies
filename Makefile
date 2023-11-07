@@ -64,11 +64,8 @@ poetry.lock: pyproject.toml
 endif
 
 .PHONY: clean
-clean:
+clean: ## Delete virtual environment and temporary files
 	rm -rf .cache .coverage htmlcov staticfiles
-
-.PHONY: clean-all
-clean-all: clean
 	rm -rf $(VIRTUAL_ENV)
 
 # RUNTIME DEPENDENCIES ########################################################
