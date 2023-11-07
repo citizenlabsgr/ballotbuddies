@@ -17,7 +17,7 @@ class CustomUser:
 
     @property
     def is_test(self: User) -> bool:  # type: ignore
-        return "@example.com" in self.email or "admin" in self.username
+        return "admin" in self.username or self.voter.zip_code == "99999"
 
     def update_name(self: User, request, first_name: str, last_name: str):  # type: ignore
         self.first_name = first_name
