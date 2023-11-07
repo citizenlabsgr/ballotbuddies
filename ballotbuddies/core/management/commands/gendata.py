@@ -75,7 +75,7 @@ class Command(BaseCommand):
                 voter.user.first_name + "'s",
                 "Friend",
                 "1970-01-01",
-                "49503",
+                "99999",
             )
             voter.friends.add(friend, *real_voters, *test_voters)
             voter.save()
@@ -187,7 +187,7 @@ class Command(BaseCommand):
             "Not",
             "Registered",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -201,7 +201,7 @@ class Command(BaseCommand):
             "Absentee",
             "Requested",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -214,7 +214,7 @@ class Command(BaseCommand):
             "Absentee",
             "Missing",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -227,7 +227,7 @@ class Command(BaseCommand):
             "Absentee",
             "Skipped",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
             absentee=False,
         )
@@ -239,7 +239,7 @@ class Command(BaseCommand):
             "Ballot",
             "Pending",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -251,7 +251,7 @@ class Command(BaseCommand):
             "No",
             "Election",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -262,7 +262,7 @@ class Command(BaseCommand):
             "Ballot",
             "Available",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -273,7 +273,7 @@ class Command(BaseCommand):
             "Ballot",
             "Sent",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -283,7 +283,7 @@ class Command(BaseCommand):
             "Ballot",
             "Received",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
         )
 
@@ -295,7 +295,7 @@ class Command(BaseCommand):
             "Ballot",
             "Completed",
             "1970-01-01",
-            "49503",
+            "99999",
             status,
             ballot="https://share.michiganelections.io/elections/49/precincts/1193/?proposal-8018=approve",
         )

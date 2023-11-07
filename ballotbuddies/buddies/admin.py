@@ -8,6 +8,17 @@ from django.utils.safestring import mark_safe
 from .models import Voter
 
 
+def reset_selected_voters(modeladmin, request, queryset):
+    count = 0
+    voter: Voter
+    for voter in queryset:
+        voter.reset_status()
+        voter.save()
+        count += 1
+    s = "" if count == 1 else "s"
+    messages.info(request, f"Reset {count} voter{s}.")
+
+
 def update_selected_voters(modeladmin, request, queryset):
     count = 0
     voter: Voter
@@ -63,7 +74,7 @@ class VoterAdmin(admin.ModelAdmin):
     def Actions(self, voter: Voter):
         return voter.progress.actions
 
-    actions = [update_selected_voters, share_selected_voters]
+    actions = [reset_selected_voters, update_selected_voters, share_selected_voters]
 
     filter_horizontal = ["friends", "neighbors", "strangers"]
 
