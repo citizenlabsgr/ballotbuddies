@@ -10,16 +10,6 @@
     "htmlcov/": true,
     "staticfiles/": true
   },
-  "python.pythonPath": ".venv/bin/python",
-  "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true,
-  "python.linting.pylintPath": ".venv/bin/pylint",
-  "python.linting.pylintArgs": ["--rcfile", ".pylint.ini"],
-  "python.linting.mypyEnabled": true,
-  "python.linting.mypyPath": ".venv/bin/mypy",
-  "python.linting.mypyArgs": ["--config-file", ".mypy.ini"],
-  "python.formatting.provider": "black",
-  "python.formatting.blackPath": ".venv/bin/black",
   "editor.formatOnSave": true,
   "cSpell.words": [
     "asdict",
@@ -67,5 +57,8 @@
     "whitenoise",
     "wsgi",
     "zipcodes"
+  ],
+  "pylint.args": [
+    "--rcfile=.pylint.ini"
   ]
 }
