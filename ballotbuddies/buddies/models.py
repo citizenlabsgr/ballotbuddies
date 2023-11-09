@@ -252,7 +252,7 @@ class Voter(models.Model):
         if not self.voted:
             if progress.ballot_completed and not progress.ballot_sent:
                 progress.voted.icon = "🟡"
-            if progress.ballot_available and progress.election.days == 0:
+            if progress.ballot_available and progress.election.days <= 0:
                 progress.voted.icon = "🟡"
 
         return progress

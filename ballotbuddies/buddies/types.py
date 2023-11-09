@@ -256,14 +256,12 @@ class Progress:
             progress.registered.color = "warning"
             return progress
 
-        if registered := status.get("registered"):
+        if status.get("registered"):
             progress.registered.check()
         else:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
             progress.registered.url = constants.MICHIGAN_REGISTRATION_URL
-
-        if not registered:
             return progress
 
         if absentee := status.get("absentee"):
