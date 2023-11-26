@@ -14,7 +14,6 @@ if TYPE_CHECKING:
 
 
 class Profile(models.Model):
-
     voter: Voter = AutoOneToOneField("buddies.Voter", on_delete=models.CASCADE)
 
     always_alert = models.BooleanField(default=False)
@@ -61,6 +60,8 @@ class Profile(models.Model):
         if self.voter.updated > timezone.now() - timedelta(days=7):
             return False
         if self.voter.complete:
+            if not self.has_election:
+                return False
             if self.voter.progress.actions:
                 if 0 < self.voter.progress.election.days < 7:
                     return self.staleness > timedelta(days=1)
@@ -109,7 +110,6 @@ class MessageManager(models.Manager):
 
 
 class Message(models.Model):
-
     profile: Profile = models.ForeignKey(Profile, on_delete=models.CASCADE)  # type: ignore
 
     activity = models.JSONField(blank=True, default=dict)
