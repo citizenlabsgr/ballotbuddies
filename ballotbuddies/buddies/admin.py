@@ -43,7 +43,6 @@ def share_selected_voters(modeladmin, request, queryset):
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
-
     search_fields = [
         "nickname",
         "user__email",

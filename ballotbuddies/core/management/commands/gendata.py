@@ -40,7 +40,6 @@ STATUS = {
 
 
 class Command(BaseCommand):
-
     help = "Generate data for automated testing and manual review"
 
     def add_arguments(self, parser):

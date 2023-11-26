@@ -7,7 +7,6 @@ import annoying.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("buddies", "0012_voter_absentee"),
         ("alerts", "0002_profile_last"),

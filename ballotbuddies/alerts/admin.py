@@ -33,7 +33,6 @@ def alert_selected_profiles(modeladmin, request, queryset):
 
 @admin.register(Profile)
 class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
-
     default_query = "will_alert__exact=1"
 
     search_fields = [
@@ -125,7 +124,6 @@ def send_selected_messages(modeladmin, request, queryset):
 
 @admin.register(Message)
 class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
-
     default_query = "sent__exact=0"
 
     search_fields = [
