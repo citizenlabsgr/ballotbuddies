@@ -262,6 +262,8 @@ class Progress:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
             progress.registered.url = constants.MICHIGAN_REGISTRATION_URL
+            if progress.election.days < constants.PAST_ELECTION_DAYS:
+                progress.election = State()
             return progress
 
         if absentee := status.get("absentee"):
