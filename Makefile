@@ -65,8 +65,7 @@ endif
 
 .PHONY: clean
 clean: ## Delete virtual environment and temporary files
-	rm -rf .cache .coverage htmlcov staticfiles
-	rm -rf $(VIRTUAL_ENV)
+	rm -rf .cache .coverage $(VIRTUAL_ENV) htmlcov staticfiles
 
 # RUNTIME DEPENDENCIES ########################################################
 
