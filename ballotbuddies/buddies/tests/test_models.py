@@ -6,7 +6,14 @@ from django.utils import timezone
 
 import pytest
 
-from ..constants import PLANNING, REGISTERED, SAMPLE_DATA, UNREGISTERED, VOTED
+from ..constants import (
+    PLANNING,
+    REGISTERED,
+    SAMPLE_DATA,
+    UNREGISTERED,
+    VOTED,
+    VoterData,
+)
 from ..models import User, Voter
 
 
@@ -19,11 +26,8 @@ def describe_voter():
         )
 
     def describe_progress():
-        @pytest.mark.django_db
         @pytest.mark.parametrize("sample", SAMPLE_DATA)
-        def with_samples(expect, voter, sample):
-            voter.user.save()
-
+        def with_samples(expect, voter: Voter, sample: VoterData):
             voter.status = sample.status
 
             expect(asdict(voter.progress)) == sample.progress
@@ -35,27 +39,20 @@ def describe_voter():
                 voter.progress.registered.url
             ) == "https://votesaveamerica.com/state/ohio/"
 
-        # @pytest.mark.skip
-        @pytest.mark.django_db
         def with_planned_present_voter(expect, voter: Voter):
-            voter.user.save()
             voter.status = PLANNING.status
             voter.absentee = False
             voter.ballot = "http://example.com"
 
             expect(voter.progress.voted.icon) == "🟡"
 
-        @pytest.mark.django_db
         def with_completed_present_voter(expect, voter: Voter):
-            voter.user.save()
             voter.status = VOTED.status
             voter.voted = timezone.now()
 
             expect(voter.progress.voted.color) == "success text-muted"
 
-        @pytest.mark.django_db
         def with_complete_ballot_from_past_election(expect, voter: Voter):
-            voter.user.save()
             voter.status = REGISTERED.status
             voter.ballot = "http://example.com"
 
@@ -63,7 +60,6 @@ def describe_voter():
             expect(voter.ballot) == None
 
     def describe_activity():
-        @pytest.mark.django_db
         @pytest.mark.parametrize(
             ("status", "activity"),
             [
@@ -73,8 +69,6 @@ def describe_voter():
             ],
         )
         def with_samples(expect, voter, status, activity):
-            voter.user.save()
-
             voter.status = status
 
             expect(voter.activity) == activity
@@ -110,11 +104,9 @@ def describe_voter():
             expect(count) == 0
 
     def describe_save():
-        @pytest.mark.django_db
         def it_formats_name(expect, voter: Voter):
             voter.user.first_name = "jane"
             voter.user.last_name = "doe"
-            voter.user.save()
 
             voter.save()
 
@@ -130,19 +122,13 @@ def describe_voter():
 
             expect(voter.friends.all()).excludes(voter)
 
-        @pytest.mark.django_db
         def it_updates_state(expect, voter: Voter):
-            voter.user.save()
-
             voter.zip_code = "94040"
             voter.save()
 
             expect(voter.state) == "California"
 
-        @pytest.mark.django_db
         def it_handles_invalid_zip_code(expect, voter: Voter):
-            voter.user.save()
-
             voter.zip_code = "?????"
             voter.save()
 
