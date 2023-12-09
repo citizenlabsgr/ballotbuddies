@@ -232,6 +232,11 @@ class Voter(models.Model):
             progress.absentee_requested.url = ""
             progress.absentee_received.disable()
 
+        if self.ballot and not progress.ballot_available and progress.election.days > 0:
+            log.info(f"Clearing completed ballot from past election: {self}")
+            self.ballot = None
+            self.save()
+
         if progress.ballot_received.date and not self.ballot_returned:
             log.info(f"Assuming ballot was returned: {self}")
             self.ballot_returned = progress.ballot_received.date_comparable
@@ -241,7 +246,7 @@ class Voter(models.Model):
             log.info(f"Recording vote for current election: {self}")
             self.voted = progress.voted.date_comparable
             self.save()
-            if not self.profile.never_alert:
+            if self.user.pk and not self.profile.never_alert:
                 send_voted_email(self.user)
 
         if self.ballot:
@@ -418,11 +423,13 @@ class Voter(models.Model):
         if self.user.get_full_name().islower():
             self.user.first_name = self.user.first_name.capitalize()
             self.user.last_name = self.user.last_name.capitalize()
-            self.user.save()
+            if self.user.pk:
+                self.user.save()
         with suppress(ValueError):
             if places := zipcodes.matching(self.zip_code or "0"):
                 abbr = places[0]["state"]
                 self.state = us.states.lookup(abbr).name
         if self.id:
             self.friends.remove(self)
-        super().save(**kwargs)
+        if self.user.pk:
+            super().save(**kwargs)
