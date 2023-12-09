@@ -235,6 +235,7 @@ class Voter(models.Model):
         if self.ballot and not progress.ballot_available and progress.election.days > 0:
             log.info(f"Clearing completed ballot from past election: {self}")
             self.ballot = None
+            self.voted = None
             self.save()
 
         if progress.ballot_received.date and not self.ballot_returned:
