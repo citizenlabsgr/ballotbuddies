@@ -937,13 +937,13 @@ files = [
 
 [[package]]
 name = "minilog"
-version = "2.0.1"
+version = "2.3"
 description = "Minimalistic wrapper for Python logging."
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "minilog-2.0.1-py3-none-any.whl", hash = "sha256:9cd8b002043c7a6e5f312af96b06f562932312217d4fcb8c2752edc1ae91d3c7"},
-    {file = "minilog-2.0.1.tar.gz", hash = "sha256:52cbec563f266f1e931fd884edbb53a87ce24817365d84cc9dc628a96ea00b85"},
+    {file = "minilog-2.3-py3-none-any.whl", hash = "sha256:e42dc2def1da424e90d6664279c128dde94adc5840557b27857957ed23ee09b6"},
+    {file = "minilog-2.3.tar.gz", hash = "sha256:ebdf354f1dd86a2e8a824cdde4b7b50cdbc24b99a5465bc4d1806bd1e030bc92"},
 ]
 
 [[package]]
@@ -2160,4 +2160,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.6"
-content-hash = "3d655ba497e3a35de086bf986b4dad5aee3651c1f915398ed66a54fb5c1a4ad6"
+content-hash = "61ca062dce81c9b0a6cfaeda33b45315d380b984bf836e540f8ef3e41449a79f"

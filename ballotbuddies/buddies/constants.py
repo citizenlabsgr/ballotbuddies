@@ -196,6 +196,38 @@ REGISTERED = VoterData(
     },
 )
 
+PLANNING = VoterData(
+    "Peter",
+    "Planner",
+    {
+        "status": {
+            "ballot": True,
+            "absentee": False,
+            "ballot_url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
+            "registered": True,
+            "absentee_ballot_sent": None,
+            "absentee_ballot_received": None,
+            "absentee_application_received": None,
+        },
+        "message": "TBD.",
+        "election": {
+            "id": 45,
+            "date": "2021-11-02",
+            "name": "November Consolidated",
+            "description": "",
+            "reference_url": None,
+        },
+        "precinct": {
+            "id": 5943,
+            "ward": "2",
+            "county": "Kent",
+            "number": "10",
+            "jurisdiction": "City of Kentwood",
+        },
+    },
+    {"value": "TBD"},
+)
+
 
 VOTED = VoterData(
     "Vicky",

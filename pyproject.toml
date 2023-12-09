@@ -38,7 +38,7 @@ whitenoise = "^5.3"
 bugsnag = "^4.1.1"
 
 # Utilities
-minilog = "^2.0"
+minilog = "^2.3"
 requests = "^2.26"
 ua-parser = "*"     # optional 'django-sesame' dependency to detect Safari
 zipcodes = "^1.2.0"
