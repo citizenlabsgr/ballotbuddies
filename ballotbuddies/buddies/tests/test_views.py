@@ -207,3 +207,13 @@ def describe_status():
 
         html = decode(response, verbose=False)
         expect(html).excludes("I didn't vote")
+
+    def it_can_manually_clear_voting_with_redirect(expect, client, url, voter):
+        voter.ballot = "http://example.com"
+        client.force_login(voter.user)
+
+        response = client.get(url + "?reset=true")
+        expect(response.status_code) == 302
+
+        voter.refresh_from_db()
+        expect(voter.ballot).is_(None)
