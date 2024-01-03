@@ -295,10 +295,14 @@ def status(request: HttpRequest, slug: str):
         voter.voted = timezone.now()
         render_as_table = True
 
-    if "reset" in request.POST:
+    if "reset" in request.POST or "reset" in request.GET:
         log.info(f"Clearing vote: {voter}")
         voter.reset_status()
         render_as_table = True
+        if request.method == "GET":
+            voter.save()
+            messages.info(request, "Successfully reset ballot status.")
+            return redirect("buddies:friends-profile", slug=slug)
 
     voter.update_status()
     voter.save()
