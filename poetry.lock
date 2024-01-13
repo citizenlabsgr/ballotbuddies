@@ -1650,25 +1650,23 @@ files = [
 
 [[package]]
 name = "splinter"
-version = "0.19.0"
+version = "0.20.1"
 description = "browser abstraction for web acceptance testing"
 optional = false
 python-versions = "*"
 files = [
-    {file = "splinter-0.19.0-py3-none-any.whl", hash = "sha256:1f072570c084f5f7e0c685b6b5d93b1a7959da06cb5da4c3b548dc1b3b0757a0"},
-    {file = "splinter-0.19.0.tar.gz", hash = "sha256:ba9603385deb91ffb92b2e0edeed3da58dce3bfa0e0db1a37143c5e64b83ceb2"},
+    {file = "splinter-0.20.1-py3-none-any.whl", hash = "sha256:d1e11f679606473227b0350cddaf2cbe444eb2ad5a26c87eaa1c19aeeb50b336"},
+    {file = "splinter-0.20.1.tar.gz", hash = "sha256:28a2e45d0b50002a38d40989993b5c59f39d32e0f6c62b03360af25d8290c0f4"},
 ]
 
 [package.dependencies]
-urllib3 = ">=1.26.14,<2.0"
+urllib3 = ">=1.26.14,<3.0"
 
 [package.extras]
 django = ["Django (>=2.0.6)", "cssselect", "lxml (>=4.2.4)"]
-edge = ["msedge-selenium-tools"]
-flask = ["Flask (>=2.0.2)", "cssselect", "lxml (>=4.2.4)"]
-selenium3 = ["selenium (>=3.141.0,<4.0)"]
-selenium4 = ["selenium (>=4.1.0,<4.2.0)"]
-zope-testbrowser = ["cssselect", "lxml (>=4.2.4)", "zope.testbrowser (>=5.5.1)"]
+flask = ["Flask (>=2.3.2)", "cssselect", "lxml (>=4.2.4)"]
+selenium = ["selenium (>=4.1.0,<4.16.0)"]
+zope-testbrowser = ["cssselect", "lxml (>=4.2.4)", "zope.testbrowser (>=6.0)"]
 
 [[package]]
 name = "sqlparse"
@@ -2160,4 +2158,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.6"
-content-hash = "61ca062dce81c9b0a6cfaeda33b45315d380b984bf836e540f8ef3e41449a79f"
+content-hash = "e1ad2e20d86eaa3ead6534021e4244d47481df88a833373dae72dca4ce6401b3"
