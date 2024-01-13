@@ -63,7 +63,11 @@
                             hx-trigger="click"
                             hx-target="closest table"
                             hx-swap="outerHTML">
+                        {% if voter.user == request.user %}
                         I'm voting absentee
+                        {% else %}
+                        They're voting absentee
+                        {% endif %}
                     </button>
                 </form>
                 {% elif not voter.progress.absentee_requested %}
@@ -74,7 +78,11 @@
                         hx-trigger="click"
                         hx-target="closest table"
                         hx-swap="outerHTML">
+                        {% if voter.user == request.user %}
                         I'm voting in-person
+                        {% else %}
+                        They're voting in-person
+                        {% endif %}
                     </button>
                 </form>
                 {% endif %}
@@ -108,7 +116,11 @@
                         hx-trigger="click"
                         hx-target="closest table"
                         hx-swap="outerHTML">
+                        {% if voter.user == request.user %}
                         I'm voting in-person
+                        {% else %}
+                        They're voting in-person
+                        {% endif %}
                     </button>
                 </form>
                 {% endif %}
@@ -189,7 +201,11 @@
                             hx-trigger="click"
                             hx-target="closest table"
                             hx-swap="outerHTML">
+                        {% if voter.user == request.user %}
                         ✓ &nbsp I returned it
+                        {% else %}
+                        ✓ &nbsp They returned it
+                        {% endif %}
                     </button>
                 </form>
             </td>
@@ -230,7 +246,6 @@
             <th scope="row">
                 Election Day
             </th>
-
             {% if voter.progress.ballot_available.url %}
                 {% if voter.progress.ballot_received.date %}
                     <td class="text-center table-{{ voter.progress.voted.color }} border-start">
@@ -249,7 +264,11 @@
                                 hx-trigger="click"
                                 hx-target="closest table"
                                 hx-swap="outerHTML">
+                                {% if voter.user == request.user %}
                                 ✕ &nbsp I didn't vote
+                                {% else %}
+                                ✕ &nbsp They didn't vote
+                                {% endif %}
                             </button>
                         </form>
                     </td>
@@ -262,7 +281,11 @@
                                 hx-trigger="click"
                                 hx-target="closest table"
                                 hx-swap="outerHTML">
+                                {% if voter.user == request.user %}
                                 ✓ &nbsp I voted in-person
+                                {% else %}
+                                ✓ &nbsp They voted in-person
+                                {% endif %}
                             </button>
                         </form>
                     </td>
