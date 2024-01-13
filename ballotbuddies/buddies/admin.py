@@ -12,7 +12,7 @@ def reset_selected_voters(modeladmin, request, queryset):
     count = 0
     voter: Voter
     for voter in queryset:
-        voter.reset_status()
+        voter.reset_status(promoter=request.user.voter)
         voter.save()
         count += 1
     s = "" if count == 1 else "s"

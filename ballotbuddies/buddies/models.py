@@ -106,8 +106,20 @@ class Voter(models.Model):
     )
 
     referrer = models.ForeignKey(
-        "Voter", null=True, blank=True, on_delete=models.SET_NULL
+        "Voter",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="referred_voters",
     )
+    promoter = models.ForeignKey(
+        "Voter",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="promoted_voters",
+    )
+
     friends = models.ManyToManyField("Voter", blank=True, related_name="followers")
     neighbors = models.ManyToManyField("Voter", blank=True, related_name="lurkers")
     strangers = models.ManyToManyField("Voter", blank=True, related_name="blockers")
@@ -295,12 +307,14 @@ class Voter(models.Model):
             )
         )
 
-    def reset_status(self, absentee=True, ballot=None, status=None):
+    def reset_status(self, absentee=True, ballot=None, status=None, promoter=None):
         self.absentee = absentee
         self.ballot = ballot
         self.ballot_returned = None
         self.voted = None
         self.status = status
+        if promoter:
+            self.promoter = promoter
         if not self.user.is_test:  # type: ignore
             self.updated = None
 
