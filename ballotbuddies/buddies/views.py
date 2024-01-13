@@ -283,21 +283,24 @@ def status(request: HttpRequest, slug: str):
         log.info(f"Recording in-person intention: {voter}")
         assert request.POST["absentee"] == "false"
         voter.absentee = False
+        voter.promoter = request.user.voter
         render_as_table = True
 
     if "mailed" in request.POST:
         log.info(f"Recording returned ballot: {voter}")
         voter.ballot_returned = timezone.now()
+        voter.promoter = request.user.voter
         render_as_table = True
 
     if "voted" in request.POST:
         log.info(f"Recording vote: {voter}")
         voter.voted = timezone.now()
+        voter.promoter = request.user.voter
         render_as_table = True
 
     if "reset" in request.POST or "reset" in request.GET:
         log.info(f"Clearing vote: {voter}")
-        voter.reset_status()
+        voter.reset_status(promoter=request.user.voter)
         render_as_table = True
         if request.method == "GET":
             voter.save()
