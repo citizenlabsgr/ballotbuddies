@@ -70,8 +70,13 @@ class Profile(models.Model):
         else:
             return self.staleness > timedelta(days=30)
 
-    def alert(self, voter: Voter):
+    def alert(self, voter: Voter, friend: bool = True) -> bool:
+        if len(self.message) >= 8:
+            return False
+        if len(self.message) >= 3 and not friend:
+            return False
         self.message.add(voter)
+        return True
 
     def mark_alerted(self, *, save=True):
         self.last_alerted = timezone.now()

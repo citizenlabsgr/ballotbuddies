@@ -380,12 +380,12 @@ class Voter(models.Model):
 
     def share_status(self) -> int:
         count = 0
-        for friend in self.friends.all():
-            friend.profile.alert(self)
-            count += 1
-        for friend in self.neighbors.all():
-            friend.profile.alert(self)
-            count += 1
+        for voter in self.friends.all():
+            if voter.profile.alert(self):
+                count += 1
+        for voter in self.neighbors.all():
+            if voter.profile.alert(self, voter.friends.filter(pk=self.pk).exists()):
+                count += 1
         return count
 
     def add_friend(self, referrer: str) -> tuple[Voter | None, bool]:
