@@ -29,7 +29,7 @@ class VoterManager(models.Manager):
     def from_email(self, email: str, referrer: str) -> Voter:
         try:
             user, created = User.objects.get_or_create(
-                email=email, defaults=dict(username=email)
+                email=email.lower(), defaults=dict(username=email)
             )
             if created:
                 log.info(f"Created user: {user}")
@@ -58,7 +58,7 @@ class VoterManager(models.Manager):
         friends = []
         for email in emails:
             user, created = User.objects.get_or_create(
-                email=email, defaults=dict(username=email)
+                email=email.lower(), defaults=dict(username=email)
             )
             if created:
                 log.info(f"Created user: {user}")
