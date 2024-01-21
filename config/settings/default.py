@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "ballotbuddies.api",
     "ballotbuddies.buddies",
     "ballotbuddies.alerts",
+    "ballotbuddies.explore",
 ]
 
 MIDDLEWARE = [

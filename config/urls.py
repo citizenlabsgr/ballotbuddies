@@ -8,7 +8,8 @@ import debug_toolbar
 from ballotbuddies.core.views import zapier
 
 urlpatterns: list = [
-    path("", include("ballotbuddies.buddies.urls", namespace="buddies")),
+    path("", include("ballotbuddies.buddies.urls")),
+    path("explore/", include("ballotbuddies.explore.urls")),
     path("zapier/", zapier),
     path("api/", include("ballotbuddies.api.urls")),
     path("admin/", admin.site.urls),

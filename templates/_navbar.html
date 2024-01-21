@@ -1,6 +1,7 @@
 {% url 'buddies:friends' as friends_url %}
 {% url 'buddies:search' as search_url %}
 {% url 'buddies:profile' as profile_url %}
+{% url 'explore:index' as explore_url %}
 {% url 'buddies:about' as about_url %}
 {% url 'buddies:login' as login_url %}
 
@@ -20,6 +21,11 @@
 
 			<a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-sm-0"
 					href="{% url 'buddies:profile' %}">Profile</a>
+
+			{% if request.user.is_staff %}
+			<a class="nav-link text-danger {% if request.path == explore_url %} active {% endif %} ms-3 ms-sm-0"
+					href="{% url 'explore:index' %}">Explore</a>
+			{% endif %}
 		</div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">

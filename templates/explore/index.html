@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h1>Explore Ballots</h1>
+
+{% if election %}
+<p>
+    <i>Election: {{ election.name }} ({{ election.date }})</i>
+    <a class="text-decoration-none" href="{% url 'explore:index' %}">×</a>
+</p>
+{% endif %}
+
+<h2>Proposals</h2>
+
+<ul>
+{% for proposal in proposals %}
+    <li class="mb-2">
+        <b>{{ proposal.name }}</b>
+        <div class="mb-1">{{ proposal.description }}</div>
+        <i>District: {{ proposal.district.name }} ({{ proposal.district.category }})</i>
+
+        {% if not election %}
+        <br>
+        <i>
+            Election:
+            <a class="text-decoration-none"
+            href="{% url 'explore:election' proposal.election.id %}">{{ proposal.election.name }}</a>
+            ({{ proposal.election.date }})
+        </i>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock main %}
