@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import date, datetime
 from functools import cached_property
 
@@ -381,3 +381,14 @@ class Progress:
                     progress.ballot_returned.color = "warning"
 
         return progress
+
+
+@dataclass
+class Message:
+    text: str
+    url: str
+    label: str
+
+    @property
+    def data(self) -> dict:
+        return asdict(self)

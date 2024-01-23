@@ -5,7 +5,7 @@ from typing import NamedTuple
 ELECTIONS_HOST = os.getenv("ELECTIONS_HOST", "https://michiganelections.io")
 MICHIGAN_REGISTRATION_URL = "https://mvic.sos.state.mi.us/RegisterVoter/Index"
 OTHER_REGISTRATION_URL = "https://votesaveamerica.com/state/{name}/"
-ABSENTEE_URL = "https://absentee.michiganelections.io/"
+ABSENTEE_URL = "https://absentee.michiganelections.io"
 PREVIEW_HOST = os.getenv("PREVIEW_HOST", "https://share.michiganelections.io")
 BALLOT_PREVIEW_URL = PREVIEW_HOST + "/ballots/{ballot_id}/"
 PRECINCT_PREVIEW_URL = PREVIEW_HOST + "/elections/{election_id}/precincts/{precinct_id}"
@@ -133,7 +133,7 @@ REGISTERED = VoterData(
         "absentee_requested": {
             "icon": "🚫",
             "color": "warning",
-            "url": "https://absentee.michiganelections.io/",
+            "url": "https://absentee.michiganelections.io",
             "date": "",
             "deadline": "2021-10-05",
         },

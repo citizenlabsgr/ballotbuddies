@@ -156,7 +156,7 @@ DEBUG_TOOLBAR_CONFIG = {
 # Bootstrap
 
 MESSAGE_TAGS = {
-    messages.DEBUG: "alert-info",
+    messages.DEBUG: "alert-light",
     messages.INFO: "alert-info",
     messages.SUCCESS: "alert-success",
     messages.WARNING: "alert-warning",
