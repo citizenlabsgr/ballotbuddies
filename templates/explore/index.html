@@ -1,36 +1,78 @@
 {% extends "base.html" %}
 
+{% load markdownify %}
+
 {% block main %}
 
-<h1>Explore Ballots</h1>
+<style>
+    p {
+        margin-bottom: 0.25em;
+    }
+    ul {
+        margin-bottom: 0.25em !important;
+    }
+</style>
+
+<h1>Explore All Ballots</h1>
 
 {% if election %}
 <p>
-    <i>Election: {{ election.name }} ({{ election.date }})</i>
-    <a class="text-decoration-none" href="{% url 'explore:index' %}">×</a>
+    <b>By Election:</b>
+    {{ election.name }} ({{ election.date }})
+    <a class="text-decoration-none" href="{% url 'explore:index' %}" hx-boost="true">
+        ×
+    </a>
+</p>
+{% endif %}
+
+{% if district %}
+<p>
+    <b>By District:</b>
+    {{ district.name }} ({{ district.category }})
+    <a class="text-decoration-none" href="{% url 'explore:index' %}" hx-boost="true">
+        ×
+    </a>
 </p>
 {% endif %}
 
 <h2>Proposals</h2>
 
-<ul>
+<ol>
 {% for proposal in proposals %}
     <li class="mb-2">
+
         <b>{{ proposal.name }}</b>
-        <div class="mb-1">{{ proposal.description }}</div>
-        <i>District: {{ proposal.district.name }} ({{ proposal.district.category }})</i>
+
+        <div class="mb-1">{{ proposal.description|markdownify }}</div>
+
+        {% if not district %}
+        <div>
+            <b>District:</b>
+            <a class="text-decoration-none"
+                href="{% url 'explore:district' proposal.district.id %}"
+                hx-boost="true">
+                {{ proposal.district.name }}
+            </a>
+            ({{ proposal.district.category }})
+        </div>
+        {% endif %}
 
         {% if not election %}
-        <br>
-        <i>
-            Election:
+        <div>
+            <b>Election:</b>
             <a class="text-decoration-none"
-            href="{% url 'explore:election' proposal.election.id %}">{{ proposal.election.name }}</a>
+                href="{% url 'explore:election' proposal.election.id %}"
+                hx-boost="true">
+                {{ proposal.election.name }}
+            </a>
             ({{ proposal.election.date }})
-        </i>
+        </div>
         {% endif %}
+
     </li>
 {% endfor %}
-</ul>
+</ol>
 
 {% endblock main %}
+
+

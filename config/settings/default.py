@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "crispy_forms",
     "crispy_bootstrap5",
+    "markdownify",
     "multi_email_field",
     "annoying",
     "rest_framework",
@@ -165,6 +166,16 @@ MESSAGE_TAGS = {
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+###############################################################################
+# Markdownify
+
+MARKDOWNIFY = {
+    "default": {
+        "WHITELIST_TAGS": ["p", "li", "ol", "ul"],
+        "STRIP": False,
+    }
+}
 
 ###############################################################################
 # Email
