@@ -1,17 +1,6 @@
 {% extends "base.html" %}
 
-{% load markdownify %}
-
 {% block main %}
-
-<style>
-    p {
-        margin-bottom: 0.25em;
-    }
-    ul {
-        margin-bottom: 0.25em !important;
-    }
-</style>
 
 <h1>Explore All Ballots</h1>
 
@@ -37,41 +26,7 @@
 
 <h2>Proposals</h2>
 
-<ol>
-{% for proposal in proposals %}
-    <li class="mb-2">
-
-        <b>{{ proposal.name }}</b>
-
-        <div class="mb-1">{{ proposal.description|markdownify }}</div>
-
-        {% if not district %}
-        <div>
-            <b>District:</b>
-            <a class="text-decoration-none"
-                href="{% url 'explore:district' proposal.district.id %}"
-                hx-boost="true">
-                {{ proposal.district.name }}
-            </a>
-            ({{ proposal.district.category }})
-        </div>
-        {% endif %}
-
-        {% if not election %}
-        <div>
-            <b>Election:</b>
-            <a class="text-decoration-none"
-                href="{% url 'explore:election' proposal.election.id %}"
-                hx-boost="true">
-                {{ proposal.election.name }}
-            </a>
-            ({{ proposal.election.date }})
-        </div>
-        {% endif %}
-
-    </li>
-{% endfor %}
-</ol>
+{% include "explore/_proposals.html" %}
 
 {% endblock main %}
 

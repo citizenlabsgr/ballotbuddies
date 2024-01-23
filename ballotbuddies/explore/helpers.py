@@ -19,7 +19,7 @@ async def get_district(district_id: int) -> dict:
 
 
 async def get_proposals(
-    *, election_id: int = 0, district_id: int = 0, count: int = 20
+    limit: int, *, election_id: int = 0, district_id: int = 0
 ) -> list:
     items: list[dict] = []
 
@@ -29,12 +29,12 @@ async def get_proposals(
     if district_id:
         url += f"&district_id={district_id}"
 
-    async with httpx.AsyncClient() as client:
-        while url and len(items) < count:
+    async with httpx.AsyncClient(follow_redirects=True) as client:
+        while url and len(items) < limit:
             log.info(f"Fetching {url}")
             response = await client.get(url)
             data = response.json()
             items.extend(data["results"])
             url = data["next"]
 
-    return items[:count]
+    return items
