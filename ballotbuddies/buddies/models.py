@@ -5,6 +5,7 @@ from copy import deepcopy
 from datetime import timedelta
 from functools import cached_property
 from itertools import chain
+from typing import Iterator
 from urllib.parse import urlencode
 
 from django.contrib.auth.models import User
@@ -20,7 +21,7 @@ from ballotbuddies.alerts.helpers import send_invite_email, send_voted_email
 from ballotbuddies.core.helpers import generate_key, today
 
 from . import constants
-from .types import Progress, to_date
+from .types import Message, Progress, to_date
 
 ZERO_WIDTH_SPACE = "\u200b"
 
@@ -170,7 +171,7 @@ class Voter(models.Model):
         return self.display_name
 
     @cached_property
-    def cta(self) -> str:
+    def friends_cta(self) -> str:
         friends = self.friends.count()
         neighbors = self.neighbors.count()
         voters = (
@@ -192,6 +193,27 @@ class Voter(models.Model):
             text += ". Invite more to promote democracy!"
 
         return text
+
+    @property
+    def profile_cta(self) -> Iterator[Message]:
+        if self.complete and not self.progress.registered:
+            yield Message(
+                "Confirm your voter information matches the SOS",
+                constants.MICHIGAN_REGISTRATION_URL,
+                "https://mvic.sos.state.mi.us",
+            )
+        if self.complete and self.absentee and not self.progress.absentee_requested:
+            yield Message(
+                "Request your absentee ballot",
+                constants.ABSENTEE_URL,
+                constants.ABSENTEE_URL,
+            )
+        if not self.ballot and self.ballot_url:
+            yield Message(
+                "Fill out your sample ballot",
+                self.ballot_url,
+                self.ballot_url.split("?")[0],
+            )
 
     @cached_property
     def data(self) -> dict:

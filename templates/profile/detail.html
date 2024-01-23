@@ -38,7 +38,7 @@
 <h2 class="pt-4">Last Updated</h2>
 
 <p>
-    {{ voter.updated|default:"Never" }}
+    {{ voter.updated|default:"Never (Incomplete Voter Information)" }}
     <a href="{% url 'buddies:status' slug=voter.slug %}?reset=true"
         class="ms-1 text-reset text-decoration-none"
         style="opacity: 0.25;">✕</a>

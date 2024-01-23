@@ -52,6 +52,11 @@ if "DATABASE_URL" in os.environ:
     DATABASES["default"] = dj_database_url.config()
 
 ###############################################################################
+# Bootstrap
+
+MESSAGE_LEVEL = messages.DEBUG
+
+###############################################################################
 # Bugsnag
 
 bugsnag.configure(release_stage="local")

@@ -101,17 +101,14 @@ def profile(request: HttpRequest):
         if error:
             messages.error(request, error)
 
-    form = VoterForm(initial=voter.data, locked=True)
-    if not voter.ballot and voter.ballot_url:
-        messages.info(
-            request,
-            format_html(
-                'Your sample ballot is ready: <a href="{0}">{1}</a>',
-                voter.ballot_url,
-                voter.ballot_url.split("?")[0],
-            ),
-        )
+    if not messages.get_messages(request):
+        for cta in voter.profile_cta:
+            messages.info(
+                request,
+                format_html('{text}: <a href="{url}">{label}</a>', **cta.data),
+            )
 
+    form = VoterForm(initial=voter.data, locked=True)
     context = {"voter": voter, "form": form}
     return render(request, "profile/detail.html", context)
 
@@ -175,7 +172,7 @@ def friends(request: HttpRequest):
         form = FriendsForm()
 
     context = {
-        "cta": voter.cta,
+        "cta": voter.friends_cta,
         "community": voter.community,
         "recommended": voter.neighbors.all(),
         "form": form,
@@ -232,6 +229,13 @@ def friends_profile(request: HttpRequest, slug: str):
     getattr(voter, "profile")  # ensure Profile exists
     if voter.user == request.user:
         return redirect("buddies:profile")
+
+    if not messages.get_messages(request):
+        for cta in voter.profile_cta:
+            messages.debug(
+                request,
+                format_html('{text}: <a href="{url}">{label}</a>', **cta.data),
+            )
 
     form = VoterForm(initial=voter.data, locked=True)
     context = {"voter": voter, "form": form}
