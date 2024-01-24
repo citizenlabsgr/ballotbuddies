@@ -1,39 +1,42 @@
 {% load markdownify %}
 
 <style>
-ol {
-    padding-left: 0px;
-    list-style-position: inside;
-}
-p {
-    margin-bottom: 0.25em;
-}
-ul {
-    margin-bottom: 0.25em !important;
-}
+    ol {
+        padding-left: 0px;
+        list-style-position: inside;
+    }
+    p {
+        margin-bottom: 0.25em;
+    }
+    ul {
+        margin-bottom: 0.25em !important;
+    }
+    .highlight {
+        background-color: yellow;
+    }
 </style>
 
 <ol>
     {% for proposal in proposals %}
     <li>
 
-        <b>{{ proposal.name }}</b>
+        <b class="proposal-text">{{ proposal.name }}</b>
 
-        <div class="mt-2" style="text-align: justify;">
+        <div class="proposal-text mt-2" style="text-align: justify;">
             {{ proposal.description|markdownify }}
         </div>
 
-        <div class="d-flex justify-content-center gap-4">
+        <div class="d-flex justify-content-end gap-4" hx-boost="true">
 
             {% if not election %}
             <span>
                 <b>Election:</b>
                 {% if district %}
-                    <a class="text-decoration-none" href="{% url 'explore:election-district' proposal.election.id proposal.district.id %}">
+                    <a class="text-decoration-none" href="{% url 'explore:election-district' proposal.election.id proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
                         {{ proposal.election.name }}
                     </a>
                 {% else %}
-                    <a class="text-decoration-none" href="{% url 'explore:election' proposal.election.id %}">
+                    <a class="text-decoration-none" href="{% url 'explore:election' proposal.election.id %}{% if q %}?q={{ q }}{% endif %}">
                         {{ proposal.election.name }}
                     </a>
                 {% endif %}
@@ -45,11 +48,11 @@ ul {
             <span>
                 <b>District:</b>
                 {% if election %}
-                    <a class="text-decoration-none" href="{% url 'explore:election-district' proposal.election.id proposal.district.id %}">
+                    <a class="text-decoration-none" href="{% url 'explore:election-district' proposal.election.id proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
                         {{ proposal.district.name }}
                     </a>
                 {% else %}
-                    <a class="text-decoration-none" href="{% url 'explore:district' proposal.district.id %}">
+                    <a class="text-decoration-none" href="{% url 'explore:district' proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
                         {{ proposal.district.name }}
                     </a>
                 {% endif %}
@@ -65,11 +68,40 @@ ul {
 
     {% if forloop.revcounter < 10 and count >= limit %}
     <span hx-trigger="revealed"
-        hx-get="{{ request.path }}?limit={{ limit|add:step }}"
+        hx-get="{{ request.path }}?q={{ q }}&limit={{ limit|add:20 }}"
         hx-target="closest ol"
         hx-swap="outerHTML">
     </span>
     {% endif %}
 
+    {% empty %}
+
+    {% if limit %}
+    <i>No matching proposals.</i>
+    {% else %}
+    <span hx-trigger="load delay:100ms"
+        hx-get="{{ request.path }}?q={{ q }}&limit=20"
+        hx-target="closest ol"
+        hx-swap="outerHTML">
+        Loding results...
+    </span>
+    {% endif %}
+
     {% endfor %}
 </ol>
+
+
+<script>
+    function highlightWords(word) {
+        if (!word) {
+            return;
+        }
+        var elements = document.getElementsByClassName('proposal-text');
+        for (var i = 0; i < elements.length; i++) {
+            var content = elements[i];
+            var regex = new RegExp('(' + word + ')', 'gi');
+            content.innerHTML = content.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+        }
+    }
+    highlightWords('{{ q }}');
+</script>

@@ -2,22 +2,22 @@
 
 {% block content %}
 
-<div class="container-xl my-3" hx-boost="true">
+<div class="container-xl my-3">
 
     <h1 class="text-center">Explore Ballots Items</h1>
 
-    <div class="d-flex justify-content-center gap-4">
+    <div class="d-flex justify-content-center gap-4" hx-boost="true">
 
         {% if election %}
         <span>
             <b>By Election:</b>
             {{ election.name }} ({{ election.date }})
             {% if district %}
-            <a class="text-decoration-none" href="{% url 'explore:district' district.id %}">
+            <a class="text-decoration-none" href="{% url 'explore:district' district.id %}{% if q %}?q={{ q }}{% endif %}">
                 ×
             </a>
             {% else %}
-            <a class="text-decoration-none" href="{% url 'explore:index' %}">
+            <a class="text-decoration-none" href="{% url 'explore:index' %}{% if q %}?q={{ q }}{% endif %}">
                 ×
             </a>
             {% endif %}
@@ -29,7 +29,27 @@
             <b>By District:</b>
             {{ district.name }} ({{ district.category }})
             {% if election %}
-            <a class="text-decoration-none" href="{% url 'explore:election' election.id %}">
+            <a class="text-decoration-none" href="{% url 'explore:election' election.id %}{% if q %}?q={{ q }}{% endif %}">
+                ×
+            </a>
+            {% else %}
+            <a class="text-decoration-none" href="{% url 'explore:index' %}{% if q %}?q={{ q }}{% endif %}">
+                ×
+            </a>
+            {% endif %}
+        </span>
+        {% endif %}
+
+        {% if q %}
+        <span>
+            <b>By Text:</b>
+            {{ q }}
+            {% if election %}
+            <a class="text-decoration-none" href="{% url 'explore:election' election.id %}{% if district %}?district={{ district.id }}{% endif %}">
+                ×
+            </a>
+            {% elif district %}
+            <a class="text-decoration-none" href="{% url 'explore:district' district.id %}">
                 ×
             </a>
             {% else %}
@@ -42,12 +62,24 @@
 
     </div>
 
-    <h2 class="my-4">Proposals</h2>
+    <div class="d-flex justify-content-between my-4">
+        <h2>Proposals</h2>
+
+        <div>
+            <form action="{{ request.path }}" method="get">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control"
+                        placeholder="Title or description"
+                        value="{{ q }}" aria-label="Search"
+                        onclick="this.select();" {% if not q %}autofocus{% endif %}>
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     {% include "explore/_proposals.html" %}
 
 </div>
 
 {% endblock content %}
-
-

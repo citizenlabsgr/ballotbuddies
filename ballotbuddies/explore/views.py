@@ -9,15 +9,16 @@ async_render = sync_to_async(render)
 
 
 async def index(request: HttpRequest):
-    limit = int(request.GET.get("limit", 20))
+    q = request.GET.get("q", "").strip().lower()
+    limit = int(request.GET.get("limit", 0))
 
-    proposals = await helpers.get_proposals(limit)
+    proposals = await helpers.get_proposals(q, limit)
 
     context = {
+        "q": q,
         "proposals": proposals[:limit],
         "count": len(proposals),
         "limit": limit,
-        "step": 20,
     }
 
     if "limit" in request.GET:
@@ -29,17 +30,18 @@ async def index(request: HttpRequest):
 
 
 async def by_election(request: HttpRequest, election_id: int):
+    q = request.GET.get("q", "").strip().lower()
     limit = int(request.GET.get("limit", 20))
 
     election = await helpers.get_election(election_id)
-    proposals = await helpers.get_proposals(limit, election_id=election_id)
+    proposals = await helpers.get_proposals(q, limit, election_id=election_id)
 
     context = {
+        "q": q,
         "election": election,
         "proposals": proposals[:limit],
         "count": len(proposals),
         "limit": limit,
-        "step": 20,
     }
 
     if "limit" in request.GET:
@@ -51,17 +53,18 @@ async def by_election(request: HttpRequest, election_id: int):
 
 
 async def by_district(request: HttpRequest, district_id: int):
+    q = request.GET.get("q", "").strip().lower()
     limit = int(request.GET.get("limit", 20))
 
     district = await helpers.get_district(district_id)
-    proposals = await helpers.get_proposals(limit, district_id=district_id)
+    proposals = await helpers.get_proposals(q, limit, district_id=district_id)
 
     context = {
+        "q": q,
         "district": district,
         "proposals": proposals[:limit],
         "count": len(proposals),
         "limit": limit,
-        "step": 20,
     }
 
     if "limit" in request.GET:
@@ -75,21 +78,22 @@ async def by_district(request: HttpRequest, district_id: int):
 async def by_election_and_district(
     request: HttpRequest, election_id: int, district_id: int
 ):
+    q = request.GET.get("q", "").strip().lower()
     limit = int(request.GET.get("limit", 20))
 
     election = await helpers.get_election(election_id)
     district = await helpers.get_district(district_id)
     proposals = await helpers.get_proposals(
-        limit, election_id=election_id, district_id=district_id
+        q, limit, election_id=election_id, district_id=district_id
     )
 
     context = {
+        "q": q,
         "election": election,
         "district": district,
         "proposals": proposals[:limit],
         "count": len(proposals),
         "limit": limit,
-        "step": 20,
     }
 
     if "limit" in request.GET:
