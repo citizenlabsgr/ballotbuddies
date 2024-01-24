@@ -1,33 +1,53 @@
 {% extends "base.html" %}
 
-{% block main %}
+{% block content %}
 
-<h1>Explore All Ballots</h1>
+<div class="container-xl my-3" hx-boost="true">
 
-{% if election %}
-<p>
-    <b>By Election:</b>
-    {{ election.name }} ({{ election.date }})
-    <a class="text-decoration-none" href="{% url 'explore:index' %}" hx-boost="true">
-        ×
-    </a>
-</p>
-{% endif %}
+    <h1 class="text-center">Explore Ballots Items</h1>
 
-{% if district %}
-<p>
-    <b>By District:</b>
-    {{ district.name }} ({{ district.category }})
-    <a class="text-decoration-none" href="{% url 'explore:index' %}" hx-boost="true">
-        ×
-    </a>
-</p>
-{% endif %}
+    <div class="d-flex justify-content-center gap-4">
 
-<h2>Proposals</h2>
+        {% if election %}
+        <span>
+            <b>By Election:</b>
+            {{ election.name }} ({{ election.date }})
+            {% if district %}
+            <a class="text-decoration-none" href="{% url 'explore:district' district.id %}">
+                ×
+            </a>
+            {% else %}
+            <a class="text-decoration-none" href="{% url 'explore:index' %}">
+                ×
+            </a>
+            {% endif %}
+        </span>
+        {% endif %}
 
-{% include "explore/_proposals.html" %}
+        {% if district %}
+        <span>
+            <b>By District:</b>
+            {{ district.name }} ({{ district.category }})
+            {% if election %}
+            <a class="text-decoration-none" href="{% url 'explore:election' election.id %}">
+                ×
+            </a>
+            {% else %}
+            <a class="text-decoration-none" href="{% url 'explore:index' %}">
+                ×
+            </a>
+            {% endif %}
+        </span>
+        {% endif %}
 
-{% endblock main %}
+    </div>
+
+    <h2 class="my-4">Proposals</h2>
+
+    {% include "explore/_proposals.html" %}
+
+</div>
+
+{% endblock content %}
 
 

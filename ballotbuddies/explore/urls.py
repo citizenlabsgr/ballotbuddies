@@ -8,4 +8,5 @@ urlpatterns = [
     path("", views.index, name="index"),  # type: ignore[arg-type]
     path("election/<int:election_id>/", views.by_election, name="election"),  # type: ignore[arg-type]
     path("district/<int:district_id>/", views.by_district, name="district"),  # type: ignore[arg-type]
+    path("election/<int:election_id>/district/<district_id>/", views.by_election_and_district, name="election-district"),  # type: ignore[arg-type]
 ]

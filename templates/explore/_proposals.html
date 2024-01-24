@@ -1,6 +1,10 @@
 {% load markdownify %}
 
 <style>
+ol {
+    padding-left: 0px;
+    list-style-position: inside;
+}
 p {
     margin-bottom: 0.25em;
 }
@@ -10,40 +14,56 @@ ul {
 </style>
 
 <ol>
-{% for proposal in proposals %}
-    <li class="mb-2">
+    {% for proposal in proposals %}
+    <li>
 
         <b>{{ proposal.name }}</b>
 
-        <div class="mb-1">{{ proposal.description|markdownify }}</div>
-
-        {% if not district %}
-        <div>
-            <b>District:</b>
-            <a class="text-decoration-none"
-                href="{% url 'explore:district' proposal.district.id %}"
-                hx-boost="true">
-                {{ proposal.district.name }}
-            </a>
-            ({{ proposal.district.category }})
+        <div class="mt-2" style="text-align: justify;">
+            {{ proposal.description|markdownify }}
         </div>
-        {% endif %}
 
-        {% if not election %}
-        <div>
-            <b>Election:</b>
-            <a class="text-decoration-none"
-                href="{% url 'explore:election' proposal.election.id %}"
-                hx-boost="true">
-                {{ proposal.election.name }}
-            </a>
-            ({{ proposal.election.date }})
+        <div class="d-flex justify-content-center gap-4">
+
+            {% if not election %}
+            <span>
+                <b>Election:</b>
+                {% if district %}
+                    <a class="text-decoration-none" href="{% url 'explore:election-district' proposal.election.id proposal.district.id %}">
+                        {{ proposal.election.name }}
+                    </a>
+                {% else %}
+                    <a class="text-decoration-none" href="{% url 'explore:election' proposal.election.id %}">
+                        {{ proposal.election.name }}
+                    </a>
+                {% endif %}
+                ({{ proposal.election.date }})
+            </span>
+            {% endif %}
+
+            {% if not district %}
+            <span>
+                <b>District:</b>
+                {% if election %}
+                    <a class="text-decoration-none" href="{% url 'explore:election-district' proposal.election.id proposal.district.id %}">
+                        {{ proposal.district.name }}
+                    </a>
+                {% else %}
+                    <a class="text-decoration-none" href="{% url 'explore:district' proposal.district.id %}">
+                        {{ proposal.district.name }}
+                    </a>
+                {% endif %}
+                ({{ proposal.district.category }})
+            </span>
+            {% endif %}
+
         </div>
-        {% endif %}
+
+        <hr>
 
     </li>
 
-    {% if forloop.revcounter < 5 and count >= limit %}
+    {% if forloop.revcounter < 10 and count >= limit %}
     <span hx-trigger="revealed"
         hx-get="{{ request.path }}?limit={{ limit|add:step }}"
         hx-target="closest ol"
@@ -51,5 +71,5 @@ ul {
     </span>
     {% endif %}
 
-{% endfor %}
+    {% endfor %}
 </ol>
