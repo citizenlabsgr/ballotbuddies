@@ -6,10 +6,10 @@
 
     <h1 class="text-center">Explore Ballots Items</h1>
 
-    <div class="d-flex justify-content-center gap-4" hx-boost="true">
+    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-md-4" hx-boost="true">
 
         {% if election %}
-        <span>
+        <span class="text-nowrap">
             <b>By Election:</b>
             {{ election.name }} ({{ election.date }})
             {% if district %}
@@ -25,7 +25,7 @@
         {% endif %}
 
         {% if district %}
-        <span>
+        <span class="text-nowrap">
             <b>By District:</b>
             {{ district.name }} ({{ district.category }})
             {% if election %}
@@ -41,31 +41,21 @@
         {% endif %}
 
         {% if q %}
-        <span>
+        <span class="text-nowrap">
             <b>By Text:</b>
             {{ q }}
-            {% if election %}
-            <a class="text-decoration-none" href="{% url 'explore:election' election.id %}{% if district %}?district={{ district.id }}{% endif %}">
+            <a class="text-decoration-none" href="{{ request.path }}">
                 ×
             </a>
-            {% elif district %}
-            <a class="text-decoration-none" href="{% url 'explore:district' district.id %}">
-                ×
-            </a>
-            {% else %}
-            <a class="text-decoration-none" href="{% url 'explore:index' %}">
-                ×
-            </a>
-            {% endif %}
         </span>
         {% endif %}
 
     </div>
 
-    <div class="d-flex justify-content-between my-4">
+    <div class="d-flex flex-column-reverse flex-md-row justify-content-between my-4">
         <h2>Proposals</h2>
 
-        <div>
+        <div class="mb-4 mb-md-0">
             <form action="{{ request.path }}" method="get">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control"

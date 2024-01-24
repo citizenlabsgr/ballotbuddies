@@ -5,7 +5,7 @@
 {% url 'buddies:about' as about_url %}
 {% url 'buddies:login' as login_url %}
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
 
 	    <a class="navbar-brand" href="{% url 'buddies:index' %}">Ballot Buddies</a>
@@ -19,13 +19,9 @@
 				{% endif %}
 			</a>
 
-			<a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-sm-0"
+			<a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-md-0"
 					href="{% url 'buddies:profile' %}">Profile</a>
 
-			{% if request.user.is_staff %}
-			<a class="nav-link text-danger {% if request.path == explore_url %} active {% endif %} ms-3 ms-sm-0"
-					href="{% url 'explore:index' %}">Explore</a>
-			{% endif %}
 		</div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +30,13 @@
 
 	    <div class="collapse navbar-collapse" id="navbar-content">
 
-	        <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+	        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+				{% if request.user.is_staff %}
+				<li class="nav-item">
+					<a class="nav-link text-danger {% if request.path == explore_url %} active {% endif %}"
+						href="{% url 'explore:index' %}">Explore</a>
+				</li>
+				{% endif %}
 		        <li class="nav-item">
 		            <a class="nav-link {% if request.path == about_url %} active {% endif %}"
                         href="{% url 'buddies:about' %}">About</a>
