@@ -1,6 +1,13 @@
 <tr>
     <th scope="col" colspan="2" rowspan="2" class="border-end align-middle">
-        Registered <span class="d-none d-sm-inline">to Vote</span>
+        <div class="d-flex justify-content-between align-items-center">
+            {% if 'search' not in request.path %}
+            <a class="btn btn-outline-secondary me-2" href="{% url 'buddies:search' %}" aria-label="Search">🔎</a>
+            {% endif %}
+            <div class="w-100 text-center text-nowrap">
+                Registered to Vote
+            </div>
+        </div>
     </th>
 
     <th scope="colgroup" colspan="2" class="border-end d-none d-lg-table-cell">
