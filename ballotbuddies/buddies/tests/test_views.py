@@ -69,7 +69,10 @@ def describe_index():
 @pytest.mark.django_db
 def describe_login():
     def it_displays_button_for_standard_email_domains(expect, client):
-        response = client.post("/login/", {"email": "test@gmail.com"})
+        pc_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        response = client.post(
+            "/login/", {"email": "test@gmail.com"}, HTTP_USER_AGENT=pc_user_agent
+        )
 
         html = decode(response)
         expect(html).contains("Open gmail.com")

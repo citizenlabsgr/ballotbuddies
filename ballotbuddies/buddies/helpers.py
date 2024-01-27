@@ -18,10 +18,13 @@ def parse_domain(email: str) -> tuple[str, bool]:
         "comcast.net",
         "gmail.com",
         "hotmail.com",
+        "icloud.com",
         "live.com",
+        "mail.com",
         "msn.com",
         "outlook.com",
         "yahoo.com",
+        "ymail.com",
     }
     return domain, standard
 

@@ -63,9 +63,11 @@ def login(request: HttpRequest):
 
             send_login_email(voter.user)
             domain, standard = parse_domain(voter.user.email)
-            return render(
-                request, "login.html", {"domain": domain, "standard": standard}
-            )
+            context = {
+                "domain": domain,
+                "standard": standard and request.user_agent.is_pc,  # type: ignore[attr-defined]
+            }
+            return render(request, "login.html", context)
     else:
         form = LoginForm()
 

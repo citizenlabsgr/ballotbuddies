@@ -60,6 +60,7 @@
     "Votey",
     "whitenoise",
     "wsgi",
+    "ymail",
     "zipcodes"
   ],
   "pylint.args": [
