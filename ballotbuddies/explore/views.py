@@ -48,7 +48,7 @@ async def _filter_proposals(
     else:
         district = None
 
-    proposals = await helpers.get_proposals(
+    total, proposals = await helpers.get_proposals(
         q, limit, election_id=election_id, district_id=district_id
     )
 
@@ -57,6 +57,7 @@ async def _filter_proposals(
         "election": election,
         "district": district,
         "proposals": proposals[:limit],
+        "total": total,
         "count": len(proposals),
         "limit": limit,
     }
@@ -105,7 +106,7 @@ async def _filter_positions(
     else:
         district = None
 
-    positions = await helpers.get_positions(
+    total, positions = await helpers.get_positions(
         q, limit, election_id=election_id, district_id=district_id
     )
 
@@ -114,6 +115,7 @@ async def _filter_positions(
         "election": election,
         "district": district,
         "positions": positions[:limit],
+        "total": total,
         "count": len(positions),
         "limit": limit,
     }

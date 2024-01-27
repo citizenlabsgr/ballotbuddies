@@ -12,10 +12,10 @@ def describe_index():
 
 @pytest.mark.vcr
 def describe_proposals():
-    def it_shows_loading_message(expect, client):
+    def it_shows_proposals_loading_message(expect, client):
         response = client.get("/explore/proposals/")
         html = response.content.decode()
-        expect(html).contains("Loading proposals")
+        expect(html).contains("Loading 8094 proposals")
 
     def it_shows_proposals_by_election(expect, client):
         response = client.get("/explore/proposals/election/54/")
@@ -41,10 +41,10 @@ def describe_proposals():
 
 @pytest.mark.vcr
 def describe_positions():
-    def it_shows_loading_message(expect, client):
+    def it_shows_positions_loading_message(expect, client):
         response = client.get("/explore/positions/")
         html = response.content.decode()
-        expect(html).contains("Loading positions")
+        expect(html).contains("Loading 49139 positions")
 
     def it_shows_positions_by_election(expect, client):
         response = client.get("/explore/positions/election/54/")

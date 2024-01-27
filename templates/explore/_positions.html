@@ -99,7 +99,7 @@
         hx-get="{{ request.path }}?q={{ q }}&limit=20"
         hx-target="closest ol"
         hx-swap="outerHTML">
-        Loading positions...
+        Loading {{ total }} positions...
     </span>
     {% endif %}
 
