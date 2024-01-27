@@ -1,3 +1,5 @@
+from django.core.cache import cache
+
 import httpx
 import log
 
@@ -23,6 +25,7 @@ async def get_proposals(
 ) -> list:
     items: list[dict] = []
 
+    log.info(f"Getting proposals: {election_id=} {district_id=} {q=}")
     url = f"{API}/proposals/?active_election=null&limit=1000"
     if election_id:
         url += f"&election_id={election_id}"
@@ -31,9 +34,7 @@ async def get_proposals(
 
     async with httpx.AsyncClient(follow_redirects=True) as client:
         while url and len(items) < limit:
-            log.info(f"Fetching {url} ({q=})")
-            response = await client.get(url)
-            data = response.json()
+            data = await _call(client, url)
             url = data["next"]
             if q:
                 for item in data["results"]:
@@ -51,6 +52,7 @@ async def get_positions(
 ) -> list:
     items: list[dict] = []
 
+    log.info(f"Getting positions: {election_id=} {district_id=} {q=}")
     url = f"{API}/positions/?active_election=null&limit=1000"
     if election_id:
         url += f"&election_id={election_id}"
@@ -60,8 +62,7 @@ async def get_positions(
     async with httpx.AsyncClient(follow_redirects=True) as client:
         while url and len(items) < limit:
             log.info(f"Fetching {url} ({q=})")
-            response = await client.get(url)
-            data = response.json()
+            data = await _call(client, url)
             url = data["next"]
             if q:
                 for item in data["results"]:
@@ -72,3 +73,13 @@ async def get_positions(
                 items.extend(data["results"])
 
     return items
+
+
+async def _call(client, url: str) -> dict:
+    data = await cache.aget(url)
+    if data is None:
+        log.info(f"Fetching {url}")
+        response = await client.get(url)
+        data = response.json()
+        await cache.aset(url, data, timeout=60 * 60)
+    return data
