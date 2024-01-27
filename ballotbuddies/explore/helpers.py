@@ -1,4 +1,5 @@
 import os
+from time import time
 
 from django.core.cache import cache
 
@@ -34,8 +35,9 @@ async def get_proposals(
     if district_id:
         url += f"&district_id={district_id}"
 
+    start = time()
     async with httpx.AsyncClient(follow_redirects=True) as client:
-        while url and len(items) < limit:
+        while url and len(items) < limit and time() - start < 10:
             data = await _call(client, url)
             url = data["next"]
             if q:
@@ -61,9 +63,9 @@ async def get_positions(
     if district_id:
         url += f"&district_id={district_id}"
 
+    start = time()
     async with httpx.AsyncClient(follow_redirects=True) as client:
-        while url and len(items) < limit:
-            log.info(f"Fetching {url} ({q=})")
+        while url and len(items) < limit and time() - start < 10:
             data = await _call(client, url)
             url = data["next"]
             if q:
