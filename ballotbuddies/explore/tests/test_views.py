@@ -25,18 +25,18 @@ def describe_proposals():
     def it_shows_proposals_by_district(expect, client):
         response = client.get("/explore/proposals/district/728/")
         html = response.content.decode()
-        expect(html).contains("Cass (County)")
+        expect(html).contains("Cass")
 
     def it_shows_proposals_by_election_and_district(expect, client):
         response = client.get("/explore/proposals/election/54/district/728/")
         html = response.content.decode()
         expect(html).contains("Presidential Primary")
-        expect(html).contains("Cass (County)")
+        expect(html).contains("Cass")
 
     def it_filters_proposals_by_text(expect, client):
         response = client.get("/explore/proposals/election/54/?q=money")
         html = response.content.decode()
-        expect(html.count("money")) == 10
+        expect(html.count("money")) == 11
 
 
 @pytest.mark.vcr
@@ -54,15 +54,15 @@ def describe_positions():
     def it_shows_positions_by_district(expect, client):
         response = client.get("/explore/positions/district/728/")
         html = response.content.decode()
-        expect(html).contains("Cass (County)")
+        expect(html).contains("Cass")
 
     def it_shows_positions_by_election_and_district(expect, client):
         response = client.get("/explore/positions/election/54/district/728/")
         html = response.content.decode()
         expect(html).contains("Presidential Primary")
-        expect(html).contains("Cass (County)")
+        expect(html).contains("Cass")
 
     def it_filters_positions_by_text(expect, client):
         response = client.get("/explore/positions/election/54/?q=taxes")
         html = response.content.decode()
-        expect(html.count("taxes")) == 6
+        expect(html.count("taxes")) == 7
