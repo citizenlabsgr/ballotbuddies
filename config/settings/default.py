@@ -114,6 +114,19 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 ###############################################################################
+# Caches
+
+CACHES: dict = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    },
+    "explore": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(os.getcwd(), ".cache/django/explore"),
+    },
+}
+
+###############################################################################
 # Sessions
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"

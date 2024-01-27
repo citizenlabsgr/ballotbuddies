@@ -1,24 +1,26 @@
 from time import time
 
-from django.core.cache import cache
+from django.core.cache import caches
 
 import httpx
 import log
 
 API = "https://michiganelections.io/api"
 
+cache = caches["explore"]
+
 
 async def get_election(election_id: int) -> dict:
     url = f"{API}/elections/{election_id}/"
     async with httpx.AsyncClient() as client:
-        data = await _call(client, url, cache_result=True)
+        data = await _call(client, url)
         return data
 
 
 async def get_district(district_id: int) -> dict:
     url = f"{API}/districts/{district_id}/"
     async with httpx.AsyncClient() as client:
-        data = await _call(client, url, cache_result=True)
+        data = await _call(client, url)
         return data
 
 
@@ -39,7 +41,7 @@ async def get_proposals(
     start = time()
     async with httpx.AsyncClient(follow_redirects=True) as client:
         while url:
-            data = await _call(client, url, cache_result=not limit)
+            data = await _call(client, url)
             total = data["count"]
             url = data["next"]
             if q:
@@ -79,7 +81,7 @@ async def get_positions(
     start = time()
     async with httpx.AsyncClient(follow_redirects=True) as client:
         while url:
-            data = await _call(client, url, cache_result=not limit)
+            data = await _call(client, url)
             total = data["count"]
             url = data["next"]
             if q:
@@ -102,19 +104,13 @@ async def get_positions(
     return total, items
 
 
-async def _call(client, url: str, *, cache_result: bool = False) -> dict:
-    if cache_result:
-        data = await cache.aget(url)
-        if data is None:
-            log.info(f"Fetching {url}")
-            response = await client.get(url)
-            data = response.json()
-            await cache.aset(url, data, timeout=60 * 60)
-    else:
+async def _call(client, url: str) -> dict:
+    data = await caches["explore"].aget(url)
+    if data is None:
         log.info(f"Fetching {url}")
         response = await client.get(url)
         data = response.json()
-
+        await caches["explore"].aset(url, data, timeout=60 * 60)
     return data
 
 
