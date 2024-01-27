@@ -55,7 +55,7 @@ async def get_positions(
     items: list[dict] = []
 
     log.info(f"Getting positions: {election_id=} {district_id=} {q=}")
-    url = f"{API}/positions/?active_election=null&limit=1000"
+    url = f"{API}/positions/?active_election=null&limit=500"
     if election_id:
         url += f"&election_id={election_id}"
     if district_id:
