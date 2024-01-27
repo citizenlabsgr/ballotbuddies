@@ -41,6 +41,7 @@ CACHES = {
     "explore": {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": "/tmp/django/explore",
+        "TIMEOUT": 60 * 60 * 6,
     },
 }
 

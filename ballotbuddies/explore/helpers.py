@@ -110,7 +110,7 @@ async def _call(client, url: str) -> dict:
         log.info(f"Fetching {url}")
         response = await client.get(url)
         data = response.json()
-        await caches["explore"].aset(url, data, timeout=60 * 60)
+        await caches["explore"].aset(url, data)
     return data
 
 
