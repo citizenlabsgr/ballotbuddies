@@ -2,7 +2,7 @@
     <b>Michigan Ballot Buddies</b>
     is an app to help friends hold each other accountable to vote in every election.
     We fetch information from the
-    <a href="https://mvic.sos.state.mi.us/">Michigan Secretary of State</a>
+    <a href="https://mvic.sos.state.mi.us/" target="_blank">Michigan Secretary of State</a>
     so you can nudge friends to update their registration or encourage them to vote by mail.
 </p>
 
@@ -19,13 +19,17 @@
         </a>
         {% endif %}
 
-    {% else %}
-    <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
-        Get Started
-    </a>
-    {% endif %}
+        <a class="btn btn-secondary" href="{% url 'buddies:invite' %}">
+            Invite Friends
+        </a>
 
-    <a class="btn btn-secondary" href="{% url 'buddies:invite' %}">
-        Invite Friends
-    </a>
+    {% else %}
+        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+            Get Started
+        </a>
+
+        <a class="btn btn-secondary" href="{% url 'explore:index' %}">
+            Explore Ballots
+        </a>
+    {% endif %}
 </div>
