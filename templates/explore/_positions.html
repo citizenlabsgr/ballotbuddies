@@ -30,7 +30,7 @@
             {{ position.description|markdownify }}
         </div>
 
-        <ul {% if not election or not district %}class="mb-3 mb-lg-0"{% endif %}>
+        <ul>
             {% for candidate in position.candidates %}
             <li>
                 {{ candidate.name }}
@@ -42,7 +42,7 @@
             {% endfor %}
         </ul>
 
-        <div class="d-flex flex-column flex-md-row justify-content-end align-items-center gap-md-4" hx-boost="true">
+        <div class="{% if not election or not district %}mt-3 mt-lg-0{% endif %} d-flex flex-column flex-md-row justify-content-end align-items-center gap-md-4" hx-boost="true">
 
             {% if not election %}
             <span>
