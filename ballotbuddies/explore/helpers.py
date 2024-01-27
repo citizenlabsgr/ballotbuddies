@@ -78,8 +78,13 @@ async def get_positions(
 
 
 async def _call(client, url: str) -> dict:
+    if os.getenv("DISABLE_CACHE"):
+        log.info(f"Fetching {url}")
+        response = await client.get(url)
+        return response.json()
+
     data = await cache.aget(url)
-    if data is None or os.getenv("DISABLE_CACHE"):
+    if data is None:
         log.info(f"Fetching {url}")
         response = await client.get(url)
         data = response.json()
