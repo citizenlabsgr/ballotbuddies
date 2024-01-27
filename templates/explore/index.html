@@ -5,10 +5,18 @@
 {% block content %}
 
 <style>
-    @media (min-width: 768px) {
-        .w-md-third {
-            flex: 0 0 33%;
-        }
+    .sticky-nav {
+        position: -webkit-sticky; /* For Safari */
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: white;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+
+    .scrollable-content {
+        overflow-y: auto;
     }
 
     .square-button {
@@ -23,6 +31,8 @@
 <div class="container-xl my-3">
 
     <h1 class="text-center">Explore Ballots Items</h1>
+
+    <div class="sticky-nav">
 
     <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-1 gap-md-4" hx-boost="true">
 
@@ -109,7 +119,7 @@
             </li>
         </ul>
 
-        <div class="mb-4 mb-md-0 w-md-third">
+        <div class="mb-4 mb-md-0" style="min-width: 25em;">
             <form action="{{ request.path }}" method="get" hx-boost="true">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control"
@@ -128,11 +138,15 @@
 
     </div>
 
+    </div>
+
+    <div class="scrollable-content">
     {% if 'proposals' in request.path %}
     {% include "explore/_proposals.html" %}
     {% elif 'positions' in request.path %}
     {% include "explore/_positions.html" %}
     {% endif %}
+    </div>
 
 </div>
 
