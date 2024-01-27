@@ -11,8 +11,8 @@
         top: 0;
         z-index: 100;
         background-color: white;
-        padding-top: 10px;
-        padding-bottom: 5px;
+        padding-top: 15px;
+        padding-bottom: 10px;
     }
 
     .scrollable-content {
@@ -26,6 +26,19 @@
         padding: 0;
         text-align: center;
     }
+
+    @keyframes showText {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .text-delayed {
+        animation-name: showText;
+        animation-duration: 0.5s;
+        animation-delay: 1s;
+        animation-fill-mode: forwards;
+        opacity: 0;
+    }
 </style>
 
 <div class="container-xl my-3">
@@ -34,109 +47,111 @@
 
     <div class="sticky-nav">
 
-    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-1 gap-md-4" hx-boost="true">
+        {% if election or district %}
+        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-1 gap-md-4 mb-4" hx-boost="true">
 
-        {% if election %}
-        <span class="text-nowrap">
-            <span class="me-1">
-                <b>By Election:</b>
-                {{ election.name }} <span class="d-none d-lg-inline">({{ election.date }})</span>
-            </span>
+            {% if election %}
+            <span class="text-nowrap">
+                <span class="me-1">
+                    <b>By Election:</b>
+                    {{ election.name }} <span class="d-none d-lg-inline">({{ election.date }})</span>
+                </span>
 
-            {% if 'proposals' in request.path %}
-                {% if district %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% else %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% endif %}
-            {% elif 'positions' in request.path %}
-                {% if district %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% else %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% endif %}
-            {% endif %}
-
-        </span>
-        {% endif %}
-
-        {% if district %}
-        <span class="text-nowrap">
-            <span class="me-1">
-                <b>By District:</b>
-                {{ district.name }} <span class="d-none d-lg-inline">({{ district.category }})</span>
-            </span>
-
-            {% if 'proposals' in request.path %}
-                {% if election %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% else %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% endif %}
-            {% elif 'positions' in request.path %}
-                {% if election %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% else %}
-                <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
-                    ×
-                </a>
-                {% endif %}
-            {% endif %}
-
-        </span>
-        {% endif %}
-
-    </div>
-
-    <div class="d-flex flex-column-reverse flex-md-row justify-content-between my-4">
-
-        <ul class="nav nav-tabs" hx-boost="true">
-            <li class="nav-item">
-                <a class="nav-link {% if 'proposals' in request.path %}active{% endif %}"
-                    href="{{ request.build_absolute_uri|replace:'positions,proposals' }}">
-                    Proposals
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if 'positions' in request.path %}active{% endif %}"
-                    href="{{ request.build_absolute_uri|replace:'proposals,positions' }}">
-                    Positions
-                </a>
-            </li>
-        </ul>
-
-        <div class="mb-4 mb-md-0" style="min-width: 25em;">
-            <form action="{{ request.path }}" method="get" hx-boost="true">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control"
-                        placeholder="Keyword, election, or district"
-                        value="{{ q }}" aria-label="Search"
-                        {% if not q %}autofocus{% endif %}>
-                    {% if q %}
-                    <a href="{{ request.path }}" class="btn btn-outline-danger">
+                {% if 'proposals' in request.path %}
+                    {% if district %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
+                        ×
+                    </a>
+                    {% else %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
                         ×
                     </a>
                     {% endif %}
-                    <button type="submit" class="btn btn-outline-primary">Search</button>
-                </div>
-            </form>
-        </div>
+                {% elif 'positions' in request.path %}
+                    {% if district %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
+                        ×
+                    </a>
+                    {% else %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
+                        ×
+                    </a>
+                    {% endif %}
+                {% endif %}
 
-    </div>
+            </span>
+            {% endif %}
+
+            {% if district %}
+            <span class="text-nowrap">
+                <span class="me-1">
+                    <b>By District:</b>
+                    {{ district.name }} <span class="d-none d-lg-inline">({{ district.category }})</span>
+                </span>
+
+                {% if 'proposals' in request.path %}
+                    {% if election %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
+                        ×
+                    </a>
+                    {% else %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
+                        ×
+                    </a>
+                    {% endif %}
+                {% elif 'positions' in request.path %}
+                    {% if election %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
+                        ×
+                    </a>
+                    {% else %}
+                    <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
+                        ×
+                    </a>
+                    {% endif %}
+                {% endif %}
+
+            </span>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+        <div class="d-flex flex-column-reverse flex-md-row justify-content-between">
+
+            <ul class="nav nav-tabs" hx-boost="true">
+                <li class="nav-item">
+                    <a class="nav-link {% if 'proposals' in request.path %}active{% endif %}"
+                        href="{{ request.build_absolute_uri|replace:'positions,proposals' }}">
+                        Proposals
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'positions' in request.path %}active{% endif %}"
+                        href="{{ request.build_absolute_uri|replace:'proposals,positions' }}">
+                        Positions
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mb-4 mb-md-0" style="min-width: 50%;">
+                <form action="{{ request.path }}" method="get" hx-boost="true">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control"
+                            placeholder="Keyword, election, or district"
+                            value="{{ q }}" aria-label="Search"
+                            {% if not q %}autofocus{% endif %}>
+                        {% if q %}
+                        <a href="{{ request.path }}" class="btn btn-outline-danger">
+                            ×
+                        </a>
+                        {% endif %}
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
 
     </div>
 

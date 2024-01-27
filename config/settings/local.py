@@ -52,6 +52,11 @@ if "DATABASE_URL" in os.environ:
     DATABASES["default"] = dj_database_url.config()
 
 ###############################################################################
+# Caches
+
+CACHES["explore"]["TIMEOUT"] = 60
+
+###############################################################################
 # Bootstrap
 
 MESSAGE_LEVEL = messages.DEBUG

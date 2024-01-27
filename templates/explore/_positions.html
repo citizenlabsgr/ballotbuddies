@@ -95,11 +95,12 @@
     {% if limit %}
     <i>No matching positions.</i>
     {% else %}
-    <span hx-trigger="load delay:1s"
+    <span class="text-delayed"
+        hx-trigger="load delay:250ms"
         hx-get="{{ request.path }}?q={{ q }}&limit=20"
         hx-target="closest ol"
         hx-swap="outerHTML">
-        Loading {{ total }} positions...
+        {% if q %}Searching{% else %}Loading{% endif %} {{ total }} positions...
     </span>
     {% endif %}
 
