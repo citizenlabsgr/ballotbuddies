@@ -44,8 +44,7 @@ async def get_proposals(
             url = data["next"]
             if q:
                 for item in data["results"]:
-                    text = item["name"].lower() + item["description"].lower()
-                    if q.lower() in text:
+                    if _match(q, item):
                         items.append(item)
             else:
                 items.extend(data["results"])
@@ -85,8 +84,7 @@ async def get_positions(
             url = data["next"]
             if q:
                 for item in data["results"]:
-                    text = item["name"].lower() + item["description"].lower()
-                    if q.lower() in text:
+                    if _match(q, item):
                         items.append(item)
             else:
                 items.extend(data["results"])
@@ -118,3 +116,12 @@ async def _call(client, url: str, *, cache_result: bool = False) -> dict:
         data = response.json()
 
     return data
+
+
+def _match(text: str, item: dict) -> bool:
+    return text.lower() in (
+        item["name"].lower()
+        + item["description"].lower()
+        + item["election"]["name"].lower()
+        + item["district"]["name"].lower()
+    )

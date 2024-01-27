@@ -1,6 +1,7 @@
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
 
+import log
 from asgiref.sync import sync_to_async
 
 from . import helpers
@@ -40,11 +41,13 @@ async def _filter_proposals(
 
     if election_id:
         election = await helpers.get_election(election_id)
+        q = _normalize(q, election)
     else:
         election = None
 
     if district_id:
         district = await helpers.get_district(district_id)
+        q = _normalize(q, district)
     else:
         district = None
 
@@ -98,11 +101,13 @@ async def _filter_positions(
 
     if election_id:
         election = await helpers.get_election(election_id)
+        q = _normalize(q, election)
     else:
         election = None
 
     if district_id:
         district = await helpers.get_district(district_id)
+        q = _normalize(q, district)
     else:
         district = None
 
@@ -126,3 +131,13 @@ async def _filter_positions(
         template_name = "explore/index.html"
 
     return await async_render(request, template_name, context)
+
+
+def _normalize(q: str, item: dict) -> str:
+    label = item["name"]
+    if category := item.get("category"):
+        label += " " + category
+    if len(q) > 3 and q.lower() in label.lower():
+        log.info(f"Matched {q=} to {item}")
+        return ""
+    return q

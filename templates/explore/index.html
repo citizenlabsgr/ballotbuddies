@@ -113,7 +113,7 @@
             <form action="{{ request.path }}" method="get" hx-boost="true">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control"
-                        placeholder="Title or description"
+                        placeholder="Keywords, election, or district"
                         value="{{ q }}" aria-label="Search"
                         onclick="this.select();" {% if not q %}autofocus{% endif %}>
                     {% if q %}
