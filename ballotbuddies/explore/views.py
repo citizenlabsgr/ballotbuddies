@@ -17,26 +17,26 @@ async def proposals_by_text(request: HttpRequest):
 
 
 async def proposals_by_election(request: HttpRequest, election_id: int):
-    return await _filter_proposals(request, limit=20, election_id=election_id)
+    return await _filter_proposals(request, election_id=election_id)
 
 
 async def proposals_by_district(request: HttpRequest, district_id: int):
-    return await _filter_proposals(request, limit=20, district_id=district_id)
+    return await _filter_proposals(request, district_id=district_id)
 
 
 async def proposals_by_election_and_district(
     request: HttpRequest, election_id: int, district_id: int
 ):
     return await _filter_proposals(
-        request, limit=20, election_id=election_id, district_id=district_id
+        request, election_id=election_id, district_id=district_id
     )
 
 
 async def _filter_proposals(
-    request: HttpRequest, *, limit: int = 0, election_id: int = 0, district_id: int = 0
+    request: HttpRequest, *, election_id: int = 0, district_id: int = 0
 ):
-    q = request.GET.get("q", "").strip().lower()
-    limit = int(request.GET.get("limit", limit))
+    q = request.GET.get("q", "").strip()
+    limit = int(request.GET.get("limit", 20 if election_id or district_id else 0))
 
     if election_id:
         election = await helpers.get_election(election_id)
@@ -75,26 +75,26 @@ async def positions_by_text(request: HttpRequest):
 
 
 async def positions_by_election(request: HttpRequest, election_id: int):
-    return await _filter_positions(request, limit=20, election_id=election_id)
+    return await _filter_positions(request, election_id=election_id)
 
 
 async def positions_by_district(request: HttpRequest, district_id: int):
-    return await _filter_positions(request, limit=20, district_id=district_id)
+    return await _filter_positions(request, district_id=district_id)
 
 
 async def positions_by_election_and_district(
     request: HttpRequest, election_id: int, district_id: int
 ):
     return await _filter_positions(
-        request, limit=20, election_id=election_id, district_id=district_id
+        request, election_id=election_id, district_id=district_id
     )
 
 
 async def _filter_positions(
-    request: HttpRequest, *, limit: int = 0, election_id: int = 0, district_id: int = 0
+    request: HttpRequest, *, election_id: int = 0, district_id: int = 0
 ):
-    q = request.GET.get("q", "").strip().lower()
-    limit = int(request.GET.get("limit", limit))
+    q = request.GET.get("q", "").strip()
+    limit = int(request.GET.get("limit", 20 if election_id or district_id else 0))
 
     if election_id:
         election = await helpers.get_election(election_id)

@@ -45,7 +45,7 @@ async def get_proposals(
             if q:
                 for item in data["results"]:
                     text = item["name"].lower() + item["description"].lower()
-                    if q in text:
+                    if q.lower() in text:
                         items.append(item)
             else:
                 items.extend(data["results"])
@@ -86,7 +86,7 @@ async def get_positions(
             if q:
                 for item in data["results"]:
                     text = item["name"].lower() + item["description"].lower()
-                    if q in text:
+                    if q.lower() in text:
                         items.append(item)
             else:
                 items.extend(data["results"])

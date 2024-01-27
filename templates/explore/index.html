@@ -82,7 +82,7 @@
 
     <div class="d-flex flex-column-reverse flex-md-row justify-content-between my-4">
 
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" hx-boost="true">
             <li class="nav-item">
                 <a class="nav-link {% if 'proposals' in request.path %}active{% endif %}"
                     href="{% url 'explore:proposals' %}">Proposals</a>
@@ -94,7 +94,7 @@
         </ul>
 
         <div class="mb-4 mb-md-0">
-            <form action="{{ request.path }}" method="get">
+            <form action="{{ request.path }}" method="get" hx-boost="true">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control"
                         placeholder="Title or description"
