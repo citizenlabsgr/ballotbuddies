@@ -17,14 +17,30 @@
 </style>
 
 <ol>
-    {% for proposal in proposals %}
+    {% for position in positions %}
     <li>
 
-        <b class="proposal-text">{{ proposal.name }}</b>
+        <b class="position-text">{{ position.name }}</b>
 
-        <div class="proposal-text mt-2" style="text-align: justify;">
-            {{ proposal.description|markdownify }}
+        {% if position.section %}
+        ({{ position.section }} Section)
+        {% endif %}
+
+        <div class="position-text mt-2" style="text-align: justify;">
+            {{ position.description|markdownify }}
         </div>
+
+        <ul {% if not election or not district %}class="mb-3 mb-lg-0"{% endif %}>
+            {% for candidate in position.candidates %}
+            <li>
+                {{ candidate.name }}
+                <span>
+                    (<span style="color: {{ candidate.party.color }};">⬤</span>
+                    {{ candidate.party.name }})
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
 
         <div class="d-flex flex-column flex-md-row justify-content-end align-items-center gap-md-4" hx-boost="true">
 
@@ -32,15 +48,15 @@
             <span>
                 <b>Election:</b>
                 {% if district %}
-                    <a class="text-decoration-none" href="{% url 'explore:proposals-election-district' proposal.election.id proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
-                        {{ proposal.election.name }}
+                    <a class="text-decoration-none" href="{% url 'explore:positions-election-district' position.election.id position.district.id %}{% if q %}?q={{ q }}{% endif %}">
+                        {{ position.election.name }}
                     </a>
                 {% else %}
-                    <a class="text-decoration-none" href="{% url 'explore:proposals-election' proposal.election.id %}{% if q %}?q={{ q }}{% endif %}">
-                        {{ proposal.election.name }}
+                    <a class="text-decoration-none" href="{% url 'explore:positions-election' position.election.id %}{% if q %}?q={{ q }}{% endif %}">
+                        {{ position.election.name }}
                     </a>
                 {% endif %}
-                ({{ proposal.election.date }})
+                ({{ position.election.date }})
             </span>
             {% endif %}
 
@@ -48,15 +64,15 @@
             <span>
                 <b>District:</b>
                 {% if election %}
-                    <a class="text-decoration-none" href="{% url 'explore:proposals-election-district' proposal.election.id proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
-                        {{ proposal.district.name }}
+                    <a class="text-decoration-none" href="{% url 'explore:positions-election-district' position.election.id position.district.id %}{% if q %}?q={{ q }}{% endif %}">
+                        {{ position.district.name }}
                     </a>
                 {% else %}
-                    <a class="text-decoration-none" href="{% url 'explore:proposals-district' proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
-                        {{ proposal.district.name }}
+                    <a class="text-decoration-none" href="{% url 'explore:positions-district' position.district.id %}{% if q %}?q={{ q }}{% endif %}">
+                        {{ position.district.name }}
                     </a>
                 {% endif %}
-                ({{ proposal.district.category }})
+                ({{ position.district.category }})
             </span>
             {% endif %}
 
@@ -77,13 +93,13 @@
     {% empty %}
 
     {% if limit %}
-    <i>No matching proposals.</i>
+    <i>No matching positions.</i>
     {% else %}
     <span hx-trigger="load delay:100ms"
         hx-get="{{ request.path }}?q={{ q }}&limit=20"
         hx-target="closest ol"
         hx-swap="outerHTML">
-        Loading proposals...
+        Loading positions...
     </span>
     {% endif %}
 
@@ -96,7 +112,7 @@
         if (!word) {
             return;
         }
-        var elements = document.getElementsByClassName('proposal-text');
+        var elements = document.getElementsByClassName('position-text');
         for (var i = 0; i < elements.length; i++) {
             var content = elements[i];
             var regex = new RegExp('(' + word + ')', 'gi');

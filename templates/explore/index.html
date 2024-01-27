@@ -12,15 +12,29 @@
         <span class="text-nowrap">
             <b>By Election:</b>
             {{ election.name }} ({{ election.date }})
-            {% if district %}
-            <a class="text-decoration-none" href="{% url 'explore:district' district.id %}{% if q %}?q={{ q }}{% endif %}">
-                ×
-            </a>
-            {% else %}
-            <a class="text-decoration-none" href="{% url 'explore:index' %}{% if q %}?q={{ q }}{% endif %}">
-                ×
-            </a>
+
+            {% if 'proposals' in request.path %}
+                {% if district %}
+                <a class="text-decoration-none" href="{% url 'explore:proposals-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% else %}
+                <a class="text-decoration-none" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% endif %}
+            {% elif 'positions' in request.path %}
+                {% if district %}
+                <a class="text-decoration-none" href="{% url 'explore:positions-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% else %}
+                <a class="text-decoration-none" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% endif %}
             {% endif %}
+
         </span>
         {% endif %}
 
@@ -28,15 +42,29 @@
         <span class="text-nowrap">
             <b>By District:</b>
             {{ district.name }} ({{ district.category }})
-            {% if election %}
-            <a class="text-decoration-none" href="{% url 'explore:election' election.id %}{% if q %}?q={{ q }}{% endif %}">
-                ×
-            </a>
-            {% else %}
-            <a class="text-decoration-none" href="{% url 'explore:index' %}{% if q %}?q={{ q }}{% endif %}">
-                ×
-            </a>
+
+            {% if 'proposals' in request.path %}
+                {% if election %}
+                <a class="text-decoration-none" href="{% url 'explore:proposals-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% else %}
+                <a class="text-decoration-none" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% endif %}
+            {% elif 'positions' in request.path %}
+                {% if election %}
+                <a class="text-decoration-none" href="{% url 'explore:positions-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% else %}
+                <a class="text-decoration-none" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
+                    ×
+                </a>
+                {% endif %}
             {% endif %}
+
         </span>
         {% endif %}
 
@@ -53,7 +81,17 @@
     </div>
 
     <div class="d-flex flex-column-reverse flex-md-row justify-content-between my-4">
-        <h2>Proposals</h2>
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {% if 'proposals' in request.path %}active{% endif %}"
+                    href="{% url 'explore:proposals' %}">Proposals</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if 'positions' in request.path %}active{% endif %}"
+                    href="{% url 'explore:positions' %}">Positions</a>
+            </li>
+        </ul>
 
         <div class="mb-4 mb-md-0">
             <form action="{{ request.path }}" method="get">
@@ -66,9 +104,14 @@
                 </div>
             </form>
         </div>
+
     </div>
 
+    {% if 'proposals' in request.path %}
     {% include "explore/_proposals.html" %}
+    {% elif 'positions' in request.path %}
+    {% include "explore/_positions.html" %}
+    {% endif %}
 
 </div>
 
