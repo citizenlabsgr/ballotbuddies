@@ -19,7 +19,9 @@
 			</a>
 
 			<a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-md-0"
-					href="{% url 'buddies:profile' %}">Profile</a>
+				href="{% url 'buddies:profile' %}">
+				Profile
+			</a>
 
 		</div>
 
@@ -33,12 +35,14 @@
 				<li class="nav-item">
 					<a class="nav-link {% if 'explore' in request.path %} active {% endif %}"
 						href="{% url 'explore:index' %}">
-						Explore
+						Explore <span class="d-md-none">Ballots</span>
 					</a>
 				</li>
 		        <li class="nav-item">
 		            <a class="nav-link {% if request.path == about_url %} active {% endif %}"
-                        href="{% url 'buddies:about' %}">About</a>
+                        href="{% url 'buddies:about' %}">
+						About <span class="d-md-none">This Site</span>
+					</a>
 		        </li>
 				{% if debug or allow_debug %}
 				<li class="nav-item">
@@ -47,7 +51,7 @@
                         href="{% url 'alerts:detail' slug=voter.slug %}"
 						{% else %}
 						href="{% url 'alerts:index' %}"
-						{% endif %}>Emails</a>
+						{% endif %}>Preview Emails</a>
 		        </li>
 				{% endif %}
 	        </ul>
