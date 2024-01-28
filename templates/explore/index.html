@@ -140,7 +140,7 @@
                         <input type="text" name="q" class="form-control"
                             placeholder="Keyword, election, or district"
                             value="{{ q }}" aria-label="Search"
-                            {% if not q %}autofocus{% endif %}>
+                            {% if request.user_agent.is_pc and not q %}autofocus{% endif %}>
                         {% if q %}
                         <a href="{{ request.path }}" class="btn btn-outline-danger">
                             ×
