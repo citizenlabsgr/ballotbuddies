@@ -66,3 +66,11 @@ def describe_positions():
         response = client.get("/explore/positions/election/54/?q=taxes")
         html = response.content.decode()
         expect(html.count("taxes")) == 7
+
+
+@pytest.mark.vcr
+def describe_elections():
+    def it_shows_all_elections(expect, client):
+        response = client.get("/explore/elections/")
+        html = response.content.decode()
+        expect(html.count("<li>")) == 22

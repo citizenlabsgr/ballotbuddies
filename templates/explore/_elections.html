@@ -1,0 +1,23 @@
+<ol>
+    {% for election in elections %}
+    <li>
+
+        <b>{{ election.name }}</b>
+
+        ({{ election.date }})
+
+        <div class="d-flex gap-4 p-3">
+            <a class="text-decoration-none"
+                href="{% url 'explore:proposals-election' election.id %}">
+                View Proposals
+            </a>
+
+            <a class="text-decoration-none"
+                href="{% url 'explore:positions-election' election.id %}">
+                View Positions
+            </a>
+        </div>
+
+    </li>
+    {% endfor %}
+</ol>

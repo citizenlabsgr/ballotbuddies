@@ -104,6 +104,18 @@ async def get_positions(
     return total, items
 
 
+async def get_elections() -> tuple[int, list]:
+    log.info("Getting elections")
+    url = f"{API}/elections/"
+    async with httpx.AsyncClient(follow_redirects=True) as client:
+        data = await _call(client, url)
+        total = data["count"]
+        url = data["next"]
+        items = data["results"]
+
+    return total, items
+
+
 async def _call(client, url: str) -> dict:
     data = await caches["explore"].aget(url)
     if data is None:

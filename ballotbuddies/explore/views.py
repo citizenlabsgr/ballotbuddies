@@ -13,7 +13,7 @@ async def index(_request: HttpRequest):
     return redirect("explore:proposals")
 
 
-async def proposals_by_text(request: HttpRequest):
+async def proposals_list(request: HttpRequest):
     return await _filter_proposals(request)
 
 
@@ -73,7 +73,7 @@ async def _filter_proposals(
     return await async_render(request, template_name, context)
 
 
-async def positions_by_text(request: HttpRequest):
+async def positions_list(request: HttpRequest):
     return await _filter_positions(request)
 
 
@@ -131,6 +131,18 @@ async def _filter_positions(
         template_name = "explore/index.html"
 
     return await async_render(request, template_name, context)
+
+
+async def elections_list(request: HttpRequest):
+    total, elections = await helpers.get_elections()
+
+    context = {
+        "q": None,
+        "elections": elections,
+        "total": total,
+    }
+
+    return await async_render(request, "explore/index.html", context)
 
 
 def _normalize(q: str, item: dict) -> str:

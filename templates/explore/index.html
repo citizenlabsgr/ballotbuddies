@@ -122,19 +122,25 @@
             <ul class="nav nav-tabs" hx-boost="true">
                 <li class="nav-item">
                     <a class="nav-link {% if 'proposals' in request.path %}active{% endif %}"
-                        href="{{ request.build_absolute_uri|replace:'positions,proposals' }}">
+                        href="{{ request.build_absolute_uri|replace:'positions,proposals'|replace:'elections,proposals' }}">
                         Proposals
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if 'positions' in request.path %}active{% endif %}"
-                        href="{{ request.build_absolute_uri|replace:'proposals,positions' }}">
+                        href="{{ request.build_absolute_uri|replace:'proposals,positions'|replace:'elections,positions' }}">
                         Positions
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'elections' in request.path %}active{% endif %}"
+                        href="{% url 'explore:elections' %}">
+                        Elections
                     </a>
                 </li>
             </ul>
 
-            <div class="mb-4 mb-md-0" style="min-width: 50%;">
+            <div class="mb-4 mb-md-0 {% if 'elections' in request.path %}invisible{% endif %}" style="min-width: 50%;">
                 <form action="{{ request.path }}" method="get" hx-boost="true">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control"
@@ -146,7 +152,9 @@
                             ×
                         </a>
                         {% endif %}
-                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                        <button type="submit" class="btn btn-outline-primary">
+                            Search
+                        </button>
                     </div>
                 </form>
             </div>
@@ -157,9 +165,11 @@
 
     <div class="scrollable-content">
     {% if 'proposals' in request.path %}
-    {% include "explore/_proposals.html" %}
+        {% include "explore/_proposals.html" %}
     {% elif 'positions' in request.path %}
-    {% include "explore/_positions.html" %}
+        {% include "explore/_positions.html" %}
+    {% elif 'elections' in request.path %}
+        {% include "explore/_elections.html" %}
     {% endif %}
     </div>
 
