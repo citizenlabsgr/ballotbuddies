@@ -187,7 +187,8 @@ class Voter(models.Model):
             text += f" and have {neighbors} recommended friend{s}"
 
         if voters:
-            text += f". {voters} of them have already cast their ballot"
+            have = "has" if voters == 1 else "have"
+            text += f". {voters} of them {have} already cast their ballot"
             text += ". Invite more friends to promote democracy!"
         else:
             text += ". Invite more to promote democracy!"
