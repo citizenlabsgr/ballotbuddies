@@ -27,13 +27,13 @@
         text-align: center;
     }
 
-    @keyframes showText {
+    @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
     }
 
     .text-delayed {
-        animation-name: showText;
+        animation-name: fadeIn;
         animation-duration: 0.5s;
         animation-delay: 1s;
         animation-fill-mode: forwards;
@@ -140,7 +140,19 @@
                 </li>
             </ul>
 
-            <div class="mb-4 mb-md-0 {% if 'elections' in request.path %}invisible{% endif %}" style="min-width: 50%;">
+            {% if 'elections' in request.path %}
+            <div class="mb-4 mb-md-0" style="min-width: 50%; opacity: 0.5; pointer-events: none;">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                            placeholder="Keyword, election, or district"
+                            aria-label="Search">
+                        <button type="submit" class="btn btn-outline-primary" disabled>
+                            Search
+                        </button>
+                    </div>
+            </div>
+            {% else %}
+            <div class="mb-4 mb-md-0" style="min-width: 50%;">
                 <form action="{{ request.path }}" method="get" hx-boost="true">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control"
@@ -158,6 +170,7 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
 
         </div>
 

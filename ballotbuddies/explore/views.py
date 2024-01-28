@@ -137,7 +137,6 @@ async def elections_list(request: HttpRequest):
     total, elections = await helpers.get_elections()
 
     context = {
-        "q": None,
         "elections": elections,
         "total": total,
     }
