@@ -13,123 +13,6 @@ interactions:
       user-agent:
       - python-httpx/0.26.0
     method: GET
-    uri: https://michiganelections.io/api/elections/54/
-  response:
-    content: '{"url":"http://michiganelections.io/api/elections/54/","id":54,"name":"Presidential
-      Primary","date":"2024-02-27","date_humanized":"Tuesday, February 27th","active":true,"reference_url":null}'
-    headers:
-      Allow:
-      - OPTIONS, GET
-      CF-Cache-Status:
-      - DYNAMIC
-      CF-RAY:
-      - 84c2d52e6f2c027b-ORD
-      Connection:
-      - keep-alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Cross-Origin-Opener-Policy:
-      - same-origin
-      Date:
-      - Sat, 27 Jan 2024 17:49:31 GMT
-      Nel:
-      - '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
-      Referrer-Policy:
-      - same-origin
-      Report-To:
-      - '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1706377771&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=ThLYH32p%2Bk7k%2FrIdyyq5MLEBCNVrrWOHOgKm2N0yVJA%3D"}]}'
-      Reporting-Endpoints:
-      - heroku-nel=https://nel.heroku.com/reports?ts=1706377771&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=ThLYH32p%2Bk7k%2FrIdyyq5MLEBCNVrrWOHOgKm2N0yVJA%3D
-      Server:
-      - cloudflare
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - Accept, Cookie, Origin
-      Via:
-      - 1.1 vegur
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      alt-svc:
-      - h3=":443"; ma=86400
-    http_version: HTTP/1.1
-    status_code: 200
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-      host:
-      - michiganelections.io
-      user-agent:
-      - python-httpx/0.26.0
-    method: GET
-    uri: https://michiganelections.io/api/districts/728/
-  response:
-    content: '{"url":"http://michiganelections.io/api/districts/728/","id":728,"category":"County","name":"Cass"}'
-    headers:
-      Allow:
-      - OPTIONS, GET
-      CF-Cache-Status:
-      - DYNAMIC
-      CF-RAY:
-      - 84c2d52f3ad06179-ORD
-      Connection:
-      - keep-alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Cross-Origin-Opener-Policy:
-      - same-origin
-      Date:
-      - Sat, 27 Jan 2024 17:49:31 GMT
-      Nel:
-      - '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
-      Referrer-Policy:
-      - same-origin
-      Report-To:
-      - '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1706377771&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=ThLYH32p%2Bk7k%2FrIdyyq5MLEBCNVrrWOHOgKm2N0yVJA%3D"}]}'
-      Reporting-Endpoints:
-      - heroku-nel=https://nel.heroku.com/reports?ts=1706377771&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=ThLYH32p%2Bk7k%2FrIdyyq5MLEBCNVrrWOHOgKm2N0yVJA%3D
-      Server:
-      - cloudflare
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - Accept, Cookie, Origin
-      Via:
-      - 1.1 vegur
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      alt-svc:
-      - h3=":443"; ma=86400
-    http_version: HTTP/1.1
-    status_code: 200
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-      host:
-      - michiganelections.io
-      user-agent:
-      - python-httpx/0.26.0
-    method: GET
     uri: https://michiganelections.io/api/proposals/?active_election=null&limit=1000&election_id=54&district_id=728
   response:
     content: '{"count":1,"next":null,"previous":null,"results":[{"url":"http://michiganelections.io/api/proposals/8695/","id":8695,"name":"Cass
@@ -153,7 +36,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 84c2d5303cc70256-ORD
+      - 851bc40c7a701112-ORD
       Connection:
       - keep-alive
       Content-Encoding:
@@ -163,15 +46,15 @@ interactions:
       Cross-Origin-Opener-Policy:
       - same-origin
       Date:
-      - Sat, 27 Jan 2024 17:49:31 GMT
+      - Wed, 07 Feb 2024 12:51:42 GMT
       Nel:
       - '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
       Referrer-Policy:
       - same-origin
       Report-To:
-      - '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1706377771&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=ThLYH32p%2Bk7k%2FrIdyyq5MLEBCNVrrWOHOgKm2N0yVJA%3D"}]}'
+      - '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1707310302&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=w4HXKhEGgbOHwszyiv0k1jksZYm%2BJ3HJbljvGkq7rKc%3D"}]}'
       Reporting-Endpoints:
-      - heroku-nel=https://nel.heroku.com/reports?ts=1706377771&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=ThLYH32p%2Bk7k%2FrIdyyq5MLEBCNVrrWOHOgKm2N0yVJA%3D
+      - heroku-nel=https://nel.heroku.com/reports?ts=1707310302&sid=67ff5de4-ad2b-4112-9289-cf96be89efed&s=w4HXKhEGgbOHwszyiv0k1jksZYm%2BJ3HJbljvGkq7rKc%3D
       Server:
       - cloudflare
       Transfer-Encoding:
