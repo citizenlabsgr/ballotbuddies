@@ -126,10 +126,24 @@ async def _call(client, url: str) -> dict:
     return data
 
 
-def _match(text: str, item: dict) -> bool:
-    return text.lower() in (
-        item["name"].lower()
-        + item["description"].lower()
-        + item["election"]["name"].lower()
-        + item["district"]["name"].lower()
-    )
+def _match(query: str, item: dict) -> bool:
+    parts = query.strip("-").split(" -", 1)
+    inclusion_phrase = parts[0].strip().lower()
+    exclusion_phrase = parts[1].strip().lower() if len(parts) > 1 else ""
+
+    item_text = " ".join(
+        [
+            item["name"],
+            item["description"],
+            item["election"]["name"],
+            item["district"]["name"],
+        ]
+    ).lower()
+
+    if inclusion_phrase and inclusion_phrase not in item_text:
+        return False
+
+    if exclusion_phrase and exclusion_phrase in item_text:
+        return False
+
+    return True

@@ -111,16 +111,20 @@
     {% endfor %}
 </ol>
 
-
 <script>
-    function highlightWords(word) {
-        if (!word) {
+    function highlightWords(query) {
+        if (!query) {
             return;
         }
+
+        var parts = query.split(' -', 1);
+        var includePhrase = parts[0].trim();
+
         var elements = document.getElementsByClassName('position-text');
         for (var i = 0; i < elements.length; i++) {
             var content = elements[i];
-            var regex = new RegExp('(' + word + ')', 'gi');
+            var escapedIncludePhrase = includePhrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            var regex = new RegExp('(' + escapedIncludePhrase + ')', 'gi');
             content.innerHTML = content.innerHTML.replace(regex, '<span class="highlight">$1</span>');
         }
     }
