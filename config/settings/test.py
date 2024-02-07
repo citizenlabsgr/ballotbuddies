@@ -38,4 +38,4 @@ DATABASES = {
 ###############################################################################
 # Bugsnag
 
-bugsnag.configure(release_stage="test")
+MIDDLEWARE.remove("bugsnag.django.middleware.BugsnagMiddleware")

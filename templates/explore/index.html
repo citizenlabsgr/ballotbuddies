@@ -138,10 +138,13 @@
                         Elections
                     </a>
                 </li>
+                <li class="nav-item ms-auto ms-md-4 d-flex align-items-center text-muted">
+                    {{ total }} Item{{ total|pluralize }}
+                </li>
             </ul>
 
             {% if 'elections' in request.path %}
-            <div class="mb-4 mb-md-0" style="min-width: 50%; opacity: 0.5; pointer-events: none;">
+            <div class="mb-4 mb-md-0" style="min-width: 40%; opacity: 0.5; pointer-events: none;">
                     <div class="input-group">
                         <input type="text" class="form-control"
                             placeholder="Keyword, election, or district"
@@ -152,7 +155,7 @@
                     </div>
             </div>
             {% else %}
-            <div class="mb-4 mb-md-0" style="min-width: 50%;">
+            <div class="mb-4 mb-md-0" style="min-width: 40%;">
                 <form action="{{ request.path }}" method="get" hx-boost="true">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control"

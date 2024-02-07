@@ -30,7 +30,7 @@ async def get_proposals(
     total = 0
     items: list[dict] = []
 
-    log.info(f"Getting proposals: {election_id=} {district_id=} {q=}")
+    log.info(f"Getting proposals: {election_id=} {district_id=} {q=} {limit=}")
     url = f"{API}/proposals/?active_election=null"
     url += "&limit=1000" if limit else "&limit=1"
     if election_id:
@@ -70,7 +70,7 @@ async def get_positions(
     total = 0
     items: list[dict] = []
 
-    log.info(f"Getting {limit} positions: {election_id=} {district_id=} {q=}")
+    log.info(f"Getting {limit} positions: {election_id=} {district_id=} {q=} {limit=}")
     url = f"{API}/positions/?active_election=null"
     url += "&limit=1000" if limit else "&limit=1"
     if election_id:

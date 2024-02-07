@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 import log
 from asgiref.sync import sync_to_async
 
-from . import helpers
+from . import constants, helpers
 
 async_render = sync_to_async(render)
 
@@ -37,7 +37,7 @@ async def _filter_proposals(
     request: HttpRequest, *, election_id: int = 0, district_id: int = 0
 ):
     q = request.GET.get("q", "").strip()
-    limit = int(request.GET.get("limit", 20 if election_id or district_id else 0))
+    limit = int(request.GET.get("limit", constants.LIMIT))
 
     if election_id:
         election = await helpers.get_election(election_id)
@@ -97,7 +97,7 @@ async def _filter_positions(
     request: HttpRequest, *, election_id: int = 0, district_id: int = 0
 ):
     q = request.GET.get("q", "").strip()
-    limit = int(request.GET.get("limit", 20 if election_id or district_id else 0))
+    limit = int(request.GET.get("limit", constants.LIMIT))
 
     if election_id:
         election = await helpers.get_election(election_id)

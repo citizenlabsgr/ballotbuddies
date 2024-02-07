@@ -18,7 +18,15 @@
 
 <ol>
     {% for proposal in proposals %}
+
+    {% if forloop.revcounter == 10 and count >= limit %}
+    <li hx-trigger="revealed"
+        hx-get="{{ request.path }}?q={{ q }}&limit={{ limit|add:20 }}"
+        hx-target="closest ol"
+        hx-swap="outerHTML">
+    {% else %}
     <li>
+    {% endif %}
 
         <b class="proposal-text">{{ proposal.name }}</b>
 
@@ -66,20 +74,12 @@
 
     </li>
 
-    {% if forloop.revcounter < 10 and count >= limit %}
-    <span hx-trigger="revealed"
-        hx-get="{{ request.path }}?q={{ q }}&limit={{ limit|add:20 }}"
-        hx-target="closest ol"
-        hx-swap="outerHTML">
-    </span>
-    {% endif %}
-
     {% empty %}
 
     {% if limit %}
     <i>No matching proposals.</i>
     {% else %}
-    <span {% if not q %}class="text-delayed"{% endif %}
+    <span class="text-muted {% if not q %}text-delayed{% endif %}"
         hx-trigger="load delay:100ms"
         hx-get="{{ request.path }}?q={{ q }}&limit=20"
         hx-target="closest ol"

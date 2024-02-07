@@ -64,4 +64,7 @@ MESSAGE_LEVEL = messages.DEBUG
 ###############################################################################
 # Bugsnag
 
-bugsnag.configure(release_stage="local")
+if "BUGSNAG_API_KEY" in os.environ:
+    bugsnag.configure(release_stage="local")
+else:
+    MIDDLEWARE.remove("bugsnag.django.middleware.BugsnagMiddleware")
