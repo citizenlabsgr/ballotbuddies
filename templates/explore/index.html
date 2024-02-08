@@ -119,7 +119,7 @@
 
         <div class="d-flex flex-column-reverse flex-md-row justify-content-between">
 
-            <ul class="nav nav-tabs" hx-boost="true">
+            <ul class="nav nav-tabs flex-nowrap" hx-boost="true">
                 <li class="nav-item">
                     <a class="nav-link {% if 'proposals' in request.path %}active{% endif %}"
                         href="{{ request.build_absolute_uri|replace:'positions,proposals'|replace:'elections,proposals' }}">
@@ -138,8 +138,8 @@
                         Elections
                     </a>
                 </li>
-                <li class="nav-item ms-auto ms-md-4 d-flex align-items-center text-muted">
-                    {{ total }} Item{{ total|pluralize }}
+                <li class="nav-item ms-auto ms-md-4 d-flex align-items-center text-muted text-nowrap">
+                    {{ total|abbreviate }} Item{{ total|pluralize }}
                 </li>
             </ul>
 
