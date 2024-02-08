@@ -16,9 +16,10 @@ def replace(value: str, parameter: str):
 @register.filter
 def abbreviate(value: str):
     try:
-        value = int(value)
-        if value >= 1000:
-            return f"{round(value / 1000, 1)}k"
+        count = float(value)
+        if count >= 1000:
+            count = round(count / 1000, 1)
+            return f"{count}k"
         return value
     except (ValueError, TypeError):
         return value
