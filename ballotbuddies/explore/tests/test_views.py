@@ -20,6 +20,7 @@ def describe_proposals():
     def it_shows_proposals_by_election(expect, client):
         response = client.get("/explore/proposals/election/54/")
         html = response.content.decode()
+        expect(html).contains("192 Items")
         expect(html).contains("Presidential Primary")
 
     def it_shows_proposals_by_district(expect, client):
@@ -30,6 +31,7 @@ def describe_proposals():
     def it_shows_proposals_by_election_and_district(expect, client):
         response = client.get("/explore/proposals/election/54/district/728/")
         html = response.content.decode()
+        expect(html).contains("1 Item")
         expect(html).contains("Presidential Primary")
         expect(html).contains("Cass")
 
@@ -50,6 +52,7 @@ def describe_positions():
     def it_shows_positions_by_election(expect, client):
         response = client.get("/explore/positions/election/54/")
         html = response.content.decode()
+        expect(html).contains("4 Items")
         expect(html).contains("Presidential Primary")
 
     def it_shows_positions_by_district(expect, client):
@@ -60,6 +63,7 @@ def describe_positions():
     def it_shows_positions_by_election_and_district(expect, client):
         response = client.get("/explore/positions/election/54/district/728/")
         html = response.content.decode()
+        expect(html).contains("0 Items")
         expect(html).contains("Presidential Primary")
         expect(html).contains("Cass")
 

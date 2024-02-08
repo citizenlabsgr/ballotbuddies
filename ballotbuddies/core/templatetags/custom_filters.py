@@ -14,13 +14,11 @@ def replace(value: str, parameter: str):
 
 
 @register.filter
-def abbreviate(value: float):
+def abbreviate(value: str):
     try:
-        value = float(value)
+        value = int(value)
         if value >= 1000:
-            value = round(value / 1000, 1)
-            return f"{value}k"
-        else:
-            return value
+            return f"{round(value / 1000, 1)}k"
+        return value
     except (ValueError, TypeError):
         return value
