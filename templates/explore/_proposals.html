@@ -34,10 +34,10 @@
             {{ proposal.description|markdownify }}
         </div>
 
-        <div class="{% if not election or not district %}mt-3{% endif %} d-flex flex-column flex-md-row justify-content-end align-items-center gap-1 gap-md-4" hx-boost="true">
+        <div class="{% if not election or not district %}mt-3{% endif %} d-flex flex-column flex-md-row justify-content-end align-md-items-center gap-1 gap-md-4" hx-boost="true">
 
             {% if not election %}
-            <span>
+            <span class="text-nowrap">
                 <b>Election:</b>
                 {% if district %}
                     <a class="text-decoration-none" href="{% url 'explore:proposals-election-district' proposal.election.id proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
@@ -53,7 +53,7 @@
             {% endif %}
 
             {% if not district %}
-            <span>
+            <span class="text-nowrap">
                 <b>District:</b>
                 {% if election %}
                     <a class="text-decoration-none" href="{% url 'explore:proposals-election-district' proposal.election.id proposal.district.id %}{% if q %}?q={{ q }}{% endif %}">
