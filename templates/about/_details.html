@@ -11,25 +11,25 @@
 
         {% if request.user.voter.complete %}
         <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
-            View Ballot
+            <i class="fa-solid fa-user"></i> View Ballot
         </a>
         {% else %}
         <a class="btn btn-primary" href="{% url 'buddies:setup' %}">
-            Finish Setup
+            <i class="fa-solid fa-pen-to-square"></i> Finish Setup
         </a>
         {% endif %}
 
         <a class="btn btn-secondary" href="{% url 'buddies:invite' %}">
-            Invite Friends
+            <i class="fa-solid fa-user-plus"></i> Invite Friends
         </a>
 
     {% else %}
         <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
-            Get Started
+            <i class="fa-solid fa-right-to-bracket"></i> Get Started
         </a>
 
         <a class="btn btn-secondary" href="{% url 'explore:index' %}">
-            Explore Ballots
+            <i class="fa-solid fa-database"></i> Explore Ballots
         </a>
     {% endif %}
 </div>

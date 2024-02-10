@@ -3,39 +3,45 @@
 {% load crispy_forms_tags %}
 
 {% block meta %}
-<meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noindex, nofollow">
 {% endblock meta %}
 
 {% block main %}
 
-<h1>Access Ballot Buddies</h1>
+    <h1>Access Ballot Buddies</h1>
 
-<p>We'll send you an email with a link to log in automatically.<p>
+    <p>We'll send you an email with a link to log in automatically.<p>
 
-{% if domain %}
+    {% if domain %}
 
-  {% if standard %}
-    <a class="btn btn-primary" href="http://{{ domain }}"> Open {{ domain }}<a>
-  {% else %}
-    <div class="alert alert-success" role="alert">
-      An email was sent to your <b>{{ domain }}</b> address.
-    </div>
-  {% endif %}
+        {% if standard %}
+            <a class="btn btn-primary" href="http://{{ domain }}">
+                <i class="fa-solid fa-inbox"></i> Open {{ domain }}
+            <a>
+        {% else %}
+            <div class="alert alert-success" role="alert">
+                An email was sent to your <b>{{ domain }}</b> address.
+            </div>
+        {% endif %}
 
-{% else %}
+    {% else %}
 
-<form method="post" novalidate>
-  {% csrf_token %}
+    <form method="post" novalidate>
+        {% csrf_token %}
 
-  {{ form|crispy }}
+        {{ form|crispy }}
 
-  <button class="btn btn-primary" type="submit">Log in</button>
+        <button class="btn btn-primary" type="submit">
+            <i class="fa-solid fa-right-to-bracket"></i> Log in
+        </button>
 
-  {% if allow_debug %}
-  <button type="submit" class="btn btn-outline-danger" name="debug" value="true">Log in (bypass email)</button>
-  {% endif %}
-</form>
+        {% if allow_debug %}
+        <button type="submit" class="btn btn-outline-danger" name="debug" value="true">
+            <i class="fa-solid fa-right-to-bracket"></i> Log in (bypass email)
+        </button>
+        {% endif %}
+    </form>
 
-{% endif %}
+    {% endif %}
 
 {% endblock main %}

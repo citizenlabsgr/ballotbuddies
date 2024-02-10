@@ -60,21 +60,21 @@
                 {% if 'proposals' in request.path %}
                     {% if district %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% else %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% endif %}
                 {% elif 'positions' in request.path %}
                     {% if district %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions-district' district.id %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% else %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% endif %}
                 {% endif %}
@@ -92,21 +92,21 @@
                 {% if 'proposals' in request.path %}
                     {% if election %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% else %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:proposals' %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% endif %}
                 {% elif 'positions' in request.path %}
                     {% if election %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions-election' election.id %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% else %}
                     <a class="btn btn-sm btn-outline-danger square-button" href="{% url 'explore:positions' %}{% if q %}?q={{ q }}{% endif %}">
-                        ×
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                     {% endif %}
                 {% endif %}
@@ -150,7 +150,7 @@
                             placeholder="Keyword, election, or district"
                             aria-label="Search">
                         <button type="submit" class="btn btn-outline-primary" disabled>
-                            Search
+                            <i class="fa-solid fa-magnifying-glass"></i> Search
                         </button>
                     </div>
             </div>
@@ -164,11 +164,11 @@
                             {% if request.user_agent.is_pc and not q %}autofocus{% endif %}>
                         {% if q %}
                         <a href="{{ request.path }}" class="btn btn-outline-danger">
-                            ×
+                            <i class="fa-solid fa-xmark"></i>
                         </a>
                         {% endif %}
                         <button type="submit" class="btn btn-outline-primary">
-                            Search
+                            <i class="fa-solid fa-magnifying-glass"></i> Search
                         </button>
                     </div>
                 </form>
