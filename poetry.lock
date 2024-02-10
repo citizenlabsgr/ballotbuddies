@@ -1765,13 +1765,13 @@ files = [
 
 [[package]]
 name = "splinter"
-version = "0.20.1"
+version = "0.21.0"
 description = "browser abstraction for web acceptance testing"
 optional = false
 python-versions = "*"
 files = [
-    {file = "splinter-0.20.1-py3-none-any.whl", hash = "sha256:d1e11f679606473227b0350cddaf2cbe444eb2ad5a26c87eaa1c19aeeb50b336"},
-    {file = "splinter-0.20.1.tar.gz", hash = "sha256:28a2e45d0b50002a38d40989993b5c59f39d32e0f6c62b03360af25d8290c0f4"},
+    {file = "splinter-0.21.0-py3-none-any.whl", hash = "sha256:4c9e5962ce25f468b2dd52effbd1445afd7466740f238e564c6b70f7fda9368f"},
+    {file = "splinter-0.21.0.tar.gz", hash = "sha256:60cbbec9209acefccf39608d677eecdb248bbd700023663ce406595322c38fe5"},
 ]
 
 [package.dependencies]
@@ -1780,7 +1780,7 @@ urllib3 = ">=1.26.14,<3.0"
 [package.extras]
 django = ["Django (>=2.0.6)", "cssselect", "lxml (>=4.2.4)"]
 flask = ["Flask (>=2.3.2)", "cssselect", "lxml (>=4.2.4)"]
-selenium = ["selenium (>=4.1.0,<4.16.0)"]
+selenium = ["selenium (>=4.1.0,<4.17.0)"]
 zope-testbrowser = ["cssselect", "lxml (>=4.2.4)", "zope.testbrowser (>=6.0)"]
 
 [[package]]
@@ -2302,4 +2302,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.6"
-content-hash = "38edc0bf5ec356912ad98a270dac460794379f189afc4572bd48da7bf653131f"
+content-hash = "9daa25ba511f353f3e29149b90e11f572b32e8c3157379a69ba39b0f9ec07988"

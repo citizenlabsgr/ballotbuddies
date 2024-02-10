@@ -11,7 +11,7 @@ def visit(path):
 def login(email: str):
     visit("/login")
     browser.fill("email", email)
-    browser.find_by_text("Log in").click()
+    browser.find_by_css(".btn-primary").click()
 
 
 def logout():
