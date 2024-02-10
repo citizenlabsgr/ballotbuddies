@@ -132,15 +132,27 @@
         {% if voter.user == request.user and not referrer %}
             {% if voter.complete %}
             <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">
-                <span class="d-none d-md-inline text-nowrap">➜ View Profile</span>
-                <span class="d-none d-sm-inline d-md-none text-nowrap">➜ View</span>
-                <span class="d-inline d-sm-none">➜</span>
+                <span class="d-none d-md-inline text-nowrap">
+                    <i class="fa-solid fa-user"></i> View Profile
+                </span>
+                <span class="d-none d-sm-inline d-md-none text-nowrap">
+                    <i class="fa-solid fa-user"></i> View
+                </span>
+                <span class="d-inline d-sm-none">
+                    <i class="fa-solid fa-user"></i>
+                </span>
             </a>
             {% else %}
             <a class="btn btn-primary" href="{% url 'buddies:setup' %}">
-                <span class="d-none d-md-inline text-nowrap">✎ Finish Setup</span>
-                <span class="d-none d-sm-inline d-md-none text-nowrap">✎ Setup</span>
-                <span class="d-inline d-sm-none">✎</span>
+                <span class="d-none d-md-inline text-nowrap">
+                    <i class="fa-solid fa-pen-to-square"></i> Finish Setup
+                </span>
+                <span class="d-none d-sm-inline d-md-none text-nowrap">
+                    <i class="fa-solid fa-pen-to-square"></i> Setup
+                </span>
+                <span class="d-inline d-sm-none">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </span>
             </a>
             {% endif %}
         {% elif voter in recommended %}
@@ -150,9 +162,15 @@
             hx-trigger="click"
             hx-target="closest tr"
             hx-swap="outerHTML">
-            <span class="d-none d-md-inline text-nowrap">⊕ Add Friend</span>
-            <span class="d-none d-sm-inline d-md-none text-nowrap">⊕ Follow</span>
-            <span class="d-inline d-sm-none">⊕</span>
+            <span class="d-none d-md-inline text-nowrap">
+                <i class="fa-solid fa-user-plus"></i> Add Friend
+            </span>
+            <span class="d-none d-sm-inline d-md-none text-nowrap">
+                <i class="fa-solid fa-user-plus"></i> Follow
+            </span>
+            <span class="d-inline d-sm-none">
+                <i class="fa-solid fa-user-plus"></i>
+            </span>
         </button>
         <button class="btn btn-danger"
                 hx-post="{% url 'buddies:status' slug=voter.slug %}"
@@ -160,20 +178,32 @@
                 hx-trigger="click"
                 hx-target="closest tr"
                 hx-swap="delete">
-                ✕
+                <i class="fa-solid fa-xmark"></i>
         </button>
         {% elif voter.complete %}
         <a class="btn btn-{% if voter.progress.actions %}primary{% else %}secondary{% endif %} text-nowrap"
             href="{% url 'buddies:friends-profile' slug=voter.slug %}?email=true">
-            <span class="d-none d-md-inline text-nowrap">@ Send Email</span>
-            <span class="d-none d-sm-inline d-md-none text-nowrap">@ Email</span>
-            <span class="d-inline d-sm-none">@</span>
+            <span class="d-none d-md-inline text-nowrap">
+                <i class="fa-solid fa-envelope"></i> Send Email
+            </span>
+            <span class="d-none d-sm-inline d-md-none text-nowrap">
+                <i class="fa-solid fa-envelope"></i> Email
+            </span>
+            <span class="d-inline d-sm-none">
+                <i class="fa-solid fa-envelope"></i>
+            </span>
         </a>
         {% else %}
         <a class="btn btn-primary" href="{% url 'buddies:friends-setup' slug=voter.slug %}">
-            <span class="d-none d-md-inline text-nowrap">✎ Finish Setup</span>
-            <span class="d-none d-sm-inline d-md-none text-nowrap">✎ Setup</span>
-            <span class="d-inline d-sm-none">✎</span>
+            <span class="d-none d-md-inline text-nowrap">
+                <i class="fa-solid fa-pen-to-square"></i> Finish Setup
+            </span>
+            <span class="d-none d-sm-inline d-md-none text-nowrap">
+                <i class="fa-solid fa-pen-to-square"></i> Setup
+            </span>
+            <span class="d-inline d-sm-none">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </span>
         </a>
         {% endif %}
 

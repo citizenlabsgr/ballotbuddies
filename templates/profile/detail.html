@@ -41,26 +41,34 @@
     {{ voter.updated|default:"Never (Incomplete Voter Information)" }}
     <a href="{% url 'buddies:status' slug=voter.slug %}?reset=true"
         class="ms-1 text-reset text-decoration-none"
-        style="opacity: 0.25;">✕</a>
+        style="opacity: 0.25;">
+        <i class="fa-solid fa-xmark"></i>
+    </a>
 </p>
 
 <h2 class="pt-4">Voter Information</h2>
 
 {{ form|crispy }}
 
-<a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">Edit Details</a>
+<a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">
+    <i class="fa-solid fa-pen-to-square"></i> Edit Details
+</a>
 
 {% else %}
 
 <div class="d-flex justify-content-between align-items-center pt-4">
     <h2>Voter Information</h2>
-    <a class="btn btn-primary" href="{% url 'buddies:setup' %}">Finish Setup</a>
+    <a class="btn btn-primary" href="{% url 'buddies:setup' %}">
+        <i class="fa-solid fa-pen-to-square"></i> Finish Setup
+    </a>
 </div>
 
 {{ form|crispy }}
 
 {% endif %}
 
-<a class="btn btn-outline-danger" href="{% url 'buddies:delete' %}">Delete Account...</a>
+<a class="btn btn-outline-danger" href="{% url 'buddies:delete' %}">
+    <i class="fa-solid fa-trash"></i> Delete Account...
+</a>
 
 {% endblock main %}
