@@ -72,7 +72,7 @@ async def get_positions(
 
     log.info(f"Getting {limit} positions: {election_id=} {district_id=} {q=} {limit=}")
     url = f"{API}/positions/?active_election=null"
-    url += "&limit=1000" if limit else "&limit=1"
+    url += "&limit=500" if limit else "&limit=1"
     if election_id:
         url += f"&election_id={election_id}"
     if district_id:
