@@ -125,6 +125,8 @@ addopts = """
 
 cache_dir = ".cache/pytest/"
 
+markers = []
+
 filterwarnings = """
 error:::django.db.models.fields.related_lookups:52
 """
