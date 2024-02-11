@@ -59,7 +59,7 @@ django-stubs = { version = "^4.2", extras = ["compatible-mypy"] }
 types-requests = "*"
 
 # Testing
-pytest = "^7.2"
+pytest = "^8.0"
 pytest-django = "^4.5"
 pytest-describe = "^2.0"
 pytest-expecter = "^3.0"
