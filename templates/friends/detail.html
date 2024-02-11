@@ -56,11 +56,11 @@
                 {% csrf_token %}
                 <button class="btn btn-danger"
                     hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                    hx-vals='{ "ignore": true }'
+                    hx-vals='{ "ignore": true, "redirect": true }'
                     hx-trigger="click"
                     hx-swap="none">
                     <span class="text-nowrap">
-                        <i class="fa-solid fa-user-minus"></i> Unfollow Voter
+                        <i class="fa-solid fa-square-minus"></i> Unfollow Voter
                     </span>
                 </button>
             </form>
