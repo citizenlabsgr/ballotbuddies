@@ -188,6 +188,10 @@ class Progress:
         return int(ratio * 100)
 
     @cached_property
+    def percent_scaled(self) -> float:
+        return 60 + (40 * self.percent / 100)
+
+    @cached_property
     def actions(self) -> int:
         if self.election.days < 0:
             return 0
