@@ -5,8 +5,8 @@ from django.contrib.auth import logout as force_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpRequest, JsonResponse
-from django.shortcuts import redirect, render
+from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.shortcuts import redirect, render, resolve_url
 from django.utils import timezone
 from django.utils.html import format_html
 
@@ -277,6 +277,11 @@ def status(request: HttpRequest, slug: str):
         request.user.voter.neighbors.remove(voter)
         request.user.voter.strangers.add(voter)
         request.user.voter.save()
+        if "redirect" in request.POST:
+            messages.info(request, "Successfully unfollowed voter.")
+            return HttpResponse(
+                status=302, headers={"HX-Redirect": resolve_url("buddies:friends")}
+            )
 
     if "add" in request.POST:
         log.info(f"Following voter: {voter}")
