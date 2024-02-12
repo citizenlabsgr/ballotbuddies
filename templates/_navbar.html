@@ -5,14 +5,16 @@
 {% url 'buddies:login' as login_url %}
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid" hx-boost="true">
+    <div class="container-fluid">
 
-	    <a class="navbar-brand" href="{% url 'buddies:index' %}">Ballot Buddies</a>
+	    <a class="navbar-brand" href="{% url 'buddies:index' %}" hx-boost="true">
+			Ballot Buddies
+		</a>
 
 		<div class="navbar-nav d-flex flex-row gap-3 gap-sm-1">
 
 			<a class="nav-link {% if request.path == friends_url or request.path == search_url %} active {% endif %} text-nowrap"
-				href="{% url 'buddies:friends' %}">
+				href="{% url 'buddies:friends' %}" hx-boost="true">
 				<span class="fa-layers fa-fw">
 					<i class="fa-solid fa-list"></i>
 					{% if user.voter.neighbors.exists %}
@@ -25,12 +27,12 @@
 			</a>
 
 			<a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-md-0 text-nowrap"
-				href="{% url 'buddies:profile' %}">
+				href="{% url 'buddies:profile' %}" hx-boost="true">
 				<i class="fa-solid fa-user"></i> <span class="d-none d-sm-inline">Profile</span>
 			</a>
 
 			<a class="nav-link {% if 'explore' in request.path %} active {% endif %} ms-3 ms-md-0 text-nowrap"
-				href="{% url 'explore:index' %}">
+				href="{% url 'explore:index' %}" hx-boost="true">
 				<i class="fa-solid fa-magnifying-glass"></i> <span class="d-none d-sm-inline">Explore</span>
 			</a>
 
@@ -48,7 +50,7 @@
 	        <ul class="navbar-nav me-auto mb-2 mb-md-0">
 		        <li class="nav-item">
 		            <a class="nav-link {% if request.path == about_url %} active {% endif %} text-nowrap"
-                        href="{% url 'buddies:about' %}">
+                        href="{% url 'buddies:about' %}" hx-boost="true">
 						<i class="fa-solid fa-circle-info"></i> About <span class="d-md-none">This Site</span>
 					</a>
 		        </li>
