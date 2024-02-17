@@ -38,16 +38,19 @@ async def _filter_proposals(
 ):
     q = request.GET.get("q", "").strip()
     limit = int(request.GET.get("limit", constants.LIMIT))
+    banner = ""
 
     if election_id:
         election = await helpers.get_election(election_id)
         q = _normalize(q, election)
+        banner = f"election_id={election_id}"
     else:
         election = None
 
     if district_id:
         district = await helpers.get_district(district_id)
         q = _normalize(q, district)
+        banner = f"district_id={district_id}"
     else:
         district = None
 
@@ -63,6 +66,7 @@ async def _filter_proposals(
         "total": total,
         "count": len(proposals),
         "limit": limit,
+        "banner": banner,
     }
 
     if "limit" in request.GET:
@@ -98,16 +102,19 @@ async def _filter_positions(
 ):
     q = request.GET.get("q", "").strip()
     limit = int(request.GET.get("limit", constants.LIMIT))
+    banner = ""
 
     if election_id:
         election = await helpers.get_election(election_id)
         q = _normalize(q, election)
+        banner = f"election_id={election_id}"
     else:
         election = None
 
     if district_id:
         district = await helpers.get_district(district_id)
         q = _normalize(q, district)
+        banner = f"district_id={district_id}"
     else:
         district = None
 
@@ -123,6 +130,7 @@ async def _filter_positions(
         "total": total,
         "count": len(positions),
         "limit": limit,
+        "banner": banner,
     }
 
     if "limit" in request.GET:
@@ -139,6 +147,7 @@ async def elections_list(request: HttpRequest):
     context = {
         "elections": elections,
         "total": total,
+        "banner": f"election_id={elections[0]['id']}",
     }
 
     return await async_render(request, "explore/index.html", context)
