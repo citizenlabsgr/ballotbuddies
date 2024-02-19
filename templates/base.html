@@ -29,7 +29,7 @@
     <meta property="og:url" content="https://app.michiganelections.io/">
     <meta property="og:title" content="Michigan Ballot Buddies">
     <meta property="og:description" content="An app to help friends hold each other accountable to vote in every election. Check your registration status, view sample ballots, and track progress when voting by mail.">
-    <meta property="og:image" content="https://share.michiganelections.io/banner.jpg?target=facebook{% if banner %}&{{ banner }}{% endif %}">
+    <meta property="og:image" content="https://share.michiganelections.io/banner.jpg?{% if banner %}{{ banner }}&{% endif %}target=facebook">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="628">
 
@@ -38,7 +38,7 @@
     <meta property="twitter:url" content="https://app.michiganelections.io/">
     <meta property="twitter:title" content="Michigan Ballot Buddies">
     <meta property="twitter:description" content="An app to help friends hold each other accountable to vote in every election. Check your registration status, view sample ballots, and track progress when voting by mail.">
-    <meta property="twitter:image" content="https://share.michiganelections.io/banner.jpg?target=twitter{% if banner %}&{{ banner }}{% endif %}">
+    <meta property="twitter:image" content="https://share.michiganelections.io/banner.jpg?{% if banner %}{{ banner }}&{% endif %}target=twitter">
     {% endblock meta %}
 
     <!-- Bootstrap -->

@@ -22,11 +22,13 @@ def describe_proposals():
         html = response.content.decode()
         expect(html).contains("192 Items")
         expect(html).contains("Presidential Primary")
+        expect(html).contains("banner.jpg?election_id=54")
 
     def it_shows_proposals_by_district(expect, client):
         response = client.get("/explore/proposals/district/729/")
         html = response.content.decode()
         expect(html).contains("Township of Marcellus")
+        expect(html).contains("banner.jpg?district_id=729")
 
     def it_shows_proposals_by_election_and_district(expect, client):
         response = client.get("/explore/proposals/election/54/district/728/")
@@ -34,6 +36,7 @@ def describe_proposals():
         expect(html).contains("1 Item")
         expect(html).contains("Presidential Primary")
         expect(html).contains("Cass")
+        expect(html).contains("banner.jpg?district_id=728")
 
     @pytest.mark.vcr
     def it_filters_proposals_by_text(expect, client):
@@ -54,11 +57,13 @@ def describe_positions():
         html = response.content.decode()
         expect(html).contains("4 Items")
         expect(html).contains("Presidential Primary")
+        expect(html).contains("banner.jpg?election_id=54")
 
     def it_shows_positions_by_district(expect, client):
         response = client.get("/explore/positions/district/729/")
         html = response.content.decode()
         expect(html).contains("Township of Marcellus")
+        expect(html).contains("banner.jpg?district_id=729")
 
     def it_shows_positions_by_election_and_district(expect, client):
         response = client.get("/explore/positions/election/54/district/728/")
@@ -66,6 +71,7 @@ def describe_positions():
         expect(html).contains("0 Items")
         expect(html).contains("Presidential Primary")
         expect(html).contains("Cass")
+        expect(html).contains("banner.jpg?district_id=728")
 
     @pytest.mark.vcr
     def it_filters_positions_by_text(expect, client):
@@ -80,3 +86,4 @@ def describe_elections():
         response = client.get("/explore/elections/")
         html = response.content.decode()
         expect(html.count("<li>")) == 22
+        expect(html).contains("banner.jpg?election_id=54")

@@ -57,6 +57,8 @@ async def _filter_proposals(
     total, proposals = await helpers.get_proposals(
         q, limit, election_id=election_id, district_id=district_id
     )
+    if proposals and not banner:
+        banner = f"election_id={proposals[0]['election']['id']}"
 
     context = {
         "q": q,
@@ -121,6 +123,8 @@ async def _filter_positions(
     total, positions = await helpers.get_positions(
         q, limit, election_id=election_id, district_id=district_id
     )
+    if positions and not banner:
+        banner = f"election_id={positions[0]['election']['id']}"
 
     context = {
         "q": q,
