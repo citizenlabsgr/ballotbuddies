@@ -31,6 +31,7 @@
     <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Requested -->
     <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Recieved -->
     <td class="d-none d-sm-table-cell"></td> <!-- Ballot: Available -->
+    <td class="d-none d-xl-table-cell"></td> <!-- Ballot: Items -->
     <td class="d-none d-md-table-cell"></td> <!-- Ballot: Completed -->
     <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Sent -->
     <td class="d-none d-xl-table-cell"></td> <!-- Ballot: Returned -->
@@ -85,6 +86,20 @@
             {{ voter.progress.ballot_available }}
         {% endif %}
     </td>
+
+    <!-- Ballot: Items -->
+
+    {% if voter.progress.ballot_available %}
+    <td class="text-center table-{{ voter.progress.ballot_completed.color }} d-none d-xl-table-cell">
+        {{ voter.ballot_items }}
+    </td>
+    {% else %}
+    <td class="text-center table-{{ voter.progress.ballot_completed.color }} d-none d-xl-table-cell">
+        {% if voter.election %}
+        −
+        {% endif %}
+    </td>
+    {% endif %}
 
     <!-- Ballot: Completed -->
 

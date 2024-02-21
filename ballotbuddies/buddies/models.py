@@ -247,6 +247,10 @@ class Voter(models.Model):
         return url
 
     @cached_property
+    def ballot_items(self) -> int:
+        return (self.status or {}).get("ballot", {}).get("items", 0)
+
+    @cached_property
     def progress(self) -> Progress:
         progress = Progress.parse(
             self.status, voted=self.voted, returned_date=self.ballot_returned
