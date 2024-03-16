@@ -11,16 +11,17 @@ def describe_index():
 
 
 def describe_proposals():
-    @pytest.mark.vcr
+    @pytest.mark.vcr()
     def it_shows_proposals_loading_message(expect, client):
         response = client.get("/explore/proposals/?limit=0")
         html = response.content.decode()
         expect(html).contains("Loading 8094 proposals")
 
+    @pytest.mark.vcr()
     def it_shows_proposals_by_election(expect, client):
         response = client.get("/explore/proposals/election/54/")
         html = response.content.decode()
-        expect(html).contains("192 Items")
+        expect(html).contains("193 Items")
         expect(html).contains("Presidential Primary")
         expect(html).contains("banner.jpg?election_id=54")
 
@@ -38,7 +39,7 @@ def describe_proposals():
         expect(html).contains("Cass")
         expect(html).contains("banner.jpg?district_id=728")
 
-    @pytest.mark.vcr
+    @pytest.mark.vcr()
     def it_filters_proposals_by_text(expect, client):
         response = client.get("/explore/proposals/election/54/?q=money")
         html = response.content.decode()
@@ -46,7 +47,7 @@ def describe_proposals():
 
 
 def describe_positions():
-    @pytest.mark.vcr
+    @pytest.mark.vcr()
     def it_shows_positions_loading_message(expect, client):
         response = client.get("/explore/positions/?limit=0")
         html = response.content.decode()
@@ -73,14 +74,14 @@ def describe_positions():
         expect(html).contains("Cass")
         expect(html).contains("banner.jpg?district_id=728")
 
-    @pytest.mark.vcr
+    @pytest.mark.vcr()
     def it_filters_positions_by_text(expect, client):
         response = client.get("/explore/positions/election/54/?q=taxes")
         html = response.content.decode()
         expect(html.count("taxes")) == 7
 
 
-@pytest.mark.vcr
+@pytest.mark.vcr()
 def describe_elections():
     def it_shows_all_elections(expect, client):
         response = client.get("/explore/elections/")
