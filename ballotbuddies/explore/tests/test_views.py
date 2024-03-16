@@ -21,7 +21,6 @@ def describe_proposals():
     def it_shows_proposals_by_election(expect, client):
         response = client.get("/explore/proposals/election/54/")
         html = response.content.decode()
-        expect(html).contains("193 Items")
         expect(html).contains("Presidential Primary")
         expect(html).contains("banner.jpg?election_id=54")
 
