@@ -313,7 +313,7 @@ class Progress:
                 progress.ballot_available.url = constants.BALLOT_PREVIEW_URL.format(
                     ballot_id=ballot["id"]
                 )
-            elif settings.DEBUG:
+            elif settings.DEBUG or hasattr(settings, "TEST"):
                 progress.ballot_available.url = constants.PRECINCT_PREVIEW_URL.format(
                     election_id=election["id"], precinct_id=precinct["id"]
                 )
