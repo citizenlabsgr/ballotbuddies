@@ -4,6 +4,7 @@ from dataclasses import asdict, dataclass, field
 from datetime import date, datetime
 from functools import cached_property
 
+from django.conf import settings
 from django.utils import timezone
 
 from ballotbuddies.core.helpers import today
@@ -312,7 +313,7 @@ class Progress:
                 progress.ballot_available.url = constants.BALLOT_PREVIEW_URL.format(
                     ballot_id=ballot["id"]
                 )
-            else:
+            elif settings.DEBUG or hasattr(settings, "TEST"):
                 progress.ballot_available.url = constants.PRECINCT_PREVIEW_URL.format(
                     election_id=election["id"], precinct_id=precinct["id"]
                 )
