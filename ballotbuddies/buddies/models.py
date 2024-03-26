@@ -228,6 +228,14 @@ class Voter(models.Model):
         )
 
     @cached_property
+    def elections_api(self) -> str:
+        return f"{constants.ELECTIONS_HOST}/api/elections/"
+
+    @cached_property
+    def status_api(self) -> str:
+        return f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(self.data)}"
+
+    @cached_property
     def complete(self) -> bool:
         data = self.data.copy()
         data.pop("email")
@@ -358,9 +366,8 @@ class Voter(models.Model):
         if self.user.is_test:  # type: ignore
             return False, "Voter registration can only be fetched for real people."
 
-        url = f"{constants.ELECTIONS_HOST}/api/elections/"
-        log.info(f"GET {url}")
-        response = requests.get(url, timeout=10)
+        log.info(f"GET {self.elections_api}")
+        response = requests.get(self.elections_api, timeout=10)
         if response.status_code == 200:
             data = response.json()
             election = data["results"][0]
@@ -371,9 +378,8 @@ class Voter(models.Model):
         else:
             return False, "Election information unavailable at this time."
 
-        url = f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(self.data)}"
-        log.info(f"GET {url}")
-        response = requests.get(url, timeout=10)
+        log.info(f"GET {self.status_api}")
+        response = requests.get(self.status_api, timeout=10)
         if response.status_code == 202:
             data = response.json()
             log.error(f"{response.status_code} response: {data}")

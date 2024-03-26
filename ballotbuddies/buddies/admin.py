@@ -87,6 +87,7 @@ class VoterAdmin(admin.ModelAdmin):
     ]
 
     def Status(self, voter: Voter):
-        text = json.dumps(voter.status, indent=4)
-        html = f"<pre>{text}</pre>"
+        url = voter.status_api
+        data = json.dumps(voter.status, indent=4)
+        html = f'<a href="{url}" target="_blank">Status API</a><pre>{data}</pre>'
         return mark_safe(html)
