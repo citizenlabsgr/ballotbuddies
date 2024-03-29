@@ -11,6 +11,8 @@
     "staticfiles/": true
   },
   "editor.formatOnSave": true,
+  "python.defaultInterpreterPath": ".venv/bin/python",
+  "pylint.args": ["--rcfile=.pylint.ini"],
   "cSpell.words": [
     "asdict",
     "asgi",
@@ -47,6 +49,7 @@
     "markdownify",
     "maxsplit",
     "michiganelections",
+    "mvic",
     "ngrok",
     "postdeploy",
     "PYTHONUNBUFFERED",
@@ -63,8 +66,5 @@
     "wsgi",
     "ymail",
     "zipcodes"
-  ],
-  "pylint.args": [
-    "--rcfile=.pylint.ini"
   ]
 }
