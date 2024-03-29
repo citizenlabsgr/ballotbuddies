@@ -233,7 +233,10 @@ class Voter(models.Model):
 
     @cached_property
     def status_api(self) -> str:
-        return f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(self.data)}"
+        data = self.data.copy()
+        data.pop("email")
+        data.pop("nickname")
+        return f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(data)}"
 
     @cached_property
     def complete(self) -> bool:
