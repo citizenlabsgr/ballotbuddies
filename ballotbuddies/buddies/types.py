@@ -391,8 +391,8 @@ class Progress:
 @dataclass
 class Message:
     text: str
-    url: str
     label: str
+    url: str
 
     @property
     def data(self) -> dict:

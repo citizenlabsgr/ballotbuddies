@@ -197,13 +197,17 @@ class Voter(models.Model):
 
     @property
     def profile_cta(self) -> Iterator[Message]:
-        if self.complete and not self.progress.registered:
+        if not self.complete:
+            return
+        if not self.progress.registered:
             yield Message(
                 "Confirm your voter information matches the SOS",
-                constants.MICHIGAN_REGISTRATION_URL,
                 "https://mvic.sos.state.mi.us",
+                constants.MICHIGAN_REGISTRATION_URL,
             )
-        if self.complete and self.absentee and not self.progress.absentee_requested:
+        if not self.progress.election.days:
+            return
+        if self.absentee and not self.progress.absentee_requested:
             yield Message(
                 "Request your absentee ballot",
                 constants.ABSENTEE_URL,
@@ -212,8 +216,8 @@ class Voter(models.Model):
         if not self.ballot and self.ballot_url:
             yield Message(
                 "Fill out your sample ballot",
-                self.ballot_url,
                 self.ballot_url.split("?")[0],
+                self.ballot_url,
             )
 
     @cached_property
