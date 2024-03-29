@@ -233,7 +233,10 @@ class Voter(models.Model):
 
     @cached_property
     def status_api(self) -> str:
-        return f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(self.data)}"
+        data = self.data.copy()
+        data.pop("email")
+        data.pop("nickname")
+        return f"{constants.ELECTIONS_HOST}/api/status/?{urlencode(data)}"
 
     @cached_property
     def complete(self) -> bool:
@@ -354,29 +357,32 @@ class Voter(models.Model):
             self.updated = None
 
     def update_status(self) -> tuple[bool, str]:
+        message = ""
         previous_fingerprint = self.fingerprint
 
         if self.state != "Michigan":
             self.fetched = timezone.now()
-            return False, "Voter registration can only be fetched for Michigan."
-
-        if self.staleness < 60 * 15:
-            return False, "Voter registration fetched recently."
-
-        if self.user.is_test:  # type: ignore
-            return False, "Voter registration can only be fetched for real people."
-
-        log.info(f"GET {self.elections_api}")
-        response = requests.get(self.elections_api, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            election = data["results"][0]
-            log.info(f"Latest election is {election['name']} on {election['date']}")
-            date = to_date(election["date"])
-            if date < today():
-                return False, "No upcoming elections."
+            message = "Voter registration can only be fetched for Michigan."
+        elif self.staleness < 60 * 15:
+            message = "Voter registration fetched recently."
+        elif self.user.is_test:  # type: ignore
+            message = "Voter registration can only be fetched for real people."
         else:
-            return False, "Election information unavailable at this time."
+            log.info(f"GET {self.elections_api}")
+            response = requests.get(self.elections_api, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                election = data["results"][0]
+                log.info(f"Latest election is {election['name']} on {election['date']}")
+                date = to_date(election["date"])
+                if date < today():
+                    message = "No upcoming elections."
+            else:
+                message = "Election information unavailable at this time."
+
+        if message:
+            log.info(message.strip(".") + f": {self}")
+            return False, message
 
         log.info(f"GET {self.status_api}")
         response = requests.get(self.status_api, timeout=10)
@@ -387,7 +393,7 @@ class Voter(models.Model):
             return False, data["message"]
         if response.status_code != 200:
             log.error(f"{response.status_code} response")
-            return False, ""
+            return False, message
 
         data = response.json()
         log.info(f"{response.status_code} response: {data}")
@@ -400,7 +406,7 @@ class Voter(models.Model):
             if previous_fingerprint:
                 self.share_status()
 
-        return changed, ""
+        return changed, message
 
     @property
     def fingerprint(self) -> str:

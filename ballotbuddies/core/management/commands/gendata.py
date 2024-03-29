@@ -1,4 +1,5 @@
 from copy import deepcopy
+from datetime import timedelta
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -7,6 +8,7 @@ from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils import timezone
 
+from ballotbuddies.buddies.constants import BALLOT_PREVIEW_URL
 from ballotbuddies.buddies.models import Voter
 from ballotbuddies.core.helpers import today
 
@@ -15,7 +17,6 @@ STATUS = {
     "status": {
         "absentee": True,
         "ballot": True,
-        "ballot_url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
         "registered": True,
         "absentee_ballot_sent": "2021-09-30",
         "absentee_ballot_received": "2021-10-15",
@@ -35,6 +36,11 @@ STATUS = {
         "county": "Kent",
         "number": "10",
         "jurisdiction": "City of Kentwood",
+    },
+    "ballot": {
+        "id": 99999,
+        "mvic_url": "https://mvic.sos.state.mi.us/Voter/GetMvicBallot/5947/687/",
+        "items": 99,
     },
 }
 
@@ -57,7 +63,9 @@ class Command(BaseCommand):
 
         real_voters: list[Voter] = []
         for info in voters:
-            voter = self.get_or_create_voter(*info.split(","), admin=True)
+            voter = self.get_or_create_voter(
+                *info.split(","), status=STATUS, admin=True
+            )
             real_voters.append(voter)
 
         for voter in real_voters:
@@ -130,8 +138,8 @@ class Command(BaseCommand):
         last_name: str,
         birth_date: str,
         zip_code: str,
-        status=None,
         *,
+        status=None,
         absentee: bool = True,
         ballot: str | None = None,
         admin: bool = False,
@@ -155,7 +163,11 @@ class Command(BaseCommand):
 
         if status:
             voter.reset_status(absentee, ballot, status)
-            voter.updated = timezone.now()
+            if admin:
+                url = BALLOT_PREVIEW_URL.format(ballot_id=status["ballot"]["id"])
+                voter.ballot = url
+                voter.voted = timezone.now()
+            voter.updated = timezone.now() - timedelta(days=1)
             voter.save()
 
         return voter
@@ -187,7 +199,7 @@ class Command(BaseCommand):
             "Registered",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -201,7 +213,7 @@ class Command(BaseCommand):
             "Requested",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -214,7 +226,7 @@ class Command(BaseCommand):
             "Missing",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -227,7 +239,7 @@ class Command(BaseCommand):
             "Skipped",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
             absentee=False,
         )
 
@@ -239,7 +251,7 @@ class Command(BaseCommand):
             "Pending",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -251,7 +263,7 @@ class Command(BaseCommand):
             "Election",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -262,7 +274,7 @@ class Command(BaseCommand):
             "Available",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -273,7 +285,7 @@ class Command(BaseCommand):
             "Sent",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -283,7 +295,7 @@ class Command(BaseCommand):
             "Received",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
         )
 
         status = deepcopy(STATUS)
@@ -295,6 +307,6 @@ class Command(BaseCommand):
             "Completed",
             "1970-01-01",
             "99999",
-            status,
+            status=status,
             ballot="https://share.michiganelections.io/elections/49/precincts/1193/?proposal-8018=approve",
         )
