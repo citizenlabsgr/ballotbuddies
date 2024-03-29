@@ -9,7 +9,9 @@ from . import constants, helpers
 async_render = sync_to_async(render)
 
 
-async def index(_request: HttpRequest):
+def index(request: HttpRequest):
+    if request.GET.get("referrer") and request.user.is_authenticated:
+        return redirect("buddies:profile")
     return redirect("explore:proposals")
 
 

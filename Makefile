@@ -151,7 +151,7 @@ test-system: install
 
 .PHONY: run
 run: .envrc install migrate ## Run the applicaiton
-	$(RUN) python manage.py runserver
+	$(RUN) python manage.py runserver $${PORT:-8000}
 
 .PHONY: run-production
 run-production: .envrc install
