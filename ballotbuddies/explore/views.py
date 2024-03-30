@@ -12,7 +12,7 @@ async_render = sync_to_async(render)
 def index(request: HttpRequest):
     if request.GET.get("referrer") and request.user.is_authenticated:
         return redirect("buddies:profile")
-    return redirect("explore:proposals")
+    return redirect("explore:elections")
 
 
 async def proposals_list(request: HttpRequest):

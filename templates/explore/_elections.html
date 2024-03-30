@@ -9,12 +9,12 @@
         <div class="d-flex gap-4 p-3">
             <a class="text-decoration-none"
                 href="{% url 'explore:proposals-election' election.id %}">
-                View Proposals
+                View {{ election.proposals_count }} Proposal{{ election.proposals_count|pluralize }}
             </a>
 
             <a class="text-decoration-none"
                 href="{% url 'explore:positions-election' election.id %}">
-                View Positions
+                View {{ election.positions_count }} Position{{ election.positions_count|pluralize }}
             </a>
         </div>
 

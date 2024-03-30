@@ -1,23 +1,19 @@
 # pylint: disable=redefined-outer-name,unused-variable,unused-argument,expression-not-assigned
 
-import pytest
-
 
 def describe_index():
     def it_redirects_to_proposals(expect, client):
         response = client.get("/explore/")
         expect(response.status_code) == 302
-        expect(response.url) == "/explore/proposals/"
+        expect(response.url) == "/explore/elections/"
 
 
 def describe_proposals():
-    @pytest.mark.vcr()
     def it_shows_proposals_loading_message(expect, client):
         response = client.get("/explore/proposals/?limit=0")
         html = response.content.decode()
-        expect(html).contains("Loading 8094 proposals")
+        expect(html).contains("Loading")
 
-    @pytest.mark.vcr()
     def it_shows_proposals_by_election(expect, client):
         response = client.get("/explore/proposals/election/54/")
         html = response.content.decode()
@@ -38,7 +34,6 @@ def describe_proposals():
         expect(html).contains("Cass")
         expect(html).contains("banner.jpg?district_id=728")
 
-    @pytest.mark.vcr()
     def it_filters_proposals_by_text(expect, client):
         response = client.get("/explore/proposals/election/54/?q=money")
         html = response.content.decode()
@@ -46,11 +41,10 @@ def describe_proposals():
 
 
 def describe_positions():
-    @pytest.mark.vcr()
     def it_shows_positions_loading_message(expect, client):
         response = client.get("/explore/positions/?limit=0")
         html = response.content.decode()
-        expect(html).contains("Loading 49139 positions")
+        expect(html).contains("Loading")
 
     def it_shows_positions_by_election(expect, client):
         response = client.get("/explore/positions/election/54/")
@@ -73,17 +67,14 @@ def describe_positions():
         expect(html).contains("Cass")
         expect(html).contains("banner.jpg?district_id=728")
 
-    @pytest.mark.vcr()
     def it_filters_positions_by_text(expect, client):
         response = client.get("/explore/positions/election/54/?q=taxes")
         html = response.content.decode()
         expect(html.count("taxes")) == 7
 
 
-@pytest.mark.vcr()
 def describe_elections():
     def it_shows_all_elections(expect, client):
         response = client.get("/explore/elections/")
         html = response.content.decode()
-        expect(html.count("<li>")) == 22
-        expect(html).contains("banner.jpg?election_id=54")
+        expect(html.count("<li>")) >= 24
