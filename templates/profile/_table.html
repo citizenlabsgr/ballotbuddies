@@ -244,7 +244,7 @@
 
         <tr class="align-middle">
             <th scope="row">
-                Election Day
+                {{ voter.election|default:"Next" }} Election
             </th>
             {% if voter.progress.ballot_available.url %}
                 {% if voter.progress.ballot_received.date %}
