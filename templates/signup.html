@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block main %}
+
+<h1>Join Ballot Buddies</h1>
+
+<p class="mb-1">
+    Using your voter information, we'll periodically check to see if you have any upcoming elections and provide you status updates on your ballot.
+
+    <div><small class="text-muted mt-0">Already have an account?
+    <a class="text-decoration-none" href="{% url 'buddies:login' %}">Log in</a>
+    now.</small></div>
+</p>
+
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+    <button class="btn btn-primary" type="submit">Sign up</button>
+</form>
+
+{% endblock main %}
