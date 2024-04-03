@@ -46,6 +46,8 @@ class VoterForm(forms.ModelForm):
         self.fields["birth_date"].widget.attrs["placeholder"] = "mm/dd/yyyy"
         self.fields["birth_date"].widget.attrs["data-date-format"] = "mm/dd/yyyy"
         self.fields["zip_code"].required = True
+        self.fields["first_name"].widget.attrs["data-lpignore"] = True
+
         if locked:
             del self.fields["email"]
             if not kwargs["initial"].get("nickname"):

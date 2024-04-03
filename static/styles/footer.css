@@ -12,3 +12,11 @@ body {
     height: 60px;
     line-height: 60px;
 }
+
+/*
+  Enforces hiding the lastpass autocomplete icon
+  which no longer respects data-lpignore, autocomplete="off"
+*/
+[data-lpignore] + [data-lastpass-icon-root], [data-lpignore="true"] + [data-lastpass-icon-root] {
+  display: none;
+}
