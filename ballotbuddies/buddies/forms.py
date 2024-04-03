@@ -41,12 +41,12 @@ class VoterForm(forms.ModelForm):
 
     def __init__(self, *args, locked: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["email"].widget.attrs["data-lpignore"] = True
         self.fields["nickname"].widget.attrs["placeholder"] = "Preferred first name"
         self.fields["birth_date"].required = True
         self.fields["birth_date"].widget.attrs["placeholder"] = "mm/dd/yyyy"
         self.fields["birth_date"].widget.attrs["data-date-format"] = "mm/dd/yyyy"
         self.fields["zip_code"].required = True
-        self.fields["first_name"].widget.attrs["data-lpignore"] = True
 
         if locked:
             del self.fields["email"]
@@ -56,6 +56,7 @@ class VoterForm(forms.ModelForm):
                 self.fields[name].required = False
                 self.fields[name].widget.attrs["autofocus"] = False
                 self.fields[name].widget.attrs["readonly"] = True
+                self.fields[name].widget.attrs["data-lpignore"] = True
 
     def clean_zip_code(self):
         value = self.cleaned_data["zip_code"].strip()
