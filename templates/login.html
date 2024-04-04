@@ -10,7 +10,13 @@
 
     <h1>Access Ballot Buddies</h1>
 
-    <p>We'll send you an email with a link to log in automatically.<p>
+    <p class="mb-1">
+        We'll send you an email with a link to log in automatically.
+
+        <div><small class="text-muted mt-0">Don't have an account?
+        <a class="text-decoration-none" href="{% url 'buddies:join' %}">Sign up</a>
+        now.</small></div>
+    </p>
 
     {% if domain %}
 
@@ -37,7 +43,7 @@
 
         {% if allow_debug %}
         <button type="submit" class="btn btn-outline-danger" name="debug" value="true">
-            <i class="fa-solid fa-right-to-bracket"></i> Log in (bypass email)
+            <i class="fa-solid fa-code"></i> Log in (bypass email)
         </button>
         {% endif %}
     </form>

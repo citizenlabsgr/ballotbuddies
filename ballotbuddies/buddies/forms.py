@@ -8,7 +8,11 @@ from .widgets import DateInput
 
 class LoginForm(forms.ModelForm):
     email = forms.EmailField(
-        required=True, widget=forms.TextInput(attrs={"autofocus": True})
+        required=True,
+        label="",
+        widget=forms.TextInput(
+            attrs={"autofocus": True, "placeholder": "Email address"}
+        ),
     )
 
     class Meta:
@@ -63,6 +67,17 @@ class VoterForm(forms.ModelForm):
         if len(value) != 5 or not value.isnumeric():
             raise forms.ValidationError("This value must be exactly five digits.")
         return value
+
+
+class SignupForm(VoterForm):
+    email = forms.EmailField(
+        required=True, widget=forms.EmailInput(attrs={"autofocus": True})
+    )
+    nickname = forms.CharField(required=False, widget=forms.HiddenInput())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        del self.fields["email"].widget.attrs["data-lpignore"]
 
 
 class FriendsForm(forms.Form):

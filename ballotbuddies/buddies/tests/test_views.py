@@ -1,5 +1,7 @@
 # pylint: disable=redefined-outer-name,unused-variable,unused-argument,expression-not-assigned
 
+from django.contrib.messages import get_messages
+from django.test import Client
 from django.urls import reverse
 from django.utils import timezone
 
@@ -64,6 +66,35 @@ def describe_index():
         html = decode(response)
         expect(html).excludes("Successfully added 1 friend.")
         expect(html).includes("Friendo")
+
+
+@pytest.mark.django_db
+def describe_join():
+    @pytest.fixture
+    def signup_data():
+        return {
+            "email": "user@example.com",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "birth_date": "1990-01-01",
+            "zip_code": "12345",
+        }
+
+    def it_creates_voter_profile_on_valid_post(client: Client, signup_data):
+        response = client.post("/join/", signup_data)
+
+        messages = list(get_messages(response.wsgi_request))
+        expect(len(messages)) == 1
+        expect(str(messages[0])).contains("created your voter profile")
+
+    def it_redirects_to_login_if_email_exists(client: Client, signup_data):
+        Voter.objects.from_email(signup_data["email"], "<referrer>")
+
+        response = client.post("/join/", signup_data)
+
+        messages = list(get_messages(response.wsgi_request))
+        expect(len(messages)) == 1
+        expect(str(messages[0])).contains("already have an account")
 
 
 @pytest.mark.django_db

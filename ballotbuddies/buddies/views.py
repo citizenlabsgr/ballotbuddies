@@ -15,7 +15,7 @@ import log
 from ballotbuddies.alerts.helpers import send_login_email
 from ballotbuddies.core.helpers import allow_debug
 
-from .forms import FriendsForm, LoginForm, VoterForm
+from .forms import FriendsForm, LoginForm, SignupForm, VoterForm
 from .helpers import generate_sample_voters, parse_domain
 from .models import Voter
 
@@ -44,6 +44,48 @@ def index(request: HttpRequest):
 
 def about(request):
     return render(request, "about/index.html")
+
+
+def join(request: HttpRequest):
+    referrer = request.session.get("referrer", "")
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            try:
+                voter = Voter.objects.from_email(email, referrer, create=False)
+            except Voter.DoesNotExist:
+                voter = Voter.objects.from_email(email, referrer)
+                voter.birth_date = form.cleaned_data["birth_date"]
+                voter.zip_code = form.cleaned_data["zip_code"]
+                voter.save()
+                voter.user.update_name(  # type: ignore
+                    request,
+                    form.cleaned_data["first_name"],
+                    form.cleaned_data["last_name"],
+                )
+                log.info(f"Updated voter: {voter}")
+            else:
+                log.info(f"Voter already exists: {voter}")
+                request.method = "POST"
+                request.POST = {"email": email}  # type: ignore
+                messages.info(
+                    request,
+                    "It looks like you already have an account. Check your email for a login link.",
+                )
+                return login(request)
+
+            messages.success(request, "Successfully created your voter profile.")
+            force_login(
+                request, voter.user, backend=settings.AUTHENTICATION_BACKENDS[0]
+            )
+            send_login_email(voter.user)
+            return redirect(request.GET.get("next") or "buddies:profile")
+    else:
+        form = SignupForm()
+
+    context = {"form": form}
+    return render(request, "signup.html", context)
 
 
 def login(request: HttpRequest):
@@ -265,6 +307,12 @@ def friends_setup(request: HttpRequest, slug: str):
     return render(request, "friends/setup.html", context)
 
 
+def friends_email(request: HttpRequest, slug: str):
+    assert isinstance(request.user, User)
+    voter: Voter = Voter.objects.get(slug=slug)
+    return JsonResponse({"email": voter.user.email})
+
+
 @login_required
 def status(request: HttpRequest, slug: str):
     assert isinstance(request.user, User)
@@ -326,12 +374,6 @@ def status(request: HttpRequest, slug: str):
         return render(request, "profile/_table.html", context)
 
     return render(request, "friends/_row.html", context)
-
-
-def email(request: HttpRequest, slug: str):
-    assert isinstance(request.user, User)
-    voter: Voter = Voter.objects.get(slug=slug)
-    return JsonResponse({"email": voter.user.email})
 
 
 @login_required

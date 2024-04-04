@@ -27,7 +27,10 @@ ZERO_WIDTH_SPACE = "\u200b"
 
 
 class VoterManager(models.Manager):
-    def from_email(self, email: str, referrer: str) -> Voter:
+    def from_email(self, email: str, referrer: str, *, create=True) -> Voter:
+        if not create:
+            return self.get(user__email=email.lower())  # type: ignore
+
         try:
             user, created = User.objects.get_or_create(
                 email=email.lower(), defaults=dict(username=email)
@@ -129,7 +132,7 @@ class Voter(models.Model):
     updated = models.DateTimeField(null=True, blank=True)
     fetched = models.DateTimeField(null=True, blank=True)
 
-    objects = VoterManager()
+    objects: VoterManager = VoterManager()
 
     class Meta:
         ordering = ["-created"]
