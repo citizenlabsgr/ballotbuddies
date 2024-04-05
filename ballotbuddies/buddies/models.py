@@ -208,7 +208,7 @@ class Voter(models.Model):
                 "https://mvic.sos.state.mi.us",
                 constants.MICHIGAN_REGISTRATION_URL,
             )
-        if not self.progress.election.days:
+        if not self.progress.actions:
             return
         if self.absentee and not self.progress.absentee_requested:
             yield Message(
