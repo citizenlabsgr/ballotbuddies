@@ -32,7 +32,7 @@ class VoterData(NamedTuple):
 
 
 UNREGISTERED = VoterData(
-    "Ulrich",
+    "Uma",
     "Unregistered",
     {
         "election": {"date": "2021-11-02"},
@@ -113,7 +113,7 @@ UNREGISTERED = VoterData(
 )
 
 REGISTERED = VoterData(
-    "Reggie",
+    "Riley",
     "Registered",
     {
         "election": {

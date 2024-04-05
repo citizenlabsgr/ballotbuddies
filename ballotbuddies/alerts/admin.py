@@ -2,7 +2,7 @@
 
 from django.contrib import admin, messages
 from django.shortcuts import redirect
-from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from ballotbuddies.buddies.models import Voter
 
@@ -86,7 +86,9 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
     ]
 
     def Message(self, profile: Profile):
-        return format_html("<br><br>".join(profile.message.activity_lines))
+        return mark_safe(
+            '<br style="margin-bottom: 0.25em">'.join(profile.message.activity_lines)
+        )
 
 
 def clear_selected_messages(modeladmin, request, queryset):
@@ -152,7 +154,9 @@ class MessageAdmin(DefaultQueryMixin, admin.ModelAdmin):
     ]
 
     def Activities(self, message: Message):
-        return format_html("<br><br>".join(message.activity_lines))
+        return mark_safe(
+            '<br style="margin-bottom: 0.25em">'.join(message.activity_lines)
+        )
 
     def Dismissed(self, message: Message):
         return message.dismissed

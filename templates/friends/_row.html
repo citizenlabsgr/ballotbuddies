@@ -139,12 +139,13 @@
 
     {% endif %}
 
+    {% if not preview %}
     <td>
         <div class="d-flex justify-content-center">
         <form>{% csrf_token %}
         <div class="input-group flex-nowrap">
 
-        {% if voter.user == request.user and not referrer %}
+        {% if voter.user == request.user %}
             {% if voter.complete %}
             <a class="btn btn-secondary" href="{% url 'buddies:profile' %}">
                 <span class="d-none d-md-inline text-nowrap">
@@ -226,6 +227,7 @@
         </form>
         </div>
     </td>
+    {% endif %}
 
 </tr>
 
