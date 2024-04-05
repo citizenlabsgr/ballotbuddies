@@ -22,20 +22,18 @@
 
 {% if voter.complete %}
 
-<h2 class="pt-4">Ballot Status</h2>
+<h2 class="mt-5">Ballot Status</h2>
 
 {% include "profile/_progress.html" %}
 
-<div>
-    <div
-        hx-get="{% url 'buddies:status' slug=voter.slug %}"
-        hx-trigger="load delay:1s"
-        hx-swap="outerHTML">
-        {% include "profile/_table.html" %}
-    </div>
+<div
+    hx-get="{% url 'buddies:status' slug=voter.slug %}"
+    hx-trigger="load delay:1s"
+    hx-swap="outerHTML">
+    {% include "profile/_table.html" %}
 </div>
 
-<h2 class="pt-4">Last Updated</h2>
+<h2 class="mt-5">Last Updated</h2>
 
 <p>
     {{ voter.updated|default:"Never (Incomplete Voter Information)" }}
@@ -46,7 +44,7 @@
     </a>
 </p>
 
-<h2 class="pt-4">Voter Information</h2>
+<h2 class="mt-5">Voter Information</h2>
 
 {{ form|crispy }}
 

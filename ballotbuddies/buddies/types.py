@@ -345,7 +345,6 @@ class Progress:
             progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
             progress.election.icon = "−"
-            progress.election.date = ""
             progress.voted.icon = "−"
 
         if not (has_ballot and absentee_date):
