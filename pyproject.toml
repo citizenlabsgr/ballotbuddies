@@ -52,6 +52,7 @@ us = "^2.0.2"
 # Formatting
 black = "^23.11"
 isort = "^5.12"
+djlint = "^1.34.1"
 
 # Linters
 pylint = "~2.15"
@@ -89,6 +90,10 @@ profile = "black"
 
 known_django = "django"
 sections = "FUTURE,STDLIB,DJANGO,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+
+[tool.djlint]
+
+quiet = true
 
 [tool.mypy]
 

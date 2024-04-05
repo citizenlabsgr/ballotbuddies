@@ -36,8 +36,8 @@ def index(request: HttpRequest):
             return redirect("buddies:friends")
 
     context = {
+        "preview": True,
         "community": sorted(generate_sample_voters(referrer)),
-        "referrer": referrer,
     }
     return render(request, "friends/index.html", context)
 
