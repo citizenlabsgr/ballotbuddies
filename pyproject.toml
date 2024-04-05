@@ -68,7 +68,7 @@ pytest-vcr = "*"
 pytest-cov = "^4.0"
 splinter = "~0.21"
 selenium = "*"
-coveragespace = "^6.0"
+coveragespace = "^6.1"
 coveralls = "*"
 
 # Tooling
