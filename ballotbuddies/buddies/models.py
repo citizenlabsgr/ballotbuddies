@@ -296,7 +296,7 @@ class Voter(models.Model):
             self.save()
 
         if progress.ballot_received.date and not self.ballot_returned:
-            log.info(f"Assuming ballot was returned: {self}")
+            log.info(f"Inferring ballot was returned: {self}")
             self.ballot_returned = progress.ballot_received.date_comparable
             self.save()
 
@@ -380,7 +380,7 @@ class Voter(models.Model):
             if response.status_code == 200:
                 data = response.json()
                 election = data["results"][0]
-                log.info(f"Latest election is {election['name']} on {election['date']}")
+                log.info(f"200 response: {election}")
                 date = to_date(election["date"])
                 if date < today():
                     message = "No upcoming elections."
