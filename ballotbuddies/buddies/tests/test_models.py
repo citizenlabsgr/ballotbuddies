@@ -52,7 +52,7 @@ def describe_voter():
 
             expect(voter.progress.voted.color) == "success text-muted"
 
-        def with_complete_ballot_from_past_election(expect, voter: Voter):
+        def with_vote_from_past_election(expect, voter: Voter):
             voter.status = REGISTERED.status
             voter.ballot = "http://example.com"
             voter.voted = timezone.now()
