@@ -162,7 +162,7 @@ class Command(BaseCommand):
             self.stdout.write(f"Updated voter: {voter}")
 
         if status:
-            voter.reset_status(absentee, ballot, status)
+            voter.reset_status(absentee=absentee, ballot=ballot, status=status)
             if admin:
                 url = BALLOT_PREVIEW_URL.format(ballot_id=status["ballot"]["id"])
                 voter.ballot = url

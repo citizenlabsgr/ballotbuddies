@@ -346,8 +346,9 @@ class Voter(models.Model):
             )
         )
 
-    def reset_status(self, absentee=True, ballot=None, status=None, promoter=None):
-        self.absentee = absentee
+    def reset_status(self, *, absentee=None, ballot=None, status=None, promoter=None):
+        if absentee is not None:
+            self.absentee = absentee
         self.ballot = ballot
         self.ballot_returned = None
         self.voted = None
