@@ -233,7 +233,9 @@
 
 <tr class="collapse" id="status-{{ voter.slug }}">
     <td colspan="100%" class="pt-3 pb-0 px-2">
+        {% with embed=True %}
         {% include "profile/_table.html" %}
+        {% endwith %}
     </td>
 </tr>
 
