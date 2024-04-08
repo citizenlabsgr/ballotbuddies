@@ -52,6 +52,9 @@ def describe_voter():
 
             expect(voter.progress.voted.color) == "success text-muted"
 
+        @pytest.mark.xfail(
+            reason="https://github.com/citizenlabsgr/ballotbuddies/issues/265"
+        )
         def with_vote_from_past_election(expect, voter: Voter):
             voter.status = REGISTERED.status
             voter.ballot = "http://example.com"

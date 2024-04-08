@@ -289,14 +289,6 @@ class Voter(models.Model):
             progress.absentee_requested.url = ""
             progress.absentee_received.disable()
 
-        # TODO: Move this to a scheduled task to only run where there is an election?
-        if self.voted and not progress.ballot_available and progress.election.days > 0:
-            log.info(f"Clearing completed ballot from past election: {self}")
-            self.ballot = None
-            self.ballot_returned = None
-            self.voted = None
-            self.save()
-
         if progress.ballot_received.date and not self.ballot_returned:
             log.info(f"Inferring ballot was returned: {self}")
             self.ballot_returned = progress.ballot_received.date_comparable
