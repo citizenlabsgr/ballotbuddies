@@ -1,4 +1,4 @@
-# pylint: disable=redefined-outer-name,unused-variable,unused-argument,expression-not-assigned
+# pylint: disable=unused-variable,redefined-outer-name,expression-not-assigned
 
 from django.contrib.messages import get_messages
 from django.test import Client

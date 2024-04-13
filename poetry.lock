@@ -1511,6 +1511,21 @@ spelling = ["pyenchant (>=3.2,<4.0)"]
 testutils = ["gitpython (>3)"]
 
 [[package]]
+name = "pylint-pytest"
+version = "1.1.7"
+description = "A Pylint plugin to suppress pytest-related false positives."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pylint-pytest-1.1.7.tar.gz", hash = "sha256:7a38be02c014eb6d98791eb978e79ed292f1904d3a518289c6d7ac4fb4122e98"},
+    {file = "pylint_pytest-1.1.7-py3-none-any.whl", hash = "sha256:5d687a2f4b17e85654fc2a8f04944761efb11cb15dc46d008f420c377b149151"},
+]
+
+[package.dependencies]
+pylint = ">=2"
+pytest = ">=4.6"
+
+[[package]]
 name = "pync"
 version = "2.0.3"
 description = "Python Wrapper for Mac OS 10.10 Notification Center"
@@ -2522,4 +2537,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.6"
-content-hash = "46b24e9229bd3b8627b2ee21bbb7b7669fb284184b8741ac069fd94dbadbfcdb"
+content-hash = "961076235ff9ab9cb7e4a5007c334fcf83867e1ee5f4ad4c6e6eed683abb0cdf"

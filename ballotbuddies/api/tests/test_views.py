@@ -1,4 +1,4 @@
-# pylint: disable=redefined-outer-name,unused-variable,unused-argument,expression-not-assigned
+# pylint: disable=expression-not-assigned
 
 
 from django.utils import timezone

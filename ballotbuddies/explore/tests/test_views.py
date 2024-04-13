@@ -1,4 +1,4 @@
-# pylint: disable=redefined-outer-name,unused-variable,unused-argument,expression-not-assigned
+# pylint: disable=unused-variable,expression-not-assigned
 
 
 def describe_index():

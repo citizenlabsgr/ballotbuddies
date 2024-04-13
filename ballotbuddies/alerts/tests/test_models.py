@@ -1,4 +1,4 @@
-# pylint: disable=expression-not-assigned,singleton-comparison,unused-variable,redefined-outer-name
+# pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned,singleton-comparison
 
 
 from datetime import timedelta
