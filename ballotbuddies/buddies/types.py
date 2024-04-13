@@ -93,7 +93,7 @@ class State:
 
     @property
     def date_delta(self) -> str:
-        if self.icon:
+        if self.icon and "success" not in self.color:
             return self.icon
         if _date := to_date(self.date):
             delta = (_date - today()).days
