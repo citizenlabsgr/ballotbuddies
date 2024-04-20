@@ -53,11 +53,9 @@ class Profile(models.Model):
             return False
         if self.always_alert:
             return True
-        if not self.voter.updated:
-            # TODO: Remove this case when unsubscribe link is added
-            # https://github.com/citizenlabsgr/ballotbuddies/issues/192
-            return False
-        if self.voter.updated > timezone.now() - timedelta(days=7):
+        if self.voter.updated and self.voter.updated > timezone.now() - timedelta(
+            days=7
+        ):
             return False
         if self.voter.complete:
             if not self.has_election:

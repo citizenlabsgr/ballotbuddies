@@ -181,6 +181,16 @@ def setup(request: HttpRequest):
 
 
 @login_required
+def unsubscribe(request: HttpRequest):
+    assert isinstance(request.user, User)
+    voter: Voter = Voter.objects.from_user(request.user)
+    voter.profile.never_alert = True
+    voter.profile.save()
+    messages.info(request, "You have been unsubscribed from periodic reminder emails.")
+    return redirect("buddies:profile")
+
+
+@login_required
 def delete(request: HttpRequest):
     if request.method == "POST":
         if "yes" in request.POST:
