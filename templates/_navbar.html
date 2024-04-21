@@ -1,13 +1,13 @@
 {% url 'buddies:friends' as friends_url %}
 {% url 'buddies:search' as search_url %}
 {% url 'buddies:profile' as profile_url %}
-{% url 'buddies:about' as about_url %}
-{% url 'buddies:login' as login_url %}
+{% url 'core:about' as about_url %}
+{% url 'core:login' as login_url %}
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
 
-	    <a class="navbar-brand" href="{% url 'buddies:index' %}" hx-boost="true">
+	    <a class="navbar-brand" href="{% url 'core:index' %}" hx-boost="true">
 			Ballot Buddies
 		</a>
 
@@ -50,7 +50,7 @@
 	        <ul class="navbar-nav me-auto mb-2 mb-md-0">
 		        <li class="nav-item">
 		            <a class="nav-link {% if request.path == about_url %} active {% endif %} text-nowrap"
-                        href="{% url 'buddies:about' %}" hx-boost="true">
+                        href="{% url 'core:about' %}" hx-boost="true">
 						<i class="fa-solid fa-circle-info"></i> About <span class="d-md-none">This Site</span>
 					</a>
 		        </li>
@@ -73,11 +73,11 @@
 			{% endif %}
 
             {% if request.user.is_authenticated %}
-            <a class="btn btn-outline-secondary text-nowrap" href="{% url 'buddies:logout' %}">
+            <a class="btn btn-outline-secondary text-nowrap" href="{% url 'core:logout' %}">
 				Log out
 			</a>
             {% elif request.path != login_url %}
-            <a class="btn btn-outline-secondary text-nowrap" href="{% url 'buddies:login' %}">
+            <a class="btn btn-outline-secondary text-nowrap" href="{% url 'core:login' %}">
 				Log in
 			</a>
             {% endif %}

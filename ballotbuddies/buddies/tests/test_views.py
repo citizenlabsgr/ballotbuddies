@@ -1,13 +1,12 @@
 # pylint: disable=unused-variable,redefined-outer-name,expression-not-assigned
 
-from django.contrib.messages import get_messages
-from django.test import Client
 from django.urls import reverse
 from django.utils import timezone
 
-import log
 import pytest
 from expecter import expect
+
+from ballotbuddies.core.tests import decode
 
 from ..constants import VOTED
 from ..models import User, Voter
@@ -38,81 +37,6 @@ def friend(voter: Voter):
     voter.friends.add(voter2)
     voter.save()
     return voter2
-
-
-def decode(response, verbose=True) -> str:
-    html = response.content.decode().strip()
-    message = f"{response.status_code} response"
-    if verbose:
-        message += f"\n\n{html}\n\n"
-    log.info(f"{response.status_code} response")
-    return html
-
-
-@pytest.mark.django_db
-def describe_index():
-    def it_adds_friend_from_referrer(expect, client, voter, friend):
-        voter.friends.clear()
-        client.force_login(voter.user)
-
-        response = client.get(f"/?referrer={friend.slug}", follow=True)
-
-        html = decode(response)
-        expect(html).includes("Successfully added 1 friend.")
-        expect(html).includes("Friendo")
-
-        response = client.get(f"/?referrer={friend.slug}", follow=True)
-
-        html = decode(response)
-        expect(html).excludes("Successfully added 1 friend.")
-        expect(html).includes("Friendo")
-
-
-@pytest.mark.django_db
-def describe_join():
-    @pytest.fixture
-    def signup_data():
-        return {
-            "email": "user@example.com",
-            "first_name": "Jane",
-            "last_name": "Doe",
-            "birth_date": "1990-01-01",
-            "zip_code": "12345",
-        }
-
-    def it_creates_voter_profile_on_valid_post(client: Client, signup_data):
-        response = client.post("/join/", signup_data)
-
-        messages = list(get_messages(response.wsgi_request))
-        expect(len(messages)) == 1
-        expect(str(messages[0])).contains("created your voter profile")
-
-    def it_redirects_to_login_if_email_exists(client: Client, signup_data):
-        Voter.objects.from_email(signup_data["email"], "<referrer>")
-
-        response = client.post("/join/", signup_data)
-
-        messages = list(get_messages(response.wsgi_request))
-        expect(len(messages)) == 1
-        expect(str(messages[0])).contains("already have an account")
-
-
-@pytest.mark.django_db
-def describe_login():
-    def it_displays_button_for_standard_email_domains(expect, client):
-        pc_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-        response = client.post(
-            "/login/", {"email": "test@gmail.com"}, HTTP_USER_AGENT=pc_user_agent
-        )
-
-        html = decode(response)
-        expect(html).contains("Open gmail.com")
-
-    def it_displays_message_for_non_standard_email_domains(expect, client):
-        response = client.post("/login/", {"email": "test@example.com"})
-
-        html = decode(response)
-        expect(html).contains("was sent")
 
 
 @pytest.mark.django_db
