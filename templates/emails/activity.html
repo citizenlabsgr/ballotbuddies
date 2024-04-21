@@ -28,3 +28,5 @@
     Click this link to view {% if date %}your{% else %}their{% endif %} progress:
     <a href="{{ url }}{{ query_string }}">{{ url }}</a>
 </p>
+
+{% include "emails/_unsubscribe.html" %}

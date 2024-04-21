@@ -13,6 +13,7 @@
   "editor.formatOnSave": true,
   "python.defaultInterpreterPath": ".venv/bin/python",
   "pylint.args": ["--rcfile=.pylint.ini"],
+  "djlint.ignore": ["H021"],
   "cSpell.words": [
     "asdict",
     "asgi",

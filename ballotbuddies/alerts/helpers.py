@@ -91,6 +91,7 @@ def get_activity_email(
         "election": voter.election,
         "date": date,
         "url": build_url("/profile") if date else build_url("/friends"),
+        "unsubscribe_url": build_url("/profile/unsubscribe"),
         "query_string": get_query_string(user),
     }
     body = render_to_string("emails/activity.html", context)
@@ -127,6 +128,7 @@ def get_voted_email(user: User):
         "name": voter.short_name or "Voter",
         "election": voter.election,
         "url": build_url("/friends"),
+        "unsubscribe_url": build_url("/profile/unsubscribe"),
         "query_string": get_query_string(user),
     }
     subject = "Your Vote Has Been Cast"
