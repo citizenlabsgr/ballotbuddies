@@ -14,7 +14,7 @@
         We'll send you an email with a link to log in automatically.
 
         <div><small class="text-muted mt-0">Don't have an account?
-        <a class="text-decoration-none" href="{% url 'buddies:join' %}">Sign up</a>
+        <a class="text-decoration-none" href="{% url 'core:join' %}">Sign up</a>
         now.</small></div>
     </p>
 
@@ -23,7 +23,7 @@
         {% if standard %}
             <a class="btn btn-primary" href="http://{{ domain }}">
                 <i class="fa-solid fa-inbox"></i> Open {{ domain }}
-            <a>
+            </a>
         {% else %}
             <div class="alert alert-success" role="alert">
                 An email was sent to your <b>{{ domain }}</b> address.

@@ -2,26 +2,8 @@ from django import forms
 
 from multi_email_field.forms import MultiEmailField
 
-from .models import User, Voter
+from .models import Voter
 from .widgets import DateInput
-
-
-class LoginForm(forms.ModelForm):
-    email = forms.EmailField(
-        required=True,
-        label="",
-        widget=forms.TextInput(
-            attrs={"autofocus": True, "placeholder": "Email address"}
-        ),
-    )
-
-    class Meta:
-        model = User
-        fields = ["email"]
-
-    def clean_email(self):
-        value = self.cleaned_data["email"]
-        return value.lower()
 
 
 class VoterForm(forms.ModelForm):
@@ -67,17 +49,6 @@ class VoterForm(forms.ModelForm):
         if len(value) != 5 or not value.isnumeric():
             raise forms.ValidationError("This value must be exactly five digits.")
         return value
-
-
-class SignupForm(VoterForm):
-    email = forms.EmailField(
-        required=True, widget=forms.EmailInput(attrs={"autofocus": True})
-    )
-    nickname = forms.CharField(required=False, widget=forms.HiddenInput())
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        del self.fields["email"].widget.attrs["data-lpignore"]
 
 
 class FriendsForm(forms.Form):

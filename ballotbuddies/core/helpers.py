@@ -29,3 +29,21 @@ def allow_debug(request) -> bool:
 def generate_key(length=10):
     alphabet = string.ascii_letters + string.digits
     return "".join(random.choice(alphabet) for _ in range(length))
+
+
+def parse_domain(email: str) -> tuple[str, bool]:
+    domain = email.split("@")[-1]
+    standard = domain in {
+        "aol.com",
+        "comcast.net",
+        "gmail.com",
+        "hotmail.com",
+        "icloud.com",
+        "live.com",
+        "mail.com",
+        "msn.com",
+        "outlook.com",
+        "yahoo.com",
+        "ymail.com",
+    }
+    return domain, standard
