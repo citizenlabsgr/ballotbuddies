@@ -1,3 +1,7 @@
+{% extends "emails/base.html" %}
+
+{% block content %}
+
 <p style="font-size: 14pt;">
     Hello {{ name }},
 </p>
@@ -30,3 +34,5 @@
 </p>
 
 {% include "emails/_unsubscribe.html" %}
+
+{% endblock content%}

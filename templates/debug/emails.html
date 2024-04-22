@@ -8,22 +8,18 @@
 
 {% for email in emails %}
 
-    <hr>
+<hr>
 
-    <p>
-        <b>Subject:</b> {{ email.subject }}
-    </p>
+<h2 class="fs-4 text-center">
+    {{ email.subject }}
+</h2>
 
-    <p>
-        <b>Body:</b>
-
-        <br>
-
-        {{ email.body|safe }}
-    </p>
+<div style="background-color: #dc3545;">
+    {{ email.body|safe }}
+</div>
 
 {% endfor %}
 
-    <hr>
+<hr>
 
-{% endblock %}
+{% endblock main %}
