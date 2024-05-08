@@ -14,7 +14,7 @@
 
     <div class="row justify-content-center">
         {% if not request.user_agent.is_bot %}
-        <div class="col-12" {% if preview %}style="opacity: 60%; filter: saturate(70%)"{% endif %}>
+        <div class="col-12" {% if preview %}style="filter: opacity(60%) saturate(70%)"{% endif %}>
 
             <table class="table">
                 <thead class="text-center {% if search %} border-top {% endif %}">

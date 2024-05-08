@@ -6,9 +6,10 @@ from functools import cached_property
 
 from django.conf import settings
 from django.utils import timezone
+from django.utils.html import format_html
 
 from ballotbuddies.core.helpers import today
-from django.utils.html import format_html
+
 from . import constants
 
 
