@@ -21,7 +21,7 @@ body {
   line-height: 60px;
 }
 
-
+/* Blur effect for recommended friends  */
 
 .enable-blur>* {
   filter: opacity(35%) saturate(0%);
