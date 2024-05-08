@@ -5,7 +5,6 @@ from django.db.models import Q
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, resolve_url
 from django.utils import timezone
-from django.utils.html import format_html
 
 import log
 
@@ -40,10 +39,7 @@ def profile(request: HttpRequest):
 
     if not messages.get_messages(request):
         for cta in voter.profile_cta:
-            messages.info(
-                request,
-                format_html('{text}: <a href="{url}">{label}</a>', **cta.data),
-            )
+            messages.info(request, cta.html)
 
     form = VoterForm(initial=voter.data, locked=True)
     context = {"voter": voter, "form": form}
@@ -179,10 +175,7 @@ def friends_profile(request: HttpRequest, slug: str):
 
     if not messages.get_messages(request):
         for cta in voter.profile_cta:
-            messages.debug(
-                request,
-                format_html('{text}: <a href="{url}">{label}</a>', **cta.data),
-            )
+            messages.debug(request, cta.html)
 
     form = VoterForm(initial=voter.data, locked=True)
     context = {"voter": voter, "form": form}

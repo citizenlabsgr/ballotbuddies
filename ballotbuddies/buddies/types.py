@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from ballotbuddies.core.helpers import today
-
+from django.utils.html import format_html
 from . import constants
 
 
@@ -390,9 +390,15 @@ class Progress:
 @dataclass
 class Message:
     text: str
-    label: str
-    url: str
+    label: str = ""
+    url: str = ""
 
     @property
     def data(self) -> dict:
         return asdict(self)
+
+    @property
+    def html(self) -> str:
+        if self.label and self.url:
+            return format_html('{text}: <a href="{url}">{label}</a>', **self.data)
+        return format_html("{text}", **self.data)
