@@ -209,6 +209,11 @@ class Voter(models.Model):
                 constants.MICHIGAN_REGISTRATION_URL,
             )
         if not self.progress.actions:
+            if not self.voted:
+                yield Message(
+                    "You have no upcoming elections at this time. "
+                    "Check back in a few months for updates!"
+                )
             return
         if self.absentee and not self.progress.absentee_requested:
             yield Message(
