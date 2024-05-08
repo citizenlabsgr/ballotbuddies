@@ -1,3 +1,4 @@
+import random
 from copy import deepcopy
 from datetime import timedelta
 
@@ -77,12 +78,15 @@ class Command(BaseCommand):
         test_voters = list(self.generate_test_voters())
 
         for count, voter in enumerate(real_voters, start=1):
+            _voter: Voter = random.choice(Voter.objects.all())
+            status = deepcopy(_voter.status)
             friend = self.get_or_create_voter(
                 f"friend+{count}@example.com",
                 voter.user.first_name + "'s",
                 "Friend",
-                "1970-01-01",
-                "99999",
+                str(_voter.birth_date),
+                str(_voter.zip_code),
+                status=status,
             )
             voter.friends.add(friend, *real_voters, *test_voters)
             voter.save()

@@ -20,3 +20,16 @@ body {
   height: 60px;
   line-height: 60px;
 }
+
+
+
+.enable-blur>* {
+  filter: opacity(35%) saturate(0%);
+  clip-path: inset(0px -1em);
+  pointer-events: none;
+}
+
+.disable-blur {
+  filter: blur(0);
+  pointer-events: all;
+}

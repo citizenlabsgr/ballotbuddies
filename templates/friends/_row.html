@@ -1,4 +1,4 @@
-<tr class="align-middle {% if not voter.complete %} text-muted {% endif %}">
+<tr class="align-middle {% if not voter.complete %} text-muted {% endif %} {% if voter in recommended %} enable-blur {% endif %}">
 
     <th scope="row">
         <a class="text-reset text-decoration-none" href="{% url 'buddies:friends-profile' slug=voter.slug %}">
@@ -26,19 +26,6 @@
             ▼
         </button>
     </td>
-
-    {% if voter in recommended %}
-    <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Requested -->
-    <td class="d-none d-lg-table-cell"></td> <!-- Absentee: Recieved -->
-    <td class="d-none d-sm-table-cell"></td> <!-- Ballot: Available -->
-    <td class="d-none d-xl-table-cell"></td> <!-- Ballot: Items -->
-    <td class="d-none d-md-table-cell"></td> <!-- Ballot: Completed -->
-    <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Sent -->
-    <td class="d-none d-xl-table-cell"></td> <!-- Ballot: Returned -->
-    <td class="d-none d-lg-table-cell"></td> <!-- Ballot: Recieved -->
-    <td class="d-none d-md-table-cell"></td> <!-- Election: Deadline -->
-    <td class=""></td> <!-- Election: Voted -->
-    {% else %}
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-lg-none">
         {% if voter.ballot_url %}
@@ -137,10 +124,8 @@
         {{ voter.progress.voted.icon }}
     </td>
 
-    {% endif %}
-
     {% if not preview %}
-    <td>
+    <td class="disable-blur">
         <div class="d-flex justify-content-center">
         <form>{% csrf_token %}
         <div class="input-group flex-nowrap">
