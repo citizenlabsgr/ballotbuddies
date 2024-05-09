@@ -69,6 +69,11 @@ class Command(BaseCommand):
             )
             real_voters.append(voter)
 
+        voter: Voter
+        for voter in Voter.objects.exclude(user__email__contains="example.com"):
+            if voter not in real_voters:
+                real_voters.append(voter)
+
         for voter in real_voters:
             voter.friends.clear()
             voter.neighbors.clear()
