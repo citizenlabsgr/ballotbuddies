@@ -62,6 +62,7 @@ class Command(BaseCommand):
         self.get_or_create_superuser()
         self.get_or_create_user("newbie@example.com")
 
+        voter: Voter
         real_voters: list[Voter] = []
         for info in voters:
             voter = self.get_or_create_voter(
@@ -69,7 +70,6 @@ class Command(BaseCommand):
             )
             real_voters.append(voter)
 
-        voter: Voter
         for voter in Voter.objects.exclude(user__email__contains="example.com"):
             if voter not in real_voters:
                 real_voters.append(voter)
