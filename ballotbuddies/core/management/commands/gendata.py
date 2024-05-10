@@ -56,7 +56,7 @@ class Command(BaseCommand):
             default=[],
         )
 
-    def handle(self, *, voters, **_options):
+    def handle(self, *, voters: tuple[str], **_options):
         self.update_site()
         self.get_or_create_superuser()
         self.get_or_create_user("newbie@example.com")
@@ -68,7 +68,6 @@ class Command(BaseCommand):
                 *info.split(","), status=STATUS, admin=True
             )
             real_voters.append(voter)
-
         for voter in Voter.objects.exclude(user__email__contains="example.com"):
             if voter not in real_voters:
                 real_voters.append(voter)
@@ -88,8 +87,8 @@ class Command(BaseCommand):
                 f"friend+{count}@example.com",
                 voter.user.first_name + "'s",
                 "Friend",
-                str(_voter.birth_date),
-                str(_voter.zip_code),
+                str(_voter.birth_date or ""),
+                str(_voter.zip_code or ""),
                 status=status,
             )
             voter.friends.add(friend, *real_voters, *test_voters)
