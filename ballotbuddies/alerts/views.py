@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from ballotbuddies.buddies import constants
 from ballotbuddies.buddies.models import Voter
 from ballotbuddies.core.models import User
 
@@ -34,6 +35,9 @@ def debug(request, slug=""):
         helpers.get_activity_email(user, message=message),
         helpers.get_voted_email(user),
     ]
-    context = {"profile": profile, "emails": emails}
-
+    context = {
+        "profile": profile,
+        "today": constants.today().isoformat(),
+        "emails": emails,
+    }
     return render(request, "debug/emails.html", context)

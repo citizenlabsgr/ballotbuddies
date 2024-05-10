@@ -18,7 +18,7 @@ import us
 import zipcodes
 
 from ballotbuddies.alerts.helpers import send_invite_email, send_voted_email
-from ballotbuddies.core.helpers import generate_key, today
+from ballotbuddies.core.helpers import generate_key
 
 from . import constants
 from .types import Message, Progress, to_date
@@ -382,7 +382,7 @@ class Voter(models.Model):
                 election = data["results"][0]
                 log.info(f"200 response: {election}")
                 date = to_date(election["date"])
-                if date < today():
+                if date < constants.today():
                     message = "No upcoming elections."
             else:
                 message = "Election information unavailable at this time."

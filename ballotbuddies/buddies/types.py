@@ -4,11 +4,8 @@ from dataclasses import asdict, dataclass, field
 from datetime import date, datetime
 from functools import cached_property
 
-from django.conf import settings
 from django.utils import timezone
 from django.utils.html import format_html
-
-from ballotbuddies.core.helpers import today
 
 from . import constants
 
@@ -66,7 +63,7 @@ class State:
     @property
     def actionable(self) -> bool:
         if deadline := to_date(self.deadline):
-            if today() > deadline:
+            if constants.today() > deadline:
                 return False
         return self.icon in {"🟡", "⚠️", "🚫"}
 
@@ -77,7 +74,7 @@ class State:
     @property
     def days(self) -> int:
         if self.date:
-            delta = to_date(self.date) - today()
+            delta = to_date(self.date) - constants.today()
             return delta.days
         return 0
 
@@ -97,7 +94,7 @@ class State:
         if self.icon and "success" not in self.color:
             return self.icon
         if _date := to_date(self.date):
-            delta = (_date - today()).days
+            delta = (_date - constants.today()).days
             if delta > 1:
                 return f"{delta} days"
             if delta == 1:
@@ -314,7 +311,7 @@ class Progress:
                 progress.ballot_available.url = constants.BALLOT_PREVIEW_URL.format(
                     ballot_id=ballot["id"]
                 )
-            elif settings.DEBUG or hasattr(settings, "TEST"):
+            elif constants.ALLOW_FAKE_DATA:
                 progress.ballot_available.url = constants.PRECINCT_PREVIEW_URL.format(
                     election_id=election["id"], precinct_id=precinct["id"]
                 )
