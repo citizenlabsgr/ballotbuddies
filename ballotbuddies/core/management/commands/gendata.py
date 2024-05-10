@@ -9,9 +9,8 @@ from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils import timezone
 
-from ballotbuddies.buddies.constants import BALLOT_PREVIEW_URL
+from ballotbuddies.buddies import constants
 from ballotbuddies.buddies.models import Voter
-from ballotbuddies.core.helpers import today
 
 STATUS = {
     "id": "345-3932-11713",
@@ -173,7 +172,9 @@ class Command(BaseCommand):
         if status:
             voter.reset_status(absentee=absentee, ballot=ballot, status=status)
             if admin:
-                url = BALLOT_PREVIEW_URL.format(ballot_id=status["ballot"]["id"])
+                url = constants.BALLOT_PREVIEW_URL.format(
+                    ballot_id=status["ballot"]["id"]
+                )
                 voter.ballot = url
                 voter.voted = timezone.now()
             voter.updated = timezone.now() - timedelta(days=1)
@@ -265,7 +266,7 @@ class Command(BaseCommand):
 
         status = deepcopy(STATUS)
         status["status"]["ballot"] = False  # type: ignore
-        status["election"]["date"] = today().strftime("%Y-%m-%d")  # type: ignore
+        status["election"]["date"] = constants.today().isoformat()  # type: ignore
         yield self.get_or_create_voter(
             "test+nonvoter@example.com",
             "No",

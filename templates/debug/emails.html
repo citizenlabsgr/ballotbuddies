@@ -4,7 +4,7 @@
 
 <h1>Email Templates</h1>
 
-<p>{{ profile|stringformat:'r' }}</p>
+<p>{{ profile|stringformat:'r' }} {{ today }}</p>
 
 {% for email in emails %}
 
@@ -26,4 +26,4 @@
 
     <hr>
 
-{% endblock %}
+{% endblock main %}

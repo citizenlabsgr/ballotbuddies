@@ -1,13 +1,7 @@
 import random
 import string
-from datetime import date
 
 from django.conf import settings
-from django.utils import timezone
-
-
-def today() -> date:
-    return settings.TODAY or timezone.localtime(timezone.now()).date()
 
 
 def build_url(path: str) -> str:

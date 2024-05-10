@@ -1,6 +1,9 @@
 import os
-from datetime import timedelta
+from datetime import date, timedelta
 from typing import NamedTuple
+
+from django.conf import settings
+from django.utils import timezone
 
 ELECTIONS_HOST = os.getenv("ELECTIONS_HOST", "https://michiganelections.io")
 MICHIGAN_REGISTRATION_URL = "https://mvic.sos.state.mi.us/RegisterVoter/Index"
@@ -22,6 +25,17 @@ BALLOT_RECEIVED_DEADLINE_DELTA = timedelta(days=4)  # Friday before the election
 ABSENTEE_WARNING_DAYS = 7  # buffer for mail service
 EARLY_VOTING_DAYS = 29  # minimum of 9 state-wide but communities can do more
 PAST_ELECTION_DAYS = -14  # number of days to show voter progress after an election
+
+
+ALLOW_FAKE_DATA = settings.DEBUG or hasattr(settings, "TEST")
+
+
+def today() -> date:
+    now = timezone.localtime(timezone.now()).date()
+    then = os.getenv("TODAY") or "2021-09-15"
+    if then == "now" or not ALLOW_FAKE_DATA:
+        return now
+    return date.fromisoformat(then)
 
 
 class VoterData(NamedTuple):
