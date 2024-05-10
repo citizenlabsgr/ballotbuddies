@@ -81,14 +81,16 @@ class Command(BaseCommand):
         test_voters = list(self.generate_test_voters())
 
         for count, voter in enumerate(real_voters, start=1):
-            _voter: Voter = random.choice(Voter.objects.all())
+            _voter: Voter = random.choice(
+                Voter.objects.filter(birth_date__isnull=False, zip_code__isnull=False)
+            )
             status = deepcopy(_voter.status)
             friend = self.get_or_create_voter(
                 f"friend+{count}@example.com",
                 voter.user.first_name + "'s",
                 "Friend",
-                str(_voter.birth_date or ""),
-                str(_voter.zip_code or ""),
+                str(_voter.birth_date),
+                str(_voter.zip_code),
                 status=status,
             )
             voter.friends.add(friend, *real_voters, *test_voters)
