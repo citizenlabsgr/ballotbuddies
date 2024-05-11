@@ -51,7 +51,8 @@
 		        <li class="nav-item">
 		            <a class="nav-link {% if request.path == about_url %} active {% endif %} text-nowrap"
                         href="{% url 'core:about' %}" hx-boost="true">
-						<i class="fa-solid fa-circle-info"></i> About <span class="d-md-none">This Site</span>
+						<i class="fa-solid fa-circle-info"></i>
+						About <span class="d-md-none">This Site</span>
 					</a>
 		        </li>
 				{% if debug or debug_nav %}
@@ -63,7 +64,7 @@
 						href="{% url 'alerts:index' %}"
 						{% endif %}>
 							<i class="fa-solid fa-gear"></i>
-							Debug
+							Debug <span class="d-md-none">Tools</span>
 					</a>
 		        </li>
 				{% endif %}
