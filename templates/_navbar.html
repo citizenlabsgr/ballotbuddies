@@ -54,7 +54,7 @@
 						<i class="fa-solid fa-circle-info"></i> About <span class="d-md-none">This Site</span>
 					</a>
 		        </li>
-				{% if debug %}
+				{% if debug or debug_nav %}
 				<li class="nav-item">
 		            <a class="nav-link {% if 'emails' in request.path %} active {% else %} text-danger {% endif %} text-nowrap"
 						{% if voter %}
