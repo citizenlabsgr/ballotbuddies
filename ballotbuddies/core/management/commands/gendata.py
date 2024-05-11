@@ -82,7 +82,9 @@ class Command(BaseCommand):
 
         for count, voter in enumerate(real_voters, start=1):
             _voter: Voter = random.choice(
-                Voter.objects.filter(birth_date__isnull=False, zip_code__isnull=False)
+                Voter.objects.filter(
+                    birth_date__isnull=False, zip_code__isnull=False
+                ).exclude(user__first_name="")
             )
             status = deepcopy(_voter.status)
             friend = self.get_or_create_voter(
