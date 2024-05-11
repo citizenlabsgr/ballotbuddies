@@ -43,7 +43,11 @@ def profile(request: HttpRequest):
             messages.info(request, cta.html)
 
     form = VoterForm(initial=voter.data, locked=True)
-    context = {"voter": voter, "form": form}
+    context = {
+        "debug_nav": settings.ALLOW_DEBUG,
+        "voter": voter,
+        "form": form,
+    }
     return render(request, "profile/detail.html", context)
 
 
