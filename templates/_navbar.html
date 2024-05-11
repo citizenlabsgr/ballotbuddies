@@ -56,14 +56,14 @@
 		        </li>
 				{% if debug or debug_nav %}
 				<li class="nav-item">
-		            <a class="nav-link {% if 'emails' in request.path %} active {% else %} text-danger {% endif %} text-nowrap"
+		            <a class="nav-link {% if 'debug' in request.path %} active {% else %} text-danger {% endif %} text-nowrap"
 						{% if voter %}
                         href="{% url 'alerts:detail' slug=voter.slug %}"
 						{% else %}
 						href="{% url 'alerts:index' %}"
 						{% endif %}>
-							<i class="fa-solid fa-envelope"></i>
-							Email Templates
+							<i class="fa-solid fa-gear"></i>
+							Debug
 					</a>
 		        </li>
 				{% endif %}

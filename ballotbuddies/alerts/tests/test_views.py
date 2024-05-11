@@ -19,7 +19,7 @@ def describe_index():
     def it_displays_emails(expect, client, voter: Voter):
         client.force_login(voter.user)
 
-        response = client.get("/emails/")
+        response = client.get("/debug/")
 
         html = response.content.decode()
         expect(html).contains("Join Firstname Lastname on Michigan Ballot Buddies")
@@ -30,7 +30,7 @@ def describe_detail():
     def it_displays_emails(expect, client, voter: Voter):
         client.force_login(voter.user)
 
-        response = client.get(f"/emails/{voter.slug}")
+        response = client.get(f"/debug/{voter.slug}")
 
         html = response.content.decode()
         expect(html).contains(voter.user.email)

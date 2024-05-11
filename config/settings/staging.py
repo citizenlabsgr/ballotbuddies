@@ -1,5 +1,7 @@
 # mypy: ignore-errors
 
+from django.contrib import messages
+
 import bugsnag
 
 from .production import *
@@ -22,6 +24,11 @@ ALLOWED_HOSTS += [".herokuapp.com", ".michiganelections.io"]
 # Authentication
 
 AUTH_PASSWORD_VALIDATORS = []
+
+###############################################################################
+# Bootstrap
+
+MESSAGE_LEVEL = messages.DEBUG
 
 ###############################################################################
 # Bugsnag

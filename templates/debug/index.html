@@ -2,9 +2,12 @@
 
 {% block main %}
 
-<h1>Email Templates</h1>
+<h1>Debug Tools</h1>
 
-<p>{{ profile|stringformat:'r' }} {{ today }}</p>
+<p><b>Voter:</b> {{ profile|stringformat:'r' }}</p>
+<p><b>Today:</b> {{ today }}</p>
+
+<h2>Email Templates</h2>
 
 {% for email in emails %}
 

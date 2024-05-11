@@ -40,4 +40,4 @@ def debug(request, slug=""):
         "today": constants.today().isoformat(),
         "emails": emails,
     }
-    return render(request, "debug/emails.html", context)
+    return render(request, "debug/index.html", context)

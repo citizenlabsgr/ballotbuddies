@@ -1,7 +1,6 @@
 # mypy: ignore-errors
 
 import os
-from datetime import date
 
 import bugsnag
 import dj_database_url
