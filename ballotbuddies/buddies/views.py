@@ -119,7 +119,7 @@ def friends(request: HttpRequest):
         "community": voter.community,
         "recommended": voter.neighbors.all(),
         "form": form,
-        "allow_debug": allow_debug(request),
+        "debug": allow_debug(request),
     }
     return render(request, "friends/index.html", context)
 
