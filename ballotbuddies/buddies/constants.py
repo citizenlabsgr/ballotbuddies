@@ -27,7 +27,7 @@ EARLY_VOTING_DAYS = 29  # minimum of 9 state-wide but communities can do more
 PAST_ELECTION_DAYS = -14  # number of days to show voter progress after an election
 
 
-ALLOW_FAKE_DATA = settings.DEBUG or hasattr(settings, "TEST")
+ALLOW_FAKE_DATA = settings.ALLOW_DEBUG or hasattr(settings, "TEST")
 
 
 def today() -> date:
