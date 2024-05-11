@@ -54,19 +54,22 @@
 						<i class="fa-solid fa-circle-info"></i> About <span class="d-md-none">This Site</span>
 					</a>
 		        </li>
-				{% if debug or allow_debug %}
+				{% if debug or debug_nav %}
 				<li class="nav-item">
 		            <a class="nav-link {% if 'emails' in request.path %} active {% else %} text-danger {% endif %} text-nowrap"
 						{% if voter %}
                         href="{% url 'alerts:detail' slug=voter.slug %}"
 						{% else %}
 						href="{% url 'alerts:index' %}"
-						{% endif %}>Email Templates</a>
+						{% endif %}>
+							<i class="fa-solid fa-envelope"></i>
+							Email Templates
+					</a>
 		        </li>
 				{% endif %}
 	        </ul>
 
-			{% if request.user.is_superuser or debug or allow_debug %}
+			{% if request.user.is_superuser or debug %}
 			<a class="btn btn-outline-danger me-2" href="{% url 'admin:index' %}">
 				Admin
 			</a>

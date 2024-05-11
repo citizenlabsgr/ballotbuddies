@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -42,7 +43,11 @@ def profile(request: HttpRequest):
             messages.info(request, cta.html)
 
     form = VoterForm(initial=voter.data, locked=True)
-    context = {"voter": voter, "form": form}
+    context = {
+        "debug_nav": settings.ALLOW_DEBUG,
+        "voter": voter,
+        "form": form,
+    }
     return render(request, "profile/detail.html", context)
 
 
@@ -119,7 +124,8 @@ def friends(request: HttpRequest):
         "community": voter.community,
         "recommended": voter.neighbors.all(),
         "form": form,
-        "allow_debug": allow_debug(request),
+        "debug": allow_debug(request),
+        "debug_nav": settings.ALLOW_DEBUG,
     }
     return render(request, "friends/index.html", context)
 
