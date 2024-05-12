@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -8,8 +7,6 @@ from django.shortcuts import redirect, render, resolve_url
 from django.utils import timezone
 
 import log
-
-from ballotbuddies.core.helpers import allow_debug
 
 from .forms import FriendsForm, VoterForm
 from .models import Voter
@@ -43,11 +40,7 @@ def profile(request: HttpRequest):
             messages.info(request, cta.html)
 
     form = VoterForm(initial=voter.data, locked=True)
-    context = {
-        "debug_nav": settings.ALLOW_DEBUG,
-        "voter": voter,
-        "form": form,
-    }
+    context = {"voter": voter, "form": form}
     return render(request, "profile/detail.html", context)
 
 
@@ -124,8 +117,6 @@ def friends(request: HttpRequest):
         "community": voter.community,
         "recommended": voter.neighbors.all(),
         "form": form,
-        "debug": allow_debug(request),
-        "debug_nav": settings.ALLOW_DEBUG,
     }
     return render(request, "friends/index.html", context)
 

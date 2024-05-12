@@ -104,10 +104,7 @@ def login(request: HttpRequest):
     else:
         form = LoginForm()
 
-    context = {
-        "form": form,
-        "debug": allow_debug(request),
-    }
+    context = {"form": form}
     return render(request, "login.html", context)
 
 
