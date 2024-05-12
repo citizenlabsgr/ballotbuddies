@@ -79,12 +79,12 @@
     {% if limit %}
     <i>No matching proposals.</i>
     {% else %}
-    <span class="text-muted {% if not q %}text-delayed{% endif %}"
+    <span class="text-muted text-delayed"
         hx-trigger="load delay:100ms"
         hx-get="{{ request.path }}?q={{ q }}&limit=20"
         hx-target="closest ol"
         hx-swap="outerHTML">
-        {% if q %}Searching{% else %}Loading{% endif %} {{ total }} proposals...
+        Loading {{ total }} proposals...
     </span>
     {% endif %}
 

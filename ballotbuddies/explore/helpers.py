@@ -31,7 +31,7 @@ async def get_proposals(
     items: list[dict] = []
 
     log.info(f"Getting proposals: {election_id=} {district_id=} {q=} {limit=}")
-    url = f"{API}/proposals/?active_election=null"
+    url = f"{API}/proposals/?active_election=null&q={q}"
     url += "&limit=1000" if limit else "&limit=1"
     if election_id:
         url += f"&election_id={election_id}"
@@ -43,13 +43,8 @@ async def get_proposals(
         while url:
             data = await _call(client, url)
             total = data["count"]
+            items.extend(data["results"])
             url = data["next"]
-            if q:
-                for item in data["results"]:
-                    if _match(q, item):
-                        items.append(item)
-            else:
-                items.extend(data["results"])
 
             if len(items) >= limit:
                 s = "" if len(items) == 1 else "s"
@@ -71,7 +66,7 @@ async def get_positions(
     items: list[dict] = []
 
     log.info(f"Getting {limit} positions: {election_id=} {district_id=} {q=} {limit=}")
-    url = f"{API}/positions/?active_election=null"
+    url = f"{API}/positions/?active_election=null&q={q}"
     url += "&limit=1000" if limit else "&limit=1"
     if election_id:
         url += f"&election_id={election_id}"
@@ -83,13 +78,8 @@ async def get_positions(
         while url:
             data = await _call(client, url)
             total = data["count"]
+            items.extend(data["results"])
             url = data["next"]
-            if q:
-                for item in data["results"]:
-                    if _match(q, item):
-                        items.append(item)
-            else:
-                items.extend(data["results"])
 
             if len(items) >= limit:
                 s = "" if len(items) == 1 else "s"
@@ -124,26 +114,3 @@ async def _call(client, url: str) -> dict:
         data = response.json()
         await caches["explore"].aset(url, data)
     return data
-
-
-def _match(query: str, item: dict) -> bool:
-    parts = query.strip("-").split(" -", 1)
-    inclusion_phrase = parts[0].strip().lower()
-    exclusion_phrase = parts[1].strip().lower() if len(parts) > 1 else ""
-
-    item_text = " ".join(
-        [
-            item["name"],
-            item["description"],
-            item["election"]["name"],
-            item["district"]["name"],
-        ]
-    ).lower()
-
-    if inclusion_phrase and inclusion_phrase not in item_text:
-        return False
-
-    if exclusion_phrase and exclusion_phrase in item_text:
-        return False
-
-    return True
