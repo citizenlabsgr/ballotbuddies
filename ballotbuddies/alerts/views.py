@@ -31,8 +31,10 @@ def debug(request, slug=""):
         helpers.get_login_email(user),
         helpers.get_invite_email(newbie.user, friend),
         helpers.get_invite_email(user, friend),
-        helpers.get_activity_email(newbie.user, profile=profile, message=message),
-        helpers.get_activity_email(user, message=message),
+        helpers.get_activity_email(
+            newbie.user, profile=profile, message=message, debug=True
+        ),
+        helpers.get_activity_email(user, message=message, debug=True),
         helpers.get_voted_email(user),
     ]
     context = {

@@ -78,7 +78,11 @@ def send_invite_email(user: User, friend: Voter, *, debug=False):
 
 
 def get_activity_email(
-    user: User, *, profile: Profile | None = None, message: Message | None = None
+    user: User,
+    *,
+    profile: Profile | None = None,
+    message: Message | None = None,
+    debug: bool = False,
 ):
     profile = profile or user.voter.profile
     assert profile
@@ -97,6 +101,9 @@ def get_activity_email(
     body = render_to_string("emails/activity.html", context)
     email = EmailMessage(str(message), body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
+    if voter.progress.election.days <= 0 and not debug:
+        log.critical(f"Attempted to email {voter} about past election: {context}")
+        return None
     return email
 
 
