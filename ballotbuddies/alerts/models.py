@@ -166,7 +166,7 @@ class Message(models.Model):
             self.save()
 
     def clear(self):
-        log.info(f"Clearing unset message to {self.profile}")
+        log.info(f"Clearing unset message: {self.profile}")
         self.activity = {}
         self.save()
 
