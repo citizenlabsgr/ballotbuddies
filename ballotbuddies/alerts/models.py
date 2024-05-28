@@ -99,7 +99,9 @@ class Profile(models.Model):
     def save(self, **kwargs):
         self.staleness = self._staleness()
         if self.pk:
-            self.will_alert = self.has_message and self.should_alert
+            self.will_alert = all(
+                (self.has_election, self.has_message, self.should_alert)
+            )
         super().save(**kwargs)
 
 
@@ -110,6 +112,9 @@ class MessageManager(models.Manager):
             message = self.create(profile=profile, sent=False)
             log.debug(f"Drafted new message: {message}")
         return message
+
+    def filter_unsent(self):
+        return self.filter(sent=False).exclude(activity={})
 
 
 class Message(models.Model):
@@ -122,7 +127,7 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     sent_at = models.DateTimeField(null=True, blank=True, editable=False)
 
-    objects = MessageManager()
+    objects: MessageManager = MessageManager()
 
     class Meta:
         ordering = ["-updated_at"]

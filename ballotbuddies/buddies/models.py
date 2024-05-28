@@ -81,6 +81,13 @@ class VoterManager(models.Manager):
         voter.save()
         return friends
 
+    def filter_progressed(self):
+        return self.filter(
+            models.Q(ballot__isnull=False)
+            | models.Q(ballot_returned__isnull=False)
+            | models.Q(voted__isnull=False)
+        )
+
 
 class Voter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -352,6 +359,7 @@ class Voter(models.Model):
         )
 
     def reset_status(self, *, absentee=None, ballot=None, status=None, promoter=None):
+        log.info(f"Resetting status for {self}")
         if absentee is not None:
             self.absentee = absentee
         self.ballot = ballot

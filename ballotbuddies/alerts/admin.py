@@ -60,20 +60,17 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
         "will_alert",
     ]
 
+    @admin.display(boolean=True)
     def Has_election(self, profile: Profile):
         return profile.has_election
 
-    Has_election.boolean = True  # type: ignore
-
+    @admin.display(boolean=True)
     def Has_message(self, profile: Profile):
         return profile.has_message
 
-    Has_message.boolean = True  # type: ignore
-
+    @admin.display(boolean=True)
     def Should_alert(self, profile: Profile):
         return profile.should_alert
-
-    Should_alert.boolean = True  # type: ignore
 
     readonly_fields = [
         "Has_election",
