@@ -392,13 +392,14 @@ class Voter(models.Model):
                 log.info(f"200 response: {election}")
                 date = to_date(election["date"])
                 if date < constants.today():
-                    message = "There are no upcoming elections at this time. Please check back later."
+                    message = "There are no upcoming elections at this time."
             else:
-                message = "Election information unavailable at this time. Please try again later."
+                message = "Election information unavailable at this time."
 
         if message:
             log.info(message.strip(".") + f": {self}")
-            return False, message
+            if self.status is not None:
+                return False, message
 
         log.info(f"GET {self.status_api}")
         response = requests.get(self.status_api, timeout=10)
