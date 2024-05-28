@@ -365,7 +365,8 @@ class Voter(models.Model):
         self.ballot = ballot
         self.ballot_returned = None
         self.voted = None
-        self.status = status
+        if status is not None:
+            self.status = status
         if promoter:
             self.promoter = promoter
         if not self.user.is_test:  # type: ignore
@@ -379,7 +380,7 @@ class Voter(models.Model):
             self.fetched = timezone.now()
             message = "Voter registration can only be fetched for Michigan."
         elif self.staleness < 60 * 15:
-            message = "Voter registration fetched recently."
+            message = "Voter registration has been fetched recently."
         elif self.user.is_test:  # type: ignore
             message = "Voter registration can only be fetched for real people."
         else:
@@ -391,9 +392,9 @@ class Voter(models.Model):
                 log.info(f"200 response: {election}")
                 date = to_date(election["date"])
                 if date < constants.today():
-                    message = "No upcoming elections."
+                    message = "There are oo upcoming elections at this time. Please check back later."
             else:
-                message = "Election information unavailable at this time."
+                message = "Election information unavailable at this time. Please try again later."
 
         if message:
             log.info(message.strip(".") + f": {self}")
