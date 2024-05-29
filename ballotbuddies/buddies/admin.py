@@ -50,7 +50,13 @@ class VoterAdmin(admin.ModelAdmin):
         "user__last_name",
     ]
 
-    list_filter = ["state", "absentee", "ballot_returned", "voted"]
+    list_filter = [
+        "state",
+        "absentee",
+        "ballot_updated",
+        "ballot_returned",
+        "voted",
+    ]
     list_display = [
         "display_name",
         "Percent",
