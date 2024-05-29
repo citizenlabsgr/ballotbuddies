@@ -84,6 +84,7 @@ class VoterManager(models.Manager):
     def filter_progressed(self):
         return self.filter(
             models.Q(ballot__isnull=False)
+            | models.Q(ballot_updated__isnull=False)
             | models.Q(ballot_returned__isnull=False)
             | models.Q(voted__isnull=False)
         )
@@ -105,6 +106,9 @@ class Voter(models.Model):
         default=True, help_text="Voter plans to vote by mail."
     )
     ballot = models.URLField(null=True, blank=True, max_length=2000)
+    ballot_updated = models.DateTimeField(
+        null=True, blank=True, help_text="Voter has filled out their sample ballot."
+    )
     ballot_returned = models.DateTimeField(
         null=True,
         blank=True,
@@ -363,6 +367,7 @@ class Voter(models.Model):
         if absentee is not None:
             self.absentee = absentee
         self.ballot = ballot
+        self.ballot_updated = None
         self.ballot_returned = None
         self.voted = None
         if status is not None:

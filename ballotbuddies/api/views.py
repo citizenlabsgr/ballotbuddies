@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 import log
 from rest_framework import serializers
@@ -59,5 +60,6 @@ def update_ballot(request):
 
     log.info(f"Updating {voter} ballot from {voter.ballot} to {ballot}")
     voter.ballot = ballot
+    voter.ballot_updated = timezone.now()
     voter.save()
     return Response({"message": "Successfully updated voter's ballot."})
