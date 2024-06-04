@@ -58,10 +58,11 @@
                 <form>{% csrf_token %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
                             hx-post="{% url 'buddies:status' slug=voter.slug %}"
-                            hx-vals='{ "reset": true }'
+                            hx-vals='{ "absentee": true }'
                             hx-trigger="click"
                             hx-target="closest table"
-                            hx-swap="outerHTML">
+                            hx-swap="outerHTML"
+                            hx-indicator="#spinner">
                         {% if voter.user == request.user %}
                         I'm voting absentee
                         {% else %}
@@ -76,7 +77,8 @@
                         hx-vals='{ "absentee": false }'
                         hx-trigger="click"
                         hx-target="closest table"
-                        hx-swap="outerHTML">
+                        hx-swap="outerHTML"
+                        hx-indicator="#spinner">
                         {% if voter.user == request.user %}
                         I'm voting in-person
                         {% else %}
@@ -115,7 +117,8 @@
                         hx-vals='{ "absentee": false }'
                         hx-trigger="click"
                         hx-target="closest table"
-                        hx-swap="outerHTML">
+                        hx-swap="outerHTML"
+                        hx-indicator="#spinner">
                         {% if voter.user == request.user %}
                         I'm voting in-person
                         {% else %}
@@ -201,7 +204,8 @@
                             hx-vals='{ "mailed": true }'
                             hx-trigger="click"
                             hx-target="closest table"
-                            hx-swap="outerHTML">
+                            hx-swap="outerHTML"
+                            hx-indicator="#spinner">
                         {% if voter.user == request.user %}
                         ✓ &nbsp I returned it
                         {% else %}
@@ -266,7 +270,8 @@
                                 hx-vals='{ "reset": true }'
                                 hx-trigger="click"
                                 hx-target="closest table"
-                                hx-swap="outerHTML">
+                                hx-swap="outerHTML"
+                                hx-indicator="#spinner">
                                 {% if voter.user == request.user %}
                                 ✕ &nbsp I didn't vote
                                 {% else %}
@@ -285,7 +290,8 @@
                                 hx-vals='{ "voted": true }'
                                 hx-trigger="click"
                                 hx-target="closest table"
-                                hx-swap="outerHTML">
+                                hx-swap="outerHTML"
+                                hx-indicator="#spinner">
                                 {% if voter.user == request.user %}
                                 ✓ &nbsp I voted in-person
                                 {% else %}

@@ -39,8 +39,12 @@
     document.addEventListener("DOMContentLoaded", checkEmailInUrlAndRedirect);
 </script>
 
-
-<h1>{% firstof voter.short_name "Friend" %}'s Profile</h1>
+<h1 class="d-flex align-items-center justify-content-between">
+    <span>{% firstof voter.short_name "Friend" %}'s Profile</span>
+    <span id="spinner" class="spinner-border text-secondary fs-5 htmx-indicator" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </span>
+</h1>
 
 <div class="btn-group">
     <button class="btn btn-{% if voter.progress.actions %}primary{% else %}secondary{% endif %}" onclick="redirectToEmail()">
@@ -94,7 +98,8 @@
 <div
     hx-get="{% url 'buddies:status' slug=voter.slug %}"
     hx-trigger="load delay:1s"
-    hx-swap="outerHTML">
+    hx-swap="outerHTML"
+    hx-indicator="#spinner">
     {% include "profile/_table.html" %}
 </div>
 

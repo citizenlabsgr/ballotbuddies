@@ -232,9 +232,8 @@ def status(request: HttpRequest, slug: str):
         voter.profile.alert(request.user.voter)
 
     if "absentee" in request.POST:
-        log.info(f"Recording in-person intention: {voter}")
-        assert request.POST["absentee"] == "false"
-        voter.absentee = False
+        log.info(f"Recording absentee intention: {voter}")
+        voter.absentee = request.POST["absentee"] == "true"
         voter.promoter = request.user.voter
         voter.save()
         render_as_table = True
