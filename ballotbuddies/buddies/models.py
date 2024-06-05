@@ -403,7 +403,7 @@ class Voter(models.Model):
 
         if message:
             log.info(message.strip(".") + f": {self}")
-            if self.status is not None:
+            if self.updated is not None:
                 return False, message
 
         log.info(f"GET {self.status_api}")

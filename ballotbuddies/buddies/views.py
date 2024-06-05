@@ -30,10 +30,10 @@ def profile(request: HttpRequest):
         return redirect("buddies:profile")
 
     if voter.complete and not voter.updated:
-        _updated, error = voter.update_status()
+        _updated, message = voter.update_status()
         voter.save()
-        if error:
-            messages.error(request, error)
+        if message:
+            messages.error(request, message)
 
     if not messages.get_messages(request):
         for cta in voter.profile_cta:
