@@ -11,7 +11,7 @@ async_render = sync_to_async(render)
 
 def index(request: HttpRequest):
     if request.GET.get("referrer") and request.user.is_authenticated:
-        return redirect("core:index")
+        return redirect("buddies:profile")
     return redirect("explore:elections")
 
 
