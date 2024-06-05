@@ -271,6 +271,9 @@ class Progress:
 
         if absentee := status.get("absentee"):
             progress.absentee_requested.check()
+        elif absentee is None:
+            progress.absentee_requested.icon = "−"
+            progress.absentee_requested.color = "success text-muted"
         else:
             progress.absentee_requested.icon = "🚫"
             progress.absentee_requested.url = constants.ABSENTEE_URL
