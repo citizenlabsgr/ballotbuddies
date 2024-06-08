@@ -33,6 +33,7 @@ def index(request: HttpRequest):
     context = {
         "preview": True,
         "community": sorted(generate_sample_voters(referrer)),
+        "friend": Voter.objects.filter(slug=referrer).first(),
     }
     return render(request, "friends/index.html", context)
 

@@ -6,6 +6,12 @@
     to remind voters to update their registration and encourage them to vote by mail.
 </p>
 
+{% if friend %}
+<p>
+    Join your friend <b>{{ friend }}</b> to promote civic engagement!
+</p>
+{% endif %}
+
 <div class="text-center pt-2">
     {% if request.user.is_authenticated %}
 
@@ -24,6 +30,7 @@
         </a>
 
     {% else %}
+
         <a class="btn btn-primary" href="{% url 'core:join' %}">
             <i class="fa-solid fa-right-to-bracket"></i> Get Started
         </a>
@@ -31,5 +38,6 @@
         <a class="btn btn-outline-secondary" href="{% url 'explore:index' %}">
             <i class="fa-solid fa-layer-group"></i> Explore Ballots
         </a>
+
     {% endif %}
 </div>
