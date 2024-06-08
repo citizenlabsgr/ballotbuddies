@@ -166,13 +166,13 @@ css = ["tinycss2 (>=1.1.0,<1.3)"]
 
 [[package]]
 name = "bugsnag"
-version = "4.1.1"
+version = "4.7.1"
 description = "Automatic error monitoring for django, flask, etc."
 optional = false
-python-versions = ">=3.5, <4"
+python-versions = "<4,>=3.5"
 files = [
-    {file = "bugsnag-4.1.1-py3-none-any.whl", hash = "sha256:03a3c39549fa248842a53b6d195fa3d64f5906aff4e2eeba98aadd033e1da968"},
-    {file = "bugsnag-4.1.1.tar.gz", hash = "sha256:cdbdb3e02ef0c0655bb55be8b05ec1cb830b5ec629923ccb24bfd71dede3d1c3"},
+    {file = "bugsnag-4.7.1-py3-none-any.whl", hash = "sha256:4537ff3c200890d26e28079e31729c041a9ffe84a803860ea8adefe535aac7df"},
+    {file = "bugsnag-4.7.1.tar.gz", hash = "sha256:98408fe17d4a7f300a56535407a6448b9844d9b528c44527908868fc3646e873"},
 ]
 
 [package.dependencies]
@@ -2537,4 +2537,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.6"
-content-hash = "961076235ff9ab9cb7e4a5007c334fcf83867e1ee5f4ad4c6e6eed683abb0cdf"
+content-hash = "4578b32276ec1adb56a5f4a249243e9e81c49f4d170afd06f3b7dbb550463876"

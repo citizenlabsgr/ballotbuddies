@@ -1,3 +1,5 @@
+import time
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -211,6 +213,7 @@ def status(request: HttpRequest, slug: str):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.get(slug=slug)
     render_as_table = request.method == "GET"
+    start = time.time()
 
     if "ignore" in request.POST:
         log.info(f"Unfollowing voter: {voter}")
@@ -263,6 +266,8 @@ def status(request: HttpRequest, slug: str):
 
     if render_as_table:
         template_name = "profile/_table.html"
+        while time.time() - start < 1.0:
+            time.sleep(0.1)
     else:
         template_name = "friends/_row.html"
     context = {"voter": voter, "recommended": []}
