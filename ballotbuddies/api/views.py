@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 import log
+from furl import furl
 from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -21,6 +22,11 @@ class VoterSerializer(serializers.Serializer):
 class BallotSerializer(serializers.Serializer):
     voter = serializers.CharField(max_length=200)
     url = serializers.URLField()
+
+    def validate_url(self, value):
+        parts = furl(value)
+        parts.remove(query=["name", "slug"])
+        return parts.url.replace("%2C", ",")
 
 
 @api_view(["POST"])
@@ -58,7 +64,7 @@ def update_ballot(request):
     ballot = serializer.validated_data["url"]
     voter: Voter = get_object_or_404(Voter, slug=slug)
 
-    log.info(f"Updating {voter} ballot from {voter.ballot} to {ballot}")
+    log.info(f"Updating {voter}'s ballot from {voter.ballot} to {ballot}")
     voter.ballot = ballot
     voter.ballot_updated = timezone.now()
     voter.save()

@@ -46,6 +46,7 @@ requests = "^2.26"
 ua-parser = "*" # optional 'django-sesame' dependency to detect Safari
 zipcodes = "^1.2.0"
 us = "^2.0.2"
+furl = "^2.1.3"
 
 [tool.poetry.dev-dependencies]
 

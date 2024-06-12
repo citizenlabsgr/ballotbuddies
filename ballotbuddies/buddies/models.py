@@ -16,6 +16,7 @@ import log
 import requests
 import us
 import zipcodes
+from furl import furl
 
 from ballotbuddies.alerts.helpers import send_invite_email, send_voted_email
 from ballotbuddies.core.helpers import generate_key
@@ -235,7 +236,7 @@ class Voter(models.Model):
         if not self.ballot and self.ballot_url:
             yield Message(
                 "Fill out your sample ballot",
-                self.ballot_url.split("?")[0],
+                furl(self.ballot_url).remove(query=True).url,
                 self.ballot_url,
             )
 
@@ -274,11 +275,12 @@ class Voter(models.Model):
 
     @cached_property
     def ballot_url(self) -> str:
-        url = self.ballot or self.progress.ballot_available.url
-        if url:
-            joiner = "&" if "?" in url else "?"
-            url += f"{joiner}name={self.short_name or 'Friend'}&slug={self.slug}"
-        return url
+        if url := (self.ballot or self.progress.ballot_available.url):
+            parts = furl(url)
+            parts.args["name"] = self.short_name or "Friend"
+            parts.args["slug"] = self.slug
+            return parts.url
+        return ""
 
     @cached_property
     def ballot_items(self) -> int:
@@ -497,6 +499,7 @@ class Voter(models.Model):
 
     def save(self, **kwargs):
         if self.ballot:
+            # TODO: Remove this after 6/20 and not more occurrences
             assert "slug" not in self.ballot, f"Invalid ballot: {self.ballot}"
         if self.user.get_full_name().islower():
             self.user.first_name = self.user.first_name.capitalize()
