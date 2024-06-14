@@ -89,6 +89,7 @@
         });
     });
 
+    {% if not debug %}
     // Service Worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
@@ -97,6 +98,7 @@
                 console.error('Service worker registration failed:', error);
             });
     }
+    {% endif %}
 
     </script>
 
