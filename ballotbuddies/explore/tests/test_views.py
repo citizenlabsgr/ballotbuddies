@@ -5,7 +5,7 @@ def describe_index():
     def it_redirects_to_proposals(expect, client):
         response = client.get("/explore/")
         expect(response.status_code) == 302
-        expect(response.url) == "/explore/elections/"
+        expect(response.url).contains("proposals")
 
 
 def describe_proposals():

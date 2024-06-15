@@ -9,9 +9,12 @@ from . import constants, helpers
 async_render = sync_to_async(render)
 
 
-def index(request: HttpRequest):
+async def index(request: HttpRequest):
     if request.GET.get("referrer") and request.user.is_authenticated:
         return redirect("buddies:profile")
+    total, elections = await helpers.get_elections()
+    if total and elections[0]["active"]:
+        return redirect("explore:proposals-election", election_id=elections[0]["id"])
     return redirect("explore:elections")
 
 
