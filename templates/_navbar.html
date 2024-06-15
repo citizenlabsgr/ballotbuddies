@@ -7,85 +7,87 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
 
-	    <a class="navbar-brand" href="{% url 'core:index' %}" hx-boost="true">
-			Ballot Buddies
-		</a>
+        <a class="navbar-brand" href="{% url 'core:index' %}" hx-boost="true">
+            Ballot Buddies
+        </a>
 
-		<div class="navbar-nav d-flex flex-row gap-3 gap-sm-1">
+        <div class="navbar-nav d-flex flex-row gap-3 gap-sm-1">
 
-			<a class="nav-link {% if request.path == friends_url or request.path == search_url %} active {% endif %} text-nowrap"
-				href="{% url 'buddies:friends' %}" hx-boost="true">
-				<span class="fa-layers fa-fw">
-					<i class="fa-solid fa-list"></i>
-					{% if user.voter.neighbors.exists %}
-					<span class="fa-layers-counter" style="background:Tomato; font-size: 24px;">
-						{{ user.voter.neighbors.count }}
-					</span>
-					{% endif %}
-				</span>
-				<span class="d-none d-sm-inline">Friends</span>
-			</a>
+            <a class="nav-link {% if request.path == friends_url or request.path == search_url %} active {% endif %} text-nowrap"
+                href="{% url 'buddies:friends' %}" hx-boost="true">
+                <span class="fa-layers fa-fw">
+                    <i class="fa-solid fa-list"></i>
+                    {% if user.voter.neighbors.exists %}
+                    <span class="fa-layers-counter" style="background:Tomato; font-size: 24px;">
+                        {{ user.voter.neighbors.count }}
+                    </span>
+                    {% endif %}
+                </span>
+                <span class="d-none d-sm-inline">Friends</span>
+            </a>
 
-			<a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-md-0 text-nowrap"
-				href="{% url 'buddies:profile' %}" hx-boost="true">
-				<i class="fa-solid fa-user"></i> <span class="d-none d-sm-inline">Profile</span>
-			</a>
+            <a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-md-0 text-nowrap"
+                href="{% url 'buddies:profile' %}" hx-boost="true">
+                <i class="fa-solid fa-user"></i> <span class="d-none d-sm-inline">Profile</span>
+            </a>
 
-			<a class="nav-link {% if 'explore' in request.path %} active {% endif %} ms-3 ms-md-0 text-nowrap"
-				href="{% url 'explore:index' %}" hx-boost="true">
-				<i class="fa-solid fa-layer-group"></i> <span class="d-none d-sm-inline">Explore</span>
-			</a>
-
-		</div>
+        </div>
 
         <button class="navbar-toggler" type="button"
-			data-bs-toggle="collapse" data-bs-target="#navbar-content"
-			aria-controls="navbar-content" aria-expanded="false"
-			aria-label="Toggle navigation">
+            data-bs-toggle="collapse" data-bs-target="#navbar-content"
+            aria-controls="navbar-content" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-	    <div class="collapse navbar-collapse" id="navbar-content">
+        <div class="collapse navbar-collapse" id="navbar-content">
 
-	        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-		        <li class="nav-item">
-		            <a class="nav-link {% if request.path == about_url %} active {% endif %} text-nowrap"
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == about_url %} active {% endif %} text-nowrap"
                         href="{% url 'core:about' %}" hx-boost="true">
-						<i class="fa-solid fa-circle-info"></i>
-						About <span class="d-md-none">This Site</span>
-					</a>
-		        </li>
-				{% if debug or debug_nav %}
-				<li class="nav-item">
-		            <a class="nav-link {% if 'debug' in request.path %} active {% else %} text-danger {% endif %} text-nowrap"
-						{% if voter %}
+                        <i class="fa-solid fa-circle-info"></i>
+                        About <span class="d-md-none">This Site</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'explore' in request.path %} active {% endif %} text-nowrap"
+                        href="{% url 'explore:index' %}" hx-boost="true">
+                        <i class="fa-solid fa-layer-group"></i>
+                        Explore <span class="d-md-none">Ballots</span>
+                    </a>
+                </li>
+                {% if debug or debug_nav %}
+                <li class="nav-item">
+                    <a class="nav-link {% if 'debug' in request.path %} active {% else %} text-danger {% endif %} text-nowrap"
+                        {% if voter %}
                         href="{% url 'alerts:detail' slug=voter.slug %}"
-						{% else %}
-						href="{% url 'alerts:index' %}"
-						{% endif %}>
-							<i class="fa-solid fa-gear"></i>
-							Debug <span class="d-md-none">Tools</span>
-					</a>
-		        </li>
-				{% endif %}
-	        </ul>
+                        {% else %}
+                        href="{% url 'alerts:index' %}"
+                        {% endif %}>
+                            <i class="fa-solid fa-gear"></i>
+                            Debug <span class="d-md-none">Tools</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
 
-			{% if request.user.is_superuser or debug %}
-			<a class="btn btn-outline-danger me-2" href="{% url 'admin:index' %}">
-				Admin
-			</a>
-			{% endif %}
+            {% if request.user.is_superuser or debug %}
+            <a class="btn btn-outline-danger me-2" href="{% url 'admin:index' %}">
+                Admin
+            </a>
+            {% endif %}
 
             {% if request.user.is_authenticated %}
             <a class="btn btn-outline-secondary text-nowrap" href="{% url 'core:logout' %}">
-				Log out
-			</a>
+                Log out
+            </a>
             {% elif request.path != login_url %}
             <a class="btn btn-outline-secondary text-nowrap" href="{% url 'core:login' %}">
-				Log in
-			</a>
+                Log in
+            </a>
             {% endif %}
 
-	    </div>
+        </div>
     </div>
 </nav>

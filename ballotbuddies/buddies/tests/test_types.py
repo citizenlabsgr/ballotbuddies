@@ -4,7 +4,6 @@ from dataclasses import asdict
 
 import pytest
 
-from .. import constants
 from ..constants import SAMPLE_DATA
 from ..types import Progress, to_ordinal
 
