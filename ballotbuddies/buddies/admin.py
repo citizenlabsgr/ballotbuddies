@@ -85,6 +85,7 @@ class VoterAdmin(admin.ModelAdmin):
 
     readonly_fields = [
         "Status",
+        "activity",
         "Percent",
         "Actions",
         "fetched",
