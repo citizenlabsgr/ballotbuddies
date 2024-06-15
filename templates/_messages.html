@@ -2,7 +2,7 @@
     <div class="col-lg-8 col-12">
         {% for message in messages %}
 
-        <div class="alert {{ message.tags }} alert-dismissible mt-3" role="alert">
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>

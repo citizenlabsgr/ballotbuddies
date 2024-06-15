@@ -217,7 +217,7 @@ class Voter(models.Model):
         if not self.progress.registered:
             yield Message(
                 "Confirm your voter information matches the SOS",
-                "https://mvic.sos.state.mi.us",
+                "View Registration",
                 constants.MICHIGAN_REGISTRATION_URL,
             )
         if not self.progress.actions:
@@ -230,13 +230,13 @@ class Voter(models.Model):
         if self.absentee and not self.progress.absentee_requested:
             yield Message(
                 "Request your absentee ballot",
-                constants.ABSENTEE_URL,
+                "View Instructions",
                 constants.ABSENTEE_URL,
             )
         if not self.ballot and self.ballot_url:
             yield Message(
-                "Fill out your sample ballot",
-                furl(self.ballot_url).remove(query=True).url,
+                "Your sample ballot is ready",
+                "View Ballot",
                 self.ballot_url,
             )
 

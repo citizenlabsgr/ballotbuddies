@@ -39,7 +39,7 @@ def profile(request: HttpRequest):
 
     if not messages.get_messages(request):
         for cta in voter.profile_cta:
-            messages.info(request, cta.html)
+            messages.warning(request, cta.html)
 
     form = VoterForm(initial=voter.data, locked=True)
     context = {"voter": voter, "form": form}

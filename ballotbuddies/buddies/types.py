@@ -401,5 +401,8 @@ class Message:
     @property
     def html(self) -> str:
         if self.label and self.url:
-            return format_html('{text}: <a href="{url}">{label}</a>', **self.data)
+            return format_html(
+                '{text}: <a href="{url}" class="text-decoration-none">{label}</a>',
+                **self.data,
+            )
         return format_html("{text}", **self.data)
