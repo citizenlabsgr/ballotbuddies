@@ -43,7 +43,9 @@
         <ul>
             {% for candidate in position.candidates %}
             <li>
-                {{ candidate.name }}
+                <span class="position-text">
+                    {{ candidate.name }}
+                </span>
                 <span>
                     (<span style="color: {{ candidate.party.color }};">⬤</span>
                     {{ candidate.party.name }})

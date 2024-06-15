@@ -5,7 +5,9 @@ from django.core.cache import caches
 import httpx
 import log
 
-API = "https://michiganelections.io/api"
+from ballotbuddies.buddies.constants import ELECTIONS_HOST
+
+API = f"{ELECTIONS_HOST}/api"
 
 cache = caches["explore"]
 
