@@ -67,6 +67,7 @@ def update_ballot(request):
     log.info(f"Updating {voter}'s ballot from {voter.ballot} to {ballot}")
     voter.ballot = ballot
     voter.ballot_updated = timezone.now()
+    voter.updated = timezone.now()
     voter.save()
     voter.share_status()
     return Response({"message": "Successfully updated voter's ballot."})

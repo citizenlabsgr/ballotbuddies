@@ -238,6 +238,7 @@ def status(request: HttpRequest, slug: str):
         log.info(f"Recording absentee intention: {voter}")
         voter.absentee = request.POST["absentee"] == "true"
         voter.promoter = request.user.voter
+        voter.updated = timezone.now()
         voter.save()
         render_as_table = True
 
@@ -245,6 +246,7 @@ def status(request: HttpRequest, slug: str):
         log.info(f"Recording returned ballot: {voter}")
         voter.ballot_returned = timezone.now()
         voter.promoter = request.user.voter
+        voter.updated = timezone.now()
         voter.save()
         render_as_table = True
 
@@ -252,6 +254,7 @@ def status(request: HttpRequest, slug: str):
         log.info(f"Recording vote: {voter}")
         voter.voted = timezone.now()
         voter.promoter = request.user.voter
+        voter.updated = timezone.now()
         voter.save()
         render_as_table = True
 
