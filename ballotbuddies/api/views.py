@@ -63,11 +63,14 @@ def update_ballot(request):
     slug = serializer.validated_data["voter"]
     ballot = serializer.validated_data["url"]
     voter: Voter = get_object_or_404(Voter, slug=slug)
+    previous_ballot = voter.ballot
 
-    log.info(f"Updating {voter}'s ballot from {voter.ballot} to {ballot}")
+    log.info(f"Updating {voter}'s ballot from {previous_ballot} to {ballot}")
     voter.ballot = ballot
     voter.ballot_updated = timezone.now()
     voter.updated = timezone.now()
     voter.save()
-    voter.share_status()
+    if previous_ballot is None:
+        voter.share_status()
+
     return Response({"message": "Successfully updated voter's ballot."})
