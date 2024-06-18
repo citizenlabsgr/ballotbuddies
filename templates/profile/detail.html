@@ -52,6 +52,8 @@
 
 <h2 class="mt-5">Voter Information</h2>
 
+<div class="mb-4">
+
 {{ form|crispy }}
 
 <a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">
@@ -74,5 +76,7 @@
 <a class="btn btn-outline-danger" href="{% url 'buddies:delete' %}">
     <i class="fa-solid fa-trash"></i> Delete Account...
 </a>
+
+</div>
 
 {% endblock main %}
