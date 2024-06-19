@@ -42,7 +42,7 @@
 </script>
 
 <h1 class="d-flex align-items-center justify-content-between">
-    <span>{% firstof voter.short_name "Friend" %}'s Profile</span>
+    <span>{% firstof voter "Friend" %}'s Profile</span>
     <span id="spinner" class="spinner-border text-secondary fs-5 htmx-indicator" role="status">
         <span class="visually-hidden">Loading...</span>
     </span>
