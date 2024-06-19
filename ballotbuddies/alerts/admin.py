@@ -33,7 +33,7 @@ def alert_selected_profiles(modeladmin, request, queryset):
 
 @admin.register(Profile)
 class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
-    default_query = "will_alert__exact=1"
+    default_query = "never_alert__exact=0"
 
     search_fields = [
         "voter__nickname",
@@ -51,12 +51,11 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
     ]
     list_display = [
         "voter",
+        "last_viewed",
         "Has_election",
         "Has_message",
-        "last_viewed",
-        "last_alerted",
-        "staleness",
         "Should_alert",
+        "staleness",
         "will_alert",
     ]
 

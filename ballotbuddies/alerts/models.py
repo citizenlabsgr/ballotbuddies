@@ -27,7 +27,7 @@ class Profile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["-staleness"]
+        ordering = ["-last_viewed"]
 
     def __str__(self):
         return str(self.voter)
