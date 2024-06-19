@@ -133,7 +133,7 @@ def friends_search(request: HttpRequest):
     voted = request.GET.get("voted") != "no"
 
     queryset = voter.friends.filter(
-        Q(state="Michigan") | Q(zip_code="99999")
+        Q(state="Michigan") | Q(zip_code="99999") | Q(zip_code="")
     ).select_related("user")
     if "q" in request.GET:
         partial = True
