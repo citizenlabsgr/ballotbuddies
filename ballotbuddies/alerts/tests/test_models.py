@@ -34,7 +34,7 @@ def describe_profile():
     def it_can_mark_viewed(expect, profile: Profile):
         profile.mark_viewed()
 
-        expect(profile.staleness) == timedelta(0)
+        expect(profile.staleness) < timedelta(seconds=1)
         expect(profile.has_message) == False
         expect(profile.should_alert) == False
 

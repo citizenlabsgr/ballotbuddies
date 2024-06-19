@@ -93,8 +93,7 @@ class Profile(models.Model):
         now = timezone.now()
         self.last_alerted = self.last_alerted or now
         self.last_viewed = self.last_viewed or now
-        delta = min(now - self.last_alerted, now - self.last_viewed)
-        return timedelta(days=delta.days)
+        return min(now - self.last_alerted, now - self.last_viewed)
 
     def save(self, **kwargs):
         self.staleness = self._staleness()
