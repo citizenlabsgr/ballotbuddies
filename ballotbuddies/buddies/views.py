@@ -147,9 +147,8 @@ def friends_search(request: HttpRequest):
         queryset = queryset.filter(voted__isnull=True)
 
     log.info(f"Found {queryset.count()} friend(s) for {partial=} {ballot=} {voted=}")
-    community = sorted(queryset, key=lambda voter: voter.display_name.lower())
     context = {
-        "community": community,
+        "community": sorted(queryset, reverse=True),
         "recommended": [],
         "search": True,
         "ballot": ballot,
