@@ -32,6 +32,7 @@ def complete_voter(voter: Voter):
 def friend(voter: Voter):
     user = User.objects.create_user(username="username", password="password")
     voter2 = Voter.objects.from_user(user, VOTED.status)
+    voter2.zip_code = "99999"
     voter2.nickname = "Friendo"
     voter2.save()
     voter.friends.add(voter2)
