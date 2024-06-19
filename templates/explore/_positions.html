@@ -25,7 +25,7 @@
         hx-target="closest ol"
         hx-swap="outerHTML">
     {% else %}
-    </li>
+    <li>
     {% endif %}
 
         <b class="position-text">{{ position.name }}</b>
@@ -100,13 +100,20 @@
 
     {% if limit %}
     <i>No matching positions.</i>
-    {% else %}
+    {% elif total %}
     <span class="text-muted text-delayed"
         hx-trigger="load delay:100ms"
         hx-get="{{ request.path }}?q={{ q }}&limit=20"
         hx-target="closest ol"
         hx-swap="outerHTML">
         Loading {{ total }} positions...
+    </span>
+    {% else %}
+    <span class="text-muted text-delayed"
+        hx-trigger="load delay:100ms"
+        hx-get="{{ request.path }}?q={{ q }}"
+        hx-target="body"
+        hx-swap="outerHTML">
     </span>
     {% endif %}
 
