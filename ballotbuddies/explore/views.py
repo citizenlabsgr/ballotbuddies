@@ -62,7 +62,7 @@ async def _filter_proposals(
     else:
         district = None
 
-    if limit or request.htmx:  # type: ignore[attr-defined]
+    if limit or request.htmx and not request.htmx.boosted:  # type: ignore[attr-defined]
         total, proposals = await helpers.get_proposals(
             q, limit, election_id=election_id, district_id=district_id
         )
@@ -132,13 +132,15 @@ async def _filter_positions(
     else:
         district = None
 
-    if limit or request.htmx:  # type: ignore[attr-defined]
+    if limit or request.htmx and not request.htmx.boosted:  # type: ignore[attr-defined]
+        results = True
         total, positions = await helpers.get_positions(
             q, limit, election_id=election_id, district_id=district_id
         )
         if positions and not banner:
             banner = f"election_id={positions[0]['election']['id']}"
     else:
+        results = False
         total = 0
         positions = []
 
@@ -147,6 +149,7 @@ async def _filter_positions(
         "election": election,
         "district": district,
         "positions": positions[:limit],
+        "results": results,
         "total": total,
         "count": len(positions),
         "limit": limit,

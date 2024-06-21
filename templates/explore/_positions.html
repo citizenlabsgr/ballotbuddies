@@ -100,12 +100,13 @@
 
     {% if limit %}
     <i>No matching positions.</i>
-    {% elif total %}
+    {% elif results %}
     <span class="text-muted text-delayed"
         hx-trigger="load delay:100ms"
         hx-get="{{ request.path }}?q={{ q }}&limit=20"
         hx-target="closest ol"
         hx-swap="outerHTML">
+        <div class="spinner-border spinner-border-sm mx-2" role="status"></div>
         Loading {{ total }} positions...
     </span>
     {% else %}
@@ -114,6 +115,9 @@
         hx-get="{{ request.path }}?q={{ q }}"
         hx-target="body"
         hx-swap="outerHTML">
+        <div class="spinner-border spinner-border-sm mx-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </span>
     {% endif %}
 
