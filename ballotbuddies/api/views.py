@@ -25,7 +25,7 @@ class BallotSerializer(serializers.Serializer):
 
     def validate_url(self, value):
         parts = furl(value)
-        parts.remove(query=["name", "slug"])
+        parts.remove(query=["name", "share", "slug"])
         return parts.url.replace("%2C", ",")
 
 
