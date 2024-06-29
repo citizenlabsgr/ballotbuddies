@@ -154,8 +154,12 @@ test-system: install
 run: .envrc install migrate ## Run the applicaiton
 	$(RUN) python manage.py runserver $${PORT:-8000}
 
-.PHONY: run-production
-run-production: .envrc install
+.PHONY: run/preview
+run/preview: .envrc install
+	heroku local --procfile=Procfile.dev
+
+.PHONY: run/production
+run/production: .envrc install
 	poetry run python manage.py collectstatic --no-input
 	poetry run heroku local release
 	HEROKU_APP_NAME=local poetry run heroku local web --port=$${PORT:-8000}
