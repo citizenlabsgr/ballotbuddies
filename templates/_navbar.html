@@ -7,7 +7,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
 
-        <a class="navbar-brand" href="{% url 'core:index' %}" hx-boost="true">
+        <a class="navbar-brand {% if staging %}text-danger{% endif %}" href="{% url 'core:index' %}" hx-boost="true">
             Ballot Buddies
         </a>
 
