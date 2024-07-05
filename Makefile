@@ -150,13 +150,15 @@ test-system: install
 
 # SERVER TARGETS ##############################################################
 
+HONCHO := .venv/bin/honcho
+
 .PHONY: run
 run: .envrc install migrate ## Run the applicaiton
 	$(RUN) python manage.py runserver $${PORT:-8000}
 
 .PHONY: run/preview
 run/preview: .envrc install
-	heroku local --procfile=Procfile.dev
+	$(HONCHO) start --procfile=Procfile.dev
 
 .PHONY: run/production
 run/production: .envrc install
