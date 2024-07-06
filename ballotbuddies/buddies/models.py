@@ -443,10 +443,11 @@ class Voter(models.Model):
 
     def share_status(self) -> int:
         count = 0
-        for voter in self.friends.all():
+        voter: Voter
+        for voter in self.friends.select_related("profile"):
             if voter.profile.alert(self):
                 count += 1
-        for voter in self.neighbors.all():
+        for voter in self.neighbors.select_related("profile"):
             if voter.profile.alert(self, voter.friends.filter(pk=self.pk).exists()):
                 count += 1
         return count
