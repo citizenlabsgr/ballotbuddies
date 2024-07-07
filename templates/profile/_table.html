@@ -162,13 +162,40 @@
             <td class="text-center table-{{ voter.progress.ballot_completed.color }}">
                 {% if voter.ballot_url %}
                 <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}" class="text-decoration-none">
-                    View Ballot
+                    {% if request.user == request.voter and voter.progress.ballot_completed %}
+                    Edit
+                    {% else %}
+                    View
+                    {% endif %}
+                    Ballot
                 </a>
                 {% endif %}
             </td>
 
             <td class="text-center border-start {% if voter.progress.ballot_completed %} text-muted {% endif %}">
                 {{ voter.progress.ballot_completed.deadline_humanized }}
+            </td>
+        </tr>
+
+        <tr class="align-middle">
+            <th scope="row">
+                Sample Ballot Shared
+            </th>
+
+            <td class="text-center table-{{ voter.progress.ballot_shared.color }} border-start">
+                {{ voter.progress.ballot_shared }}
+            </td>
+
+            <td class="text-center table-{{ voter.progress.ballot_shared.color }}">
+                {% if request.user == voter.user and voter.progress.ballot_completed %}
+                <a href="{{ voter.ballot_url }}&share=" class="text-decoration-none">
+                    Share Ballot
+                </a>
+                {% endif %}
+            </td>
+
+            <td class="text-center border-start {% if voter.progress.ballot_shared %} text-muted {% endif %}">
+                {{ voter.progress.ballot_shared.deadline_humanized }}
             </td>
         </tr>
 

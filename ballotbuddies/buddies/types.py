@@ -142,6 +142,7 @@ class Progress:
     absentee_received: State = field(default_factory=State)
     ballot_available: State = field(default_factory=State)
     ballot_completed: State = field(default_factory=State)
+    ballot_shared: State = field(default_factory=State)
     ballot_sent: State = field(default_factory=State)
     ballot_returned: State = field(default_factory=State)
     ballot_received: State = field(default_factory=State)
@@ -160,6 +161,8 @@ class Progress:
             self.ballot_received.value,
             self.ballot_returned.value,
             self.ballot_completed.value,
+            # TODO: Track sharing
+            # self.ballot_shared.value,
             self.ballot_sent.value,
             self.voted.value,
             self.ballot_available.value,
@@ -179,6 +182,8 @@ class Progress:
             self.absentee_requested,
             self.absentee_received,
             self.ballot_completed,
+            # TODO: Track sharing
+            # self.ballot_shared.value,
             self.ballot_sent,
             self.ballot_returned,
             self.voted,
@@ -243,6 +248,9 @@ class Progress:
             )
             progress.ballot_completed.deadline = str(
                 election_date - constants.BALLOT_COMPLETED_DEADLINE_DELTA
+            )
+            progress.ballot_shared.deadline = str(
+                election_date - constants.BALLOT_SHARED_DEADLINE_DELTA
             )
             progress.ballot_sent.deadline = str(
                 election_date - constants.BALLOT_SENT_DEADLINE_DELTA
