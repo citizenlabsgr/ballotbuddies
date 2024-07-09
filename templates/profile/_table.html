@@ -162,7 +162,7 @@
             <td class="text-center table-{{ voter.progress.ballot_completed.color }}">
                 {% if voter.ballot_url %}
                 <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}" class="text-decoration-none">
-                    {% if request.user == request.voter and voter.progress.ballot_completed %}
+                    {% if request.user == voter.user and voter.progress.ballot_completed %}
                     Edit
                     {% else %}
                     View
