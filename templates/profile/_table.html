@@ -177,6 +177,7 @@
             </td>
         </tr>
 
+        {% if request.user == voter.user %}
         <tr class="align-middle">
             <th scope="row">
                 Sample Ballot Shared
@@ -198,6 +199,7 @@
                 {{ voter.progress.ballot_shared.deadline_humanized }}
             </td>
         </tr>
+        {% endif %}
 
         <tr class="align-middle">
             <th scope="row">
