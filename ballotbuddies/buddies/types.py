@@ -161,8 +161,7 @@ class Progress:
             self.ballot_received.value,
             self.ballot_returned.value,
             self.ballot_completed.value,
-            # TODO: Track sharing
-            # self.ballot_shared.value,
+            self.ballot_shared.value,
             self.ballot_sent.value,
             self.voted.value,
             self.ballot_available.value,
@@ -182,8 +181,7 @@ class Progress:
             self.absentee_requested,
             self.absentee_received,
             self.ballot_completed,
-            # TODO: Track sharing
-            # self.ballot_shared.value,
+            self.ballot_shared,
             self.ballot_sent,
             self.ballot_returned,
             self.voted,
@@ -204,6 +202,7 @@ class Progress:
             self.absentee_requested,
             self.absentee_received,
             self.ballot_completed,
+            self.ballot_shared,
             self.ballot_sent,
             self.ballot_returned,
             self.ballot_received,
@@ -309,6 +308,7 @@ class Progress:
             progress.absentee_received.deadline = ""
             progress.ballot_available.deadline = ""
             progress.ballot_completed.deadline = ""
+            progress.ballot_shared.deadline = ""
             progress.ballot_sent.deadline = ""
             progress.ballot_returned.deadline = ""
             progress.ballot_received.deadline = ""
@@ -334,6 +334,7 @@ class Progress:
         if voted:
             progress.absentee_received.disable()
             progress.ballot_completed.disable()
+            progress.ballot_shared.disable()
             progress.ballot_sent.disable()
             progress.ballot_sent.disable()
             progress.ballot_returned.disable()
@@ -350,6 +351,7 @@ class Progress:
             progress.ballot_available.icon = "🚫"
             progress.ballot_available.color = "success text-muted"
             progress.ballot_completed.icon = "−"
+            progress.ballot_shared.icon = "−"
             progress.ballot_sent.icon = "−"
             progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
@@ -361,6 +363,7 @@ class Progress:
 
         if sent_date := status.get("absentee_ballot_sent"):
             progress.ballot_completed.color = "success text-muted"
+            progress.ballot_shared.color = "success text-muted"
             progress.ballot_sent.check(sent_date)
         else:
             progress.ballot_sent.icon = "🟡"

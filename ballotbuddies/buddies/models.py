@@ -108,7 +108,14 @@ class Voter(models.Model):
     )
     ballot = models.URLField(null=True, blank=True, max_length=2000)
     ballot_updated = models.DateTimeField(
-        null=True, blank=True, help_text="Voter has filled out their sample ballot."
+        null=True,
+        blank=True,
+        help_text="Voter has filled out their sample ballot.",
+    )
+    ballot_shared = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Voter has shared their completed sample ballot.",
     )
     ballot_returned = models.DateTimeField(
         null=True,
@@ -319,10 +326,15 @@ class Voter(models.Model):
             if self.user.pk and not self.profile.never_alert:
                 send_voted_email(self.user)
 
+        # TODO: Move this into parse() since it doesn't required a save
         if self.ballot:
             progress.ballot_completed.check()
+            if self.ballot_shared:
+                progress.ballot_shared.check()
+            else:
+                progress.ballot_shared.icon = "🟡"
         elif not self.voted and progress.ballot_sent:
-            progress.ballot_completed.icon = "🚫"
+            progress.ballot_completed.icon = "🟡"
 
         if not self.voted and progress.election.date:
             if progress.ballot_completed and not progress.ballot_sent:
@@ -370,6 +382,7 @@ class Voter(models.Model):
             self.absentee = absentee
         self.ballot = ballot
         self.ballot_updated = None
+        self.ballot_shared = None
         self.ballot_returned = None
         self.voted = None
         if status is not None:

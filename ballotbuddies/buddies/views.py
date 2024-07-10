@@ -161,8 +161,10 @@ def friends_search(request: HttpRequest):
     return render(request, "friends/index.html", context)
 
 
-@login_required
 def friends_profile(request: HttpRequest, slug: str):
+    if referrer := request.GET.get("referrer") or request.META.get("HTTP_REFERER"):
+        log.info(f"Returned to {slug=} from {referrer=}")
+
     try:
         voter: Voter = Voter.objects.get(slug=slug)
     except Voter.DoesNotExist:
@@ -172,6 +174,15 @@ def friends_profile(request: HttpRequest, slug: str):
     getattr(voter, "profile")  # ensure Profile exists
     if voter.user == request.user:
         return redirect("buddies:profile")
+
+    if referrer and "share" in referrer:
+        log.info(f"{request.user} viewed shared ballot of {voter}")
+        voter.ballot_shared = timezone.now()
+        voter.save()
+
+    if not request.user.is_authenticated:
+        messages.info(request, "Please log in to view your friend's profile.")
+        return redirect("core:join")
 
     if not messages.get_messages(request):
         for cta in voter.profile_cta:

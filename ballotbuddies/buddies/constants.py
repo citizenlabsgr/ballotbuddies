@@ -327,7 +327,7 @@ VOTED = VoterData(
             "url": "",
         },
         "ballot_shared": {
-            "color": "default",
+            "color": "success text-muted",
             "date": "",
             "deadline": "2021-11-01",
             "icon": "",
