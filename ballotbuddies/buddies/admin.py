@@ -54,6 +54,7 @@ class VoterAdmin(admin.ModelAdmin):
         "state",
         "absentee",
         "ballot_updated",
+        "ballot_shared",
         "ballot_returned",
         "voted",
     ]
@@ -61,15 +62,11 @@ class VoterAdmin(admin.ModelAdmin):
         "display_name",
         "Percent",
         "Actions",
-        "legal_name",
-        "birth_date",
-        "zip_code",
-        "state",
         "absentee",
+        "ballot_updated",
+        "ballot_shared",
         "ballot_returned",
         "voted",
-        "fetched",
-        "updated",
         "created",
     ]
 
@@ -84,6 +81,7 @@ class VoterAdmin(admin.ModelAdmin):
     filter_horizontal = ["friends", "neighbors", "strangers"]
 
     readonly_fields = [
+        "state",
         "Status",
         "activity",
         "Percent",
