@@ -215,8 +215,10 @@ class Progress:
         cls,
         data: dict,
         *,
-        voted: datetime | None = None,
+        completed_ballot: bool = False,
+        shared_ballot: bool = False,
         returned_date: datetime | None = None,
+        voted: bool = False,
     ) -> Progress:
         progress = cls()
 
@@ -318,16 +320,23 @@ class Progress:
         if has_ballot := status.get("ballot"):
             progress.absentee_requested.color = "success text-muted"
             progress.absentee_received.color = "success text-muted"
+            progress.ballot_available.check()
             if ballot:
                 progress.ballot_available.url = constants.BALLOT_PREVIEW_URL.format(
                     ballot_id=ballot["id"]
                 )
+                progress.ballot_completed.icon = "🟡"
             elif constants.ALLOW_FAKE_DATA:
                 progress.ballot_available.url = constants.PRECINCT_PREVIEW_URL.format(
                     election_id=election["id"], precinct_id=precinct["id"]
                 )
-            progress.ballot_available.check()
-            progress.ballot_completed.icon = "🟡"
+                progress.ballot_completed.icon = "🟡"
+            if completed_ballot:
+                progress.ballot_completed.check()
+                if shared_ballot:
+                    progress.ballot_shared.check()
+                else:
+                    progress.ballot_shared.icon = "🟡"
         else:
             progress.ballot_available.icon = "🟡"
 

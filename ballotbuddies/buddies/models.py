@@ -296,7 +296,11 @@ class Voter(models.Model):
     @cached_property
     def progress(self) -> Progress:
         progress = Progress.parse(
-            self.status, voted=self.voted, returned_date=self.ballot_returned
+            self.status,
+            completed_ballot=bool(self.ballot),
+            shared_ballot=bool(self.ballot_shared),
+            returned_date=self.ballot_returned,
+            voted=bool(self.voted),
         )
 
         if self.state != "Michigan":
@@ -325,16 +329,6 @@ class Voter(models.Model):
             self.save()
             if self.user.pk and not self.profile.never_alert:
                 send_voted_email(self.user)
-
-        # TODO: Move this into parse() since it doesn't required a save
-        if self.ballot:
-            progress.ballot_completed.check()
-            if self.ballot_shared:
-                progress.ballot_shared.check()
-            else:
-                progress.ballot_shared.icon = "🟡"
-        elif not self.voted and progress.ballot_sent:
-            progress.ballot_completed.icon = "🟡"
 
         if not self.voted and progress.election.date:
             if progress.ballot_completed and not progress.ballot_sent:
