@@ -22,7 +22,7 @@ def describe_index():
         response = client.get("/debug/")
 
         html = response.content.decode()
-        expect(html).contains("Join Firstname Lastname on Michigan Ballot Buddies")
+        expect(html).contains("Join Firstname Lastname on Ballot Buddies")
 
 
 @pytest.mark.django_db

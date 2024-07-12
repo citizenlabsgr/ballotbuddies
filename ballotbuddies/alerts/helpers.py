@@ -30,7 +30,7 @@ def update_profiles():
 
 
 def get_login_email(user: User):
-    subject = "Welcome to Michigan Ballot Buddies"
+    subject = "Welcome to Ballot Buddies"
     voter: Voter = user.voter
     context = {
         "name": voter.short_name or "Voter",
@@ -53,7 +53,7 @@ def send_login_email(user: User):
 
 
 def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
-    subject = f"Join {friend.display_name} on Michigan Ballot Buddies{extra}"
+    subject = f"Join {friend.display_name} on Ballot Buddies{extra}"
     voter: Voter = user.voter
     context = {
         "name": voter.short_name or "Voter",

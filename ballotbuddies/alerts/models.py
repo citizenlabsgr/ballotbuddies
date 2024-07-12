@@ -140,7 +140,7 @@ class Message(models.Model):
             _in_days = f" in {days} Days"
         else:
             _in_days = ""
-        return f"Your Friends are Preparing to Vote{_in_days}"
+        return f"Your Friends are Voting{_in_days}"
 
     def __bool__(self):
         return bool(self.activity)
