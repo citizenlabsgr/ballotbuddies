@@ -28,13 +28,19 @@
     </td>
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-sm-table-cell d-lg-none">
-        {% if voter.ballot_url %}
-        <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}" class="text-decoration-none">
+    {% if voter.ballot_url %}
+        {% if request.user == voter.user %}
+        <a href="{{ voter.ballot_edit_url }}" class="text-decoration-none">
             🔗
         </a>
         {% else %}
-            {{ voter.progress.ballot_available }}
+        <a href="{{ voter.ballot_view_url }}" class="text-decoration-none">
+            🔗
+        </a>
         {% endif %}
+    {% else %}
+        {{ voter.progress.ballot_available }}
+    {% endif %}
     </td>
 
     <!-- Absentee: Requested -->
@@ -65,13 +71,19 @@
     <!-- Ballot: Available -->
 
     <td class="text-center table-{{ voter.progress.ballot_available.color }} d-none d-lg-table-cell">
-        {% if voter.ballot_url %}
-        <a href="{{ voter.ballot_url }}{% if request.user != voter.user %}&share=all{% endif %}" class="text-decoration-none">
+    {% if voter.ballot_url %}
+        {% if request.user == voter.user %}
+        <a href="{{ voter.ballot_edit_url }}" class="text-decoration-none">
             🔗
         </a>
         {% else %}
-            {{ voter.progress.ballot_available }}
+        <a href="{{ voter.ballot_view_url }}" class="text-decoration-none">
+            🔗
+        </a>
         {% endif %}
+    {% else %}
+        {{ voter.progress.ballot_available }}
+    {% endif %}
     </td>
 
     <!-- Ballot: Items -->

@@ -160,7 +160,7 @@
             </td>
 
             <td class="text-center table-{{ voter.progress.ballot_completed.color }}">
-                {% if voter.ballot_url %}
+            {% if voter.ballot_url %}
                 {% if request.user == voter.user %}
                 <a href="{{ voter.ballot_edit_url }}" class="text-decoration-none">
                     {% if voter.progress.ballot_completed %}
@@ -170,12 +170,12 @@
                     {% endif %}
                     Ballot
                 </a>
-                {% else %}
+            {% else %}
                 <a href="{{ voter.ballot_view_url }}" class="text-decoration-none">
                     View Ballot
                 </a>
                 {% endif %}
-                {% endif %}
+            {% endif %}
             </td>
 
             <td class="text-center border-start {% if voter.progress.ballot_completed %} text-muted {% endif %}">
