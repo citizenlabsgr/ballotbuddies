@@ -17,7 +17,7 @@ from ballotbuddies.core.helpers import build_url
 from .models import Message, Profile
 
 if TYPE_CHECKING:
-    from ballotbuddies.buddies.models import Voter
+    from ballotbuddies.friends.models import Voter
 
 
 def update_profiles():

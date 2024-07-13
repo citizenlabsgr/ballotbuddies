@@ -1,6 +1,6 @@
-{% url 'buddies:friends' as friends_url %}
-{% url 'buddies:search' as search_url %}
-{% url 'buddies:profile' as profile_url %}
+{% url 'friends:friends' as friends_url %}
+{% url 'friends:search' as search_url %}
+{% url 'friends:profile' as profile_url %}
 {% url 'core:about' as about_url %}
 {% url 'core:login' as login_url %}
 
@@ -14,7 +14,7 @@
         <div class="navbar-nav d-flex flex-row gap-3 gap-sm-1">
 
             <a class="nav-link {% if request.path == friends_url or request.path == search_url %} active {% endif %} text-nowrap"
-                href="{% url 'buddies:friends' %}" hx-boost="true">
+                href="{% url 'friends:friends' %}" hx-boost="true">
                 <span class="fa-layers fa-fw">
                     <i class="fa-solid fa-list"></i>
                     {% if user.voter.neighbors.exists %}
@@ -27,7 +27,7 @@
             </a>
 
             <a class="nav-link {% if request.path == profile_url %} active {% endif %} ms-3 ms-md-0 text-nowrap"
-                href="{% url 'buddies:profile' %}" hx-boost="true">
+                href="{% url 'friends:profile' %}" hx-boost="true">
                 <i class="fa-solid fa-user"></i> <span class="d-none d-sm-inline">Profile</span>
             </a>
 

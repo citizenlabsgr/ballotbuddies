@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("buddies", "0019_voter_status_readonly"),
+        ("friends", "0019_voter_status_readonly"),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 null=True,
                 on_delete=django.db.models.deletion.SET_NULL,
                 related_name="promoted_voters",
-                to="buddies.voter",
+                to="friends.voter",
             ),
         ),
         migrations.AlterField(
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 null=True,
                 on_delete=django.db.models.deletion.SET_NULL,
                 related_name="referred_voters",
-                to="buddies.voter",
+                to="friends.voter",
             ),
         ),
     ]

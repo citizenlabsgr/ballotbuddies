@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("buddies", "0021_voter_ballot_updated"),
+        ("friends", "0021_voter_ballot_updated"),
     ]
 
     operations = [

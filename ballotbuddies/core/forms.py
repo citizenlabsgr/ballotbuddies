@@ -1,6 +1,6 @@
 from django import forms
 
-from ballotbuddies.buddies.forms import VoterForm
+from ballotbuddies.friends.forms import VoterForm
 
 from .models import User
 

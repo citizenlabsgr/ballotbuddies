@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("buddies", "0012_voter_absentee"),
+        ("friends", "0012_voter_absentee"),
     ]
 
     operations = [
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 (
                     "voter",
                     models.OneToOneField(
-                        on_delete=django.db.models.deletion.CASCADE, to="buddies.voter"
+                        on_delete=django.db.models.deletion.CASCADE, to="friends.voter"
                     ),
                 ),
             ],

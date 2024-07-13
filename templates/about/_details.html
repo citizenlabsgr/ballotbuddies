@@ -16,16 +16,16 @@
     {% if request.user.is_authenticated %}
 
         {% if request.user.voter.complete %}
-        <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
+        <a class="btn btn-primary" href="{% url 'friends:profile' %}">
             <i class="fa-solid fa-user"></i> View Ballot
         </a>
         {% else %}
-        <a class="btn btn-primary" href="{% url 'buddies:setup' %}">
+        <a class="btn btn-primary" href="{% url 'friends:setup' %}">
             <i class="fa-solid fa-pen-to-square"></i> Finish Setup
         </a>
         {% endif %}
 
-        <a class="btn btn-outline-secondary" href="{% url 'buddies:invite' %}">
+        <a class="btn btn-outline-secondary" href="{% url 'friends:invite' %}">
             <i class="fa-solid fa-user-plus"></i> Invite Friends
         </a>
 

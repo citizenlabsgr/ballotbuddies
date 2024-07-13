@@ -8,7 +8,7 @@ import annoying.fields
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("buddies", "0012_voter_absentee"),
+        ("friends", "0012_voter_absentee"),
         ("alerts", "0002_profile_last"),
     ]
 
@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             model_name="profile",
             name="voter",
             field=annoying.fields.AutoOneToOneField(
-                on_delete=django.db.models.deletion.CASCADE, to="buddies.voter"
+                on_delete=django.db.models.deletion.CASCADE, to="friends.voter"
             ),
         ),
     ]

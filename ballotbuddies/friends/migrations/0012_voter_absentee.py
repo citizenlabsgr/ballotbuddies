@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("buddies", "0011_alter_voter_options"),
+        ("friends", "0011_alter_voter_options"),
     ]
 
     operations = [

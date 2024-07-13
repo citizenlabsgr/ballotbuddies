@@ -8,8 +8,8 @@ from django.utils import timezone
 import pytest
 
 from ballotbuddies.alerts.models import Message, Profile
-from ballotbuddies.buddies.constants import REGISTERED
-from ballotbuddies.buddies.models import User, Voter
+from ballotbuddies.friends.constants import REGISTERED
+from ballotbuddies.friends.models import User, Voter
 
 
 @pytest.fixture

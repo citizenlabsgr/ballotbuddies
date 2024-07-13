@@ -29,7 +29,7 @@ def profile(request: HttpRequest):
             voter.profile.never_alert = True
         voter.profile.save()
         messages.info(request, message)
-        return redirect("buddies:profile")
+        return redirect("friends:profile")
 
     if voter.complete and not voter.updated:
         _updated, message = voter.update_status()
@@ -61,7 +61,7 @@ def setup(request: HttpRequest):
                 request, form.cleaned_data["first_name"], form.cleaned_data["last_name"]
             )
             messages.success(request, "Successfully updated your profile information.")
-            return redirect("buddies:profile")
+            return redirect("friends:profile")
     else:
         form = VoterForm(instance=voter, initial=voter.data)
 
@@ -76,7 +76,7 @@ def unsubscribe(request: HttpRequest):
     voter.profile.never_alert = True
     voter.profile.save()
     messages.info(request, "You have been unsubscribed from periodic reminder emails.")
-    return redirect("buddies:profile")
+    return redirect("friends:profile")
 
 
 @login_required
@@ -87,7 +87,7 @@ def delete(request: HttpRequest):
             messages.info(request, "Your profile has been deleted.")
             return redirect("core:about")
         else:
-            return redirect("buddies:profile")
+            return redirect("friends:profile")
 
     return render(request, "profile/delete.html")
 
@@ -105,12 +105,12 @@ def friends(request: HttpRequest):
         form = FriendsForm(request.POST, required=len(voter.community) < 10)
         if form.is_valid():
             if not form.cleaned_data["emails"]:
-                return redirect("buddies:invite")
+                return redirect("friends:invite")
 
             voters = Voter.objects.invite(voter, form.cleaned_data["emails"])
             s = "" if len(voters) == 1 else "s"
             messages.success(request, f"Successfully added {len(voters)} friend{s}.")
-            return redirect("buddies:friends")
+            return redirect("friends:friends")
     else:
         form = FriendsForm()
 
@@ -169,11 +169,11 @@ def friends_profile(request: HttpRequest, slug: str):
         voter: Voter = Voter.objects.get(slug=slug)
     except Voter.DoesNotExist:
         messages.error(request, "The requested voter could not be found.")
-        return redirect("buddies:friends")
+        return redirect("friends:friends")
 
     getattr(voter, "profile")  # ensure Profile exists
     if voter.user == request.user:
-        return redirect("buddies:profile")
+        return redirect("friends:profile")
 
     if referrer and "share" in referrer:
         log.info(f"{request.user} viewed shared ballot of {voter}")
@@ -206,7 +206,7 @@ def friends_setup(request: HttpRequest, slug: str):
                 request, form.cleaned_data["first_name"], form.cleaned_data["last_name"]
             )
             messages.success(request, "Successfully updated your friend's information.")
-            return redirect("buddies:friends-profile", slug=slug)
+            return redirect("friends:friends-profile", slug=slug)
     else:
         form = VoterForm(instance=voter, initial=voter.data)
 
@@ -236,7 +236,7 @@ def status(request: HttpRequest, slug: str):
         if "redirect" in request.POST:
             messages.info(request, "Successfully unfollowed voter.")
             return HttpResponse(
-                status=302, headers={"HX-Redirect": resolve_url("buddies:friends")}
+                status=302, headers={"HX-Redirect": resolve_url("friends:friends")}
             )
 
     if "add" in request.POST:
@@ -277,7 +277,7 @@ def status(request: HttpRequest, slug: str):
         render_as_table = True
         if request.method == "GET":
             messages.info(request, "Successfully reset ballot status.")
-            return redirect("buddies:friends-profile", slug=slug)
+            return redirect("friends:friends-profile", slug=slug)
 
     if render_as_table:
         template_name = "profile/_table.html"
@@ -300,7 +300,7 @@ def invite(request: HttpRequest):
             voters = Voter.objects.invite(voter, form.cleaned_data["emails"])
             s = "" if len(voters) == 1 else "s"
             messages.success(request, f"Successfully added {len(voters)} friend{s}.")
-            return redirect("buddies:friends")
+            return redirect("friends:friends")
     else:
         form = FriendsForm()
 

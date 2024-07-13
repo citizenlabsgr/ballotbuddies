@@ -2,7 +2,7 @@
     <th scope="col" colspan="2" rowspan="2" class="border-end align-middle">
         <div class="d-flex justify-content-between align-items-center">
             {% if 'search' not in request.path and not preview %}
-            <a class="btn btn-outline-primary me-2" href="{% url 'buddies:search' %}" aria-label="Search">
+            <a class="btn btn-outline-primary me-2" href="{% url 'friends:search' %}" aria-label="Search">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </a>
             {% endif %}

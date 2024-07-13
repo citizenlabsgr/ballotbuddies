@@ -8,8 +8,8 @@ from django.shortcuts import redirect, render
 import log
 
 from ballotbuddies.alerts.helpers import send_login_email
-from ballotbuddies.buddies.helpers import generate_sample_voters
-from ballotbuddies.buddies.models import Voter
+from ballotbuddies.friends.helpers import generate_sample_voters
+from ballotbuddies.friends.models import Voter
 
 from .forms import LoginForm, SignupForm
 from .helpers import allow_debug, parse_domain
@@ -22,13 +22,13 @@ def index(request: HttpRequest):
 
     if request.user.is_authenticated:
         if not referrer:
-            return redirect("buddies:friends")
+            return redirect("friends:friends")
 
         friend, added = request.user.voter.add_friend(referrer)
         if added:
             messages.success(request, "Successfully added 1 friend.")
         if friend:
-            return redirect("buddies:friends")
+            return redirect("friends:friends")
 
     context = {
         "preview": True,
@@ -72,7 +72,7 @@ def join(request: HttpRequest):
                 request, voter.user, backend=settings.AUTHENTICATION_BACKENDS[0]
             )
             send_login_email(voter.user)
-            return redirect(request.GET.get("next") or "buddies:profile")
+            return redirect(request.GET.get("next") or "friends:profile")
     else:
         form = SignupForm()
 

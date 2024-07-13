@@ -57,7 +57,7 @@
                 {% if not voter.absentee %}
                 <form>{% csrf_token %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                            hx-post="{% url 'friends:status' slug=voter.slug %}"
                             hx-vals='{ "absentee": true }'
                             hx-trigger="click"
                             hx-target="closest table"
@@ -73,7 +73,7 @@
                 {% elif not voter.progress.absentee_requested %}
                 <form>{% csrf_token %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                        hx-post="{% url 'friends:status' slug=voter.slug %}"
                         hx-vals='{ "absentee": false }'
                         hx-trigger="click"
                         hx-target="closest table"
@@ -113,7 +113,7 @@
                 {% elif voter.progress.actions and not embed %}
                 <form>{% csrf_token %}
                     <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                        hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                        hx-post="{% url 'friends:status' slug=voter.slug %}"
                         hx-vals='{ "absentee": false }'
                         hx-trigger="click"
                         hx-target="closest table"
@@ -229,7 +229,7 @@
                 {% if not embed %}
                 <form>{% csrf_token %}
                     <button class="btn btn-sm btn-outline-secondary text-nowrap ms-1"
-                            hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                            hx-post="{% url 'friends:status' slug=voter.slug %}"
                             hx-vals='{ "mailed": true }'
                             hx-trigger="click"
                             hx-target="closest table"
@@ -295,7 +295,7 @@
                         {% if not embed %}
                         <form>{% csrf_token %}
                             <button class="btn btn-sm btn-outline-dark text-nowrap ms-1"
-                                hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                                hx-post="{% url 'friends:status' slug=voter.slug %}"
                                 hx-vals='{ "reset": true }'
                                 hx-trigger="click"
                                 hx-target="closest table"
@@ -315,7 +315,7 @@
                         {% if not embed %}
                         <form>{% csrf_token %}
                             <button class="btn btn-sm btn-outline-secondary text-nowrap ms-1"
-                                hx-post="{% url 'buddies:status' slug=voter.slug %}"
+                                hx-post="{% url 'friends:status' slug=voter.slug %}"
                                 hx-vals='{ "voted": true }'
                                 hx-trigger="click"
                                 hx-target="closest table"

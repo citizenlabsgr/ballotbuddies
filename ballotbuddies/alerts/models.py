@@ -10,11 +10,11 @@ import log
 from annoying.fields import AutoOneToOneField
 
 if TYPE_CHECKING:
-    from ballotbuddies.buddies.models import Voter
+    from ballotbuddies.friends.models import Voter
 
 
 class Profile(models.Model):
-    voter: Voter = AutoOneToOneField("buddies.Voter", on_delete=models.CASCADE)
+    voter: Voter = AutoOneToOneField("friends.Voter", on_delete=models.CASCADE)
 
     always_alert = models.BooleanField(default=False)
     never_alert = models.BooleanField(default=False)

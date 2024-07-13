@@ -6,8 +6,8 @@ from django.test import Client
 import pytest
 from expecter import expect
 
-from ballotbuddies.buddies.constants import VOTED
-from ballotbuddies.buddies.models import Voter
+from ballotbuddies.friends.constants import VOTED
+from ballotbuddies.friends.models import Voter
 
 from ..models import User
 from . import decode

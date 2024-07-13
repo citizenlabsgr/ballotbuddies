@@ -9,7 +9,7 @@
     <div class="form-check ms-3">
         <input class="form-check-input" type="checkbox" value="" id="ballot"
             {% if ballot %} checked {% endif %}
-            hx-get="{% url 'buddies:search' %}?ballot={{ ballot|yesno:'all,yes' }}&voted={{ voted|yesno:'all,no' }}"
+            hx-get="{% url 'friends:search' %}?ballot={{ ballot|yesno:'all,yes' }}&voted={{ voted|yesno:'all,no' }}"
             hx-push-url="true"
             hx-target="body">
         <label class="form-check-label" for="ballot">
@@ -20,7 +20,7 @@
     <div class="form-check ms-3">
         <input class="form-check-input" type="checkbox" value="" id="voted"
             {% if voted %} checked {% endif %}
-            hx-get="{% url 'buddies:search' %}?ballot={{ ballot|yesno:'yes,all' }}&voted={{ voted|yesno:'no,all' }}"
+            hx-get="{% url 'friends:search' %}?ballot={{ ballot|yesno:'yes,all' }}&voted={{ voted|yesno:'no,all' }}"
             hx-push-url="true"
             hx-target="body">
         <label class="form-check-label" for="voted">

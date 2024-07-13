@@ -2,8 +2,8 @@
 
 import pytest
 
-from ballotbuddies.buddies.constants import VOTED
-from ballotbuddies.buddies.models import User, Voter
+from ballotbuddies.friends.constants import VOTED
+from ballotbuddies.friends.models import User, Voter
 
 
 @pytest.fixture

@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("buddies", "0005_voter_slug"),
+        ("friends", "0005_voter_slug"),
     ]
 
     operations = [
@@ -13,14 +13,14 @@ class Migration(migrations.Migration):
             model_name="voter",
             name="neighbors",
             field=models.ManyToManyField(
-                blank=True, related_name="lurkers", to="buddies.Voter"
+                blank=True, related_name="lurkers", to="friends.voter"
             ),
         ),
         migrations.AddField(
             model_name="voter",
             name="strangers",
             field=models.ManyToManyField(
-                blank=True, related_name="blockers", to="buddies.Voter"
+                blank=True, related_name="blockers", to="friends.voter"
             ),
         ),
     ]

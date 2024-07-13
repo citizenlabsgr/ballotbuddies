@@ -32,7 +32,7 @@
 {% include "profile/_progress.html" %}
 
 <div
-    hx-get="{% url 'buddies:status' slug=voter.slug %}"
+    hx-get="{% url 'friends:status' slug=voter.slug %}"
     hx-trigger="load delay:1s"
     hx-swap="outerHTML">
     {% include "profile/_table.html" %}
@@ -42,7 +42,7 @@
 
 <p>
     {{ voter.updated|default:"Never (Incomplete Voter Information)" }}
-    <a href="{% url 'buddies:status' slug=voter.slug %}?reset=true"
+    <a href="{% url 'friends:status' slug=voter.slug %}?reset=true"
         class="ms-1 text-reset text-decoration-none"
         style="opacity: 0.25;">
         <i class="fa-solid fa-xmark"></i>
@@ -55,7 +55,7 @@
 
 {{ form|crispy }}
 
-<a class="btn btn-outline-dark" href="{% url 'buddies:setup' %}">
+<a class="btn btn-outline-dark" href="{% url 'friends:setup' %}">
     <i class="fa-solid fa-pen-to-square"></i> Edit Details
 </a>
 
@@ -63,7 +63,7 @@
 
 <div class="d-flex justify-content-between align-items-center pt-4">
     <h2>Voter Information</h2>
-    <a class="btn btn-primary" href="{% url 'buddies:setup' %}">
+    <a class="btn btn-primary" href="{% url 'friends:setup' %}">
         <i class="fa-solid fa-pen-to-square"></i> Finish Setup
     </a>
 </div>
@@ -72,7 +72,7 @@
 
 {% endif %}
 
-<a class="btn btn-outline-danger" href="{% url 'buddies:delete' %}">
+<a class="btn btn-outline-danger" href="{% url 'friends:delete' %}">
     <i class="fa-solid fa-trash"></i> Delete Account...
 </a>
 

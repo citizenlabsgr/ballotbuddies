@@ -4,7 +4,7 @@ from django.contrib import admin, messages
 from django.shortcuts import redirect
 from django.utils.safestring import mark_safe
 
-from ballotbuddies.buddies.models import Voter
+from ballotbuddies.friends.models import Voter
 
 from . import helpers
 from .models import Message, Profile

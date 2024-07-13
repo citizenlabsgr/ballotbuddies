@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from ballotbuddies.alerts.models import Message
-from ballotbuddies.buddies.models import Voter
+from ballotbuddies.friends.models import Voter
 
 
 class Command(BaseCommand):

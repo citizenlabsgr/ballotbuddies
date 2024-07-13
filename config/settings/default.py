@@ -31,11 +31,11 @@ INSTALLED_APPS = [
     "multi_email_field",
     "annoying",
     "rest_framework",
-    "ballotbuddies.core",
-    "ballotbuddies.api",
-    "ballotbuddies.buddies",
     "ballotbuddies.alerts",
+    "ballotbuddies.api",
+    "ballotbuddies.core",
     "ballotbuddies.explore",
+    "ballotbuddies.friends",
 ]
 
 MIDDLEWARE = [

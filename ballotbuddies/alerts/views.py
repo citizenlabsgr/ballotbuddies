@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from ballotbuddies.buddies import constants
-from ballotbuddies.buddies.models import Voter
 from ballotbuddies.core.models import User
+from ballotbuddies.friends import constants
+from ballotbuddies.friends.models import Voter
 
 from . import helpers
 from .models import Message

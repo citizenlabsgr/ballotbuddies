@@ -9,8 +9,8 @@ from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils import timezone
 
-from ballotbuddies.buddies import constants
-from ballotbuddies.buddies.models import Voter
+from ballotbuddies.friends import constants
+from ballotbuddies.friends.models import Voter
 
 STATUS = {
     "id": "345-3932-11713",

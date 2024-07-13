@@ -7,7 +7,7 @@ import ballotbuddies.core.helpers
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("buddies", "0008_voter_voted"),
+        ("friends", "0008_voter_voted"),
     ]
 
     operations = [

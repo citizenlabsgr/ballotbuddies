@@ -7,7 +7,7 @@ from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from ballotbuddies.buddies.models import Voter
+from ballotbuddies.friends.models import Voter
 
 
 class VoterSerializer(serializers.Serializer):

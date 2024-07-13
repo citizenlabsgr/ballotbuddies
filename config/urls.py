@@ -9,7 +9,7 @@ from ballotbuddies.core.views import zapier
 
 urlpatterns: list = [
     path("", include("ballotbuddies.core.urls")),
-    path("", include("ballotbuddies.buddies.urls")),
+    path("", include("ballotbuddies.friends.urls")),
     path("explore/", include("ballotbuddies.explore.urls")),
     path("zapier/", zapier),
     path("api/", include("ballotbuddies.api.urls")),

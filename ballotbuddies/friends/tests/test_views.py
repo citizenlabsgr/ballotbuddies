@@ -119,7 +119,7 @@ def describe_profile():
         @pytest.fixture
         def response(client, voter: Voter):
             client.force_login(voter.user)
-            return client.get(reverse("buddies:delete"))
+            return client.get(reverse("friends:delete"))
 
         def describe_GET():
             def it_returns_200(response):
@@ -128,7 +128,7 @@ def describe_profile():
             def describe_POST():
                 @pytest.fixture
                 def post_response(client, response):
-                    return client.post(reverse("buddies:delete"), {"yes": ""})
+                    return client.post(reverse("friends:delete"), {"yes": ""})
 
                 def it_deletes_voter(post_response, voter: Voter):
                     expect(post_response.status_code) == 302
@@ -138,7 +138,7 @@ def describe_profile():
 
                 def it_redirects_when_unauthenticated(client, response):
                     client.logout()
-                    response = client.get(reverse("buddies:delete"))
+                    response = client.get(reverse("friends:delete"))
                     expect(response.status_code) == 302
 
 
