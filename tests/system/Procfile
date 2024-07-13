@@ -1,2 +1,2 @@
 web: bin/post_compile > /dev/null && gunicorn config.asgi --bind 0.0.0.0:8001 --worker-class uvicorn.workers.UvicornWorker
-test: pytest tests/system -c tests/system/pytest.ini
+test: pytest tests/system --config-file=tests/system/pytest.ini
