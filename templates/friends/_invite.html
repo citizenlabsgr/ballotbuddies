@@ -20,8 +20,8 @@
 
 {% endif %}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-
 var clipboard = new ClipboardJS('#copy-button');
 
 clipboard.on('success', function(e) {
@@ -35,5 +35,4 @@ clipboard.on('success', function(e) {
 clipboard.on('error', function(e) {
     console.error("ClipboardJS error: ", e);
 });
-
 </script>
