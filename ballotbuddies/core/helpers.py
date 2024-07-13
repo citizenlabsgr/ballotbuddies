@@ -20,8 +20,8 @@ def allow_debug(request) -> bool:
     return settings.DEBUG
 
 
-def generate_key(length=10):
-    alphabet = string.ascii_letters + string.digits
+def generate_key(length=8):
+    alphabet = string.ascii_lowercase + string.digits
     return "".join(random.choice(alphabet) for _ in range(length))
 
 
