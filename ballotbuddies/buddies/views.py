@@ -163,7 +163,7 @@ def friends_search(request: HttpRequest):
 
 def friends_profile(request: HttpRequest, slug: str):
     if referrer := request.GET.get("referrer") or request.META.get("HTTP_REFERER"):
-        log.info(f"Returned to {slug=} from {referrer=}")
+        log.info(f"Returned to profile {slug=} from {referrer=}")
 
     try:
         voter: Voter = Voter.objects.get(slug=slug)

@@ -105,13 +105,18 @@ def describe_update_ballot():
             expect(response.json()) == {
                 "errors": {
                     "voter": ["This field is required."],
+                    "token": ["This field is required."],
                     "url": ["This field is required."],
                 }
             }
 
         @pytest.mark.django_db
-        def it_updates_voters_ballot(client, url, voter):
-            data = {"voter": voter.slug, "url": "http://example.com"}
+        def it_updates_voters_ballot(client, url, voter: Voter):
+            data = {
+                "voter": voter.slug,
+                "token": voter.token,
+                "url": "http://example.com",
+            }
             response = client.post(url, data)
 
             expect(response.status_code) == 200
@@ -124,7 +129,11 @@ def describe_update_ballot():
 
         @pytest.mark.django_db
         def it_handles_unknown_voters(client, url):
-            data = {"voter": "foobar", "url": "http://example.com"}
+            data = {
+                "voter": "foo",
+                "token": "bar",
+                "url": "http://example.com",
+            }
             response = client.post(url, data)
 
             expect(response.status_code) == 404

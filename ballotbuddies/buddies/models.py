@@ -94,6 +94,7 @@ class VoterManager(models.Manager):
 class Voter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.CharField(max_length=100, default=generate_key)
+    token = models.CharField(max_length=100, default=generate_key)
 
     nickname = models.CharField(blank=True, max_length=100)
     birth_date = models.DateField(null=True, blank=True)
@@ -244,7 +245,7 @@ class Voter(models.Model):
             yield Message(
                 "Your sample ballot is ready",
                 "View Ballot",
-                self.ballot_url,
+                self.ballot_edit_url,
             )
 
     @cached_property
@@ -286,6 +287,30 @@ class Voter(models.Model):
             parts = furl(url)
             parts.args["name"] = self.short_name or "Friend"
             parts.args["slug"] = self.slug
+            return parts.url
+        return ""
+
+    @cached_property
+    def ballot_edit_url(self) -> str:
+        if url := self.ballot_url:
+            parts = furl(url)
+            parts.args["token"] = self.token
+            return parts.url
+        return ""
+
+    @cached_property
+    def ballot_view_url(self) -> str:
+        if url := self.ballot_url:
+            parts = furl(url)
+            parts.args["share"] = "all"
+            return parts.url
+        return ""
+
+    @cached_property
+    def ballot_share_url(self) -> str:
+        if url := self.ballot_url:
+            parts = furl(url)
+            parts.args["share"] = ""
             return parts.url
         return ""
 
