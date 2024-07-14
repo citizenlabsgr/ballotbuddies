@@ -17,8 +17,10 @@ from .helpers import allow_debug, parse_domain
 
 def index(request: HttpRequest):
     if referrer := request.GET.get("referrer", ""):
-        log.info(f"Referrer: {referrer}")
+        log.info(f"Returned to index from {referrer=}")
         request.session["referrer"] = referrer
+    else:
+        referrer = request.session["referrer"]
 
     if request.user.is_authenticated:
         if not referrer:

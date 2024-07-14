@@ -181,6 +181,8 @@ def friends_profile(request: HttpRequest, slug: str):
     getattr(voter, "profile")  # ensure Profile exists
     if voter.user == request.user:
         return redirect("buddies:profile")
+    else:
+        request.session["referrer"] = voter.slug
 
     if referrer and "share" in referrer:
         log.info(f"{request.user} viewed shared ballot of {voter}")
@@ -189,7 +191,7 @@ def friends_profile(request: HttpRequest, slug: str):
 
     if not request.user.is_authenticated:
         messages.info(request, "Please log in to view your friend's profile.")
-        return redirect("core:join")
+        return redirect("core:index")
 
     if not messages.get_messages(request):
         for cta in voter.profile_cta:
