@@ -13,6 +13,9 @@ import log
 from .forms import FriendsForm, VoterForm
 from .models import Voter
 
+###############################################################################
+# Profile
+
 
 @login_required
 def profile(request: HttpRequest):
@@ -47,7 +50,7 @@ def profile(request: HttpRequest):
 
 
 @login_required
-def setup(request: HttpRequest):
+def profile_setup(request: HttpRequest):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
@@ -70,7 +73,7 @@ def setup(request: HttpRequest):
 
 
 @login_required
-def unsubscribe(request: HttpRequest):
+def profile_unsubscribe(request: HttpRequest):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
     voter.profile.never_alert = True
@@ -80,7 +83,7 @@ def unsubscribe(request: HttpRequest):
 
 
 @login_required
-def delete(request: HttpRequest):
+def profile_delete(request: HttpRequest):
     if request.method == "POST":
         if "yes" in request.POST:
             request.user.delete()
@@ -90,6 +93,10 @@ def delete(request: HttpRequest):
             return redirect("buddies:profile")
 
     return render(request, "profile/delete.html")
+
+
+###############################################################################
+# Friends
 
 
 @login_required
@@ -221,7 +228,7 @@ def friends_email(request: HttpRequest, slug: str):
 
 
 @login_required
-def status(request: HttpRequest, slug: str):
+def friends_status(request: HttpRequest, slug: str):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.get(slug=slug)
     render_as_table = request.method == "GET"
@@ -290,7 +297,7 @@ def status(request: HttpRequest, slug: str):
 
 
 @login_required
-def invite(request: HttpRequest):
+def friends_invite(request: HttpRequest):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.from_user(request.user)
 
