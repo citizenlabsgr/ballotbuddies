@@ -20,7 +20,7 @@ def index(request: HttpRequest):
         log.info(f"Returned to index from {referrer=}")
         request.session["referrer"] = referrer
     else:
-        referrer = request.session["referrer"]
+        referrer = request.session.get("referrer", "")
 
     if request.user.is_authenticated:
         if not referrer:
