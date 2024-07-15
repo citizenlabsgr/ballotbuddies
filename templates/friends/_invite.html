@@ -20,19 +20,16 @@
 
 {% endif %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-var clipboard = new ClipboardJS('#copy-button');
-
-clipboard.on('success', function(e) {
-    var triggerElement = e.trigger;
-    triggerElement.setAttribute('title', 'Link Copied');
-
-    var tooltip = new bootstrap.Tooltip(triggerElement);
-    tooltip.show();
-});
-
-clipboard.on('error', function(e) {
-    console.error("ClipboardJS error: ", e);
+var copyButton = document.getElementById('copy-button');
+copyButton.addEventListener('click', function() {
+    var textToCopy = copyButton.getAttribute('data-clipboard-text');
+    navigator.clipboard.writeText(textToCopy).then(function() {
+        copyButton.setAttribute('title', 'Link Copied');
+        var tooltip = new bootstrap.Tooltip(copyButton);
+        tooltip.show();
+    }).catch(function(error) {
+        console.error("Clipboard error: ", error);
+    });
 });
 </script>
