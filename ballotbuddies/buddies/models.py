@@ -371,6 +371,8 @@ class Voter(models.Model):
             action = "returned their absentee ballot"
         elif self.progress.ballot_sent:
             action = "was mailed their absentee ballot"
+        elif self.progress.ballot_shared:
+            action = "shared their sample ballot"
         elif self.progress.ballot_completed:
             action = "filled out their sample ballot"
         elif self.progress.ballot_available:

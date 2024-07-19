@@ -186,8 +186,11 @@ def friends_profile(request: HttpRequest, slug: str):
 
     if referrer and "share" in referrer:
         log.info(f"{request.user} viewed shared ballot of {voter}")
+        previously_shared = bool(voter.ballot_shared)
         voter.ballot_shared = timezone.now()
         voter.save()
+        if not previously_shared:
+            voter.share_status()
 
     if not request.user.is_authenticated:
         messages.info(request, "Please log in to view your friend's profile.")
