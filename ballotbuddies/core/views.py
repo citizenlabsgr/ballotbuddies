@@ -19,8 +19,6 @@ def index(request: HttpRequest):
     if referrer := request.GET.get("referrer", ""):
         log.info(f"Returned to index from {referrer=}")
         request.session["referrer"] = referrer
-    else:
-        referrer = request.session.get("referrer", "")
 
     if request.user.is_authenticated:
         if not referrer:
@@ -32,6 +30,7 @@ def index(request: HttpRequest):
         if friend:
             return redirect("buddies:friends")
 
+    referrer = request.session.get("referrer", "")
     context = {
         "preview": True,
         "community": sorted(generate_sample_voters(referrer)),
