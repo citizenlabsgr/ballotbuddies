@@ -7,13 +7,13 @@
 <h1>{% firstof voter.short_name "Friend" %}'s Voter Information</h1>
 
 <form method="post" novalidate>
-  {% csrf_token %}
+    {% csrf_token %}
 
-  {{ form|crispy }}
+    {{ form|crispy }}
 
-  <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit">Save</button>
 
-  <a class="btn btn-secondary" href="{% url 'buddies:friends-profile' slug=voter.slug %}">Cancel</a>
+    <a class="btn btn-secondary" href="{% url 'buddies:friends-profile' slug=voter.slug %}">Cancel</a>
 
 </form>
 

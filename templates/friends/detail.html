@@ -105,13 +105,6 @@
     {% include "profile/_table.html" %}
 </div>
 
-<h2 class="mt-5">Last Updated</h2>
-
-<p class="mb-4">
-    {{ voter.updated|default:"Never (Incomplete Voter Information)" }}
-    <a href="{% url 'buddies:status' slug=voter.slug %}?reset=true"
-        class="ms-1 text-reset text-decoration-none"
-        style="opacity: 0.25;">✕</a>
-</p>
+{% include "profile/_updated.html" %}
 
 {% endblock main %}

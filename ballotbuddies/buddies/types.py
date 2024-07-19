@@ -381,7 +381,7 @@ class Progress:
             return progress
 
         if received_date := status.get("absentee_ballot_received"):
-            progress.ballot_completed.icon = "−"
+            progress.ballot_completed.disable()
             progress.ballot_sent.color = "success text-muted"
             progress.ballot_returned.check()
             if returned_date:
