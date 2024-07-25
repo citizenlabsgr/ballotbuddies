@@ -3,12 +3,12 @@
         <tr>
             <th scope="col"></th>
 
-            <th scope="col" colspan="2" class="text-center align-middle border">
-                Progress
+            <th scope="col" class="text-center align-middle border">
+                Recommended Completion
             </th>
 
-            <th scope="col" class="text-center align-middle border">
-                Deadline
+            <th scope="col" colspan="2" class="text-center align-middle border">
+                Your Progress
             </th>
         </tr>
     </thead>
@@ -18,6 +18,10 @@
             <th scope="row">
                 Registered to Vote
             </th>
+
+            <td class="text-center border-start {% if voter.progress.registered %} text-muted {% endif %}">
+                {{ voter.progress.registered.deadline_humanized }}
+            </td>
 
             <td class="text-center table-{{ voter.progress.registered.color }} border-start">
                 {% if voter.progress.registered.url %}
@@ -30,16 +34,16 @@
             </td>
 
             <td class="text-center table-{{ voter.progress.registered.color }}"></td>
-
-            <td class="text-center border-start {% if voter.progress.registered %} text-muted {% endif %}">
-                {{ voter.progress.registered.deadline_humanized }}
-            </td>
         </tr>
 
         <tr class="align-middle">
             <th scope="row">
                 Absentee Application Requested
             </th>
+
+            <td class="text-center border-start {% if voter.progress.absentee_requested %} text-muted {% endif %}">
+                {{ voter.progress.absentee_requested.deadline_humanized }}
+            </td>
 
             <td class="text-center table-{{ voter.progress.absentee_requested.color }} border-start">
                 {% if voter.progress.absentee_requested.url %}
@@ -92,16 +96,16 @@
             {% else %}
             <td class="text-center table-{{ voter.progress.absentee_requested.color }}"></td>
             {% endif %}
-
-            <td class="text-center border-start {% if voter.progress.absentee_requested %} text-muted {% endif %}">
-                {{ voter.progress.absentee_requested.deadline_humanized }}
-            </td>
         </tr>
 
         <tr class="align-middle">
             <th scope="row">
                 Absentee Application Received
             </th>
+
+            <td class="text-center border-start {% if voter.progress.absentee_received %} text-muted {% endif %}">
+                {{ voter.progress.absentee_received.deadline_humanized }}
+            </td>
 
             <td class="text-center table-{{ voter.progress.absentee_received.color }} border-start">
                 {{ voter.progress.absentee_received.icon }}
@@ -128,10 +132,6 @@
                 </form>
                 {% endif %}
             </td>
-
-            <td class="text-center border-start {% if voter.progress.absentee_received %} text-muted {% endif %}">
-                {{ voter.progress.absentee_received.deadline_humanized }}
-            </td>
         </tr>
 
         <tr class="align-middle">
@@ -139,21 +139,25 @@
                 Sample Ballot Available
             </th>
 
+            <td class="text-center border-start {% if voter.progress.ballot_available %} text-muted {% endif %}">
+                {{ voter.progress.ballot_available.deadline_humanized }}
+            </td>
+
             <td class="text-center table-{{ voter.progress.ballot_available.color }} border-start">
                 {{ voter.progress.ballot_available }}
             </td>
 
             <td class="text-center table-{{ voter.progress.ballot_available.color }}"></td>
-
-            <td class="text-center border-start {% if voter.progress.ballot_available %} text-muted {% endif %}">
-                {{ voter.progress.ballot_available.deadline_humanized }}
-            </td>
         </tr>
 
         <tr class="align-middle">
             <th scope="row">
                 Sample Ballot Completed
             </th>
+
+            <td class="text-center border-start {% if voter.progress.ballot_completed %} text-muted {% endif %}">
+                {{ voter.progress.ballot_completed.deadline_humanized }}
+            </td>
 
             <td class="text-center table-{{ voter.progress.ballot_completed.color }} border-start">
                 {{ voter.progress.ballot_completed }}
@@ -177,10 +181,6 @@
                 {% endif %}
             {% endif %}
             </td>
-
-            <td class="text-center border-start {% if voter.progress.ballot_completed %} text-muted {% endif %}">
-                {{ voter.progress.ballot_completed.deadline_humanized }}
-            </td>
         </tr>
 
         {% if request.user == voter.user %}
@@ -188,6 +188,10 @@
             <th scope="row">
                 Sample Ballot Shared
             </th>
+
+            <td class="text-center border-start {% if voter.progress.ballot_shared %} text-muted {% endif %}">
+                {{ voter.progress.ballot_shared.deadline_humanized }}
+            </td>
 
             <td class="text-center table-{{ voter.progress.ballot_shared.color }} border-start">
                 {{ voter.progress.ballot_shared }}
@@ -200,10 +204,6 @@
                 </a>
                 {% endif %}
             </td>
-
-            <td class="text-center border-start {% if voter.progress.ballot_shared %} text-muted {% endif %}">
-                {{ voter.progress.ballot_shared.deadline_humanized }}
-            </td>
         </tr>
         {% endif %}
 
@@ -212,6 +212,10 @@
                 Absentee Ballot Sent
             </th>
 
+            <td class="text-center border-start {% if voter.progress.ballot_sent %} text-muted {% endif %}">
+                {{ voter.progress.ballot_sent.deadline_humanized }}
+            </td>
+
             <td class="text-center table-{{ voter.progress.ballot_sent.color }} border-start">
                 {{ voter.progress.ballot_sent.icon }}
             </td>
@@ -219,16 +223,16 @@
             <td class="text-center table-{{ voter.progress.ballot_sent.color }}">
                 {{ voter.progress.ballot_sent.date_shortened }}
             </td>
-
-            <td class="text-center border-start {% if voter.progress.ballot_sent %} text-muted {% endif %}">
-                {{ voter.progress.ballot_sent.deadline_humanized }}
-            </td>
         </tr>
 
         <tr class="align-middle">
             <th scope="row">
                 Absentee Ballot Returned
             </th>
+
+            <td class="text-center border-start {% if voter.progress.ballot_returned %} text-muted {% endif %}">
+                {{ voter.progress.ballot_returned.deadline_humanized }}
+            </td>
 
             {% if voter.progress.ballot_sent and not voter.progress.ballot_returned %}
             <td colspan="2" class="text-center table-{{ voter.progress.ballot_returned.color }} border-start">
@@ -259,16 +263,16 @@
                 {{ voter.progress.ballot_returned.date_shortened }}
             </td>
             {% endif %}
-
-            <td class="text-center border-start {% if voter.progress.ballot_returned %} text-muted {% endif %}">
-                {{ voter.progress.ballot_returned.deadline_humanized }}
-            </td>
         </tr>
 
         <tr class="align-middle">
             <th scope="row">
                 Absentee Ballot Received
             </th>
+
+            <td class="text-center border-start {% if voter.progress.ballot_received %} text-muted {% endif %}">
+                {{ voter.progress.ballot_received.deadline_humanized }}
+            </td>
 
             <td class="text-center table-{{ voter.progress.ballot_received.color }} border-start">
                 {{ voter.progress.ballot_received.icon }}
@@ -277,16 +281,17 @@
             <td class="text-center table-{{ voter.progress.ballot_received.color }}">
                 {{ voter.progress.ballot_received.date_shortened }}
             </td>
-
-            <td class="text-center border-start {% if voter.progress.ballot_received %} text-muted {% endif %}">
-                {{ voter.progress.ballot_received.deadline_humanized }}
-            </td>
         </tr>
 
         <tr class="align-middle">
             <th scope="row">
                 {{ voter.election|default:"Next" }} Election
             </th>
+
+            <td class="text-center border-start {% if voter.progress.voted %} text-muted {% endif %}">
+                {{ voter.progress.election.date_humanized }}
+            </td>
+
             {% if voter.progress.ballot_available.url %}
                 {% if voter.progress.ballot_received.date %}
                     <td class="text-center table-{{ voter.progress.voted.color }} border-start">
@@ -343,10 +348,6 @@
             </td>
             <td class="text-center table-{{ voter.progress.voted.color }}"></td>
             {% endif %}
-
-            <td class="text-center border-start {% if voter.progress.voted %} text-muted {% endif %}">
-                {{ voter.progress.election.date_humanized }}
-            </td>
         </tr>
 
     </tbody>
