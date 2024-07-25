@@ -8,7 +8,12 @@
             </th>
 
             <th scope="col" colspan="2" class="text-center align-middle border">
-                Your Progress
+                {% if voter.user == request.user %}
+                Your
+                {% else %}
+                Their
+                {% endif %}
+                Progress
             </th>
         </tr>
     </thead>
