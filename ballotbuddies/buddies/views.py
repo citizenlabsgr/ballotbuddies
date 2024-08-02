@@ -272,6 +272,7 @@ def friends_status(request: HttpRequest, slug: str):
         voter.promoter = request.user.voter
         voter.updated = timezone.now()
         voter.save()
+        voter.share_status()
         render_as_table = True
 
     if "voted" in request.POST:
@@ -280,6 +281,7 @@ def friends_status(request: HttpRequest, slug: str):
         voter.promoter = request.user.voter
         voter.updated = timezone.now()
         voter.save()
+        voter.share_status()
         render_as_table = True
 
     if "reset" in request.POST or "reset" in request.GET:
