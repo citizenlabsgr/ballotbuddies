@@ -533,9 +533,6 @@ class Voter(models.Model):
         return "−"
 
     def save(self, **kwargs):
-        if self.ballot:
-            # TODO: Remove this after 6/20 and not more occurrences
-            assert "slug" not in self.ballot, f"Invalid ballot: {self.ballot}"
         if self.user.get_full_name().islower():
             self.user.first_name = self.user.first_name.capitalize()
             self.user.last_name = self.user.last_name.capitalize()
