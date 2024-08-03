@@ -546,3 +546,22 @@ class Voter(models.Model):
             self.friends.remove(self)
         if self.user.pk:
             super().save(**kwargs)
+
+
+class Note(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    voter = models.ForeignKey(Voter, on_delete=models.CASCADE)
+    text = models.TextField()
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "voter"], name="unique_user_voter_note"
+            )
+        ]
+        ordering = ["-updated"]
+
+    def __str__(self):
+        return str(self.text).replace("\n", " ")

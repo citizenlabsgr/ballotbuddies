@@ -5,7 +5,7 @@ import json
 from django.contrib import admin, messages
 from django.utils.safestring import mark_safe
 
-from .models import Voter
+from .models import Note, Voter
 
 
 def reset_selected_voters(modeladmin, request, queryset):
@@ -96,3 +96,17 @@ class VoterAdmin(admin.ModelAdmin):
         data = json.dumps(voter.status, indent=4)
         html = f'<a href="{url}" target="_blank">Status API</a><pre>{data}</pre>'
         return mark_safe(html)
+
+
+@admin.register(Note)
+class NoteAdmin(admin.ModelAdmin):
+    list_display = ["text", "user", "voter", "updated"]
+    search_fields = (
+        "user__username",
+        "user__email",
+        "voter__user__username",
+        "voter__user__email",
+        "text",
+    )
+    list_filter = ["updated"]
+    readonly_fields = ["updated"]
