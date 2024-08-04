@@ -2,10 +2,18 @@
 
 <p>
     {{ voter.updated|default:"Never (Incomplete Voter Information)" }}
+    {% if request.user == voter.user %}
     <a href="{% url 'buddies:status' slug=voter.slug %}?reset=true"
         class="ms-1 text-reset text-decoration-none"
         style="opacity: 0.25;"
         title="Reset ballot">
         <i class="fa-solid fa-xmark"></i>
     </a>
+    {% elif request.user.is_staff %}
+    <a href="{% url 'buddies:status' slug=voter.slug %}?reset=true"
+        class="ms-1 text-danger text-decoration-none"
+        title="Reset ballot">
+        <i class="fa-solid fa-xmark"></i>
+    </a>
+    {% endif %}
 </p>

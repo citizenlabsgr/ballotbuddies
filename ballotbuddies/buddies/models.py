@@ -412,6 +412,7 @@ class Voter(models.Model):
             self.promoter = promoter
         if not self.user.is_test:  # type: ignore
             self.updated = None
+        Note.objects.filter(voter=self).delete()
 
     def update_status(self) -> tuple[bool, str]:
         message = ""
@@ -555,7 +556,6 @@ class Note(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-
         constraints = [
             models.UniqueConstraint(
                 fields=["user", "voter"], name="unique_user_voter_note"

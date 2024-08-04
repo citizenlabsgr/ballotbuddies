@@ -18,4 +18,6 @@ urlpatterns = [
     path("friends/<slug>/setup/", views.friends_setup, name="friends-setup"),
     path("friends/<slug>/_status", views.friends_status, name="status"),
     path("friends/<slug>/_email", views.friends_email, name="email"),
+    # Notes
+    path("friends/<slug>/_note/", views.friends_note, name="note"),
 ]

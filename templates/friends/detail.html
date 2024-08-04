@@ -105,6 +105,14 @@
     {% include "profile/_table.html" %}
 </div>
 
+<form hx-post="{% url 'buddies:note' voter.slug %}" hx-trigger="change delay:3s" hx-swap="none">
+    {% csrf_token %}
+    <div class="mb-3">
+      <textarea class="form-control" rows="3" placeholder="Keep notes here as you encourage this friend to vote. No one will see this but you."
+        name="text">{{ note.text }}</textarea>
+    </div>
+</form>
+
 {% include "profile/_updated.html" %}
 
 {% endblock main %}
