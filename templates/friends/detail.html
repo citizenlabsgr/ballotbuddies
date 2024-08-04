@@ -4,43 +4,6 @@
 
 {% block main %}
 
-<script>
-    async function redirectToEmail() {
-        try {
-            const response = await fetch('{% url "buddies:email" slug=voter.slug %}');
-            const data = await response.json();
-            const email = data.email;
-
-            const newTab = window.open(`mailto:${email}`, '_blank');
-
-            if (newTab) {
-                setTimeout(() => {
-                    newTab.close();
-                }, 5000);
-            } else {
-                alert("Your browser blocked us from opening your email app. Please allow pop-ups for this site to email your friend.");
-            }
-
-        } catch (error) {
-            console.error('Error fetching email:', error);
-        }
-    }
-
-    function removeEmailParamFromUrl() {
-        const urlWithoutEmail = window.location.href.replace(/([&?]email=true)(&|$)/, '$2');
-        history.replaceState(null, null, urlWithoutEmail);
-    }
-
-    function checkEmailInUrlAndRedirect() {
-        if (window.location.href.includes("email=true")) {
-            redirectToEmail();
-            removeEmailParamFromUrl();
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", checkEmailInUrlAndRedirect);
-</script>
-
 <h1 class="d-flex align-items-center justify-content-between mb-4">
     <span>{% firstof voter "Friend" %}'s Profile</span>
     <span id="spinner" class="spinner-border text-secondary fs-5 htmx-indicator" role="status">
@@ -105,6 +68,54 @@
     {% include "profile/_table.html" %}
 </div>
 
+<form hx-post="{% url 'buddies:note' voter.slug %}"
+    hx-trigger="keyup delay:1s"
+    hx-swap="none"
+    hx-indicator="#spinner">
+    {% csrf_token %}
+    <div class="mb-3">
+      <textarea class="form-control" rows="3" placeholder="Keep notes here as you encourage this friend to vote. No one will see this but you."
+        name="text">{{ note.text }}</textarea>
+    </div>
+</form>
+
 {% include "profile/_updated.html" %}
+
+<script>
+    async function redirectToEmail() {
+        try {
+            const response = await fetch('{% url "buddies:email" slug=voter.slug %}');
+            const data = await response.json();
+            const email = data.email;
+
+            const newTab = window.open(`mailto:${email}`, '_blank');
+
+            if (newTab) {
+                setTimeout(() => {
+                    newTab.close();
+                }, 5000);
+            } else {
+                alert("Your browser blocked us from opening your email app. Please allow pop-ups for this site to email your friend.");
+            }
+
+        } catch (error) {
+            console.error('Error fetching email:', error);
+        }
+    }
+
+    function removeEmailParamFromUrl() {
+        const urlWithoutEmail = window.location.href.replace(/([&?]email=true)(&|$)/, '$2');
+        history.replaceState(null, null, urlWithoutEmail);
+    }
+
+    function checkEmailInUrlAndRedirect() {
+        if (window.location.href.includes("email=true")) {
+            redirectToEmail();
+            removeEmailParamFromUrl();
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", checkEmailInUrlAndRedirect);
+</script>
 
 {% endblock main %}

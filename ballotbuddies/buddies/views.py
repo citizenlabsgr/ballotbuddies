@@ -11,7 +11,7 @@ from django.utils import timezone
 import log
 
 from .forms import FriendsForm, VoterForm
-from .models import Voter
+from .models import Note, Voter
 
 ###############################################################################
 # Profile
@@ -201,7 +201,11 @@ def friends_profile(request: HttpRequest, slug: str):
             messages.debug(request, cta.html)
 
     form = VoterForm(initial=voter.data, locked=True)
-    context = {"voter": voter, "form": form}
+    context = {
+        "voter": voter,
+        "form": form,
+        "note": Note.objects.get_or_blank(request.user, voter),
+    }
     return render(request, "friends/detail.html", context)
 
 
@@ -301,6 +305,15 @@ def friends_status(request: HttpRequest, slug: str):
         template_name = "friends/_row.html"
     context = {"voter": voter, "recommended": []}
     return render(request, template_name, context)
+
+
+@login_required
+def friends_note(request: HttpRequest, slug: str):
+    assert isinstance(request.user, User)
+    voter = Voter.objects.get(slug=slug)
+    Note.objects.update_text(request.user, voter, request.POST["text"])
+    time.sleep(1.0)
+    return HttpResponse()
 
 
 @login_required
