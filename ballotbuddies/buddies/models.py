@@ -412,7 +412,7 @@ class Voter(models.Model):
             self.promoter = promoter
         if not self.user.is_test:  # type: ignore
             self.updated = None
-        Note.objects.filter(voter=self).delete()
+        Note.objects.reset(self)
 
     def update_status(self) -> tuple[bool, str]:
         message = ""
@@ -549,11 +549,28 @@ class Voter(models.Model):
             super().save(**kwargs)
 
 
+class NoteManager(models.Manager):
+    def get_or_blank(self, user: User, voter: Voter) -> Note:
+        note = self.filter(user=user, voter=voter).first()
+        return note or Note()  # type: ignore[return-value]
+
+    def update_text(self, user: User, voter: Voter, text: str):
+        note, _created = self.update_or_create(
+            user=user, voter=voter, defaults={"text": text}
+        )
+        log.info(f"{user} updated note for {voter}: {note}")
+
+    def reset(self, voter: Voter):
+        self.filter(voter=voter).delete()
+
+
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     voter = models.ForeignKey(Voter, on_delete=models.CASCADE)
     text = models.TextField()
     updated = models.DateTimeField(auto_now=True)
+
+    objects: NoteManager = NoteManager()
 
     class Meta:
         constraints = [

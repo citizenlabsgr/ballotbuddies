@@ -204,7 +204,7 @@ def friends_profile(request: HttpRequest, slug: str):
     context = {
         "voter": voter,
         "form": form,
-        "note": Note.objects.filter(user=request.user, voter=voter).first() or Note(),
+        "note": Note.objects.get_or_blank(request.user, voter),
     }
     return render(request, "friends/detail.html", context)
 
@@ -310,11 +310,8 @@ def friends_status(request: HttpRequest, slug: str):
 @login_required
 def friends_note(request: HttpRequest, slug: str):
     assert isinstance(request.user, User)
-    voter: Voter = Voter.objects.get(slug=slug)
-    note, _created = Note.objects.update_or_create(
-        user=request.user, voter=voter, defaults={"text": request.POST["text"]}
-    )
-    log.info(f"{request.user} updated note for {voter}: {note}")
+    voter = Voter.objects.get(slug=slug)
+    Note.objects.update_text(request.user, voter, request.POST["text"])
     return HttpResponse()
 
 
