@@ -312,6 +312,7 @@ def friends_note(request: HttpRequest, slug: str):
     assert isinstance(request.user, User)
     voter = Voter.objects.get(slug=slug)
     Note.objects.update_text(request.user, voter, request.POST["text"])
+    time.sleep(1.0)
     return HttpResponse()
 
 

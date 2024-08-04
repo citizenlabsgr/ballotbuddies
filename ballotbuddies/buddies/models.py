@@ -556,7 +556,7 @@ class NoteManager(models.Manager):
 
     def update_text(self, user: User, voter: Voter, text: str):
         note, _created = self.update_or_create(
-            user=user, voter=voter, defaults={"text": text}
+            user=user, voter=voter, defaults={"text": text.strip()}
         )
         log.info(f"{user} updated note for {voter}: {note}")
 
