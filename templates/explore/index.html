@@ -43,7 +43,13 @@
 
 <div class="container-xl my-3">
 
-    <h1 class="text-center">Explore Ballot Items</h1>
+    <div class="d-flex align-items-center justify-content-center gap-3">
+        <h1 class="text-center">Explore Ballot Items</h1>
+        <button class="btn btn-sm btn-outline-secondary" type="button" id="copy-button"
+                data-clipboard-text="{{ share_url }}">
+                <i class="fa-solid fa-share-from-square"></i>
+        </button>
+    </div>
 
     <div class="sticky-nav">
 
@@ -192,5 +198,19 @@
     </div>
 
 </div>
+
+<script>
+var copyButton = document.getElementById('copy-button');
+copyButton.addEventListener('click', function() {
+    var textToCopy = copyButton.getAttribute('data-clipboard-text');
+    navigator.clipboard.writeText(textToCopy).then(function() {
+        copyButton.setAttribute('title', 'Link Copied');
+        var tooltip = new bootstrap.Tooltip(copyButton);
+        tooltip.show();
+    }).catch(function(error) {
+        console.error("Clipboard error: ", error);
+    });
+});
+</script>
 
 {% endblock content %}

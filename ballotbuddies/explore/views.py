@@ -3,16 +3,20 @@ from django.shortcuts import redirect, render
 
 import log
 from asgiref.sync import sync_to_async
+from furl import furl
 
 from . import constants, helpers
-
-async_render = sync_to_async(render)
 
 
 async def index(request: HttpRequest):
     is_authenticated = await sync_to_async(lambda: request.user.is_authenticated)()
-    if request.GET.get("referrer") and is_authenticated:
+    if referrer := request.GET.get("referrer"):
+        log.info(f"Returned to explore from {referrer=}")
+
+    if referrer == "api" and is_authenticated:
         return redirect("buddies:profile")
+    elif referrer:
+        request.session["referrer"] = referrer
 
     total, elections = await helpers.get_elections()
     if total and elections[0]["active"]:
@@ -77,6 +81,7 @@ async def _filter_proposals(
         "count": len(proposals),
         "limit": limit,
         "banner": banner,
+        "share_url": await _build_share_url(request),
     }
 
     if "limit" in request.GET:
@@ -84,7 +89,7 @@ async def _filter_proposals(
     else:
         template_name = "explore/index.html"
 
-    return await async_render(request, template_name, context)
+    return await _render(request, template_name, context)
 
 
 async def positions_list(request: HttpRequest):
@@ -143,6 +148,7 @@ async def _filter_positions(
         "count": len(positions),
         "limit": limit,
         "banner": banner,
+        "share_url": await _build_share_url(request),
     }
 
     if "limit" in request.GET:
@@ -150,7 +156,7 @@ async def _filter_positions(
     else:
         template_name = "explore/index.html"
 
-    return await async_render(request, template_name, context)
+    return await _render(request, template_name, context)
 
 
 async def elections_list(request: HttpRequest):
@@ -160,9 +166,10 @@ async def elections_list(request: HttpRequest):
         "elections": elections,
         "total": total,
         "banner": f"election_id={elections[0]['id']}",
+        "share_url": await _build_share_url(request),
     }
 
-    return await async_render(request, "explore/index.html", context)
+    return await _render(request, "explore/index.html", context)
 
 
 def _normalize(q: str, item: dict) -> str:
@@ -173,3 +180,16 @@ def _normalize(q: str, item: dict) -> str:
         log.info(f"Matched {q=} to {item}")
         return ""
     return q
+
+
+@sync_to_async
+def _build_share_url(request: HttpRequest) -> str:
+    share_url = request.build_absolute_uri()
+    if request.user.is_authenticated:
+        parts = furl(share_url)
+        parts.args["referrer"] = request.user.voter.slug
+        share_url = parts.url
+    return share_url
+
+
+_render = sync_to_async(render)
