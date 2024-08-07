@@ -37,7 +37,7 @@ def describe_proposals():
     def it_filters_proposals_by_text(expect, client):
         response = client.get("/explore/proposals/election/54/?q=money")
         html = response.content.decode()
-        expect(html.count("money")) == 11
+        expect(html.count("money")) == 12
 
 
 def describe_positions():
@@ -70,7 +70,7 @@ def describe_positions():
     def it_filters_positions_by_text(expect, client):
         response = client.get("/explore/positions/election/54/?q=taxes")
         html = response.content.decode()
-        expect(html.count("taxes")) == 7
+        expect(html.count("taxes")) == 8
 
 
 def describe_elections():
