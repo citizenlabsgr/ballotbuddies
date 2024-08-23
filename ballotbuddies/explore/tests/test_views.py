@@ -1,7 +1,13 @@
 # pylint: disable=unused-variable,expression-not-assigned
 
+from unittest.mock import AsyncMock, patch
+
 
 def describe_index():
+    @patch(
+        "ballotbuddies.explore.helpers.get_elections",
+        AsyncMock(return_value=(1, [{"id": 42, "active": True}])),
+    )
     def it_redirects_to_proposals(expect, client):
         response = client.get("/explore/")
         expect(response.status_code) == 302
