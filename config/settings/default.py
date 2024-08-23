@@ -138,7 +138,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 52
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "US/Michigan"
+TIME_ZONE = "America/Detroit"
 
 USE_I18N = True
 
