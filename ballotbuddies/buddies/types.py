@@ -274,8 +274,6 @@ class Progress:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
             progress.registered.url = constants.MICHIGAN_REGISTRATION_URL
-            if progress.election.days < constants.PAST_ELECTION_DAYS:
-                progress.election = State()
             return progress
 
         if absentee := status.get("absentee"):
@@ -303,19 +301,6 @@ class Progress:
             progress.ballot_sent.icon = "−"
             progress.ballot_returned.icon = "−"
             progress.ballot_received.icon = "−"
-
-        if progress.election.days < constants.PAST_ELECTION_DAYS:
-            progress.registered.deadline = ""
-            progress.absentee_requested.deadline = ""
-            progress.absentee_received.deadline = ""
-            progress.ballot_available.deadline = ""
-            progress.ballot_completed.deadline = ""
-            progress.ballot_shared.deadline = ""
-            progress.ballot_sent.deadline = ""
-            progress.ballot_returned.deadline = ""
-            progress.ballot_received.deadline = ""
-            progress.election = State()
-            return progress
 
         if has_ballot := status.get("ballot"):
             progress.absentee_requested.color = "success text-muted"

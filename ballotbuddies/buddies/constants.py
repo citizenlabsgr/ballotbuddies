@@ -25,7 +25,6 @@ BALLOT_RETURNED_DEADLINE_DELTA = timedelta(weeks=2, days=2)  # buffer for mail s
 BALLOT_RECEIVED_DEADLINE_DELTA = timedelta(days=4)  # Friday before the election
 ABSENTEE_WARNING_DAYS = 7  # buffer for mail service
 EARLY_VOTING_DAYS = 29  # minimum of 9 state-wide but communities can do more
-PAST_ELECTION_DAYS = -14  # number of days to show voter progress after an election
 
 
 ALLOW_FAKE_DATA = settings.ALLOW_DEBUG or hasattr(settings, "TEST")
