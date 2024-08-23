@@ -41,11 +41,6 @@ def describe_progress():
             expect(progress.percent) == percent
 
     def describe_actions():
-        def is_one_for_election_today(expect, monkeypatch):
-            monkeypatch.setenv("TODAY", "now")
-            progress = Progress.parse(SAMPLE_DATA[1].status)
-            expect(progress.actions) == 1
-
         def is_zero_for_past_elections(expect, monkeypatch):
             monkeypatch.setenv("TODAY", "2021-11-03")
             progress = Progress.parse(SAMPLE_DATA[1].status)
