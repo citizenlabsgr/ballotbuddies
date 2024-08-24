@@ -102,7 +102,8 @@ def get_activity_email(
     email = EmailMessage(str(message), body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
     if voter.progress.election.days <= 0 and not debug:
-        log.critical(f"Attempted to email {voter} about past election: {context}")
+        level = log.WARNING if profile.always_alert else log.CRITICAL
+        log.log(level, f"Attempted to email {voter} about past election: {context}")
         return None
     return email
 
