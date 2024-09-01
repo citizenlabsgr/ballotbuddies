@@ -52,18 +52,6 @@ def describe_voter():
 
             expect(voter.progress.voted.color) == "success text-muted"
 
-        @pytest.mark.skip(
-            reason="https://github.com/citizenlabsgr/ballotbuddies/issues/265"
-        )
-        def with_vote_from_past_election(expect, voter: Voter):
-            voter.status = REGISTERED.status
-            voter.ballot = "http://example.com"
-            voter.voted = timezone.now()
-
-            expect(bool(voter.progress.ballot_available)) == False
-            expect(voter.ballot) == None
-            expect(voter.voted) == None
-
     def describe_activity():
         @pytest.mark.parametrize(
             ("status", "activity"),
