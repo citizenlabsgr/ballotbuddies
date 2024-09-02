@@ -49,8 +49,21 @@ def update_statuses() -> int:
     log.info(f"Updating status for {query.count()} voter(s)")
     voter: Voter
     for voter in query:
-        if voter.update_status()[0]:
+        if clear_past_election(voter):
+            total += 1
+        elif voter.update_status()[0]:
             total += 1
         voter.save()
 
     return total
+
+
+def clear_past_election(voter: Voter) -> bool:
+    past = timezone.now() - timedelta(days=30)
+    for field in ["ballot_updated", "ballot_shared", "ballot_returned", "voted"]:
+        date = getattr(voter, field)
+        if date and date < past:
+            log.info(f"Clearing progress for past election: {voter}")
+            voter.reset_status()
+            return True
+    return False
