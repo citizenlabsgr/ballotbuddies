@@ -64,6 +64,7 @@ def clear_past_election(voter: Voter) -> bool:
         date = getattr(voter, field)
         if date and date < past:
             log.info(f"Clearing progress for past election: {voter}")
+            voter.updated = None
             voter.reset_status(status={})
             return True
     return False
