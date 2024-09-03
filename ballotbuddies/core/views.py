@@ -116,7 +116,11 @@ def logout(request: HttpRequest):
 
 
 def about(request):
-    return render(request, "about/index.html")
+    return render(request, "about/index.html", {"privacy": False})
+
+
+def privacy(request):
+    return render(request, "about/index.html", {"privacy": True})
 
 
 def zapier(request: HttpRequest):
