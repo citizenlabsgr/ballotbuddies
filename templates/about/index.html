@@ -6,4 +6,22 @@
 
 {% include "about/_details.html" %}
 
+<hr class="mt-5">
+
+{% if privacy %}
+
+    <div class="text-muted">
+    {% include "about/_privacy.html" %}
+    </div>
+
+{% else %}
+
+    <div class="text-muted float-end">
+    Click
+    <a class="text-reset" href="{% url 'core:privacy' %}">here</a>
+    to view our privacy policy.
+    </div>
+
+{% endif %}
+
 {% endblock main %}
