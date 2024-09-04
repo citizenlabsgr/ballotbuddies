@@ -15,6 +15,7 @@
   "pylint.args": ["--rcfile=.pylint.ini"],
   "djlint.ignore": ["H021"],
   "cSpell.words": [
+    "allauth",
     "asdict",
     "asgi",
     "asgiref",
@@ -59,6 +60,7 @@
     "Rosalynn",
     "runserver",
     "setenv",
+    "socialaccount",
     "Ulrich",
     "unfollowed",
     "Unfollowing",

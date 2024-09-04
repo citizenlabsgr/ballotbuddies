@@ -25,6 +25,11 @@ django-sesame = "^2.4"
 django-user-agents = "~0.4"
 crispy-bootstrap5 = "^2024.2"
 
+# Auth
+django-allauth = "^64.2"
+pyjwt = "*"
+cryptography = "*"
+
 # API
 djangorestframework = "~3.14"
 httpx = "~0.26"

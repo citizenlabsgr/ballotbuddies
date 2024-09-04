@@ -106,7 +106,10 @@ def login(request: HttpRequest):
     else:
         form = LoginForm()
 
-    context = {"form": form}
+    context = {
+        "form": form,
+        "google": bool(settings.SOCIALACCOUNT_PROVIDERS["google"]["APP"]["client_id"]),  # type: ignore[index]
+    }
     return render(request, "login.html", context)
 
 

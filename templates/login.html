@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load crispy_forms_tags %}
+{% load socialaccount %}
 
 {% block meta %}
     <meta name="robots" content="noindex, nofollow">
@@ -47,6 +48,14 @@
         </button>
         {% endif %}
     </form>
+
+    {% if google %}
+    <hr>
+
+    <a class="btn btn-outline-dark" href="{% provider_login_url 'google' %}">
+        <i class="fa-brands fa-google"></i> Log in with Google
+    </a>
+    {% endif %}
 
     {% endif %}
 

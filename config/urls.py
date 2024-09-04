@@ -14,6 +14,7 @@ urlpatterns: list = [
     path("zapier/", zapier),
     path("api/", include("ballotbuddies.api.urls")),
     path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
     path(
         "service-worker.js",
         (
