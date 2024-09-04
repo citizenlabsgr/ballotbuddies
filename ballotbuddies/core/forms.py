@@ -23,10 +23,7 @@ class LoginForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 "type": "email",
-                "autofocus": True,
                 "placeholder": "Email address",
-                "autocomplete": "off",
-                "data-lpignore": "true",
             }
         ),
     )
