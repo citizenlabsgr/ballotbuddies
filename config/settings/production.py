@@ -21,6 +21,8 @@ ALLOWED_HOSTS = ["localhost", ".michiganelections.io"]
 
 CSRF_TRUSTED_ORIGINS = ["https://*.michiganelections.io"]
 
+SECURE_SSL_REDIRECT = True
+
 ###############################################################################
 # Databases
 
