@@ -38,11 +38,11 @@ class VoterForm(forms.ModelForm):
             del self.fields["email"]
             if not kwargs["initial"].get("nickname"):
                 del self.fields["nickname"]
-            for name in self.fields:
-                self.fields[name].required = False
-                self.fields[name].widget.attrs["autofocus"] = False
-                self.fields[name].widget.attrs["readonly"] = True
-                self.fields[name].widget.attrs["data-lpignore"] = True
+            for field in self.fields.values():
+                field.required = False
+                field.widget.attrs["disabled"] = True
+                field.widget.attrs.pop("placeholder", None)
+                field.widget.input_type = "text"
 
     def clean_zip_code(self):
         value = self.cleaned_data["zip_code"].strip()
