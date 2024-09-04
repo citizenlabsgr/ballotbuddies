@@ -220,8 +220,6 @@ AUTHENTICATION_BACKENDS = [
 ###############################################################################
 # Django allauth
 
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {

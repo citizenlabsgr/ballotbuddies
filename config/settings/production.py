@@ -67,3 +67,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Static files
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+###############################################################################
+# Django allauth
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
