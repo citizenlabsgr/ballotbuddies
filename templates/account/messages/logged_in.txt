@@ -1,0 +1,3 @@
+{% if not user.voter.complete %}
+Succesffuly logged in! Finish setting up your profile to check for upcomging elections.
+{% endif %}
