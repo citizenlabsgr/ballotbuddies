@@ -2,6 +2,7 @@
 {% url 'buddies:search' as search_url %}
 {% url 'buddies:profile' as profile_url %}
 {% url 'core:about' as about_url %}
+{% url 'core:privacy' as privacy_url %}
 {% url 'core:login' as login_url %}
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -51,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == about_url %} active {% endif %} text-nowrap"
+                    <a class="nav-link {% if request.path == about_url or request.path == privacy_url %} active {% endif %} text-nowrap"
                         href="{% url 'core:about' %}" hx-boost="true">
                         <i class="fa-solid fa-circle-info"></i>
                         About <span class="d-md-none">This Site</span>
