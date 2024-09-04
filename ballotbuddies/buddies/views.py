@@ -38,7 +38,7 @@ def profile(request: HttpRequest):
         _updated, message = voter.update_status()
         voter.save()
         if message:
-            messages.error(request, message)
+            messages.info(request, message)
 
     if not messages.get_messages(request):
         for cta in voter.profile_cta:

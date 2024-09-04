@@ -221,6 +221,7 @@ class Voter(models.Model):
     @property
     def profile_cta(self) -> Iterator[Message]:
         if not self.complete:
+            yield Message("Finish setup to check for upcoming elections.")
             return
         if not self.progress.registered:
             yield Message(
@@ -228,6 +229,7 @@ class Voter(models.Model):
                 "View Registration",
                 constants.MICHIGAN_REGISTRATION_URL,
             )
+            return
         if not self.progress.actions:
             if not self.voted:
                 yield Message(
