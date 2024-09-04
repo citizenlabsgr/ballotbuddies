@@ -49,11 +49,13 @@
         {% endif %}
     </form>
 
+    {% if google %}
     <hr>
 
     <a class="btn btn-outline-dark" href="{% provider_login_url 'google' %}">
         <i class="fa-brands fa-google"></i> Log in with Google
     </a>
+    {% endif %}
 
     {% endif %}
 
