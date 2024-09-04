@@ -227,10 +227,8 @@ SOCIALACCOUNT_PROVIDERS = {
             "secret": os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
         },
         "SCOPE": ["profile", "email"],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
     }
 }
 
+SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_LOGIN_ON_GET = True

@@ -32,6 +32,8 @@ doctor: ## Check for required system dependencies
 	echo export REDIS_URL=redis://127.0.0.1:6379/0 >> $@
 	echo >> $@
 	echo export MANDRILL_API_KEY=??? >> $@
+	echo export GOOGLE_OAUTH_CLIENT_ID= >> $@
+	echo export GOOGLE_OAUTH_CLIENT_SECRET= >> $@
 	echo >> $@
 	echo export ELECTIONS_HOST=https://michiganelections.io >> $@
 	echo export PREVIEW_HOST=https://share.michiganelections.io >> $@
