@@ -21,7 +21,11 @@ class LoginForm(forms.ModelForm):
         required=True,
         label="",
         widget=forms.TextInput(
-            attrs={"autofocus": True, "placeholder": "Email address"}
+            attrs={
+                "type": "email",
+                "autofocus": True,
+                "placeholder": "Email address",
+            }
         ),
     )
 
