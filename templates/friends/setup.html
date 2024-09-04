@@ -6,6 +6,11 @@
 
 <h1>{% firstof voter.short_name "Friend" %}'s Voter Information</h1>
 
+<p class="text-muted">
+    Enter your friend's voter information below.
+    This will be used to check their registration status, discover upcoming elections, and show them a sample ballot.
+</p>
+
 <form method="post" novalidate>
     {% csrf_token %}
 
