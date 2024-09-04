@@ -134,14 +134,14 @@ endif
 
 .PHONY: test-backend-integration
 test-backend-integration: install
-	@ if test -e $(FAILURES); then $(RUN) pytest tests/integration; fi
+	@ if test -e $(FAILURES); then $(RUN) pytest tests/integration  --last-failed; fi
 	@ rm -rf $(FAILURES)
 	$(RUN) pytest tests/integration $(PYTEST_OPTIONS)
 	$(RUN) coveragespace update integration
 
 .PHONY: test-backend-all
 test-backend-all: install
-	@ if test -e $(FAILURES); then $(RUN) pytest $(PYTHON_PACKAGES) tests/unit tests/integration; fi
+	@ if test -e $(FAILURES); then $(RUN) pytest $(PYTHON_PACKAGES) tests/unit tests/integration --last-failed; fi
 	@ rm -rf $(FAILURES)
 	$(RUN) pytest $(PYTHON_PACKAGES) tests/unit tests/integration $(PYTEST_OPTIONS)
 	$(RUN) coveragespace update overall
