@@ -25,6 +25,7 @@ class LoginForm(forms.ModelForm):
                 "type": "email",
                 "autofocus": True,
                 "placeholder": "Email address",
+                "autocomplete": "off",
                 "data-lpignore": "true",
             }
         ),
