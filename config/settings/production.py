@@ -21,6 +21,7 @@ ALLOWED_HOSTS = ["localhost", ".michiganelections.io"]
 
 CSRF_TRUSTED_ORIGINS = ["https://*.michiganelections.io"]
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 
 ###############################################################################
