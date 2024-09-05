@@ -14,7 +14,7 @@ from ballotbuddies.buddies.models import Voter
 from .forms import LoginForm, SignupForm
 from .helpers import allow_debug, parse_domain
 
-GOOGLE = (bool(settings.SOCIALACCOUNT_PROVIDERS["google"]["APP"]["client_id"]),)  # type: ignore[index]
+GOOGLE = bool(settings.SOCIALACCOUNT_PROVIDERS["google"]["APP"]["client_id"])  # type: ignore[index]
 
 
 def index(request: HttpRequest):
