@@ -41,6 +41,7 @@ class VoterForm(forms.ModelForm):
             for field in self.fields.values():
                 field.required = False
                 field.widget.attrs["disabled"] = True
+                field.widget.attrs["data-lpignore"] = True
                 field.widget.attrs.pop("placeholder", None)
                 field.widget.input_type = "text"
 
