@@ -220,6 +220,9 @@ AUTHENTICATION_BACKENDS = [
 ###############################################################################
 # Django allauth
 
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
@@ -227,8 +230,13 @@ SOCIALACCOUNT_PROVIDERS = {
             "secret": os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
         },
         "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
     }
 }
 
-SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_LOGIN_ON_GET = True
+GOOGLE_AUTH_ENABLED = (
+    os.getenv("GOOGLE_OAUTH_CLIENT_ID")
+    and os.getenv("GOOGLE_OAUTH_CLIENT_ID") != "true"
+)

@@ -23,7 +23,7 @@
     <button class="btn btn-primary" type="submit">Sign up</button>
 </form>
 
-{% if google %}
+{% if google_auth_enabled %}
 <hr>
 
 <a class="btn btn-outline-dark" href="{% provider_login_url 'google' %}">

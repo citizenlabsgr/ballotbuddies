@@ -14,8 +14,6 @@ from ballotbuddies.buddies.models import Voter
 from .forms import LoginForm, SignupForm
 from .helpers import allow_debug, parse_domain
 
-GOOGLE = bool(settings.SOCIALACCOUNT_PROVIDERS["google"]["APP"]["client_id"])  # type: ignore[index]
-
 
 def index(request: HttpRequest):
     if referrer := request.GET.get("referrer", ""):
@@ -79,7 +77,7 @@ def join(request: HttpRequest):
     else:
         form = SignupForm()
 
-    context = {"form": form, "google": GOOGLE}
+    context = {"form": form}
     return render(request, "signup.html", context)
 
 
@@ -108,7 +106,7 @@ def login(request: HttpRequest):
     else:
         form = LoginForm()
 
-    context = {"form": form, "google": GOOGLE}
+    context = {"form": form}
     return render(request, "login.html", context)
 
 

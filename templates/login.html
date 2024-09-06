@@ -49,7 +49,7 @@
         {% endif %}
     </form>
 
-    {% if google %}
+    {% if google_auth_enabled %}
     <hr>
 
     <a class="btn btn-outline-dark" href="{% provider_login_url 'google' %}">
