@@ -15,7 +15,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         if existing_user := User.objects.filter(email=email).first():
             log.info(f"Logging in existing social user: {email}")
             login(request, existing_user, backend=settings.AUTHENTICATION_BACKENDS[0])
-            return redirect(request.GET.get("next") or "core:index")
+            return redirect(settings.LOGIN_REDIRECT_URL)
 
         log.info(f"Creating new social user: {email}")
         return super().pre_social_login(request, sociallogin)
