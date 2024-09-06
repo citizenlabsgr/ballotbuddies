@@ -26,7 +26,7 @@ django-user-agents = "~0.4"
 crispy-bootstrap5 = "^2024.2"
 
 # Auth
-django-allauth = "^64.2"
+django-allauth = "^64.2.1"
 pyjwt = "*"
 cryptography = "*"
 

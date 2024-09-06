@@ -61,6 +61,7 @@
     "runserver",
     "setenv",
     "socialaccount",
+    "sociallogin",
     "Ulrich",
     "unfollowed",
     "Unfollowing",

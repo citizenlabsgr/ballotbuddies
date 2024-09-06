@@ -223,6 +223,8 @@ AUTHENTICATION_BACKENDS = [
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+SOCIALACCOUNT_ADAPTER = "ballotbuddies.core.adapters.MySocialAccountAdapter"
+
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
