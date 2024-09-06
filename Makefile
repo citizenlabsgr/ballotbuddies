@@ -34,6 +34,7 @@ doctor: ## Check for required system dependencies
 	echo export MANDRILL_API_KEY=??? >> $@
 	echo export GOOGLE_OAUTH_CLIENT_ID= >> $@
 	echo export GOOGLE_OAUTH_CLIENT_SECRET= >> $@
+	echo export GOOGLE_OAUTH_DISABLED=false >> $@
 	echo >> $@
 	echo export ELECTIONS_HOST=https://michiganelections.io >> $@
 	echo export PREVIEW_HOST=https://share.michiganelections.io >> $@

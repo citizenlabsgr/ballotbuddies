@@ -237,6 +237,5 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 GOOGLE_AUTH_ENABLED = (
-    os.getenv("GOOGLE_OAUTH_CLIENT_ID")
-    and os.getenv("GOOGLE_OAUTH_CLIENT_ID") != "true"
+    os.getenv("GOOGLE_OAUTH_CLIENT_ID") and os.getenv("GOOGLE_OAUTH_DISABLED") != "true"
 )
