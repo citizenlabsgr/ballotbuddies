@@ -114,8 +114,8 @@ def send_selected_messages(modeladmin, request, queryset):
     count = 0
     message: Message
     for message in queryset:
-        helpers.send_activity_email(message.profile.voter.user)
-        count += 1
+        if helpers.send_activity_email(message.profile.voter.user, force=True):
+            count += 1
     s = "" if count == 1 else "s"
     messages.success(request, f"Sent {count} email{s}.")
 

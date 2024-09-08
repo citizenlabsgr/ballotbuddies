@@ -111,14 +111,16 @@ def get_activity_email(
     return email
 
 
-def send_activity_email(user: User):
+def send_activity_email(user: User, *, force: bool = False) -> bool:
     profile: Profile = user.voter.profile
-    if email := get_activity_email(user):
+    if email := get_activity_email(user, debug=force):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped activity email for test user: {user}")
         elif email.send(fail_silently=False):
             log.info(f"Sent activity email: {user}")
             profile.mark_alerted()
+            return True
+    return False
 
 
 def send_activity_emails(day: str) -> int:
