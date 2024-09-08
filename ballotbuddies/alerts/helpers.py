@@ -33,6 +33,7 @@ def get_login_email(user: User):
     subject = "Welcome to Ballot Buddies"
     voter: Voter = user.voter
     context = {
+        "base_url": settings.BASE_URL,
         "name": voter.short_name or "Voter",
         "complete": voter.complete,
         "url": build_url("/about"),
@@ -56,6 +57,7 @@ def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
     subject = f"Join {friend.display_name} on Ballot Buddies{extra}"
     voter: Voter = user.voter
     context = {
+        "base_url": settings.BASE_URL,
         "name": voter.short_name or "Voter",
         "complete": voter.complete,
         "friend": friend,
@@ -90,6 +92,7 @@ def get_activity_email(
     message = message or profile.message
     date = voter.progress.election.date_humanized.strip("−")
     context = {
+        "base_url": settings.BASE_URL,
         "name": voter.short_name or "Voter",
         "items": message.activity_lines,
         "election": voter.election,
@@ -133,6 +136,7 @@ def send_activity_emails(day: str) -> int:
 def get_voted_email(user: User):
     voter: Voter = user.voter
     context = {
+        "base_url": settings.BASE_URL,
         "name": voter.short_name or "Voter",
         "election": voter.election,
         "url": build_url("/friends"),

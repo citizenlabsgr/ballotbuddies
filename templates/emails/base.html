@@ -1,12 +1,22 @@
+{% load static %}
+
 <div style="background-color: #f5f5f5; padding: 20px; font-family: Arial, sans-serif;">
 
-    <div style="background-color: #ffffff !important; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+        <!-- Logo Section -->
+        <div style="text-align: center; margin-top: -10px; margin-bottom: -10px;">
+            <img src="{{ base_url }}{% static 'logo.png' %}" alt="Ballot Buddies Logo" height="50px" style="display: block; margin: 0 auto;">
+        </div>
+
+        <!-- Email Content -->
         <div>
             {% block content %}
             {% endblock content %}
         </div>
     </div>
 
+    <!-- Footer Section -->
     <div style="text-align: center; margin-top: 20px;">
 
         <p style="font-size: 10pt; color: #888888;">
