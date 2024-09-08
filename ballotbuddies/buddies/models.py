@@ -234,7 +234,7 @@ class Voter(models.Model):
             if not self.voted:
                 yield Message(
                     "You have no upcoming elections at this time. "
-                    "Check back in a few months for updates!"
+                    "Check back next month for updates!"
                 )
             return
         if self.absentee and not self.progress.absentee_requested:
