@@ -1,3 +1,7 @@
+{% extends "emails/base.html" %}
+
+{% block content %}
+
 <p style="font-size: 14pt;">
     Hello {{ name }},
 </p>
@@ -15,3 +19,5 @@
     {% endif %}
     <a href="{{ url }}{{ query_string }}">{{ url }}</a>
 </p>
+
+{% endblock content %}
