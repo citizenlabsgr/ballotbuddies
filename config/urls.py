@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 
 import debug_toolbar
 
-from ballotbuddies.core.views import zapier
+from ballotbuddies.core.views import logout, zapier
 
 urlpatterns: list = [
     path("", include("ballotbuddies.core.urls")),
@@ -14,6 +14,7 @@ urlpatterns: list = [
     path("zapier/", zapier),
     path("api/", include("ballotbuddies.api.urls")),
     path("admin/", admin.site.urls),
+    path("accounts/3rdparty/login/cancelled/", logout),
     path("accounts/", include("allauth.urls")),
     path(
         "service-worker.js",

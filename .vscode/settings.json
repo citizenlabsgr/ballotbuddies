@@ -57,6 +57,7 @@
     "ngrok",
     "postdeploy",
     "PYTHONUNBUFFERED",
+    "rdparty",
     "Rosalynn",
     "runserver",
     "setenv",

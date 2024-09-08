@@ -1,15 +1,17 @@
 from django.conf import settings
+from django.http import HttpRequest
 from django.shortcuts import redirect
 
 import log
 from allauth.account.utils import perform_login
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.socialaccount.models import SocialLogin
 
 from .models import User
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
-    def pre_social_login(self, request, sociallogin):
+    def pre_social_login(self, request: HttpRequest, sociallogin: SocialLogin):
         if sociallogin.is_existing:
             return None
 
