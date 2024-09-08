@@ -24,6 +24,8 @@ class LoginForm(forms.ModelForm):
             attrs={
                 "type": "email",
                 "placeholder": "Email address",
+                "autocomplete": "off",
+                "data-lpignore": "true",
             }
         ),
     )
