@@ -1,3 +1,7 @@
+{% extends "emails/base.html" %}
+
+{% block content %}
+
 <p style="font-size: 14pt;">
     Hello {{ name }},
 </p>
@@ -29,4 +33,4 @@
     <a href="{{ url }}{{ query_string }}">{{ url }}</a>
 </p>
 
-{% include "emails/_unsubscribe.html" %}
+{% endblock content %}

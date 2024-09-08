@@ -4,7 +4,8 @@
 
 <h1>Debug Tools</h1>
 
-<p><b>Voter:</b> {{ profile|stringformat:'r' }}</p>
+<p><b>Name:</b> {{ profile }}</p>
+<p><b>Email:</b> {{ profile.voter.user.email }}</p>
 <p><b>Today:</b> {{ today }}</p>
 
 <h2>Email Templates</h2>

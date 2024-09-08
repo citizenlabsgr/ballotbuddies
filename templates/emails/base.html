@@ -1,0 +1,41 @@
+{% load static %}
+
+<div style="background-color: #f5f5f5; padding: 20px; font-family: Arial, sans-serif;">
+
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+        <!-- Logo Section -->
+        <div style="text-align: center; margin-top: -10px; margin-bottom: -10px;">
+            <img src="{{ base_url }}{% static 'logo.png' %}" alt="Ballot Buddies Logo" height="50px" style="display: block; margin: 0 auto;">
+        </div>
+
+        <!-- Email Content -->
+        <div>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div style="text-align: center; margin-top: 20px;">
+
+        <p style="font-size: 10pt; color: #888888;">
+            <a href="https://citizenlabs.org/" target="_blank" style="color: #888888; text-decoration: none;">
+                Citizen Labs
+            </a>
+            <br>
+            77 Monroe Center St NW Ste 600
+            <br>
+            Grand Rapids, MI 49503
+        </p>
+
+        {% if unsubscribe_url %}
+        <p style="font-size: 10pt; color: #bbb;">
+            If you no longer wish to receive these emails, click
+            <a href="{{ unsubscribe_url }}{{ query_string }}" style="color: #bbb; text-decoration: underline;">here</a>
+            to unsubscribe.
+        </p>
+        {% endif %}
+
+    </div>
+</div>
