@@ -420,7 +420,7 @@ class Voter(models.Model):
         previous_fingerprint = self.fingerprint
 
         if self.state != "Michigan":
-            self.fetched = timezone.now()
+            self.updated = timezone.now()
             message = "Voter registration can only be fetched for Michigan."
         elif self.staleness < 60 * 15:
             message = "Voter registration has been fetched recently."
