@@ -289,7 +289,6 @@ def friends_status(request: HttpRequest, slug: str):
         render_as_table = True
 
     if "reset" in request.POST or "reset" in request.GET:
-        log.info(f"Clearing vote: {voter}")
         voter.reset_status(promoter=request.user.voter)
         voter.save()
         render_as_table = True

@@ -408,8 +408,7 @@ class Voter(models.Model):
         self.ballot_shared = None
         self.ballot_returned = None
         self.voted = None
-        if status is not None:
-            self.status = status
+        self.status = status
         if promoter:
             self.promoter = promoter
         if not self.user.is_test:  # type: ignore

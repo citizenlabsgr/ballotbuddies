@@ -65,6 +65,6 @@ def clear_past_election(voter: Voter) -> bool:
         if date and date < past:
             log.info(f"Clearing progress for past election: {voter}")
             voter.updated = None
-            voter.reset_status(status={})
+            voter.reset_status()
             return True
     return False
