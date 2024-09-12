@@ -23,11 +23,9 @@ def update_selected_voters(modeladmin, request, queryset):
     count = 0
     voter: Voter
     for voter in queryset:
-        updated, error = voter.update_status()
-        if updated:
+        if voter.update_status(force=True)[0]:
             voter.save()
-        if error:
-            messages.error(request, error)
+            count += 1
     s = "" if count == 1 else "s"
     messages.info(request, f"Updated {count} voter{s}.")
 

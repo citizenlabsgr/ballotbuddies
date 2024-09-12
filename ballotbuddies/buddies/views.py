@@ -35,6 +35,7 @@ def profile(request: HttpRequest):
         return redirect("buddies:profile")
 
     if voter.complete and not voter.updated:
+        log.info(f"Fetching initial status for voter: {voter} ")
         _updated, message = voter.update_status()
         voter.save()
         if message:

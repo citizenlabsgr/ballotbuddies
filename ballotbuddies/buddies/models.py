@@ -415,7 +415,7 @@ class Voter(models.Model):
             self.updated = None
         Note.objects.reset(self)
 
-    def update_status(self) -> tuple[bool, str]:
+    def update_status(self, *, force: bool = False) -> tuple[bool, str]:
         message = ""
         previous_fingerprint = self.fingerprint
 
@@ -441,7 +441,7 @@ class Voter(models.Model):
 
         if message:
             log.info(message.strip(".") + f": {self}")
-            if self.updated is not None:
+            if self.updated is not None and not force:
                 return False, message
 
         log.info(f"GET {self.status_api}")
