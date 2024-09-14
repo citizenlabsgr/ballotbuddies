@@ -64,7 +64,7 @@
     hx-get="{% url 'buddies:status' slug=voter.slug %}"
     hx-trigger="load delay:1s"
     hx-swap="outerHTML"
-    hx-indicator="#spinner">
+    {% if not voter.updated %} hx-indicator="#spinner" {% endif %}>
     {% include "profile/_table.html" %}
 </div>
 
