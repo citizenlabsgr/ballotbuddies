@@ -34,13 +34,6 @@ def profile(request: HttpRequest):
         messages.info(request, message)
         return redirect("buddies:profile")
 
-    if voter.complete and not voter.updated:
-        log.info(f"Fetching initial status for voter: {voter} ")
-        _updated, message = voter.update_status()
-        voter.save()
-        if message:
-            messages.info(request, message)
-
     if not messages.get_messages(request):
         for cta in voter.profile_cta:
             messages.warning(request, cta.html)
@@ -242,7 +235,12 @@ def friends_status(request: HttpRequest, slug: str):
     assert isinstance(request.user, User)
     voter: Voter = Voter.objects.get(slug=slug)
     render_as_table = request.method == "GET"
-    start = time.time()
+
+    if voter.complete and not voter.updated:
+        log.info(f"Fetching initial status for voter: {voter} ")
+        _updated, message = voter.update_status()
+        messages.info(request, message)
+        voter.save()
 
     if "ignore" in request.POST:
         log.info(f"Unfollowing voter: {voter}")
@@ -299,8 +297,6 @@ def friends_status(request: HttpRequest, slug: str):
 
     if render_as_table:
         template_name = "profile/_table.html"
-        while time.time() - start < 1.0:
-            time.sleep(0.1)
     else:
         template_name = "friends/_row.html"
     context = {"voter": voter, "recommended": []}
