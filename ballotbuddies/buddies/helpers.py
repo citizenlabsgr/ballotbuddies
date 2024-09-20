@@ -60,11 +60,9 @@ def update_statuses() -> int:
 
 def clear_past_election(voter: Voter) -> bool:
     past = timezone.now() - timedelta(days=45)
-    for field in ["ballot_updated", "ballot_shared", "ballot_returned", "voted"]:
-        date = getattr(voter, field)
-        if date and date < past:
-            log.info(f"Clearing progress for past election: {voter}")
-            voter.updated = None
-            voter.reset_status()
-            return True
+    if voter.voted and voter.voted < past:
+        log.info(f"Clearing progress for past election: {voter}")
+        voter.updated = None
+        voter.reset_status()
+        return True
     return False
