@@ -61,7 +61,7 @@ UNREGISTERED = VoterData(
             "deadline": "2021-10-18",
         },
         "absentee_requested": {
-            "icon": "",
+            "icon": "🟡",
             "color": "default",
             "url": "",
             "date": "",

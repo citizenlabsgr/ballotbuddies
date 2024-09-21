@@ -339,6 +339,7 @@ class Voter(models.Model):
             else:
                 progress.registered.icon = ""
                 progress.registered.color = "default"
+            progress.absentee_requested.icon = "🟡"
 
         if not self.absentee:
             progress.absentee_requested.icon = "✕"
