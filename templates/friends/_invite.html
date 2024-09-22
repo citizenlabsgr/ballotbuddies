@@ -1,7 +1,9 @@
 {% load crispy_forms_tags %}
+{% load qr_code %}
+
+{% with "http://"|add:request.get_host|add:"?referrer="|add:request.user.voter.slug as invitation_url %}
 
 {% if form %}
-
 <form method="post" novalidate>
     {% csrf_token %}
 
@@ -12,13 +14,22 @@
             <i class="fa-solid fa-user-plus"></i> Invite Friends
         </button>
         <button class="btn btn-secondary" type="button" id="copy-button"
-                data-clipboard-text="http://{{ request.get_host }}?referrer={{ request.user.voter.slug }}">
+                data-clipboard-text="{{ invitation_url }}">
                 <i class="fa-solid fa-share-from-square"></i> Copy Invitation Link
         </button>
     </div>
 </form>
-
 {% endif %}
+
+{% if qr_code %}
+<hr class="mt-5">
+<p>Or have them scan this QR code:</p>
+<div class="text-center">
+    {% qr_from_text invitation_url size="L" %}
+</div>
+{% endif %}
+
+{% endwith %}
 
 <script>
 var copyButton = document.getElementById('copy-button');
