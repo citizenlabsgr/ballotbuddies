@@ -327,5 +327,5 @@ def friends_invite(request: HttpRequest):
     else:
         form = FriendsForm()
 
-    context = {"form": form}
+    context = {"form": form, "qr_code": True}
     return render(request, "invite/index.html", context)

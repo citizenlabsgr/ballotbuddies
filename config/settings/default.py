@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "markdownify",
     "multi_email_field",
+    "qr_code",
     "annoying",
     "rest_framework",
     "ballotbuddies.core",
