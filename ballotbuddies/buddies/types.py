@@ -274,6 +274,7 @@ class Progress:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
             progress.registered.url = constants.MICHIGAN_REGISTRATION_URL
+            progress.absentee_requested.icon = "🟡"
             return progress
 
         if absentee := status.get("absentee"):
