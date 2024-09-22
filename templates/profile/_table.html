@@ -24,7 +24,7 @@
                 Registered to Vote
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.registered %} text-muted {% endif %}" >
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.registered %} text-faded {% endif %}" >
                 {{ voter.progress.registered.deadline_humanized }}
             </td>
 
@@ -46,7 +46,7 @@
                 Absentee Application Requested
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.absentee_requested %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.absentee_requested %} text-faded {% endif %}">
                 {{ voter.progress.absentee_requested.deadline_humanized }}
             </td>
 
@@ -108,7 +108,7 @@
                 Absentee Application Received
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.absentee_received %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.absentee_received %} text-faded {% endif %}">
                 {{ voter.progress.absentee_received.deadline_humanized }}
             </td>
 
@@ -144,7 +144,7 @@
                 Sample Ballot Available
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_available %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_available %} text-faded {% endif %}">
                 {{ voter.progress.ballot_available.deadline_humanized }}
             </td>
 
@@ -160,7 +160,7 @@
                 Sample Ballot Completed
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_completed %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_completed %} text-faded {% endif %}">
                 {{ voter.progress.ballot_completed.deadline_humanized }}
             </td>
 
@@ -194,7 +194,7 @@
                 Sample Ballot Shared
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_shared %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_shared %} text-faded {% endif %}">
                 {{ voter.progress.ballot_shared.deadline_humanized }}
             </td>
 
@@ -217,7 +217,7 @@
                 Absentee Ballot Sent
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_sent %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_sent %} text-faded {% endif %}">
                 {{ voter.progress.ballot_sent.deadline_humanized }}
             </td>
 
@@ -235,7 +235,7 @@
                 Absentee Ballot Returned
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_returned %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_returned %} text-faded {% endif %}">
                 {{ voter.progress.ballot_returned.deadline_humanized }}
             </td>
 
@@ -275,7 +275,7 @@
                 Absentee Ballot Received
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_received %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.ballot_received %} text-faded {% endif %}">
                 {{ voter.progress.ballot_received.deadline_humanized }}
             </td>
 
@@ -293,7 +293,7 @@
                 {{ voter.election|default:"Next" }} Election
             </th>
 
-            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.voted %} text-muted {% endif %}">
+            <td class="text-center border-start d-none d-md-table-cell {% if voter.progress.voted %} text-faded {% endif %}">
                 {{ voter.progress.election.date_humanized }}
             </td>
 

@@ -33,3 +33,9 @@ body {
   filter: blur(0);
   pointer-events: all;
 }
+
+/* Custom colors */
+
+.text-faded {
+  color: #b1b4b8 !important;
+}
