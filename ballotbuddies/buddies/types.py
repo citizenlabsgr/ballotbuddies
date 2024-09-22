@@ -134,6 +134,10 @@ class State:
             self.url = ""
         self.color = "success text-muted"
 
+    def wait(self):
+        if not self.icon:
+            self.icon = "🟡"
+
 
 @dataclass
 class Progress:
@@ -274,7 +278,8 @@ class Progress:
             progress.registered.icon = "🚫"
             progress.registered.color = "danger"
             progress.registered.url = constants.MICHIGAN_REGISTRATION_URL
-            progress.absentee_requested.icon = "🟡"
+            progress.absentee_requested.wait()
+            progress.absentee_received.wait()
             return progress
 
         if absentee := status.get("absentee"):
