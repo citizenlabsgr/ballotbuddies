@@ -24,7 +24,10 @@
 {% if qr_code %}
 <hr class="mt-5">
 <p>Or have them scan this QR code:</p>
-<div class="text-center">
+<div class="text-center d-md-none">
+    {% qr_from_text invitation_url size="M" %}
+</div>
+<div class="text-center d-none d-md-block ">
     {% qr_from_text invitation_url size="L" %}
 </div>
 {% endif %}
