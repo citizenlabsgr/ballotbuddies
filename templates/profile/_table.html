@@ -152,7 +152,11 @@
                 {{ voter.progress.ballot_available }}
             </td>
 
-            <td class="text-center table-{{ voter.progress.ballot_available.color }}"></td>
+            <td class="text-center table-{{ voter.progress.ballot_available.color }}">
+                {% if voter.ballot_items %}
+                {{ voter.ballot_items }} Item{{ voter.ballot_items|pluralize }}
+                {% endif %}
+            </td>
         </tr>
 
         <tr class="align-middle">
