@@ -9,6 +9,8 @@ from django.utils import timezone
 import log
 from annoying.fields import AutoOneToOneField
 
+from .constants import DEFAULT_ACTIVITY
+
 if TYPE_CHECKING:
     from ballotbuddies.buddies.models import Voter
 
@@ -150,7 +152,7 @@ class Message(models.Model):
 
     @property
     def activity_lines(self) -> list[str]:
-        return list(self.activity.values())
+        return list(self.activity.values()) or DEFAULT_ACTIVITY
 
     @property
     def dismissed(self) -> bool | None:
