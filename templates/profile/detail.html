@@ -49,9 +49,9 @@
 
 <h2 class="mt-5">Voter Information</h2>
 
-<div class="d-flex flex-column align-items-start flex-md-row justify-content-md-between align-items-md-center mb-2">
-    {{ voter.user.email }}
-    <form method="post" class="mt-2 mt-md-0 ml-md-3">{% csrf_token %}
+<div class="d-flex flex-column align-items-start flex-md-row justify-content-md-between align-items-md-center mb-3">
+    <input type="text" value="{{ voter.user.email }}" disabled class="textinput form-control">
+    <form method="post" class="ms-md-4 mt-2 mt-md-0 text-nowrap">{% csrf_token %}
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="send-reminders"
             {% if not voter.profile.never_alert %} checked {% endif %}
