@@ -11,19 +11,25 @@
     </span>
 </h1>
 
-<div class="d-flex flex-column align-items-start flex-md-row justify-content-md-between align-items-md-center">
-    {{ voter.user.email }}
-    <form method="post" class="mt-2 mt-md-0 ml-md-3">{% csrf_token %}
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="send-reminders"
-            {% if not voter.profile.never_alert %} checked {% endif %}
-            onChange="this.form.submit()">
-            <label class="form-check-label" for="send-reminders">
-                Send election reminders
-            </label>
-        </div>
-    </form>
+{% if voter.ballot_url %}
+<div>
+    {% if voter.progress.ballot_completed %}
+    <a href="{{ voter.ballot_edit_url }}" class="btn btn-secondary">
+        <i class="fa-solid fa-pen-to-square"></i> Edit Ballot
+    </a>
+    {% else %}
+    <a href="{{ voter.ballot_edit_url }}" class="btn btn-primary">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View Ballot
+    </a>
+    {% endif %}
+
+    {% if voter.progress.ballot_completed %}
+    <a href="{{ voter.ballot_share_url }}" class="btn btn-{% if voter.progress.ballot_shared %}secondary{% else %}primary{% endif %}">
+        <i class="fa-solid fa-share-from-square"></i> Share Ballot...
+    </a>
+    {% endif %}
 </div>
+{% endif %}
 
 {% if voter.complete %}
 
@@ -42,6 +48,20 @@
 {% include "profile/_updated.html" %}
 
 <h2 class="mt-5">Voter Information</h2>
+
+<div class="d-flex flex-column align-items-start flex-md-row justify-content-md-between align-items-md-center mb-2">
+    {{ voter.user.email }}
+    <form method="post" class="mt-2 mt-md-0 ml-md-3">{% csrf_token %}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="send-reminders"
+            {% if not voter.profile.never_alert %} checked {% endif %}
+            onChange="this.form.submit()">
+            <label class="form-check-label" for="send-reminders">
+                Send election reminders
+            </label>
+        </div>
+    </form>
+</div>
 
 <div class="mb-4">
 

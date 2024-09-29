@@ -11,6 +11,12 @@
     </span>
 </h1>
 
+{% if voter.ballot_url %}
+<a href="{{ voter.ballot_view_url }}" class="btn btn-primary">
+    <i class="fa-solid fa-arrow-up-right-from-square"></i> View Ballot
+</a>
+{% endif %}
+
 <div class="btn-group">
     <button class="btn btn-{% if voter.progress.actions %}primary{% else %}secondary{% endif %}" onclick="redirectToEmail()">
         <i class="fa-solid fa-envelope"></i> Send Email
