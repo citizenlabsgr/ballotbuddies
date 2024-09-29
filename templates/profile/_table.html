@@ -38,7 +38,8 @@
                 {% endif %}
             </td>
 
-            <td class="text-center table-{{ voter.progress.registered.color }}"></td>
+            <td class="text-center table-{{ voter.progress.registered.color }}">
+            </td>
         </tr>
 
         <tr class="align-middle">
@@ -99,7 +100,8 @@
                 {% endif %}
             </td>
             {% else %}
-            <td class="text-center table-{{ voter.progress.absentee_requested.color }}"></td>
+            <td class="text-center table-{{ voter.progress.absentee_requested.color }}">
+            </td>
             {% endif %}
         </tr>
 
@@ -153,9 +155,6 @@
             </td>
 
             <td class="text-center table-{{ voter.progress.ballot_available.color }}">
-                {% if voter.ballot_items %}
-                {{ voter.ballot_items }} Item{{ voter.ballot_items|pluralize }}
-                {% endif %}
             </td>
         </tr>
 
@@ -173,22 +172,7 @@
             </td>
 
             <td class="text-center table-{{ voter.progress.ballot_completed.color }}">
-            {% if voter.ballot_url %}
-                {% if request.user == voter.user %}
-                <a href="{{ voter.ballot_edit_url }}" class="text-decoration-none">
-                    {% if voter.progress.ballot_completed %}
-                    Edit
-                    {% else %}
-                    View
-                    {% endif %}
-                    Ballot
-                </a>
-            {% else %}
-                <a href="{{ voter.ballot_view_url }}" class="text-decoration-none">
-                    View Ballot
-                </a>
-                {% endif %}
-            {% endif %}
+                {{ voter.progress.ballot_completed.date_shortened }}
             </td>
         </tr>
 
@@ -207,11 +191,7 @@
             </td>
 
             <td class="text-center table-{{ voter.progress.ballot_shared.color }}">
-                {% if request.user == voter.user and voter.progress.ballot_completed %}
-                <a href="{{ voter.ballot_share_url }}" class="text-decoration-none">
-                    Share Ballot
-                </a>
-                {% endif %}
+                {{ voter.progress.ballot_shared.date_shortened }}
             </td>
         </tr>
         {% endif %}
@@ -306,7 +286,8 @@
                     <td class="text-center table-{{ voter.progress.voted.color }} border-start">
                         {{ voter.progress.voted.icon }}
                     </td>
-                    <td class="text-center table-{{ voter.progress.voted.color }}"></td>
+                    <td class="text-center table-{{ voter.progress.voted.color }}">
+                    </td>
                 {% elif voter.progress.voted %}
                     <td class="text-center table-{{ voter.progress.voted.color }} border-start">
                         {{ voter.progress.voted.icon }}
@@ -355,7 +336,8 @@
             <td class="text-center table-{{ voter.progress.voted.color }} border-start">
                 {{ voter.progress.voted.icon }}
             </td>
-            <td class="text-center table-{{ voter.progress.voted.color }}"></td>
+            <td class="text-center table-{{ voter.progress.voted.color }}">
+            </td>
             {% endif %}
         </tr>
 

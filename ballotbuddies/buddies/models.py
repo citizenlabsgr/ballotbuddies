@@ -244,11 +244,9 @@ class Voter(models.Model):
                 constants.ABSENTEE_URL,
             )
         if not self.ballot and self.ballot_url:
-            yield Message(
-                "Your sample ballot is ready",
-                "View Ballot",
-                self.ballot_edit_url,
-            )
+            items = self.ballot_items
+            s = "" if items == 1 else "s"
+            yield Message(f"Your sample ballot with {items} item{s} is available.")
 
     @cached_property
     def data(self) -> dict:

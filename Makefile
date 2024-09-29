@@ -159,8 +159,8 @@ HONCHO := .venv/bin/honcho
 run: .envrc install migrate ## Run the applicaiton
 	$(RUN) python manage.py runserver $${PORT:-8000}
 
-.PHONY: run/preview
-run/preview: .envrc install
+.PHONY: run/all
+run/all: .envrc install
 	$(HONCHO) start --procfile=Procfile.dev
 
 .PHONY: run/production
