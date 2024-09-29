@@ -16,9 +16,13 @@
 
     {{ form|crispy }}
 
-    <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-success" type="submit">
+        <i class="fa-solid fa-circle-check"></i> Save Changes
+    </button>
 
-    <a class="btn btn-secondary" href="{% url 'buddies:friends-profile' slug=voter.slug %}">Cancel</a>
+    <a class="btn btn-secondary" href="{% url 'buddies:friends-profile' slug=voter.slug %}">
+        <i class="fa-solid fa-ban"></i> Cancel
+    </a>
 
 </form>
 

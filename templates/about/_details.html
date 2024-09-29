@@ -17,7 +17,7 @@
 
         {% if request.user.voter.complete %}
         <a class="btn btn-primary" href="{% url 'buddies:profile' %}">
-            <i class="fa-solid fa-user"></i> View Ballot
+            <i class="fa-solid fa-user"></i> View Profile
         </a>
         {% else %}
         <a class="btn btn-primary" href="{% url 'buddies:setup' %}">

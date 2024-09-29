@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block main %}
 
@@ -8,8 +8,14 @@
 
 <form method="post">
     {% csrf_token %}
-    <button type="submit" name="yes" class="btn btn-danger">Yes</button>
-    <button type="submit" name="no" class="btn btn-secondary">No</button>
+
+    <button type="submit" name="yes" class="btn btn-danger">
+        <i class="fa-solid fa-circle-check"></i> Yes
+    </button>
+
+    <button type="submit" name="no" class="btn btn-secondary">
+        <i class="fa-solid fa-ban"></i> No
+    </button>
 </form>
 
-{% endblock %}
+{% endblock main %}
