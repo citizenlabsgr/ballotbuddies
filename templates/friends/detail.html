@@ -12,7 +12,8 @@
 </h1>
 
 {% if voter.ballot_url %}
-<a href="{{ voter.ballot_view_url }}" class="btn btn-primary">
+<a href="{{ voter.ballot_view_url }}" class="btn btn-primary"
+    title="{{ voter.ballot_items }} item{{ voter.ballot_items|pluralize }}">
     <i class="fa-solid fa-arrow-up-right-from-square"></i> View Ballot
 </a>
 {% endif %}
