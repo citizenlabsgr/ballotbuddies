@@ -219,8 +219,8 @@ class Progress:
         cls,
         data: dict,
         *,
-        completed_ballot: bool = False,
-        shared_ballot: bool = False,
+        completed_date: datetime | None = None,
+        shared_date: datetime | None = None,
         returned_date: datetime | None = None,
         voted: bool = False,
     ) -> Progress:
@@ -322,12 +322,14 @@ class Progress:
                     election_id=election["id"], precinct_id=precinct["id"]
                 )
                 progress.ballot_completed.icon = "🟡"
-            if completed_ballot:
-                progress.ballot_completed.check()
-                if shared_ballot:
-                    progress.ballot_shared.check()
+            if completed_date:
+                progress.ballot_completed.check(to_string(completed_date))
+                if shared_date:
+                    progress.ballot_shared.check(to_string(shared_date))
                 else:
                     progress.ballot_shared.icon = "🟡"
+            else:
+                progress.ballot_shared.icon = "−"
         else:
             progress.ballot_available.icon = "🟡"
 

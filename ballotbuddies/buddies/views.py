@@ -178,7 +178,7 @@ def friends_profile(request: HttpRequest, slug: str):
     else:
         request.session["referrer"] = voter.slug
 
-    if referrer and "share" in referrer and not request.user.is_staff:
+    if referrer == "share":
         log.info(f"{request.user} viewed shared ballot of {voter}")
         previously_shared = bool(voter.ballot_shared)
         voter.ballot_shared = timezone.now()

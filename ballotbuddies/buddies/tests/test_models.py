@@ -42,7 +42,7 @@ def describe_voter():
         def with_planned_present_voter(expect, voter: Voter):
             voter.status = PLANNING.status
             voter.absentee = False
-            voter.ballot = "http://example.com"
+            voter.ballot_updated = timezone.now()
 
             expect(voter.progress.voted.icon) == "🟡"
 

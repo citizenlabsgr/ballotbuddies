@@ -329,7 +329,7 @@ VOTED = VoterData(
             "color": "success text-muted",
             "date": "",
             "deadline": "2021-11-01",
-            "icon": "",
+            "icon": "−",
             "url": "",
         },
         "ballot_sent": {

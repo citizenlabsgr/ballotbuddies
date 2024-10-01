@@ -82,14 +82,6 @@ class VoterManager(models.Manager):
         voter.save()
         return friends
 
-    def filter_progressed(self):
-        return self.filter(
-            models.Q(ballot__isnull=False)
-            | models.Q(ballot_updated__isnull=False)
-            | models.Q(ballot_returned__isnull=False)
-            | models.Q(voted__isnull=False)
-        )
-
 
 class Voter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -322,8 +314,8 @@ class Voter(models.Model):
     def progress(self) -> Progress:
         progress = Progress.parse(
             self.status,
-            completed_ballot=bool(self.ballot),
-            shared_ballot=bool(self.ballot_shared),
+            completed_date=self.ballot_updated,
+            shared_date=self.ballot_shared,
             returned_date=self.ballot_returned,
             voted=bool(self.voted),
         )
