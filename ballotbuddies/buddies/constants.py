@@ -18,8 +18,8 @@ ABSENTEE_REQUESTED_DEADLINE_DELTA = timedelta(weeks=4)  # buffer for mail servic
 ABSENTEE_RECEIVED_DEADLINE_DELTA = timedelta(weeks=2)  # buffer for mail service
 BALLOT_AVAILABLE_DEADLINE_DAYS = 45  # SOS is supposed to finalize ballots a month out
 BALLOT_AVAILABLE_DEADLINE_DELTA = timedelta(days=BALLOT_AVAILABLE_DEADLINE_DAYS)
-BALLOT_COMPLETED_DEADLINE_DELTA = timedelta(days=1)  # common guidance
-BALLOT_SHARED_DEADLINE_DELTA = timedelta(days=1)  # common guidance
+BALLOT_COMPLETED_DEADLINE_DELTA = timedelta(days=BALLOT_AVAILABLE_DEADLINE_DAYS - 10)
+BALLOT_SHARED_DEADLINE_DELTA = timedelta(days=BALLOT_AVAILABLE_DEADLINE_DAYS - 13)
 BALLOT_SENT_DEADLINE_DELTA = timedelta(weeks=3)  # buffer for mail service
 BALLOT_RETURNED_DEADLINE_DELTA = timedelta(weeks=2, days=2)  # buffer for mail service
 BALLOT_RECEIVED_DEADLINE_DELTA = timedelta(days=4)  # Friday before the election
@@ -84,14 +84,14 @@ UNREGISTERED = VoterData(
         "ballot_completed": {
             "color": "default",
             "date": "",
-            "deadline": "2021-11-01",
+            "deadline": "2021-09-28",
             "icon": "",
             "url": "",
         },
         "ballot_shared": {
             "color": "default",
             "date": "",
-            "deadline": "2021-11-01",
+            "deadline": "2021-10-01",
             "icon": "",
             "url": "",
         },
@@ -178,14 +178,14 @@ REGISTERED = VoterData(
         "ballot_completed": {
             "color": "default",
             "date": "",
-            "deadline": "2021-11-01",
+            "deadline": "2021-09-28",
             "icon": "",
             "url": "",
         },
         "ballot_shared": {
             "color": "default",
             "date": "",
-            "deadline": "2021-11-01",
+            "deadline": "2021-10-01",
             "icon": "",
             "url": "",
         },
@@ -321,14 +321,14 @@ VOTED = VoterData(
         "ballot_completed": {
             "color": "success text-muted",
             "date": "",
-            "deadline": "2021-11-01",
+            "deadline": "2021-09-28",
             "icon": "−",
             "url": "",
         },
         "ballot_shared": {
             "color": "success text-muted",
             "date": "",
-            "deadline": "2021-11-01",
+            "deadline": "2021-10-01",
             "icon": "−",
             "url": "",
         },
