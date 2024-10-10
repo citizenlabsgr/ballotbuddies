@@ -59,8 +59,7 @@ def update_statuses() -> int:
 
 
 def clear_past_election(voter: Voter) -> bool:
-    past = timezone.now() - timedelta(days=45)
-    if voter.voted and voter.voted < past:
+    if voter.voted and voter.progress.election.days <= -45:
         log.info(f"Clearing progress for past election: {voter}")
         voter.updated = None
         voter.reset_status()
