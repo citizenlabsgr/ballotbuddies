@@ -46,10 +46,19 @@
                 <span class="position-text">
                     {{ candidate.name }}
                 </span>
+                {% if candidate.nomination %}
+                <span>
+                    (<span style="color: {{ candidate.party.color }};">⬤</span>
+                    {{ candidate.party.name }}
+                    , <span style="color: {{ candidate.nomination.color }};">⬤</span>
+                    {{ candidate.nomination.name }} Nomination)
+                </span>
+                {% else %}
                 <span>
                     (<span style="color: {{ candidate.party.color }};">⬤</span>
                     {{ candidate.party.name }})
                 </span>
+                {% endif %}
             </li>
             {% empty %}
             <li><i>No candidates on ballot.</i></li>
