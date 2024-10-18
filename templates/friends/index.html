@@ -13,9 +13,7 @@
     {% endif %}
 
     <div class="row justify-content-center">
-        {% if request.user_agent.is_bot %}
-        <!-- (placeholder table) -->
-        {% else %}
+
         <div class="col-12" {% if preview %}style="filter: opacity(60%) saturate(70%); pointer-events: none"{% endif %}>
 
             <table class="table">
@@ -28,7 +26,6 @@
             </table>
 
         </div>
-        {% endif %}
 
         <div class="col-lg-6 col-md-8 col-12 mb-4">
             {% if cta %}
