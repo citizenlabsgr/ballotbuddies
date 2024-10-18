@@ -8,7 +8,7 @@ jobs:
     working_directory: ~/ballotbuddies
 
     docker:
-      - image: cimg/python:3.11.6-browsers
+      - image: cimg/python:3.11.10-browsers
         environment:
           DATABASE_URL: postgres://circleci:@127.0.0.1:5432/ballotbuddies_test
           REDIS_URL: redis://127.0.0.1:6379/0
