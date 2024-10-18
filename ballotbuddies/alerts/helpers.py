@@ -30,8 +30,9 @@ def update_profiles():
 
 
 def get_login_email(user: User):
-    subject = "Welcome to Ballot Buddies"
     voter: Voter = user.voter
+
+    subject = "Welcome to Ballot Buddies"
     context = {
         "base_url": settings.BASE_URL,
         "name": voter.short_name or "Voter",
@@ -40,6 +41,7 @@ def get_login_email(user: User):
         "query_string": get_query_string(user),
     }
     body = render_to_string("emails/login.html", context)
+
     email = EmailMessage(subject, body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
     return email
@@ -54,8 +56,10 @@ def send_login_email(user: User):
 
 
 def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
-    subject = f"Join {friend.display_name} on Ballot Buddies{extra}"
     voter: Voter = user.voter
+
+    subject = f"Join {friend.display_name} on Ballot Buddies{extra}"
+
     context = {
         "base_url": settings.BASE_URL,
         "name": voter.short_name or "Voter",
@@ -65,6 +69,7 @@ def get_invite_email(user: User, friend: Voter, *, extra: str = ""):
         "query_string": get_query_string(user),
     }
     body = render_to_string("emails/invite.html", context)
+
     email = EmailMessage(subject, body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
     return email
@@ -87,9 +92,13 @@ def get_activity_email(
     debug: bool = False,
 ):
     profile = profile or user.voter.profile
-    assert profile
     voter: Voter = user.voter
     message = message or profile.message
+
+    subject = str(message)
+    if "staging" in settings.BASE_URL:
+        subject += " [TEST EMAIL]"
+
     date = voter.progress.election.date_humanized.strip("−")
     context = {
         "base_url": settings.BASE_URL,
@@ -102,7 +111,8 @@ def get_activity_email(
         "query_string": get_query_string(user),
     }
     body = render_to_string("emails/activity.html", context)
-    email = EmailMessage(str(message), body, settings.EMAIL, [user.email])
+
+    email = EmailMessage(subject, body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
     if voter.progress.election.days <= 0 and not debug:
         level = log.WARNING if profile.always_alert else log.CRITICAL
@@ -113,6 +123,7 @@ def get_activity_email(
 
 def send_activity_email(user: User, *, force: bool = False) -> bool:
     profile: Profile = user.voter.profile
+
     if email := get_activity_email(user, debug=force):
         if user.email.endswith("@example.com"):
             log.warn(f"Skipped activity email for test user: {user}")
@@ -137,6 +148,9 @@ def send_activity_emails(day: str) -> int:
 
 def get_voted_email(user: User):
     voter: Voter = user.voter
+
+    subject = "Your Vote Has Been Cast"
+
     context = {
         "base_url": settings.BASE_URL,
         "name": voter.short_name or "Voter",
@@ -145,8 +159,8 @@ def get_voted_email(user: User):
         "unsubscribe_url": build_url("/profile/unsubscribe"),
         "query_string": get_query_string(user),
     }
-    subject = "Your Vote Has Been Cast"
     body = render_to_string("emails/voted.html", context)
+
     email = EmailMessage(subject, body, settings.EMAIL, [user.email])
     email.content_subtype = "html"
     return email
@@ -154,6 +168,7 @@ def get_voted_email(user: User):
 
 def send_voted_email(user: User):
     profile: Profile = user.voter.profile
+
     email = get_voted_email(user)
     if user.email.endswith("@example.com"):
         log.warn(f"Skipped voted email for test user: {user}")
