@@ -5,3 +5,5 @@ if "localhost" in BASE_URL:
     BASE_URL = "https://app.michiganelections.io"
 
 DEFAULT_ACTIVITY = ["Jace Browning is planning to vote"]
+
+TEST_EMAIL_SUFFIX = " [TEST EMAIL]"

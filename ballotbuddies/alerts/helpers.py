@@ -14,6 +14,7 @@ from sesame.utils import get_query_string
 
 from ballotbuddies.core.helpers import build_url
 
+from . import constants
 from .models import Message, Profile
 
 if TYPE_CHECKING:
@@ -96,8 +97,8 @@ def get_activity_email(
     message = message or profile.message
 
     subject = str(message)
-    if "staging" in settings.BASE_URL:
-        subject += " [TEST EMAIL]"
+    if "staging" in settings.BASE_URL or settings.DEBUG:
+        subject += constants.TEST_EMAIL_SUFFIX
 
     date = voter.progress.election.date_humanized.strip("−")
     context = {
@@ -150,6 +151,8 @@ def get_voted_email(user: User):
     voter: Voter = user.voter
 
     subject = "Your Vote Has Been Cast"
+    if "staging" in settings.BASE_URL or settings.DEBUG:
+        subject += constants.TEST_EMAIL_SUFFIX
 
     context = {
         "base_url": settings.BASE_URL,
