@@ -51,12 +51,12 @@ class ProfileAdmin(DefaultQueryMixin, admin.ModelAdmin):
     ]
     list_display = [
         "voter",
+        "last_alerted",
         "last_viewed",
+        "staleness",
         "Has_election",
         "Has_message",
         "Should_alert",
-        "staleness",
-        "will_alert",
     ]
 
     @admin.display(boolean=True)
